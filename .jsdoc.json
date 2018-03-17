@@ -1,0 +1,8 @@
+{
+  "opts": {
+    "destination": "jsdoc",
+    "recurse": true,
+    "template": "node_modules/minami"
+  },
+  "plugins": ["plugins/markdown"]
+}

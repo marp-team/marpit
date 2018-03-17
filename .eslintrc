@@ -1,0 +1,20 @@
+env:
+  node: true
+  es6: true
+
+extends:
+  - airbnb-base
+  - plugin:prettier/recommended
+
+rules:
+  max-len:
+    - error
+    - 80
+    - 2
+    - ignoreUrls: true
+      ignoreComments: false
+      ignoreRegExpLiterals: true
+      ignoreStrings: true
+      ignoreTemplateLiterals: true
+
+  no-param-reassign: off
