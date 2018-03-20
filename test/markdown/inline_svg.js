@@ -21,11 +21,14 @@ describe('Marpit inline SVG plugin', () => {
       .use(applyDirectives)
       .use(inlineSVG, marpitInstance)
 
-  const render = (markdownIt, text) =>
-    cheerio.load(markdownIt.render(text), {
+  const render = (markdownIt, text, inline = false) => {
+    const method = inline ? markdownIt.renderInline : markdownIt.render
+
+    return cheerio.load(method.call(markdownIt, text), {
       lowerCaseAttributeNames: false,
       lowerCaseTags: false,
     })
+  }
 
   it('wraps each section elements with inline SVG', () => {
     const $ = render(md(), '# test\n\n---\n\n# test')
@@ -33,6 +36,11 @@ describe('Marpit inline SVG plugin', () => {
     assert(
       $('svg[viewBox] > foreignObject[width][height] > section').length === 2
     )
+  })
+
+  it('ignores in #renderInline', () => {
+    const $ = render(md(), '# test\n\n---\n\n# test', true)
+    assert($('svg').length === 0)
   })
 
   context('with specified theme directive', () => {
