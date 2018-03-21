@@ -4,7 +4,7 @@ import postcss from 'postcss'
 const allowOverflowProps = ['visible', 'hidden', 'inherit', 'initial', 'unset']
 
 const commentOut = node =>
-  node.replaceWith(`${node.raw('before')}/* ${node.toString()} */`)
+  node.replaceWith(`${node.raw('before')}/* ${node.toString()}; */`)
 
 /**
  * Marpit PostCSS inline SVG workaround plugin.
