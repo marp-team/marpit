@@ -6,12 +6,12 @@ import postcss from 'postcss'
  *
  * Make printable slide deck as PDF.
  *
- * @param {Object} [opts]
+ * @param {Object} opts
  * @param {string} opts.width
  * @param {string} opts.height
  * @alias module:postcss/printable
  */
-const plugin = postcss.plugin('marpit-postcss-printable', (opts = {}) => css =>
+const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
   css.first.before(
     `
 @page {
