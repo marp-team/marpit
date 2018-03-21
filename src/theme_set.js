@@ -11,6 +11,17 @@ import scaffold from './theme/scaffold'
  */
 class ThemeSet {
   constructor() {
+    /**
+     * An instance of default theme.
+     *
+     * While running {@link ThemeSet#pack}, ThemeSet will use this theme when
+     * the definition of theme directive or the theme with specified name is not
+     * found.
+     *
+     * By default, Marpit does not provide default theme (`undefined`).
+     *
+     * @type {Theme|undefined}
+     */
     this.default = undefined
 
     Object.defineProperty(this, 'themeMap', { value: new Map() })
@@ -40,6 +51,9 @@ class ThemeSet {
     this.themeMap.set(theme.name, theme)
   }
 
+  /**
+   * @method
+   */
   clear() {
     return this.themeMap.clear()
   }
