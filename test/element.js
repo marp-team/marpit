@@ -1,5 +1,5 @@
 import assert from 'assert'
-import Element from '../src/element'
+import { Element } from '../src/index'
 
 describe('Element', () => {
   describe('#constructor', () => {
