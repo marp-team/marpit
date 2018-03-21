@@ -13,13 +13,15 @@ const plugin = postcss.plugin(
   () => (css, ret) => {
     ret.marpitSectionSize = ret.marpitSectionSize || {}
 
-    css.walkRules(/(^|[,\s]+)section($|[,\s]+)/, rule => {
-      rule.walkDecls(/^(width|height)$/, decl => {
-        const { prop } = decl
-        const value = decl.value.trim()
+    css.walkRules(rule => {
+      if (rule.selectors.includes('section')) {
+        rule.walkDecls(/^(width|height)$/, decl => {
+          const { prop } = decl
+          const value = decl.value.trim()
 
-        ret.marpitSectionSize[prop] = value
-      })
+          ret.marpitSectionSize[prop] = value
+        })
+      }
     })
   }
 )
