@@ -123,7 +123,7 @@ class Theme {
   }
 
   /** @private */
-  memoize(prop, func = v => v) {
+  memoize(prop, func) {
     if (this[memoizeProp(prop)].has(this[prop]))
       return this[memoizeProp(prop)].get(this[prop])
 
