@@ -28,6 +28,15 @@ class ThemeSet {
   }
 
   /**
+   * @alias ThemeSet#size
+   * @type {number}
+   * @readonly
+   */
+  get size() {
+    return this.themeMap.size
+  }
+
+  /**
    * @param {string} css
    * @returns {Theme}
    */
