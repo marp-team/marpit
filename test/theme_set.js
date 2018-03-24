@@ -193,12 +193,22 @@ describe('ThemeSet', () => {
         `)
       })
 
-      it('returns default value when specified theme is not contain', () =>
+      it('returns default value when specified theme is not contained', () =>
         assert(instance.getThemeProp('not-contained', 'width') === '123px'))
 
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
         assert(instance.getThemeProp('not-contained', 'height') === height))
     })
+  })
+
+  describe('#has', () => {
+    it('returns true when specified name is contained', () => {
+      instance.add('/* @theme test-theme */')
+      assert(instance.has('test-theme'))
+    })
+
+    it('returns false when specified name is not contained', () =>
+      assert(!instance.has('test-theme')))
   })
 
   describe('#themes', () => {
