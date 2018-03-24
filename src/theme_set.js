@@ -141,7 +141,7 @@ class ThemeSet {
   }
 
   /**
-   * @returns {Iterator}
+   * @returns {Iterator.<Theme>}
    */
   themes() {
     return this.themeMap.values()
