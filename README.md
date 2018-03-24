@@ -96,7 +96,7 @@ h1 {
 The `Marpit` instance has a `themeSet` member that manages usable themes in the `theme` directive of Marpit Markdown. You have to add theme CSS by using `themeSet.add(string)`.
 
 ```javascript
-import Marpit from 'marpit'
+import Marpit from '@marp-team/marpit'
 import fs from 'fs'
 
 const marpit = new Marpit()
@@ -127,7 +127,7 @@ If it combines with [CSS Scroll Snap](https://www.w3.org/TR/css-scroll-snap-1/),
 
 ## API
 
-Under construction.
+Refer JSDoc: **[https://marpit.netlify.com/](https://marpit.netlify.com/)**
 
 ## Development
 
@@ -141,7 +141,7 @@ We are sorry but currently we are not ready to accept your contribute because it
 
 Managed by [@marp-team](https://github.com/marp-team).
 
-* <img src="https://github.com/yhatt.png?s=150" width="16" height="16"/> Yuki Hattori ([@yhatt](https://github.com/yhatt))
+* <img src="https://github.com/yhatt.png" width="16" height="16"/> Yuki Hattori ([@yhatt](https://github.com/yhatt))
 
 ## License
 

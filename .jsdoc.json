@@ -1,6 +1,7 @@
 {
   "opts": {
     "destination": "jsdoc",
+    "readme": "api.md",
     "recurse": true,
     "template": "node_modules/minami"
   },
