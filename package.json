@@ -76,5 +76,8 @@
     "markdown-it": "^8.4.1",
     "markdown-it-front-matter": "^0.1.2",
     "postcss": "^6.0.20"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
