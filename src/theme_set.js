@@ -112,7 +112,7 @@ class ThemeSet {
    * @param {string} name
    * @param {Object} [opts]
    * @param {Element[]} [opts.containers]
-   * @param {boolean} [opts.inlineSVG]
+   * @param {boolean|'workaround'} [opts.inlineSVG]
    * @param {boolean} [opts.printable]
    * @return {string}
    */
@@ -133,7 +133,7 @@ class ThemeSet {
         theme !== scaffold && (css => css.first.before(scaffold.css)),
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
-        opts.inlineSVG && postcssInlineSVGWorkaround,
+        opts.inlineSVG === 'workaround' && postcssInlineSVGWorkaround,
       ].filter(p => p)
     )
 

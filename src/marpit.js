@@ -34,8 +34,9 @@ class Marpit {
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
    * @param {Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
-   * @param {boolean} [opts.inlineSVG=false] Wrap each sections by inline SVG.
-   *     _(Experimental)_
+   * @param {boolean|'workaround'} [opts.inlineSVG=false] Wrap each sections by
+   *     inline SVG. If you set `workaround`, a few basic styling in theme CSS
+   *     will disable to avoid a rendering bug of Chromium. _(Experimental)_
    */
   constructor(opts = {}) {
     this.options = { ...defaultOptions, ...opts }
