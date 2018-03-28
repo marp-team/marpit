@@ -96,15 +96,10 @@ class Marpit {
    * @returns {Marpit~RenderResult} An object of rendering result.
    */
   render(markdown) {
-    const html = this.renderMarkdown(markdown)
-
-    const css = this.themeSet.pack(this.lastGlobalDirectives.theme, {
-      containers: [...this.containers, ...this.slideContainers],
-      inlineSVG: this.options.inlineSVG,
-      printable: this.options.printable,
-    })
-
-    return { html, css }
+    return {
+      html: this.renderMarkdown(markdown),
+      css: this.renderStyle(this.lastGlobalDirectives.theme),
+    }
   }
 
   /**
@@ -113,11 +108,29 @@ class Marpit {
    * This method is for internal. You can override this method if you have to
    * render with customized way.
    *
+   * @private
    * @param {string} markdown A Markdown string.
    * @returns {string} The result string of rendering Markdown.
    */
   renderMarkdown(markdown) {
     return this.markdown.render(markdown)
+  }
+
+  /**
+   * Render style by using `themeSet#pack`.
+   *
+   * This method is for internal.
+   *
+   * @private
+   * @param {string|undefined} theme Theme name.
+   * @returns {string} The result string of rendering style.
+   */
+  renderStyle(theme) {
+    return this.themeSet.pack(theme, {
+      containers: [...this.containers, ...this.slideContainers],
+      inlineSVG: this.options.inlineSVG,
+      printable: this.options.printable,
+    })
   }
 }
 
