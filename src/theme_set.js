@@ -28,7 +28,6 @@ class ThemeSet {
   }
 
   /**
-   * @alias ThemeSet#size
    * @type {number}
    * @readonly
    */

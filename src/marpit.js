@@ -83,6 +83,18 @@ class Marpit {
     if (this.options.inlineSVG) md.use(markdownItInlineSVG, this)
   }
 
+  /**
+   * @typedef {Object} Marpit~RenderResult
+   * @property {string} html Rendered HTML.
+   * @property {string} css Rendered CSS.
+   */
+
+  /**
+   * Render Markdown into HTML and CSS string.
+   *
+   * @param {string} markdown A Markdown string.
+   * @returns {Marpit~RenderResult} An object of rendering result.
+   */
   render(markdown) {
     const html = this.renderMarkdown(markdown)
 
@@ -95,6 +107,15 @@ class Marpit {
     return { html, css }
   }
 
+  /**
+   * Render Markdown by using `markdownIt#render`.
+   *
+   * This method is for internal. You can override this method if you have to
+   * render with customized way.
+   *
+   * @param {string} markdown A Markdown string.
+   * @returns {string} The result string of rendering Markdown.
+   */
   renderMarkdown(markdown) {
     return this.markdown.render(markdown)
   }
