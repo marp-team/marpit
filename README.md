@@ -15,7 +15,7 @@ It could transform the Markdown and CSS theme(s) to slide deck composed by stati
 
 * **[Marpit Markdown](#marpit-markdown)** - Based on CommonMark, and have extended _Directives_.
 * **[Clear markup](#markup)** - Marpit theme CSS has no own class, so you can focus on _your_ markup.
-* **[Inline SVG slide](#inline-svg-slide)** _(Experimental)_ - Support slide auto-scaling without extra JavaScript.
+* **[Inline SVG slide](#inline-svg-slide-experimental)** _(Experimental)_ - Support slide auto-scaling without extra JavaScript.
 
 Marpit will become a core of _the next version of **[Marp](https://github.com/yhatt/marp/)**_.
 
@@ -73,7 +73,7 @@ This container element(s) can change in Marpit constructor option. Also `contain
 
 ### Theme CSS
 
-> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. <!-- You can use the `marp` package if you want (under construction). -->
+> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use the [`@marp-team/marp`](https://github.com/marp-team/marp/tree/master/packages/marp) package if you want (UNDER CONSTRUCTION).
 
 In theme CSS, you need not think about the hierarchy of Marpit. All that you have to know is just that a `<section>` element becomes a slide.
 
@@ -107,7 +107,7 @@ A specified theme will convert to static CSS in rendering by `marpit.render()`. 
 
 ## Inline SVG slide _(experimental)_
 
-> :warning: _This feature is experimental_ because of [a Chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=771852). We are enabling a workaround, but it will disable a few basic styling defined in theme CSS. It includes `position`, `transform` and `overflow` with scrolling (`auto` and `scroll`).
+> :warning: _This feature is experimental_ because of [a Chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=771852). A workaround to style can enable by `inlineSVG: 'workaround'`, but it will disable a few basic styling defined in theme CSS. It includes `position`, `transform` and `overflow` with scrolling (`auto` and `scroll`).
 
 When you set `inlineSVG: true` in Marpit constructor option, the each `<section>` are wrapped by inline SVG.
 
