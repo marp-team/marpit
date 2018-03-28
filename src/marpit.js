@@ -54,6 +54,12 @@ class Marpit {
      * @type {MarkdownIt}
      */
     this.markdown = new MarkdownIt(...wrapArray(this.options.markdown))
+    this.applyMarkdownItPlugins()
+  }
+
+  /** @private */
+  applyMarkdownItPlugins(target = this.markdown) {
+    target
       .use(markdownItComment)
       .use(markdownItSlide)
       .use(markdownItParseDirectives, this)
@@ -61,7 +67,7 @@ class Marpit {
       .use(markdownItSlideContainer, this.slideContainers)
       .use(markdownItContainer, this.containers)
 
-    if (this.options.inlineSVG) this.markdown.use(markdownItInlineSVG, this)
+    if (this.options.inlineSVG) target.use(markdownItInlineSVG, this)
   }
 
   render(markdown) {
