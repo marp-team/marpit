@@ -108,6 +108,7 @@ class Marpit {
    * This method is for internal. You can override this method if you have to
    * render with customized way.
    *
+   * @private
    * @param {string} markdown A Markdown string.
    * @returns {string} The result string of rendering Markdown.
    */
@@ -120,6 +121,7 @@ class Marpit {
    *
    * This method is for internal.
    *
+   * @private
    * @param {string|undefined} theme Theme name.
    * @returns {string} The result string of rendering style.
    */
