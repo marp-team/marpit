@@ -55,6 +55,24 @@ class Marpit {
      * @type {MarkdownIt}
      */
     this.markdown = new MarkdownIt(...wrapArray(this.options.markdown))
+    this.applyMarkdownItPlugins()
+  }
+
+  /**
+   * The plugin interface of markdown-it for current Marpit instance.
+   *
+   * This is useful to integrate Marpit with the other markdown-it based parser.
+   *
+   * @type {Function}
+   * @readonly
+   */
+  get markdownItPlugins() {
+    return this.applyMarkdownItPlugins.bind(this)
+  }
+
+  /** @private */
+  applyMarkdownItPlugins(md = this.markdown) {
+    md
       .use(markdownItComment)
       .use(markdownItSlide)
       .use(markdownItParseDirectives, this)
@@ -62,7 +80,7 @@ class Marpit {
       .use(markdownItSlideContainer, this.slideContainers)
       .use(markdownItContainer, this.containers)
 
-    if (this.options.inlineSVG) this.markdown.use(markdownItInlineSVG, this)
+    if (this.options.inlineSVG) md.use(markdownItInlineSVG, this)
   }
 
   render(markdown) {

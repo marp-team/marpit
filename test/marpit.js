@@ -28,6 +28,18 @@ describe('Marpit', () => {
     })
   })
 
+  describe('get #markdownItPlugins', () => {
+    it('provides markdown-it plugins with its compatible interface', () => {
+      const marpit = new Marpit()
+      marpit.themeSet.add('/* @theme foobar */')
+
+      const md = new MarkdownIt().use(marpit.markdownItPlugins)
+      md.render('<!-- theme: foobar -->')
+
+      assert(marpit.lastGlobalDirectives.theme === 'foobar')
+    })
+  })
+
   describe('#render', () => {
     it('returns the object contains html and css member', () => {
       const markdown = '# Hello'
