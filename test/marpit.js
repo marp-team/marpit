@@ -127,4 +127,19 @@ describe('Marpit', () => {
       assert(instance.renderMarkdown('render') === 'test of render')
     })
   })
+
+  describe('#renderStyle', () => {
+    it('returns the result of themeSet#pack', () => {
+      const instance = new Marpit()
+      instance.themeSet.pack = (theme, opts) => {
+        assert(Object.keys(opts).includes('containers'))
+        assert(Object.keys(opts).includes('inlineSVG'))
+        assert(Object.keys(opts).includes('printable'))
+
+        return `style of ${theme}`
+      }
+
+      assert(instance.renderStyle('test-theme') === 'style of test-theme')
+    })
+  })
 })
