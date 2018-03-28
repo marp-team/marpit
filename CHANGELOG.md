@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.1 - 2018-03-28
+
 * Optional inline SVG workaround ([#1](https://github.com/marp-team/marpit/pull/1))
 * Split the injection of markdown-it plugins and provide interface of markdown-it plugin ([#2](https://github.com/marp-team/marpit/pull/2))
 * Split rendering style into Marpit#renderStyle ([#3](https://github.com/marp-team/marpit/pull/3))
