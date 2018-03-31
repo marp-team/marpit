@@ -1,6 +1,6 @@
 /** @module */
 import kebabCase from 'lodash.kebabcase'
-import { appliers, globals, locals } from './directives'
+import { globals, locals } from './directives'
 
 const publicDirectives = [...Object.keys(globals), ...Object.keys(locals)]
 
@@ -35,21 +35,44 @@ function apply(md, opts = {}) {
         const { marpitDirectives } = token.meta || {}
         if (!marpitDirectives) return
 
-        const styles = []
+        const styles = {}
 
         Object.keys(marpitDirectives)
           .filter(filterFunc)
           .forEach(dir => {
             const value = marpitDirectives[dir]
             if (!value) return
-            if (appliers[dir]) appliers[dir](value, { token, styles })
 
             const kebabCaseDir = kebabCase(dir)
             if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
-            if (css) styles.push(`--${kebabCaseDir}:${value};`)
+            if (css) styles[`--${kebabCaseDir}`] = value
           })
 
-        if (styles.length > 0) token.attrSet('style', styles.join(''))
+        // Apply attribute to token
+        if (marpitDirectives.class)
+          token.attrJoin('class', marpitDirectives.class)
+
+        if (marpitDirectives.backgroundImage) {
+          styles['background-image'] = marpitDirectives.backgroundImage
+          styles['background-position'] = 'center'
+          styles['background-repeat'] = 'no-repeat'
+          styles['background-size'] = 'cover'
+
+          if (marpitDirectives.backgroundPosition)
+            styles['background-position'] = marpitDirectives.backgroundPosition
+
+          if (marpitDirectives.backgroundRepeat)
+            styles['background-repeat'] = marpitDirectives.backgroundRepeat
+
+          if (marpitDirectives.backgroundSize)
+            styles['background-size'] = marpitDirectives.backgroundSize
+        }
+
+        const styleStr = Object.keys(styles).reduce(
+          (arr, dir) => `${arr}${dir}:${styles[dir]};`,
+          ''
+        )
+        if (styleStr.length > 0) token.attrSet('style', styleStr)
       })
     }
   )

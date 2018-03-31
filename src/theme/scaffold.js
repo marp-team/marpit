@@ -9,10 +9,6 @@ section {
   box-sizing: border-box;
   overflow: hidden;
 
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-
   scroll-snap-align: center center;
 }
 
