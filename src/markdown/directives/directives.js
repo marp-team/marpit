@@ -11,6 +11,41 @@
  */
 
 /**
+ * @typedef {Function} Applier
+ * @param {string} value A value of directive.
+ * @param {Object} opts
+ * @param {Token} opts.token The slide token of markdown-it.
+ * @param {string[]} opts.styles The array of current style definitions.
+ */
+
+/**
+ * Appliers for directive.
+ *
+ * @prop {Applier} class Assign `class` attribute to the slide token.
+ * @prop {Applier} backgroundImage Add `background-image` style.
+ * @prop {Applier} backgroundPosition Add `background-position` style.
+ * @prop {Applier} backgroundRepeat Add `background-repeat` style.
+ * @prop {Applier} backgroundSize Add `background-size` style.
+ */
+export const appliers = {
+  class(value, { token }) {
+    token.attrJoin('class', value)
+  },
+  backgroundImage(value, { styles }) {
+    styles.push(`background-image:${value};`)
+  },
+  backgroundPosition(value, { styles }) {
+    styles.push(`background-position:${value};`)
+  },
+  backgroundRepeat(value, { styles }) {
+    styles.push(`background-repeat:${value};`)
+  },
+  backgroundSize(value, { styles }) {
+    styles.push(`background-size:${value};`)
+  },
+}
+
+/**
  * Global directives.
  *
  * Each global directive assigns to the whole slide deck. If you wrote a same
@@ -38,11 +73,30 @@ export const globals = {
  * prefix `_` (underbar) to directive name. (Spot directives)
  *
  * @prop {Directive} class Specify HTML class of section element(s).
+ * @prop {Directive} backgroundImage Specify background-image style.
+ * @prop {Directive} backgroundPosition Specify background-position style. There
+ *     is defined `center` as the default style of scaffold.
+ * @prop {Directive} backgroundRepeat Specify background-repeat style. There is
+ *     defined `no-repeat` as the default style of scaffold.
+ * @prop {Directive} backgroundSize Specify background-size style. There is
+ *     defined `cover` as the default style of scaffold.
  */
 export const locals = {
+  backgroundImage(value) {
+    return { backgroundImage: value }
+  },
+  backgroundPosition(value) {
+    return { backgroundPosition: value }
+  },
+  backgroundRepeat(value) {
+    return { backgroundRepeat: value }
+  },
+  backgroundSize(value) {
+    return { backgroundSize: value }
+  },
   class(value) {
     return { class: value }
   },
 }
 
-export default { globals, locals }
+export default { appliers, globals, locals }

@@ -1,6 +1,6 @@
 /** @module */
 import kebabCase from 'lodash.kebabcase'
-import { globals, locals } from './directives'
+import { appliers, globals, locals } from './directives'
 
 const publicDirectives = [...Object.keys(globals), ...Object.keys(locals)]
 
@@ -41,10 +41,8 @@ function apply(md, opts = {}) {
           .filter(filterFunc)
           .forEach(dir => {
             const value = marpitDirectives[dir]
-            if (value === undefined) return
-
-            // Apply class
-            if (dir === 'class') token.attrJoin('class', value)
+            if (!value) return
+            if (appliers[dir]) appliers[dir](value, { token, styles })
 
             const kebabCaseDir = kebabCase(dir)
             if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
