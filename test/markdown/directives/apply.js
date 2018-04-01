@@ -3,6 +3,7 @@ import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../../src/markdown/directives/apply'
+import comment from '../../../src/markdown/comment'
 import parseDirectives from '../../../src/markdown/directives/parse'
 import slide from '../../../src/markdown/slide'
 
@@ -12,6 +13,7 @@ describe('Marpit directives apply plugin', () => {
 
   const md = (...args) =>
     new MarkdownIt('commonmark')
+      .use(comment)
       .use(slide)
       .use(parseDirectives, { themeSet: themeSetStub })
       .use(applyDirectives, ...args)
@@ -32,31 +34,41 @@ describe('Marpit directives apply plugin', () => {
       )
     })
 
-  const text = dedent`
+  const basicDirs = dedent`
     ---
     class: test
     theme: test_theme
     ---
   `
 
+  const toObjStyle = style =>
+    (style || '').split(';').reduce((obj, text) => {
+      const splited = text.trim().split(':')
+      if (splited.length !== 2) return obj
+
+      const [key, val] = splited
+      return { ...obj, [key.trim()]: val.trim() }
+    }, {})
+
   it('applies directives to slide node', () => {
-    const $ = cheerio.load(mdForTest().render(text))
+    const $ = cheerio.load(mdForTest().render(basicDirs))
     const section = $('section').first()
+    const style = toObjStyle(section.attr('style'))
 
     assert(section.is('.test'))
     assert(section.attr('data-class') === 'test')
     assert(section.attr('data-theme') === 'test_theme')
     assert(!section.attr('data-unknown-dir'))
-    assert(section.attr('style').includes('--class:test;'))
-    assert(section.attr('style').includes('--theme:test_theme;'))
-    assert(!section.attr('style').includes('--unknown-dir:directive;'))
+    assert(style['--class'] === 'test')
+    assert(style['--theme'] === 'test_theme')
+    assert(style['--unknown-dir'] !== 'directive')
   })
 
   context('with dataset option as false', () => {
     const opts = { dataset: false }
 
     it('does not apply directives to data attributes', () => {
-      const $ = cheerio.load(mdForTest(opts).render(text))
+      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
 
       assert(!section.attr('data-class'))
@@ -68,7 +80,7 @@ describe('Marpit directives apply plugin', () => {
     const opts = { css: false }
 
     it('does not apply directives to CSS custom properties', () => {
-      const $ = cheerio.load(mdForTest(opts).render(text))
+      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
 
       assert(!section.attr('style'))
@@ -78,12 +90,93 @@ describe('Marpit directives apply plugin', () => {
   context('with includeInternal option as true', () => {
     const opts = { includeInternal: true }
 
-    it('it applies together with unknown (internal) directive', () => {
-      const $ = cheerio.load(mdForTest(opts).render(text))
+    it('applies together with unknown (internal) directive', () => {
+      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
+      const style = toObjStyle(section.attr('style'))
 
       assert(section.attr('data-unknown-dir') === 'directive')
-      assert(section.attr('style').includes('--unknown-dir:directive;'))
+      assert(style['--unknown-dir'] === 'directive')
+    })
+  })
+
+  describe('Local directives', () => {
+    describe('Background image', () => {
+      const bgDirs = dedent`
+        ---
+        backgroundImage: url(//example.com/a.jpg)
+        backgroundPosition: left top
+        backgroundRepeat: repeat-y
+        backgroundSize: 25%
+        ---
+      `
+
+      it('applies corresponding style to section element', () => {
+        const $ = cheerio.load(mdForTest().render(bgDirs))
+        const section = $('section').first()
+        const style = toObjStyle(section.attr('style'))
+
+        assert(style['background-image'] === 'url(//example.com/a.jpg)')
+        assert(style['background-position'] === 'left top')
+        assert(style['background-repeat'] === 'repeat-y')
+        assert(style['background-size'] === '25%')
+      })
+
+      context('when directives of image options are not defined', () => {
+        const bgDefaultDirs =
+          '<!-- backgroundImage: "linear-gradient(to bottom, #fff, #000)" -->'
+
+        it('assigns background image option as default value', () => {
+          const $ = cheerio.load(mdForTest().render(bgDefaultDirs))
+          const section = $('section').first()
+          const style = toObjStyle(section.attr('style'))
+
+          assert(style['background-position'] === 'center')
+          assert(style['background-repeat'] === 'no-repeat')
+          assert(style['background-size'] === 'cover')
+        })
+      })
+
+      context('when backgroundImage directive is not defined', () => {
+        const bgOptionDirs = dedent`
+          ---
+          backgroundPosition: "top"
+          backgroundRepeat: "repeat"
+          backgroundSize: "150px"
+          ---
+
+          # Slide 1
+
+          ---
+          <!-- backgroundImage: "url(//example.com/specified.png)" -->
+
+          ## Slide 2
+
+          ---
+          <!-- backgroundImage: -->
+
+          ### Slide 3
+        `
+
+        it('ignores background option directives', () => {
+          const $ = cheerio.load(mdForTest().render(bgOptionDirs))
+          const [styleOne, styleTwo, styleThree] = [
+            toObjStyle($('section#1').attr('style')),
+            toObjStyle($('section#2').attr('style')),
+            toObjStyle($('section#3').attr('style')),
+          ]
+
+          assert(styleOne['background-position'] === undefined)
+          assert(styleOne['background-repeat'] === undefined)
+          assert(styleOne['background-size'] === undefined)
+          assert(styleTwo['background-position'] === 'top')
+          assert(styleTwo['background-repeat'] === 'repeat')
+          assert(styleTwo['background-size'] === '150px')
+          assert(styleThree['background-position'] === undefined)
+          assert(styleThree['background-repeat'] === undefined)
+          assert(styleThree['background-size'] === undefined)
+        })
+      })
     })
   })
 })
