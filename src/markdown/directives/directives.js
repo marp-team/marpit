@@ -38,8 +38,27 @@ export const globals = {
  * prefix `_` (underbar) to directive name. (Spot directives)
  *
  * @prop {Directive} class Specify HTML class of section element(s).
+ * @prop {Directive} backgroundImage Specify background-image style.
+ * @prop {Directive} backgroundPosition Specify background-position style. The
+ *     default value while setting backgroundImage is `center`.
+ * @prop {Directive} backgroundRepeat Specify background-repeat style. The
+ *     default value while setting backgroundImage is `no-repeat`.
+ * @prop {Directive} backgroundSize Specify background-size style. The default
+ *     value while setting backgroundImage is `cover`.
  */
 export const locals = {
+  backgroundImage(value) {
+    return { backgroundImage: value }
+  },
+  backgroundPosition(value) {
+    return { backgroundPosition: value }
+  },
+  backgroundRepeat(value) {
+    return { backgroundRepeat: value }
+  },
+  backgroundSize(value) {
+    return { backgroundSize: value }
+  },
   class(value) {
     return { class: value }
   },

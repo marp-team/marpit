@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+* Add local directives about background image ([#4](https://github.com/marp-team/marpit/pull/4))
+
 ## v0.0.1 - 2018-03-28
 
 * Optional inline SVG workaround ([#1](https://github.com/marp-team/marpit/pull/1))
