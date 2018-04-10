@@ -3,6 +3,7 @@ import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
 import markdownItApplyDirectives from './markdown/directives/apply'
+import markdownItBackgroundImage from './markdown/background_image'
 import markdownItComment from './markdown/comment'
 import markdownItContainer from './markdown/container'
 import markdownItInlineSVG from './markdown/inline_svg'
@@ -11,6 +12,7 @@ import markdownItSlide from './markdown/slide'
 import markdownItSlideContainer from './markdown/slide_container'
 
 const defaultOptions = {
+  backgroundSyntax: true,
   container: marpitContainer,
   markdown: 'commonmark',
   printable: true,
@@ -26,6 +28,8 @@ class Marpit {
    * Create a Marpit instance.
    *
    * @param {Object} [opts]
+   * @param {boolean} [opts.backgroundSyntax=true] Support markdown image syntax
+   *     with description including `bg`.
    * @param {Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
@@ -80,6 +84,7 @@ class Marpit {
       .use(markdownItSlideContainer, this.slideContainers)
       .use(markdownItContainer, this.containers)
 
+    if (this.options.backgroundSyntax) md.use(markdownItBackgroundImage)
     if (this.options.inlineSVG) md.use(markdownItInlineSVG, this)
   }
 

@@ -26,7 +26,7 @@ function wrapTokens(type, container, tokens) {
   const open = new Token(`${type}_open`, tag, 1)
   const close = new Token(`${type}_close`, tag, -1)
 
-  Object.assign(open, { ...(container.open || {}), children: tokens })
+  Object.assign(open, { ...(container.open || {}) })
   Object.assign(close, { ...(container.close || {}) })
 
   // Assign attributes
