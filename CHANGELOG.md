@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 * Add background image syntax ([#4](https://github.com/marp-team/marpit/pull/4), [#5](https://github.com/marp-team/marpit/pull/5))
+* Add [JSDoc documentation to `ThemeSet` class methods](https://marpit.netlify.com/themeset) ([#7](https://github.com/marp-team/marpit/pull/7))
 
 ## v0.0.1 - 2018-03-28
 
