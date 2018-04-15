@@ -28,6 +28,8 @@ class ThemeSet {
   }
 
   /**
+   * Return the number of themes.
+   *
    * @type {number}
    * @readonly
    */
@@ -36,8 +38,11 @@ class ThemeSet {
   }
 
   /**
-   * @param {string} css
-   * @returns {Theme}
+   * Add theme CSS from string.
+   *
+   * @param {string} css The theme CSS string.
+   * @returns {Theme} A created {@link Theme} instance.
+   * @throws Will throw an error if the theme name is not specified by `@theme`.
    */
   add(css) {
     const theme = Theme.fromCSS(css)
@@ -47,7 +52,10 @@ class ThemeSet {
   }
 
   /**
-   * @param {Theme} theme
+   * Add theme instance.
+   *
+   * @param {Theme} theme The theme instnace.
+   * @throws Will throw an error if the theme name is not specified.
    */
   addTheme(theme) {
     if (!(theme instanceof Theme))
@@ -60,25 +68,32 @@ class ThemeSet {
   }
 
   /**
-   * @method
+   * Removes all themes from a {@link themeSet} object.
    */
   clear() {
     return this.themeMap.clear()
   }
 
   /**
-   * @param {string} name
-   * @returns {boolean}
+   * Remove a specific named theme from a {@link themeSet} object.
+   *
+   * @param {string} name The theme name to delete.
+   * @returns {boolean} Returns `true` if a theme in current {@link ThemeSet}
+   *     existed and has been removed, or `false` if the theme does not exist.
    */
   delete(name) {
     return this.themeMap.delete(name)
   }
 
   /**
-   * @param {string} name
+   * Returns a specific named theme.
+   *
+   * @param {string} name The theme name to get.
    * @param {boolean} [fallback=false] If true, return instance's default theme
    *     or scaffold theme when specified theme cannot find.
-   * @returns {Theme|undefined}
+   * @returns {Theme|undefined} Returns specified or fallbacked theme, or
+   *     `undefined` if `fallback` is false and the specified theme has not
+   *     existed.
    */
   get(name, fallback = false) {
     const theme = this.themeMap.get(name)
@@ -86,8 +101,13 @@ class ThemeSet {
   }
 
   /**
-   * @param  {string|Theme} theme
-   * @param  {string} prop
+   * Returns the value of property from a specified theme.
+   *
+   * It will fallback the reference object into the instance's default theme or
+   * scaffold theme when the specified theme/property is undefined.
+   *
+   * @param {string|Theme} theme The theme name or instance.
+   * @param {string} prop The property name to get.
    */
   getThemeProp(theme, prop) {
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
@@ -100,20 +120,34 @@ class ThemeSet {
   }
 
   /**
-   * @param {string} name
-   * @returns {boolean}
+   * Returns a boolean indicating whether a specific named theme exists or not.
+   *
+   * @param {string} name The theme name.
+   * @returns {boolean} Returns `true` if a specific named theme exists,
+   *     otherwise `false`.
    */
   has(name) {
     return this.themeMap.has(name)
   }
 
   /**
-   * @param {string} name
-   * @param {Object} [opts]
-   * @param {Element[]} [opts.containers]
-   * @param {boolean|'workaround'} [opts.inlineSVG]
-   * @param {boolean} [opts.printable]
-   * @return {string}
+   * Convert registered theme CSS into usable in the rendered markdown by
+   * {@link Marpit#render}.
+   *
+   * You should use {@link Marpit#render} unless there is some particular
+   * reason.
+   *
+   * @param {string} name The theme name. It will use the instance's default
+   *     theme or scaffold theme when a specific named theme does not exist.
+   * @param {Object} [opts] The option object passed by {@link Marpit#render}.
+   * @param {Element[]} [opts.containers] Container elements wrapping whole
+   *     slide deck.
+   * @param {boolean} [opts.printable] Make style printable to PDF.
+   * @param {boolean|'workaround'} [opts.inlineSVG] Apply a hierarchy of inline
+   *     SVG to CSS selector by setting `true`. In addition if you set
+   *     `workaround`, a few basic styling will disable to avoid a rendering bug
+   *     of Chromium. _(Experimental)_
+   * @return {string} The converted CSS string.
    */
   pack(name, opts = {}) {
     const slideElements = [{ tag: 'section' }]
@@ -140,6 +174,9 @@ class ThemeSet {
   }
 
   /**
+   * Returns a `Iterator` object that contains registered themes to current
+   * instance.
+   *
    * @returns {Iterator.<Theme>}
    */
   themes() {
