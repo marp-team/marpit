@@ -3,11 +3,11 @@ import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
 import markdownItApplyDirectives from './markdown/directives/apply'
-import markdownItBackgroundImage from './markdown/background_image'
 import markdownItComment from './markdown/comment'
 import markdownItContainer from './markdown/container'
 import markdownItInlineSVG from './markdown/inline_svg'
 import markdownItParseDirectives from './markdown/directives/parse'
+import markdownItParseImage from './markdown/parse_image'
 import markdownItSlide from './markdown/slide'
 import markdownItSlideContainer from './markdown/slide_container'
 
@@ -83,8 +83,9 @@ class Marpit {
       .use(markdownItApplyDirectives)
       .use(markdownItSlideContainer, this.slideContainers)
       .use(markdownItContainer, this.containers)
+      .use(markdownItParseImage)
 
-    if (this.options.backgroundSyntax) md.use(markdownItBackgroundImage)
+    // if (this.options.backgroundSyntax) md.use(markdownItBgParse)
     if (this.options.inlineSVG) md.use(markdownItInlineSVG, this)
   }
 
