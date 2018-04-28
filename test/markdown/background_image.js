@@ -1,8 +1,8 @@
 import assert from 'assert'
 import cheerio from 'cheerio'
-import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import comment from '../../src/markdown/comment'
+import parseImage from '../../src/markdown/parse_image'
 import backgroundImage from '../../src/markdown/background_image'
 import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
@@ -15,6 +15,7 @@ describe('Marpit background image plugin', () => {
       .use(comment)
       .use(slide)
       .use(parseDirectives, marpitStub)
+      .use(parseImage)
       .use(backgroundImage)
 
   const bgDirective = (url, mdInstance) => {
@@ -46,25 +47,6 @@ describe('Marpit background image plugin', () => {
     assert($('img').length === 1)
     assert($('img').attr('alt') === 'notbg')
     assert($('img').attr('src') === 'notBgImage')
-  })
-
-  it('strips empty paragraph made by background image syntax', () => {
-    const $ = cheerio.load(
-      md().render(dedent`
-        ![bg](stripA)
-
-        ![bg](stripB) ![bg](stripC)
-
-        ![bg](stripD)
-        ![bg](stripE)
-
-        ![notBg](keep)
-
-        ![bg](keep) with contents
-      `)
-    )
-
-    assert($('p').length === 2)
   })
 
   context('when empty string is specified', () => {

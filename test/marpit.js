@@ -12,6 +12,7 @@ describe('Marpit', () => {
     it('has default options', () => {
       assert(instance.options.container.tag === 'div')
       assert(instance.options.container.class === 'marpit')
+      assert(instance.options.backgroundSyntax === true)
       assert(instance.options.markdown === 'commonmark')
       assert(instance.options.printable === true)
       assert(instance.options.slideContainer === undefined)
@@ -115,6 +116,27 @@ describe('Marpit', () => {
             assert(countDecl(ret.root, 'position') === 0)
             assert(countDecl(ret.root, 'transform') === 0)
           })
+      })
+    })
+
+    context('with backgroundSyntax option in instance', () => {
+      const instance = backgroundSyntax => new Marpit({ backgroundSyntax })
+
+      it('renders img tag when backgroundSyntax is false', () => {
+        const $ = cheerio.load(instance(false).render('![bg](test)').html)
+        assert($('img').length === 1)
+      })
+
+      it('has background-image style on section tag when backgroundSyntax is true', () => {
+        const $ = cheerio.load(instance(true).render('![bg](test)').html)
+
+        return postcss()
+          .process($('section').attr('style'), { from: undefined })
+          .then(ret =>
+            ret.root.walkDecls('background-image', decl => {
+              assert(decl.value === 'url("test")')
+            })
+          )
       })
     })
   })
