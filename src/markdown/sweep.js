@@ -19,7 +19,7 @@ function sweep(md) {
         (token.type === 'html_block' && token.content.match(/^\s*$/)) ||
         (token.type === 'inline' &&
           token.children
-            .filter(t => !t.hidden)
+            .filter(t => !(t.hidden || t.type === 'softbreak'))
             .every(t => t.type === 'text' && t.content.match(/^\s*$/)))
       )
         token.hidden = true

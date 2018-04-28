@@ -7,7 +7,7 @@
  * image url and options. The alternative text is regarded as space-separated
  * options.
  *
- * @alias module:markdown/bg/parse
+ * @alias module:markdown/parse_image
  * @param {MarkdownIt} md markdown-it instance.
  */
 function parseImage(md) {
