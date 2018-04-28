@@ -11,14 +11,16 @@
  * @param {MarkdownIt} md markdown-it instance.
  */
 function sweep(md) {
-  md.core.ruler.after('inline', 'marpit_sweep_inline', ({ tokens, env }) => {
+  md.core.ruler.after('inline', 'marpit_sweep', ({ tokens, env }) => {
     tokens.forEach(token => {
       if (
-        token.type === 'inline' &&
-        md.renderer.renderInline(token.children, md.options, env).match(/^\s*$/)
-      ) {
+        (token.type === 'html_block' && token.content.match(/^\s*$/)) ||
+        (token.type === 'inline' &&
+          token.children
+            .filter(t => !t.hidden)
+            .every(t => t.type === 'text' && t.content.match(/^\s*$/)))
+      )
         token.hidden = true
-      }
     })
   })
 

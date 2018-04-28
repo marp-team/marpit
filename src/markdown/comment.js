@@ -14,7 +14,7 @@ function comment(md) {
   md.core.ruler.after('block', 'marpit_comment', state => {
     if (state.inlineMode) return
 
-    state.tokens.forEach((token, idx) => {
+    state.tokens.forEach(token => {
       token.meta = token.meta || {}
       token.meta.marpitComment = []
 
@@ -26,23 +26,6 @@ function comment(md) {
             return ''
           }
         )
-
-        // Mark empty paragraph as hidden
-        if (token.content === '') {
-          const prevToken = state.tokens[idx - 1]
-          const nextToken = state.tokens[idx + 1]
-
-          if (
-            prevToken &&
-            nextToken &&
-            prevToken.type === 'paragraph_open' &&
-            nextToken.type === 'paragraph_close'
-          ) {
-            token.hidden = true
-            prevToken.hidden = true
-            nextToken.hidden = true
-          }
-        }
       }
     })
   })
