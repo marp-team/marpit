@@ -11,8 +11,10 @@
  * @param {MarkdownIt} md markdown-it instance.
  */
 function sweep(md) {
-  md.core.ruler.after('inline', 'marpit_sweep', ({ tokens }) => {
-    tokens.forEach(token => {
+  md.core.ruler.after('inline', 'marpit_sweep', state => {
+    if (state.inlineMode) return
+
+    state.tokens.forEach(token => {
       if (
         (token.type === 'html_block' && token.content.match(/^\s*$/)) ||
         (token.type === 'inline' &&
