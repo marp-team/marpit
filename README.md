@@ -47,7 +47,7 @@ Marpit will become a core of _the next version of **[Marp](https://github.com/yh
 ### ToDo
 
 * [x] Background image (must use _only_ `background-image` style on `<section>`)
-  * [ ] Parse `![bg]` syntax
+  * [x] Parse `![bg]` syntax
   * [ ] Auto layouting like Deckset
 * [ ] Header and footer directive
 * [ ] Slide page number
