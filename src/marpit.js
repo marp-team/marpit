@@ -2,14 +2,16 @@ import MarkdownIt from 'markdown-it'
 import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
-import markdownItApplyDirectives from './markdown/directives/apply'
-import markdownItComment from './markdown/comment'
-import markdownItContainer from './markdown/container'
-import markdownItInlineSVG from './markdown/inline_svg'
-import markdownItParseDirectives from './markdown/directives/parse'
-import markdownItParseImage from './markdown/parse_image'
-import markdownItSlide from './markdown/slide'
-import markdownItSlideContainer from './markdown/slide_container'
+import marpItApplyDirectives from './markdown/directives/apply'
+import marpItBackgroundImage from './markdown/background_image'
+import marpItComment from './markdown/comment'
+import marpItContainer from './markdown/container'
+import marpItInlineSVG from './markdown/inline_svg'
+import marpItParseDirectives from './markdown/directives/parse'
+import marpItParseImage from './markdown/parse_image'
+import marpItSlide from './markdown/slide'
+import marpItSlideContainer from './markdown/slide_container'
+import marpItSweep from './markdown/sweep'
 
 const defaultOptions = {
   backgroundSyntax: true,
@@ -77,16 +79,17 @@ class Marpit {
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
     md
-      .use(markdownItComment)
-      .use(markdownItSlide)
-      .use(markdownItParseDirectives, this)
-      .use(markdownItApplyDirectives)
-      .use(markdownItSlideContainer, this.slideContainers)
-      .use(markdownItContainer, this.containers)
-      .use(markdownItParseImage)
+      .use(marpItComment)
+      .use(marpItSlide)
+      .use(marpItParseDirectives, this)
+      .use(marpItApplyDirectives)
+      .use(marpItSlideContainer, this.slideContainers)
+      .use(marpItContainer, this.containers)
+      .use(marpItParseImage)
+      .use(marpItSweep)
 
-    // if (this.options.backgroundSyntax) md.use(markdownItBgParse)
-    if (this.options.inlineSVG) md.use(markdownItInlineSVG, this)
+    if (this.options.backgroundSyntax) md.use(marpItBackgroundImage)
+    if (this.options.inlineSVG) md.use(marpItInlineSVG, this)
   }
 
   /**
