@@ -62,8 +62,6 @@ describe('Marpit comment plugin', () => {
         assert($('h2').text() === 'bar')
         assert($('h3').length === 1)
         assert($('h3').text() === '')
-        assert($('p').length === 1)
-        assert($('p').text() === 'commentTest')
       })
     })
   })
