@@ -41,7 +41,8 @@
     "prepack": "npm-run-all --npm-path yarn --parallel format:check lint:all test:coverage --sequential build",
     "preversion": "npm-run-all --npm-path yarn --parallel format:check lint:all test:coverage",
     "test": "cross-env NODE_ENV=test mocha",
-    "test:coverage": "cross-env NODE_ENV=test nyc mocha"
+    "test:coverage": "cross-env NODE_ENV=test nyc mocha",
+    "version": "bash version.sh"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
