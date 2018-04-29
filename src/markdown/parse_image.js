@@ -22,6 +22,12 @@ function parseImage(md) {
           url: token.attrGet('src'),
           options,
         }
+
+        options.forEach(opt => {
+          // TODO: Implement cross-browser image zoom without affecting DOM tree
+          // (Pre-released Marp uses `zoom` but it has not supported in Firefox)
+          if (opt.match(/^(\d*\.)?\d+%$/)) token.meta.marpitImage.size = opt
+        })
       }
     })
   })
