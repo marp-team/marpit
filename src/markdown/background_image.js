@@ -134,7 +134,7 @@ function backgroundImage(md) {
           open.attrSet('data-marpit-advanced-background', 'content')
 
           advancedBgs = wrapTokens(
-            'marpit_advanced_background_content',
+            'marpit_advanced_background_foreign_boejct',
             { tag: 'foreignObject', width, height },
             wrapTokens(
               'marpit_advanced_background_section',
@@ -148,7 +148,7 @@ function backgroundImage(md) {
                 (imgArr, img) => [
                   ...imgArr,
                   ...wrapTokens('marpit_advanced_background_image', {
-                    tag: 'div',
+                    tag: 'figure',
                     style: `background-image:url(${img.url});${
                       img.size ? `background-size:${img.size};` : ''
                     }`,

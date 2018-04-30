@@ -26,13 +26,15 @@ section[data-marpit-advanced-background="background"] {
   padding: 0 !important;
 }
 
-section[data-marpit-advanced-background="background"] > * {
-  flex: auto !important;
-  min-height: 0 !important;
-  min-width: 0 !important;
+section[data-marpit-advanced-background="background"] > figure {
   background-position: center;
   background-repeat: no-repeat !important;
   background-size: cover;
+  flex: auto !important;
+  margin: 0 !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  padding: 0 !important;
 }
 
 section[data-marpit-advanced-background="content"] {
@@ -46,6 +48,7 @@ section[data-marpit-advanced-background="content"] {
  * - Define the default slide size.
  * - Set default style for `<section>`.
  * - Normalize `<h1>` heading style.
+ * - Support advanced background on inline SVG mode.
  *
  * @alias module:theme/scaffold
  * @type {Theme}
