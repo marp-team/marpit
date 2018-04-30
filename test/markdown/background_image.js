@@ -81,8 +81,9 @@ describe('Marpit background image plugin', () => {
 
       // The percentage scale is prior to the background keyword.
       assert(directives('![bg 100% contain](img)').backgroundSize === '100%')
+    })
 
-      // Ignore invalid scale
+    it('ignores invalid scale', () => {
       assert(directives('![bg %](img)').backgroundSize !== '%')
       assert(directives('![bg .%](img)').backgroundSize !== '.%')
       assert(directives('![bg 25](img)').backgroundSize !== '25')
