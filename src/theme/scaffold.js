@@ -12,14 +12,31 @@ section {
   scroll-snap-align: center center;
 }
 
-section[data-marpit-advanced-background] {
-  background: transparent !important;
-}
-
 /* Normalization */
 h1 {
   font-size: 2em;
   margin: 0.67em 0;
+}
+
+/* Advanced background support */
+section[data-marpit-advanced-background="background"] {
+  display: flex !important;
+  flex-direction: row !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+section[data-marpit-advanced-background="background"] > * {
+  flex: auto !important;
+  min-height: 0 !important;
+  min-width: 0 !important;
+  background-position: center;
+  background-repeat: no-repeat !important;
+  background-size: cover;
+}
+
+section[data-marpit-advanced-background="content"] {
+  background: transparent !important;
 }
 `.trim()
 
