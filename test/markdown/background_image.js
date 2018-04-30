@@ -9,17 +9,18 @@ import parseImage from '../../src/markdown/parse_image'
 import slide from '../../src/markdown/slide'
 
 describe('Marpit background image plugin', () => {
-  const marpitStub = {
-    themeSet: new Map(),
-    options: { inlineSVG: false },
-  }
+  const marpitStub = svg => ({
+    lastGlobalDirectives: {},
+    themeSet: { getThemeProp: () => 100 },
+    options: { inlineSVG: svg },
+  })
 
-  const md = () =>
+  const md = (svg = false) =>
     new MarkdownIt()
       .use(comment)
       .use(slide)
-      .use(parseDirectives, marpitStub)
-      .use(inlineSVG, marpitStub)
+      .use(parseDirectives, marpitStub(svg))
+      .use(inlineSVG, marpitStub(svg))
       .use(parseImage)
       .use(backgroundImage)
 

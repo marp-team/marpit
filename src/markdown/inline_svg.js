@@ -40,7 +40,7 @@ function inlineSVG(md, marpit) {
             close: { meta: { marpitSlideElement: -1 } },
           },
           wrapTokens(
-            'marpit_inline_svg',
+            'marpit_inline_svg_content',
             { tag: 'foreignObject', width: w, height: h },
             tokens
           )

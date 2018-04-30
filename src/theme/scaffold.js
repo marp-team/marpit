@@ -12,6 +12,10 @@ section {
   scroll-snap-align: center center;
 }
 
+section[data-marpit-advanced-background] {
+  background: transparent !important;
+}
+
 /* Normalization */
 h1 {
   font-size: 2em;
