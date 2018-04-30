@@ -87,9 +87,9 @@ class Marpit {
       .use(marpItContainer, this.containers)
       .use(marpItParseImage)
       .use(marpItSweep)
+      .use(marpItInlineSVG, this)
 
     if (this.options.backgroundSyntax) md.use(marpItBackgroundImage)
-    if (this.options.inlineSVG) md.use(marpItInlineSVG, this)
   }
 
   /**
