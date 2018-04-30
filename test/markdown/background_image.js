@@ -60,4 +60,33 @@ describe('Marpit background image plugin', () => {
       assert(firstSlide.meta.marpitDirectives.backgroundImage === 'url(A)')
     })
   })
+
+  context('with sizing keyword / scale', () => {
+    const directives = markdown => {
+      const [parsed] = md().parse(markdown)
+      return parsed.meta.marpitDirectives
+    }
+
+    it('assigns corresponded backgroundSize spot directive', () => {
+      assert(directives('![bg auto](img)').backgroundSize === 'auto')
+      assert(directives('![bg contain](img)').backgroundSize === 'contain')
+      assert(directives('![bg cover](img)').backgroundSize === 'cover')
+      assert(directives('![bg fit](img)').backgroundSize === 'contain')
+    })
+
+    it('assigns specified scale to backgroundSize spot directive', () => {
+      assert(directives('![bg 50%](img)').backgroundSize === '50%')
+      assert(directives('![bg 123.45%](img)').backgroundSize === '123.45%')
+      assert(directives('![bg .25%](img)').backgroundSize === '.25%')
+
+      // The percentage scale is prior to the background keyword.
+      assert(directives('![bg 100% contain](img)').backgroundSize === '100%')
+    })
+
+    it('ignores invalid scale', () => {
+      assert(directives('![bg %](img)').backgroundSize !== '%')
+      assert(directives('![bg .%](img)').backgroundSize !== '.%')
+      assert(directives('![bg 25](img)').backgroundSize !== '25')
+    })
+  })
 })

@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+* Implement background image sizing with keyword and scale ([#10](https://github.com/marp-team/marpit/pull/10))
+
 ## v0.0.2 - 2018-04-28
 
 * Support background image syntax ([#4](https://github.com/marp-team/marpit/pull/4), [#5](https://github.com/marp-team/marpit/pull/5), and [#8](https://github.com/marp-team/marpit/pull/8))

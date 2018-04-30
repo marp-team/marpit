@@ -1,4 +1,10 @@
 /** @module */
+const bgSizeKeywords = {
+  auto: 'auto',
+  contain: 'contain',
+  cover: 'cover',
+  fit: 'contain',
+}
 
 /**
  * Marpit background image plugin.
@@ -20,6 +26,11 @@ function backgroundImage(md) {
         if (t.meta.marpitImage.options.includes('bg')) {
           t.meta.marpitImage.background = true
           t.hidden = true
+
+          t.meta.marpitImage.options.forEach(opt => {
+            if (bgSizeKeywords[opt])
+              t.meta.marpitImage.backgroundSize = bgSizeKeywords[opt]
+          })
         }
       })
     }
@@ -39,13 +50,17 @@ function backgroundImage(md) {
         tb.children.forEach(t => {
           if (t.type !== 'image') return
 
-          const { background, url } = t.meta.marpitImage
+          const { background, backgroundSize, size, url } = t.meta.marpitImage
 
           if (background && !url.match(/^\s*$/)) {
             slide.meta.marpitDirectives = {
               ...(slide.meta.marpitDirectives || {}),
               backgroundImage: `url("${url}")`,
             }
+
+            if (size || backgroundSize)
+              slide.meta.marpitDirectives.backgroundSize =
+                size || backgroundSize
           }
         })
       })
