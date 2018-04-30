@@ -27,14 +27,11 @@ section[data-marpit-advanced-background="background"] {
 }
 
 section[data-marpit-advanced-background="background"] > figure {
+  all: initial;
   background-position: center;
-  background-repeat: no-repeat !important;
+  background-repeat: no-repeat;
   background-size: cover;
-  flex: auto !important;
-  margin: 0 !important;
-  min-height: 0 !important;
-  min-width: 0 !important;
-  padding: 0 !important;
+  flex: auto;
 }
 
 section[data-marpit-advanced-background="content"] {
