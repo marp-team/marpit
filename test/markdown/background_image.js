@@ -1,20 +1,25 @@
 import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import comment from '../../src/markdown/comment'
-import parseImage from '../../src/markdown/parse_image'
 import backgroundImage from '../../src/markdown/background_image'
+import comment from '../../src/markdown/comment'
+import inlineSVG from '../../src/markdown/inline_svg'
 import parseDirectives from '../../src/markdown/directives/parse'
+import parseImage from '../../src/markdown/parse_image'
 import slide from '../../src/markdown/slide'
 
 describe('Marpit background image plugin', () => {
-  const marpitStub = { themeSet: new Map() }
+  const marpitStub = {
+    themeSet: new Map(),
+    options: { inlineSVG: false },
+  }
 
   const md = () =>
     new MarkdownIt()
       .use(comment)
       .use(slide)
       .use(parseDirectives, marpitStub)
+      .use(inlineSVG, marpitStub)
       .use(parseImage)
       .use(backgroundImage)
 

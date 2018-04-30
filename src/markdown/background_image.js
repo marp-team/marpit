@@ -37,7 +37,7 @@ function backgroundImage(md) {
   )
 
   md.core.ruler.after(
-    'marpit_directives_parse',
+    'marpit_inline_svg',
     'marpit_apply_background_image',
     ({ inlineMode, tokens }) => {
       if (inlineMode) return
