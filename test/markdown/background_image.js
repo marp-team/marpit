@@ -69,7 +69,7 @@ describe('Marpit background image plugin', () => {
     })
   })
 
-  context('with sizing keyword / scale', () => {
+  context('with resizing keyword / scale', () => {
     const directives = markdown => {
       const [parsed] = md().parse(markdown)
       return parsed.meta.marpitDirectives
@@ -154,7 +154,7 @@ describe('Marpit background image plugin', () => {
       assert(figures.eq(1).attr('style') === 'background-image:url("B");')
     })
 
-    it('assigns background-size style with sizing keyword / scale', () => {
+    it('assigns background-size style with resizing keyword / scale', () => {
       const $ = $load(mdSVG.render('![bg fit](A) ![bg 50%](B)'))
       const styleA = $('figure:first-child').attr('style')
       const styleB = $('figure:last-child').attr('style')

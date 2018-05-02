@@ -16,7 +16,7 @@ const bgSizeKeywords = {
  *
  * When Marpit `inlineSVG` option is `false`, the image will convert to
  * `backgroundImage` and `backgroundSize` spot directive. It supports only
- * single background and sizing by using CSS.
+ * single background and resizing by using CSS.
  *
  * When `inlineSVG` option is true, the plugin enables advanced background mode.
  * In addition to the basic background implementation, it supports multiple
