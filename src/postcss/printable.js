@@ -27,6 +27,9 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
 
   section {
     page-break-before: always;
+  }
+
+  section, section[data-marpit-advanced-background="background"] > figure {
     -webkit-print-color-adjust: exact;
     color-adjust: exact;
   }
