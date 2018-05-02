@@ -2,12 +2,14 @@ import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
-import comment from '../../src/markdown/comment'
-import sweep from '../../src/markdown/sweep'
-import parseImage from '../../src/markdown/parse_image'
+import applyDirectives from '../../src/markdown/directives/apply'
 import backgroundImage from '../../src/markdown/background_image'
+import comment from '../../src/markdown/comment'
+import inlineSVG from '../../src/markdown/inline_svg'
 import parseDirectives from '../../src/markdown/directives/parse'
+import parseImage from '../../src/markdown/parse_image'
 import slide from '../../src/markdown/slide'
+import sweep from '../../src/markdown/sweep'
 
 describe('Marpit sweep plugin', () => {
   const md = (opts = {}) => new MarkdownIt('commonmark', opts).use(sweep)
@@ -16,10 +18,16 @@ describe('Marpit sweep plugin', () => {
     assert(md().renderInline(' ') === ' '))
 
   it('sweeps blank paragraph made by background image plugin', () => {
-    const marpitStub = { themeSet: new Map() }
+    const marpitStub = {
+      themeSet: new Map(),
+      options: { inlineSVG: false },
+    }
+
     const markdown = md()
       .use(slide)
       .use(parseDirectives, marpitStub)
+      .use(applyDirectives)
+      .use(inlineSVG, marpitStub)
       .use(parseImage)
       .use(backgroundImage)
 

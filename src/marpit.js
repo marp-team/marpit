@@ -31,7 +31,9 @@ class Marpit {
    *
    * @param {Object} [opts]
    * @param {boolean} [opts.backgroundSyntax=true] Support markdown image syntax
-   *     with description including `bg`.
+   *     with the alternate text including `bg`. Normally it converts into spot
+   *     directives about background image. If `inlineSVG` is enabled, it
+   *     supports multiple image layouting.
    * @param {Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
@@ -87,9 +89,9 @@ class Marpit {
       .use(marpItContainer, this.containers)
       .use(marpItParseImage)
       .use(marpItSweep)
+      .use(marpItInlineSVG, this)
 
     if (this.options.backgroundSyntax) md.use(marpItBackgroundImage)
-    if (this.options.inlineSVG) md.use(marpItInlineSVG, this)
   }
 
   /**

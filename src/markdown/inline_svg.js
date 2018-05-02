@@ -11,7 +11,7 @@ import wrapTokens from '../helpers/wrap_tokens'
  */
 function inlineSVG(md, marpit) {
   md.core.ruler.after('marpit_directives_parse', 'marpit_inline_svg', state => {
-    if (state.inlineMode) return
+    if (!marpit.options.inlineSVG || state.inlineMode) return
 
     const { themeSet, lastGlobalDirectives } = marpit
     const w = themeSet.getThemeProp(lastGlobalDirectives.theme, 'widthPixel')
@@ -40,7 +40,7 @@ function inlineSVG(md, marpit) {
             close: { meta: { marpitSlideElement: -1 } },
           },
           wrapTokens(
-            'marpit_inline_svg',
+            'marpit_inline_svg_content',
             { tag: 'foreignObject', width: w, height: h },
             tokens
           )
