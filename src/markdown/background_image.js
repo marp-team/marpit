@@ -149,7 +149,7 @@ function backgroundImage(md) {
                   ...imgArr,
                   ...wrapTokens('marpit_advanced_background_image', {
                     tag: 'figure',
-                    style: `background-image:url(${img.url});${
+                    style: `background-image:url("${img.url}");${
                       img.size ? `background-size:${img.size};` : ''
                     }`,
                   }),

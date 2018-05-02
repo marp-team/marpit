@@ -3,8 +3,9 @@ import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
+import directivesParse from '../../src/markdown/directives/parse'
+import directivesApply from '../../src/markdown/directives/apply'
 import inlineSVG from '../../src/markdown/inline_svg'
-import parseDirectives from '../../src/markdown/directives/parse'
 import parseImage from '../../src/markdown/parse_image'
 import slide from '../../src/markdown/slide'
 
@@ -19,7 +20,8 @@ describe('Marpit background image plugin', () => {
     new MarkdownIt()
       .use(comment)
       .use(slide)
-      .use(parseDirectives, marpitStub(svg))
+      .use(directivesParse, marpitStub(svg))
+      .use(directivesApply)
       .use(inlineSVG, marpitStub(svg))
       .use(parseImage)
       .use(backgroundImage)
@@ -60,7 +62,7 @@ describe('Marpit background image plugin', () => {
       assert(bgDirective('', md()) === undefined))
 
     it('fallbacks to an already assigned directive', () => {
-      const mdText = `<!-- backgroundImage: url(A) --> ![bg]()`
+      const mdText = '<!-- backgroundImage: url(A) --> ![bg]()'
       const [firstSlide] = md().parse(mdText)
 
       assert(firstSlide.meta.marpitDirectives.backgroundImage === 'url(A)')
@@ -93,6 +95,74 @@ describe('Marpit background image plugin', () => {
       assert(directives('![bg %](img)').backgroundSize !== '%')
       assert(directives('![bg .%](img)').backgroundSize !== '.%')
       assert(directives('![bg 25](img)').backgroundSize !== '25')
+    })
+  })
+
+  context('with inline SVG (Advanced background mode)', () => {
+    const mdSVG = md(true)
+    const $load = html =>
+      cheerio.load(html, {
+        lowerCaseAttributeNames: false,
+        lowerCaseTags: false,
+      })
+
+    it('renders the structure for advanced background to another foreignObject', () => {
+      const $ = $load(mdSVG.render('![bg](image)'))
+      assert($('svg[viewBox="0 0 100 100"] > foreignObject').length === 2)
+
+      const bg = $('svg > foreignObject:first-child')
+      const bgSection = bg.find(
+        'section[data-marpit-advanced-background="background"]'
+      )
+      assert(bgSection.length === 1)
+
+      const figure = bgSection.find('figure')
+      assert(figure.length === 1)
+      assert(figure.attr('style') === 'background-image:url("image");')
+    })
+
+    it('escapes doublequote to disallow XSS', () => {
+      const $ = $load(mdSVG.render('![bg](img"\\);color:#f00;--xss:url\\(")'))
+      const style = $('figure').attr('style')
+
+      assert(style !== 'background-image:("img");color:#f00;--xss:url("");')
+    })
+
+    it('assigns data attribute to section element of the slide content', () => {
+      const $ = $load(mdSVG.render('![bg](image)\n\n# test'))
+      const slideSection = $('svg > foreignObject:last-child > section')
+
+      assert(slideSection.find('h1').length === 1)
+      assert(slideSection.attr('data-marpit-advanced-background') === 'content')
+    })
+
+    it("inherits slide section's style assigned by directive", () => {
+      const $ = $load(mdSVG.render('<!-- backgroundImage: url(A) --> ![bg](B)'))
+      const bgSection = $(
+        'section[data-marpit-advanced-background="background"]'
+      )
+
+      assert(bgSection.attr('style').includes('background-image:url(A);'))
+    })
+
+    it('renders multiple images', () => {
+      const $ = $load(mdSVG.render('![bg](A) ![bg](B)'))
+      const figures = $('figure')
+
+      assert(figures.length === 2)
+      assert(figures.eq(0).attr('style') === 'background-image:url("A");')
+      assert(figures.eq(1).attr('style') === 'background-image:url("B");')
+    })
+
+    it('assigns background-size style with sizing keyword / scale', () => {
+      const $ = $load(mdSVG.render('![bg fit](A) ![bg 50%](B)'))
+      const styleA = $('figure:first-child').attr('style')
+      const styleB = $('figure:last-child').attr('style')
+
+      assert(styleA.includes('background-image:url("A");'))
+      assert(styleA.includes('background-size:contain;'))
+      assert(styleB.includes('background-image:url("B");'))
+      assert(styleB.includes('background-size:50%;'))
     })
   })
 })
