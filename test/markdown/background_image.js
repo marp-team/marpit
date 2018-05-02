@@ -1,11 +1,11 @@
 import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
+import applyDirectives from '../../src/markdown/directives/apply'
 import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
-import directivesParse from '../../src/markdown/directives/parse'
-import directivesApply from '../../src/markdown/directives/apply'
 import inlineSVG from '../../src/markdown/inline_svg'
+import parseDirectives from '../../src/markdown/directives/parse'
 import parseImage from '../../src/markdown/parse_image'
 import slide from '../../src/markdown/slide'
 
@@ -20,8 +20,8 @@ describe('Marpit background image plugin', () => {
     new MarkdownIt()
       .use(comment)
       .use(slide)
-      .use(directivesParse, marpitStub(svg))
-      .use(directivesApply)
+      .use(parseDirectives, marpitStub(svg))
+      .use(applyDirectives)
       .use(inlineSVG, marpitStub(svg))
       .use(parseImage)
       .use(backgroundImage)

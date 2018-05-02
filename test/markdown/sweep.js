@@ -2,6 +2,7 @@ import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
+import applyDirectives from '../../src/markdown/directives/apply'
 import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
 import inlineSVG from '../../src/markdown/inline_svg'
@@ -25,6 +26,7 @@ describe('Marpit sweep plugin', () => {
     const markdown = md()
       .use(slide)
       .use(parseDirectives, marpitStub)
+      .use(applyDirectives)
       .use(inlineSVG, marpitStub)
       .use(parseImage)
       .use(backgroundImage)
