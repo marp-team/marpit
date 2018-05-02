@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 * Implement background image sizing with keyword and scale ([#10](https://github.com/marp-team/marpit/pull/10))
+* Support advanced background mode with inline SVG, for multiple images and filters ([#11](https://github.com/marp-team/marpit/pull/11))
 * Upgrade node to the latest LTS version v8.11.1 ([#12](https://github.com/marp-team/marpit/pull/12))
 
 ## v0.0.2 - 2018-04-28

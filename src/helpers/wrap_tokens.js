@@ -11,10 +11,10 @@ import Token from 'markdown-it/lib/token'
  * @param {String} container.tag The name of container element.
  * @param {Object} [container.open] The object assigning to an opening token.
  * @param {Object} [container.close] The object assigning to a closing token.
- * @param {Token[]} tokens Wrapping tokens.
+ * @param {Token[]} [tokens=[]] Wrapping tokens.
  * @returns {Token[]} Wrapped tokens.
  */
-function wrapTokens(type, container, tokens) {
+function wrapTokens(type, container, tokens = []) {
   const { tag } = container
 
   // Update nesting level of wrapping tokens
