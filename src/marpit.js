@@ -16,6 +16,7 @@ import marpItSweep from './markdown/sweep'
 const defaultOptions = {
   backgroundSyntax: true,
   container: marpitContainer,
+  filters: true,
   markdown: 'commonmark',
   printable: true,
   slideContainer: undefined,
@@ -33,10 +34,12 @@ class Marpit {
    * @param {boolean} [opts.backgroundSyntax=true] Support markdown image syntax
    *     with the alternate text including `bg`. Normally it converts into spot
    *     directives about background image. If `inlineSVG` is enabled, it
-   *     supports multiple image layouting.
+   *     supports the advanced backgrounds.
    * @param {Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
+   * @param {boolean} [opts.filters=true] Support filter syntax for markdown
+   *     image. It can apply to inline image and the advanced backgrounds.
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
@@ -87,7 +90,7 @@ class Marpit {
       .use(marpItApplyDirectives)
       .use(marpItSlideContainer, this.slideContainers)
       .use(marpItContainer, this.containers)
-      .use(marpItParseImage)
+      .use(marpItParseImage, { filters: this.options.filters })
       .use(marpItSweep)
       .use(marpItInlineSVG, this)
 
