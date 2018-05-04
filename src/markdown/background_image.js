@@ -20,7 +20,7 @@ const bgSizeKeywords = {
  *
  * When `inlineSVG` option is true, the plugin enables advanced background mode.
  * In addition to the basic background implementation, it supports multiple
- * background images, filters, and splitted background.
+ * background images, filters, and split background.
  *
  * @alias module:markdown/background_image
  * @param {MarkdownIt} md markdown-it instance.
