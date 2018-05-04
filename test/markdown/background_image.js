@@ -168,7 +168,7 @@ describe('Marpit background image plugin', () => {
     })
 
     context('when filters option of parse image plugin is enabled', () => {
-      it.only('assigns filter style with the function of filter', () => {
+      it('assigns filter style with the function of filter', () => {
         const filters = {
           // with default attributes
           blur: 'filter:blur(10px);',
