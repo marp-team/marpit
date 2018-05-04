@@ -197,6 +197,9 @@ describe('Marpit background image plugin', () => {
           'opacity:30%': 'filter:opacity(30%);',
           'saturate:123%': 'filter:saturate(123%);',
           'sepia:.5': 'filter:sepia(.5);',
+
+          // with multiple filters
+          'brightness:.75 blur': 'filter:brightness(.75) blur(10px);',
         }
 
         Object.keys(filters).forEach(filter => {
@@ -209,6 +212,17 @@ describe('Marpit background image plugin', () => {
           assert(inlineImageStyle.includes(filters[filter]))
           assert(bgImageStyle.includes(filters[filter]))
         })
+      })
+
+      it('sanitizes arguments', () => {
+        const xssImageMd = '![brightness:1);color:red;--xss:(](a)'
+        const $ = $load(mdSVG(true).render(xssImageMd))
+
+        assert(
+          !$('img')
+            .attr('style')
+            .includes('filter:brightness(1);color:red;--xss:();')
+        )
       })
     })
   })
