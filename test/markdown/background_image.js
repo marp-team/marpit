@@ -189,8 +189,8 @@ describe('Marpit background image plugin', () => {
           'drop-shadow:1em,1em': 'filter:drop-shadow(1em 1em);',
           'drop-shadow:0,0,10px': 'filter:drop-shadow(0 0 10px);',
           'drop-shadow:0,1px,2px,#f00': 'filter:drop-shadow(0 1px 2px #f00);',
-          'drop-shadow:0,0,20px,rgba(64,64,64,.25)':
-            'filter:drop-shadow(0 0 20px rgba(64,64,64,.25));',
+          'drop-shadow:0,0,20px,hsla(0,100%,50%,.5)':
+            'filter:drop-shadow(0 0 20px hsla(0,100%,50%,.5));',
           'grayscale:50%': 'filter:grayscale(50%);',
           'hue-rotate:90deg': 'filter:hue-rotate(90deg);',
           'invert:0.25': 'filter:invert(0.25);',
@@ -215,14 +215,19 @@ describe('Marpit background image plugin', () => {
       })
 
       it('sanitizes arguments', () => {
-        const xssImageMd = '![brightness:1);color:red;--xss:(](a)'
-        const $ = $load(mdSVG(true).render(xssImageMd))
+        const xsses = {
+          'brightness:1);color:red;--xss:(':
+            'filter:brightness(1);color:red;--xss:();',
+          'drop-shadow:0,0,0,rgba());color:red;--xss:(':
+            'filter:drop-shadow(0,0,0,rgba());color:red;--xss:();',
+        }
 
-        assert(
-          !$('img')
-            .attr('style')
-            .includes('filter:brightness(1);color:red;--xss:();')
-        )
+        Object.keys(xsses).forEach(filter => {
+          const $ = $load(mdSVG(true).render(`![${filter}](a)`))
+          const style = $('img').attr('style')
+
+          assert(!style.includes(xsses[filter]))
+        })
       })
     })
   })

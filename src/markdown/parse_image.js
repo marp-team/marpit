@@ -1,4 +1,6 @@
 /** @module */
+const escapeStyle = target =>
+  target.replace(/[\\;:()]/g, matched => `\\${matched[0]}`)
 
 /**
  * Marpit parse image plugin.
@@ -24,46 +26,59 @@ function parseImage(md, opts = {}) {
   if (pluginOptions.filters) {
     // CSS filters
     optionMatchers.set(/^blur(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['blur', matches[1] || '10px']],
+      filters: [...meta.filters, ['blur', escapeStyle(matches[1] || '10px')]],
     }))
     optionMatchers.set(/^brightness(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['brightness', matches[1] || '1.5']],
+      filters: [
+        ...meta.filters,
+        ['brightness', escapeStyle(matches[1] || '1.5')],
+      ],
     }))
     optionMatchers.set(/^contrast(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['contrast', matches[1] || '2']],
+      filters: [...meta.filters, ['contrast', escapeStyle(matches[1] || '2')]],
     }))
     optionMatchers.set(
       /^drop-shadow(?::(.+?),(.+?)(?:,(.+?))?(?:,(.+?))?)?$/,
-      (matches, meta) => ({
-        filters: [
-          ...meta.filters,
-          [
-            'drop-shadow',
-            matches
-              .slice(1)
-              .filter(v => v)
-              .join(' ') || '0 5px 10px rgba(0,0,0,.4)',
+      (matches, meta) => {
+        const args = matches
+          .slice(1)
+          .filter(v => v)
+          .map(arg => {
+            const colorFunc = arg.match(/^(rgba?|hsla?)\((.*)\)$/)
+
+            return colorFunc
+              ? `${colorFunc[1]}(${escapeStyle(colorFunc[2])})`
+              : escapeStyle(arg)
+          })
+
+        return {
+          filters: [
+            ...meta.filters,
+            ['drop-shadow', args.join(' ') || '0 5px 10px rgba(0,0,0,.4)'],
           ],
-        ],
-      })
+        }
+      }
     )
     optionMatchers.set(/^grayscale(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['grayscale', matches[1] || '1']],
+      filters: [...meta.filters, ['grayscale', escapeStyle(matches[1] || '1')]],
     }))
     optionMatchers.set(/^hue-rotate(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['hue-rotate', matches[1] || '180deg']],
+      filters: [
+        ...meta.filters,
+        ['hue-rotate', escapeStyle(matches[1] || '180deg')],
+      ],
     }))
     optionMatchers.set(/^invert(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['invert', matches[1] || '1']],
+      filters: [...meta.filters, ['invert', escapeStyle(matches[1] || '1')]],
     }))
     optionMatchers.set(/^opacity(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['opacity', matches[1] || '.5']],
+      filters: [...meta.filters, ['opacity', escapeStyle(matches[1] || '.5')]],
     }))
     optionMatchers.set(/^saturate(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['saturate', matches[1] || '2']],
+      filters: [...meta.filters, ['saturate', escapeStyle(matches[1] || '2')]],
     }))
     optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['sepia', matches[1] || '1']],
+      filters: [...meta.filters, ['sepia', escapeStyle(matches[1] || '1')]],
     }))
   }
 
