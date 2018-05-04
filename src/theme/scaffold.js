@@ -17,26 +17,6 @@ h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
-
-/* Advanced background support */
-section[data-marpit-advanced-background="background"] {
-  display: flex !important;
-  flex-direction: row !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
-section[data-marpit-advanced-background="background"] > figure {
-  all: initial;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  flex: auto;
-}
-
-section[data-marpit-advanced-background="content"] {
-  background: transparent !important;
-}
 `.trim()
 
 /**
@@ -45,7 +25,6 @@ section[data-marpit-advanced-background="content"] {
  * - Define the default slide size.
  * - Set default style for `<section>`.
  * - Normalize `<h1>` heading style.
- * - Support advanced background on inline SVG mode.
  *
  * @alias module:theme/scaffold
  * @type {Theme}
