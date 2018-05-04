@@ -29,15 +29,16 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
     page-break-before: always;
   }
 
-  section, section[data-marpit-advanced-background="background"] > figure {
-    -webkit-print-color-adjust: exact;
-    color-adjust: exact;
+  section, section * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   :marpit-container > svg {
     display: block;
-    width: 100vw;
     height: 100vh;
+    page-break-before: always;
+    width: 100vw;
   }
 }
 `.trim()
