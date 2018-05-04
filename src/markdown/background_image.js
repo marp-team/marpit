@@ -92,7 +92,14 @@ function backgroundImage(md) {
 
         tb.children.forEach(t => {
           if (t.type !== 'image') return
-          const { background, backgroundSize, size, url } = t.meta.marpitImage
+
+          const {
+            background,
+            backgroundSize,
+            filter,
+            size,
+            url,
+          } = t.meta.marpitImage
 
           if (background && !url.match(/^\s*$/)) {
             current.images = [
@@ -100,6 +107,7 @@ function backgroundImage(md) {
               {
                 url,
                 size: size || backgroundSize || undefined,
+                filter,
               },
             ]
           }
@@ -149,9 +157,13 @@ function backgroundImage(md) {
                   ...imgArr,
                   ...wrapTokens('marpit_advanced_background_image', {
                     tag: 'figure',
-                    style: `background-image:url("${img.url}");${
-                      img.size ? `background-size:${img.size};` : ''
-                    }`,
+                    style: [
+                      `background-image:url("${img.url}");`,
+                      img.size && `background-size:${img.size};`,
+                      img.filter && `filter:${img.filter};`,
+                    ]
+                      .filter(s => s)
+                      .join(''),
                   }),
                 ],
                 []
