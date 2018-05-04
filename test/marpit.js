@@ -139,6 +139,24 @@ describe('Marpit', () => {
           )
       })
     })
+
+    context('with filters option in instance', () => {
+      const instance = filters => new Marpit({ filters })
+
+      it('does not apply filter style when filters is false', () => {
+        const $ = cheerio.load(instance(false).render('![blur](test)').html)
+        const style = $('img').attr('style') || ''
+
+        assert(!style.includes('filter:blur'))
+      })
+
+      it('applies filter style when filters is true', () => {
+        const $ = cheerio.load(instance(true).render('![blur](test)').html)
+        const style = $('img').attr('style') || ''
+
+        assert(style.includes('filter:blur'))
+      })
+    })
   })
 
   describe('#renderMarkdown', () => {
