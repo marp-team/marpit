@@ -92,6 +92,7 @@ function backgroundImage(md) {
 
         tb.children.forEach(t => {
           if (t.type !== 'image') return
+
           const {
             background,
             backgroundSize,

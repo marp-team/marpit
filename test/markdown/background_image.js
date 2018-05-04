@@ -16,14 +16,14 @@ describe('Marpit background image plugin', () => {
     options: { inlineSVG: svg },
   })
 
-  const md = (svg = false) =>
+  const md = (svg = false, filters = false) =>
     new MarkdownIt()
       .use(comment)
       .use(slide)
       .use(parseDirectives, marpitStub(svg))
       .use(applyDirectives)
       .use(inlineSVG, marpitStub(svg))
-      .use(parseImage)
+      .use(parseImage, { filters })
       .use(backgroundImage)
 
   const bgDirective = (url, mdInstance) => {
@@ -99,7 +99,7 @@ describe('Marpit background image plugin', () => {
   })
 
   context('with inline SVG (Advanced background mode)', () => {
-    const mdSVG = md(true)
+    const mdSVG = (filters = false) => md(true, filters)
     const $load = html =>
       cheerio.load(html, {
         lowerCaseAttributeNames: false,
@@ -107,7 +107,7 @@ describe('Marpit background image plugin', () => {
       })
 
     it('renders the structure for advanced background to another foreignObject', () => {
-      const $ = $load(mdSVG.render('![bg](image)'))
+      const $ = $load(mdSVG().render('![bg](image)'))
       assert($('svg[viewBox="0 0 100 100"] > foreignObject').length === 2)
 
       const bg = $('svg > foreignObject:first-child')
@@ -122,14 +122,14 @@ describe('Marpit background image plugin', () => {
     })
 
     it('escapes doublequote to disallow XSS', () => {
-      const $ = $load(mdSVG.render('![bg](img"\\);color:#f00;--xss:url\\(")'))
+      const $ = $load(mdSVG().render('![bg](img"\\);color:#f00;--xss:url\\(")'))
       const style = $('figure').attr('style')
 
       assert(style !== 'background-image:("img");color:#f00;--xss:url("");')
     })
 
     it('assigns data attribute to section element of the slide content', () => {
-      const $ = $load(mdSVG.render('![bg](image)\n\n# test'))
+      const $ = $load(mdSVG().render('![bg](image)\n\n# test'))
       const slideSection = $('svg > foreignObject:last-child > section')
 
       assert(slideSection.find('h1').length === 1)
@@ -137,7 +137,9 @@ describe('Marpit background image plugin', () => {
     })
 
     it("inherits slide section's style assigned by directive", () => {
-      const $ = $load(mdSVG.render('<!-- backgroundImage: url(A) --> ![bg](B)'))
+      const $ = $load(
+        mdSVG().render('<!-- backgroundImage: url(A) --> ![bg](B)')
+      )
       const bgSection = $(
         'section[data-marpit-advanced-background="background"]'
       )
@@ -146,7 +148,7 @@ describe('Marpit background image plugin', () => {
     })
 
     it('renders multiple images', () => {
-      const $ = $load(mdSVG.render('![bg](A) ![bg](B)'))
+      const $ = $load(mdSVG().render('![bg](A) ![bg](B)'))
       const figures = $('figure')
 
       assert(figures.length === 2)
@@ -155,7 +157,7 @@ describe('Marpit background image plugin', () => {
     })
 
     it('assigns background-size style with resizing keyword / scale', () => {
-      const $ = $load(mdSVG.render('![bg fit](A) ![bg 50%](B)'))
+      const $ = $load(mdSVG().render('![bg fit](A) ![bg 50%](B)'))
       const styleA = $('figure:first-child').attr('style')
       const styleB = $('figure:last-child').attr('style')
 
@@ -163,6 +165,51 @@ describe('Marpit background image plugin', () => {
       assert(styleA.includes('background-size:contain;'))
       assert(styleB.includes('background-image:url("B");'))
       assert(styleB.includes('background-size:50%;'))
+    })
+
+    context('when filters option of parse image plugin is enabled', () => {
+      it.only('assigns filter style with the function of filter', () => {
+        const filters = {
+          // with default attributes
+          blur: 'filter:blur(10px);',
+          brightness: 'filter:brightness(1.5);',
+          contrast: 'filter:contrast(2);',
+          'drop-shadow': 'filter:drop-shadow(0 5px 10px rgba(0,0,0,.4));',
+          grayscale: 'filter:grayscale(1);',
+          'hue-rotate': 'filter:hue-rotate(180deg);',
+          invert: 'filter:invert(1);',
+          opacity: 'filter:opacity(.5);',
+          saturate: 'filter:saturate(2);',
+          sepia: 'filter:sepia(1);',
+
+          // with specified attributes
+          'blur:20px': 'filter:blur(20px);',
+          'brightness:200%': 'filter:brightness(200%);',
+          'contrast:.5': 'filter:contrast(.5);',
+          'drop-shadow:1em,1em': 'filter:drop-shadow(1em 1em);',
+          'drop-shadow:0,0,10px': 'filter:drop-shadow(0 0 10px);',
+          'drop-shadow:0,1px,2px,#f00': 'filter:drop-shadow(0 1px 2px #f00);',
+          'drop-shadow:0,0,20px,rgba(64,64,64,.25)':
+            'filter:drop-shadow(0 0 20px rgba(64,64,64,.25));',
+          'grayscale:50%': 'filter:grayscale(50%);',
+          'hue-rotate:90deg': 'filter:hue-rotate(90deg);',
+          'invert:0.25': 'filter:invert(0.25);',
+          'opacity:30%': 'filter:opacity(30%);',
+          'saturate:123%': 'filter:saturate(123%);',
+          'sepia:.5': 'filter:sepia(.5);',
+        }
+
+        Object.keys(filters).forEach(filter => {
+          const $ = $load(
+            mdSVG(true).render(`![${filter}](a)\n![bg ${filter}](b)`)
+          )
+          const inlineImageStyle = $('img').attr('style')
+          const bgImageStyle = $('img').attr('style')
+
+          assert(inlineImageStyle.includes(filters[filter]))
+          assert(bgImageStyle.includes(filters[filter]))
+        })
+      })
     })
   })
 })
