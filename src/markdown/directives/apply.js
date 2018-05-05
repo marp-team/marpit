@@ -68,7 +68,7 @@ function apply(md, opts = {}) {
             styles['background-size'] = marpitDirectives.backgroundSize
         }
 
-        if (marpitDirectives.pagination)
+        if (marpitDirectives.paginate)
           token.attrSet('data-marpit-pagination', marpitSlide + 1)
 
         const styleStr = Object.keys(styles).reduce(

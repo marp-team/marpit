@@ -63,8 +63,8 @@ export const locals = {
   class(value) {
     return { class: value }
   },
-  pagination(value) {
-    return { pagination: (value || '').toLowerCase() === 'true' }
+  paginate(value) {
+    return { paginate: (value || '').toLowerCase() === 'true' }
   },
 }
 
