@@ -1,6 +1,7 @@
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
+import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
 import postcssPseudoPrepend from './postcss/pseudo_selector/prepend'
 import postcssPseudoReplace from './postcss/pseudo_selector/replace'
@@ -166,6 +167,7 @@ class ThemeSet {
           }),
         theme !== scaffold && (css => css.first.before(scaffold.css)),
         opts.inlineSVG && postcssAdvancedBackground,
+        postcssPagination,
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
         opts.inlineSVG === 'workaround' && postcssInlineSVGWorkaround,

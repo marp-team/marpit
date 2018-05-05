@@ -17,6 +17,10 @@ section[data-marpit-advanced-background="background"] {
   padding: 0 !important;
 }
 
+section[data-marpit-advanced-background="background"]::after {
+  display: none !important;
+}
+
 section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container] {
   all: initial;
   display: flex;

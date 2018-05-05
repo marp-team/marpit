@@ -8,6 +8,7 @@ section {
 
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 
   scroll-snap-align: center center;
 }
