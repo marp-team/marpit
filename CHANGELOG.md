@@ -4,6 +4,7 @@
 
 * Implement CSS filter for image and advanced backgrounds ([#14](https://github.com/marp-team/marpit/pull/14))
 * Fix PostCSS printable plugin to allow printing the advanced backgrounds ([#15](https://github.com/marp-team/marpit/pull/15))
+* Implement split backgrounds in advanced background mode ([#16](https://github.com/marp-team/marpit/pull/16))
 
 ## v0.0.3 - 2018-05-02
 
@@ -16,7 +17,7 @@
 
 * Support background image syntax ([#4](https://github.com/marp-team/marpit/pull/4), [#5](https://github.com/marp-team/marpit/pull/5), and [#8](https://github.com/marp-team/marpit/pull/8))
 * Add [JSDoc documentation to `ThemeSet` class methods](https://marpit.netlify.com/themeset) ([#7](https://github.com/marp-team/marpit/pull/7))
-* Improve the sweep logic of blank paragraphs by splitted into another plugin ([#8](https://github.com/marp-team/marpit/pull/8))
+* Improve the sweep logic of blank paragraphs by split into another plugin ([#8](https://github.com/marp-team/marpit/pull/8))
 
 ## v0.0.1 - 2018-03-28
 

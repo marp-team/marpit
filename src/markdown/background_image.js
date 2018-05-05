@@ -20,7 +20,7 @@ const bgSizeKeywords = {
  *
  * When `inlineSVG` option is true, the plugin enables advanced background mode.
  * In addition to the basic background implementation, it supports multiple
- * background images and filters by using SVG.
+ * background images, filters, and split background.
  *
  * @alias module:markdown/background_image
  * @param {MarkdownIt} md markdown-it instance.
@@ -40,6 +40,9 @@ function backgroundImage(md) {
           t.meta.marpitImage.options.forEach(opt => {
             if (bgSizeKeywords[opt])
               t.meta.marpitImage.backgroundSize = bgSizeKeywords[opt]
+
+            if (opt === 'left' || opt === 'right')
+              t.meta.marpitImage.backgroundSplit = opt
           })
         }
       })
@@ -69,6 +72,7 @@ function backgroundImage(md) {
                   height: current.svgContent.attrGet('height'),
                   images: current.images,
                   open: current.open,
+                  split: current.split,
                   width: current.svgContent.attrGet('width'),
                 },
               }
@@ -96,6 +100,7 @@ function backgroundImage(md) {
           const {
             background,
             backgroundSize,
+            backgroundSplit,
             filter,
             size,
             url,
@@ -111,6 +116,8 @@ function backgroundImage(md) {
               },
             ]
           }
+
+          if (backgroundSplit) current.split = backgroundSplit
         })
       })
     }
@@ -141,8 +148,17 @@ function backgroundImage(md) {
 
           open.attrSet('data-marpit-advanced-background', 'content')
 
+          const splitSide = foreignObject.meta.marpitBackground.split
+
+          if (splitSide) {
+            open.attrSet('data-marpit-advanced-background-split', splitSide)
+            foreignObject.attrSet('width', '50%')
+
+            if (splitSide === 'left') foreignObject.attrSet('x', '50%')
+          }
+
           advancedBgs = wrapTokens(
-            'marpit_advanced_background_foreign_boejct',
+            'marpit_advanced_background_foreign_object',
             { tag: 'foreignObject', width, height },
             wrapTokens(
               'marpit_advanced_background_section',
@@ -152,21 +168,28 @@ function backgroundImage(md) {
                 id: undefined,
                 'data-marpit-advanced-background': 'background',
               },
-              images.reduce(
-                (imgArr, img) => [
-                  ...imgArr,
-                  ...wrapTokens('marpit_advanced_background_image', {
-                    tag: 'figure',
-                    style: [
-                      `background-image:url("${img.url}");`,
-                      img.size && `background-size:${img.size};`,
-                      img.filter && `filter:${img.filter};`,
-                    ]
-                      .filter(s => s)
-                      .join(''),
-                  }),
-                ],
-                []
+              wrapTokens(
+                'marpit_advanced_background_image_container',
+                {
+                  tag: 'div',
+                  'data-marpit-advanced-background-container': true,
+                },
+                images.reduce(
+                  (imgArr, img) => [
+                    ...imgArr,
+                    ...wrapTokens('marpit_advanced_background_image', {
+                      tag: 'figure',
+                      style: [
+                        `background-image:url("${img.url}");`,
+                        img.size && `background-size:${img.size};`,
+                        img.filter && `filter:${img.filter};`,
+                      ]
+                        .filter(s => s)
+                        .join(''),
+                    }),
+                  ],
+                  []
+                )
               )
             )
           )
