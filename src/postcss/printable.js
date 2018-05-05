@@ -37,7 +37,6 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
   :marpit-container > svg {
     display: block;
     height: 100vh;
-    page-break-before: always;
     width: 100vw;
   }
 }
