@@ -195,6 +195,20 @@ describe('Marpit background image plugin', () => {
       assert(foreignObject.attr('x') === '50%')
     })
 
+    context(
+      'when multiple keyword for split background defined in a same slide',
+      () => {
+        const $ = $load(mdSVG().render(`![bg right](a) ![bg left](b)`))
+
+        it('uses the last defined keyword', () => {
+          const section = $('svg > foreignObject:last-child > section')
+          assert(
+            section.attr('data-marpit-advanced-background-split') === 'left'
+          )
+        })
+      }
+    )
+
     context('when filters option of parse image plugin is enabled', () => {
       it('assigns filter style with the function of filter', () => {
         const filters = {
