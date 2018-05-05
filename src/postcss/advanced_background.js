@@ -40,6 +40,7 @@ section[data-marpit-advanced-background="background"] > div[data-marpit-advanced
   background-repeat: no-repeat;
   background-size: cover;
   flex: auto;
+  margin: 0;
 }
 
 section[data-marpit-advanced-background="content"] {
