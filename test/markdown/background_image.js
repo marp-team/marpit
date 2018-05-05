@@ -9,6 +9,8 @@ import parseDirectives from '../../src/markdown/directives/parse'
 import parseImage from '../../src/markdown/parse_image'
 import slide from '../../src/markdown/slide'
 
+const splitBackgroundKeywords = ['left', 'right']
+
 describe('Marpit background image plugin', () => {
   const marpitStub = svg => ({
     lastGlobalDirectives: {},
@@ -112,11 +114,13 @@ describe('Marpit background image plugin', () => {
 
       const bg = $('svg > foreignObject:first-child')
       const bgSection = bg.find(
-        'section[data-marpit-advanced-background="background"]'
+        '> section[data-marpit-advanced-background="background"]'
       )
       assert(bgSection.length === 1)
 
-      const figure = bgSection.find('figure')
+      const figure = bgSection.find(
+        '> div[data-marpit-advanced-background-container] > figure'
+      )
       assert(figure.length === 1)
       assert(figure.attr('style') === 'background-image:url("image");')
     })
@@ -165,6 +169,30 @@ describe('Marpit background image plugin', () => {
       assert(styleA.includes('background-size:contain;'))
       assert(styleB.includes('background-image:url("B");'))
       assert(styleB.includes('background-size:50%;'))
+    })
+
+    splitBackgroundKeywords.forEach(keyword => {
+      context(`with the ${keyword} keyword for split background`, () => {
+        const $ = $load(mdSVG().render(`![bg ${keyword}](image)`))
+        const foreignObject = $('svg > foreignObject:last-child')
+
+        it('assigns the width attribute of foreignObject for content as 50%', () => {
+          assert(foreignObject.attr('width') === '50%')
+        })
+
+        it('assigns data attribute of the keyword for split background', () => {
+          const section = foreignObject.find('> section')
+          assert(
+            section.attr('data-marpit-advanced-background-split') === keyword
+          )
+        })
+      })
+    })
+
+    it('assigns x attribute of foreignObject for content as 50% with left keyword', () => {
+      const $ = $load(mdSVG().render(`![bg left](image)`))
+      const foreignObject = $('svg > foreignObject:last-child')
+      assert(foreignObject.attr('x') === '50%')
     })
 
     context('when filters option of parse image plugin is enabled', () => {
