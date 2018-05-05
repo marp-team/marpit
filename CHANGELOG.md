@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.4 - 2018-05-05
+
 * Implement CSS filter for image and advanced backgrounds ([#14](https://github.com/marp-team/marpit/pull/14))
 * Fix PostCSS printable plugin to allow printing the advanced backgrounds ([#15](https://github.com/marp-team/marpit/pull/15))
 * Implement split backgrounds in advanced background mode ([#16](https://github.com/marp-team/marpit/pull/16))
