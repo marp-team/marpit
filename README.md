@@ -110,16 +110,43 @@ When you remove the underbar, the background would apply to current and _the fol
 
 #### Advanced backgrounds with inline SVG mode
 
-The advanced backgrounds will work _only with [`inlineSVG: true`](#inline-svg-slide-experimental)_. It supports multiple background images and image filters.
+The advanced backgrounds will work _only with [`inlineSVG: true`](#inline-svg-slide-experimental)_. It supports multiple background images, image filters, and split backgrounds.
 
 ##### Multiple background images
 
-```
+```markdown
 ![bg](https://example.com/backgroundA.jpg)
 ![bg](https://example.com/backgroundB.jpg)
 ```
 
 These images will arrange in a row.
+
+##### Split backgrounds
+
+The `left` or `right` keyword with `bg` keyword make a space for the background to the specified side. It has a half of slide size, and the space of a slide content will shrink too.
+
+```markdown
+![bg left](https://example.com/backgroundA.jpg)
+
+# Slide contents
+
+The space of a slide content will shrink to the right side.
+
+---
+
+<!-- Multiple background images will work well in the specified background side. -->
+
+![bg right](https://example.com/backgroundB.jpg)
+![bg](https://example.com/backgroundC.jpg)
+
+# Slide contents
+
+The space of a slide content will shrink to the left side.
+```
+
+This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Images%20and%20Videos/01-background-images.html).
+
+> Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple background images.
 
 ### Image filters
 
