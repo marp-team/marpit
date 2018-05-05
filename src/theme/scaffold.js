@@ -13,6 +13,15 @@ section {
   scroll-snap-align: center center;
 }
 
+section::after {
+  bottom: 0;
+  content: attr(data-marpit-pagination);
+  padding: inherit;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+}
+
 /* Normalization */
 h1 {
   font-size: 2em;
