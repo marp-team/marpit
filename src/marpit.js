@@ -2,16 +2,17 @@ import MarkdownIt from 'markdown-it'
 import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
-import marpItApplyDirectives from './markdown/directives/apply'
-import marpItBackgroundImage from './markdown/background_image'
-import marpItComment from './markdown/comment'
-import marpItContainer from './markdown/container'
-import marpItInlineSVG from './markdown/inline_svg'
-import marpItParseDirectives from './markdown/directives/parse'
-import marpItParseImage from './markdown/parse_image'
-import marpItSlide from './markdown/slide'
-import marpItSlideContainer from './markdown/slide_container'
-import marpItSweep from './markdown/sweep'
+import marpitApplyDirectives from './markdown/directives/apply'
+import marpitBackgroundImage from './markdown/background_image'
+import marpitComment from './markdown/comment'
+import marpitContainerPlugin from './markdown/container'
+import marpitInlineSVG from './markdown/inline_svg'
+import marpitParseDirectives from './markdown/directives/parse'
+import marpitParseImage from './markdown/parse_image'
+import marpitPrintableEmoji from './markdown/printable_emoji'
+import marpitSlide from './markdown/slide'
+import marpitSlideContainer from './markdown/slide_container'
+import marpitSweep from './markdown/sweep'
 
 const defaultOptions = {
   backgroundSyntax: true,
@@ -84,17 +85,18 @@ class Marpit {
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
     md
-      .use(marpItComment)
-      .use(marpItSlide)
-      .use(marpItParseDirectives, this)
-      .use(marpItApplyDirectives)
-      .use(marpItSlideContainer, this.slideContainers)
-      .use(marpItContainer, this.containers)
-      .use(marpItParseImage, { filters: this.options.filters })
-      .use(marpItSweep)
-      .use(marpItInlineSVG, this)
+      .use(marpitComment)
+      .use(marpitSlide)
+      .use(marpitParseDirectives, this)
+      .use(marpitApplyDirectives)
+      .use(marpitSlideContainer, this.slideContainers)
+      .use(marpitContainerPlugin, this.containers)
+      .use(marpitParseImage, { filters: this.options.filters })
+      .use(marpitSweep)
+      .use(marpitInlineSVG, this)
 
-    if (this.options.backgroundSyntax) md.use(marpItBackgroundImage)
+    if (this.options.backgroundSyntax) md.use(marpitBackgroundImage)
+    if (this.options.printable) md.use(marpitPrintableEmoji)
   }
 
   /**
