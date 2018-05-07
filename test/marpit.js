@@ -72,7 +72,7 @@ describe('Marpit', () => {
 
         marpit.themeSet.default = marpit.themeSet.add(dedent`
           /* @theme test */
-          section { position: relative; transform: scale(0.9); }
+          section { --theme-defined: declaration; }
         `)
         return marpit
       }
@@ -100,8 +100,7 @@ describe('Marpit', () => {
           .process(rendered.css, { from: undefined })
           .then(ret => {
             assert($('svg > foreignObject > section > h1').length === 1)
-            assert(countDecl(ret.root, 'position') === 1)
-            assert(countDecl(ret.root, 'transform') === 1)
+            assert(countDecl(ret.root, '--theme-defined') === 1)
           })
       })
 
