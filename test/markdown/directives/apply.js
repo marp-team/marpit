@@ -178,5 +178,28 @@ describe('Marpit directives apply plugin', () => {
         })
       })
     })
+
+    describe('Paginate', () => {
+      it('applies data-marpit-pagination attribute', () => {
+        const paginateDirs = dedent`
+          ---
+          paginate: true
+          _paginate: false
+          ---
+
+          # Slide 1
+
+          ---
+
+          ## Slide 2
+        `
+
+        const $ = cheerio.load(mdForTest().render(paginateDirs))
+        const sections = $('section')
+
+        assert(!sections.eq(0).data('marpit-pagination'))
+        assert(sections.eq(1).data('marpit-pagination'))
+      })
+    })
   })
 })
