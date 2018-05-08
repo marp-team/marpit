@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+* Add `paginate` local directive ([#17](https://github.com/marp-team/marpit/pull/17))
+
 ## v0.0.4 - 2018-05-05
 
 * Implement CSS filter for image and advanced backgrounds ([#14](https://github.com/marp-team/marpit/pull/14))
