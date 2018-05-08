@@ -272,5 +272,22 @@ describe('Marpit background image plugin', () => {
         })
       })
     })
+
+    context('with paginate directive', () => {
+      const $ = $load(mdSVG().render('<!-- paginate: true --> ![bg](test)'))
+
+      it('appends <foreignObject data-marpit-advanced-background="pagination"> to last', () => {
+        const foreignObjects = $('svg > foreignObject')
+        assert(foreignObjects.length === 3)
+
+        const lastFO = foreignObjects.eq(2)
+        assert(lastFO.is('[data-marpit-advanced-background="pagination"]'))
+        assert(
+          lastFO
+            .find('> section')
+            .is('[data-marpit-advanced-background="pagination"]')
+        )
+      })
+    })
   })
 })

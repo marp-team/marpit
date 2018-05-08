@@ -37,12 +37,38 @@ Marpit will become a core of _the next version of **[Marp](https://github.com/yh
 
 #### Difference from [pre-released Marp](https://github.com/yhatt/marp/)
 
-* Removed directives about slide size. Use `width` / `height` declaration of theme CSS.
+* Removed directives about slide size. [Use `width` / `height` declaration of theme CSS.](#slide-size)
 * Parse directives by YAML parser. ([js-yaml](https://github.com/nodeca/js-yaml) + [`FAILSAFE_SCHEMA`](http://www.yaml.org/spec/1.2/spec.html#id2802346))
 * Support [Jekyll style front-matter](https://jekyllrb.com/docs/frontmatter/).
 * _[Global directives](https://github.com/yhatt/marp/blob/master/example.md#global-directives)_ is no longer requires `$` prefix. (but it still supports because of compatibility and clarity)
 * [Page directives](https://github.com/yhatt/marp/blob/master/example.md#page-directives) is renamed to _local directives_.
 * _Spot directives_, that is known as scoped page directive to current slide, has prefix `_`.
+
+#### Pagination
+
+We support a pagination by the `paginate` local directive. It is same as [the `page_number` directive in pre-released Marp](https://github.com/yhatt/marp/blob/master/example.md#page_number).
+
+```
+<!-- paginate: true -->
+
+You would be able to see a page number of slide in the lower right.
+```
+
+##### Skip pagination on title slide
+
+Simply you have to move a definition of `paginate` directive to an inside of a second page.
+
+```markdown
+# Title slide
+
+(This page will not paginate by lack of `paginate` local directive)
+
+---
+
+<!-- paginate: true -->
+
+It will paginate slide from a this page.
+```
 
 ### Slide backgrounds
 
@@ -182,7 +208,6 @@ Naturally multiple filters can apply to a image.
 ### ToDo
 
 * [ ] Header and footer directive
-* [ ] Slide page number
 
 ## Markup
 
@@ -226,12 +251,51 @@ section {
   width: 1280px;
   height: 960px;
   font-size: 40px;
+  padding: 40px;
 }
 
 h1 {
   font-size: 60px;
 }
 ```
+
+#### The root `section` selector
+
+In Marpit theme CSS, the root `section` selector means like a viewport of each slide.
+
+##### Slide size
+
+`width` and `height` declaration in `section` selector can specify a slide size. (1280x720 pixels by default)
+
+The specified size is not only used in the section element size but also used in the size of each page of printed PDF.
+
+For example, try these declarations in your theme CSS if you want a classic 4:3 slide:
+
+```css
+section {
+  width: 960px;
+  height: 720px;
+}
+```
+
+Please notice _these must define a length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
+
+##### Styling paginations
+
+You can style the page number through `section::after` pseudo-element. (It is shown by `paginate` local directive)
+
+```css
+section::after {
+  font-weight: bold;
+  text-shadow: 1px 1px 0 #fff;
+}
+```
+
+Please refer to [the default style of `section::after` in a scaffold theme](src/theme/scaffold.js) as well.
+
+> :information_source: The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
+
+#### Theme set
 
 The `Marpit` instance has a `themeSet` member that manages usable themes in the `theme` directive of Marpit Markdown. You have to add theme CSS by using `themeSet.add(string)`.
 

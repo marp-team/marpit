@@ -24,6 +24,7 @@ describe('Marpit PostCSS pseudo selector prepending plugin', () => {
   it('replaces section selector into :marpit-slide pseudo element', () => {
     const css = dedent`
       section { background: #fff; }
+      section::after { color: #666; }
       section.invert { background: #000; }
       section-like-element { color: red; }
     `
@@ -33,6 +34,7 @@ describe('Marpit PostCSS pseudo selector prepending plugin', () => {
       result.root.walkRules(rule => rules.push(...rule.selectors))
 
       assert(rules.includes(':marpit-container > :marpit-slide'))
+      assert(rules.includes(':marpit-container > :marpit-slide::after'))
       assert(rules.includes(':marpit-container > :marpit-slide.invert'))
 
       // Custom Elements
