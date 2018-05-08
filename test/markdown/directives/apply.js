@@ -184,7 +184,7 @@ describe('Marpit directives apply plugin', () => {
         const paginateDirs = dedent`
           ---
           paginate: true
-          _paginate: false
+          _paginate:
           ---
 
           # Slide 1
