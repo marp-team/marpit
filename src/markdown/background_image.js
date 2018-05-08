@@ -1,5 +1,4 @@
 /** @module */
-import split from '../helpers/split'
 import wrapTokens from '../helpers/wrap_tokens'
 
 const bgSizeKeywords = {
