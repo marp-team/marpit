@@ -127,75 +127,97 @@ function backgroundImage(md) {
     'marpit_directives_apply',
     'marpit_advanced_background',
     state => {
-      state.tokens = split(
-        state.tokens,
-        t =>
+      let current
+
+      state.tokens = state.tokens.reduce((ret, t) => {
+        let tokens = [t]
+
+        if (
           t.type === 'marpit_inline_svg_content_open' &&
           t.meta &&
-          t.meta.marpitBackground,
-        true
-      ).reduce((arr, tokens) => {
-        const [foreignObject] = tokens
-        let advancedBgs = []
+          t.meta.marpitBackground
+        ) {
+          current = t
 
-        if (foreignObject.type === 'marpit_inline_svg_content_open') {
-          const {
-            height,
-            images,
-            open,
-            width,
-          } = foreignObject.meta.marpitBackground
-
+          const { height, images, open, width } = t.meta.marpitBackground
           open.attrSet('data-marpit-advanced-background', 'content')
 
-          const splitSide = foreignObject.meta.marpitBackground.split
-
+          const splitSide = t.meta.marpitBackground.split
           if (splitSide) {
             open.attrSet('data-marpit-advanced-background-split', splitSide)
-            foreignObject.attrSet('width', '50%')
+            t.attrSet('width', '50%')
 
-            if (splitSide === 'left') foreignObject.attrSet('x', '50%')
+            if (splitSide === 'left') t.attrSet('x', '50%')
           }
 
-          advancedBgs = wrapTokens(
-            'marpit_advanced_background_foreign_object',
-            { tag: 'foreignObject', width, height },
-            wrapTokens(
-              'marpit_advanced_background_section',
-              {
-                ...open.attrs.reduce((o, [k, v]) => ({ ...o, [k]: v }), {}),
-                tag: 'section',
-                id: undefined,
-                'data-marpit-advanced-background': 'background',
-              },
+          tokens = [
+            ...wrapTokens(
+              'marpit_advanced_background_foreign_object',
+              { tag: 'foreignObject', width, height },
               wrapTokens(
-                'marpit_advanced_background_image_container',
+                'marpit_advanced_background_section',
                 {
-                  tag: 'div',
-                  'data-marpit-advanced-background-container': true,
+                  ...open.attrs.reduce((o, [k, v]) => ({ ...o, [k]: v }), {}),
+                  tag: 'section',
+                  id: undefined,
+                  'data-marpit-advanced-background': 'background',
                 },
-                images.reduce(
-                  (imgArr, img) => [
-                    ...imgArr,
-                    ...wrapTokens('marpit_advanced_background_image', {
-                      tag: 'figure',
-                      style: [
-                        `background-image:url("${img.url}");`,
-                        img.size && `background-size:${img.size};`,
-                        img.filter && `filter:${img.filter};`,
-                      ]
-                        .filter(s => s)
-                        .join(''),
-                    }),
-                  ],
-                  []
+                wrapTokens(
+                  'marpit_advanced_background_image_container',
+                  {
+                    tag: 'div',
+                    'data-marpit-advanced-background-container': true,
+                  },
+                  images.reduce(
+                    (imgArr, img) => [
+                      ...imgArr,
+                      ...wrapTokens('marpit_advanced_background_image', {
+                        tag: 'figure',
+                        style: [
+                          `background-image:url("${img.url}");`,
+                          img.size && `background-size:${img.size};`,
+                          img.filter && `filter:${img.filter};`,
+                        ]
+                          .filter(s => s)
+                          .join(''),
+                      }),
+                    ],
+                    []
+                  )
                 )
               )
-            )
-          )
+            ),
+            t,
+          ]
+        } else if (current && t.type === 'marpit_inline_svg_content_close') {
+          const { open } = current.meta.marpitBackground
+          const marpitPagination = open.attrGet('data-marpit-pagination')
+
+          if (marpitPagination) {
+            const { height, width } = current.meta.marpitBackground
+            tokens = [
+              t,
+              ...wrapTokens(
+                'marpit_advanced_background_foreign_object',
+                {
+                  tag: 'foreignObject',
+                  width,
+                  height,
+                  'data-marpit-advanced-background': 'pagination',
+                },
+                wrapTokens('marpit_advanced_pagination_section', {
+                  tag: 'section',
+                  'data-marpit-advanced-background': 'pagination',
+                  'data-marpit-pagination': marpitPagination,
+                })
+              ),
+            ]
+          }
+
+          current = undefined
         }
 
-        return [...arr, ...advancedBgs, ...tokens]
+        return [...ret, ...tokens]
       }, [])
     }
   )

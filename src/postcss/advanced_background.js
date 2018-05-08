@@ -17,7 +17,8 @@ section[data-marpit-advanced-background="background"] {
   padding: 0 !important;
 }
 
-section[data-marpit-advanced-background="background"]::after {
+section[data-marpit-advanced-background="background"]::after,
+section[data-marpit-advanced-background="content"]::after {
   display: none !important;
 }
 
@@ -47,8 +48,14 @@ section[data-marpit-advanced-background="background"] > div[data-marpit-advanced
   margin: 0;
 }
 
-section[data-marpit-advanced-background="content"] {
+section[data-marpit-advanced-background="content"],
+section[data-marpit-advanced-background="pagination"] {
   background: transparent !important;
+}
+
+section[data-marpit-advanced-background="pagination"],
+:marpit-container > svg > foreignObject[data-marpit-advanced-background="pagination"] {
+  pointer-events: none !important;
 }
 
 section[data-marpit-advanced-background-split] {
