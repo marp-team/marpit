@@ -30,7 +30,7 @@ export const unicodeRanges = codeGroups.reduce((arr, g) => {
   return [...arr, `${start}${end}`]
 }, [])
 
-export const defaultFamilyName = 'marpit-system-emoji'
+export const familyName = '-marpit-system-emoji'
 export const defaultFonts = [
   'Apple Color Emoji',
   'Segoe UI Emoji',
@@ -41,23 +41,29 @@ export const defaultFonts = [
   'EmojiOne Color',
   'Symbola',
   'EmojiSymbols',
-]
+].map(f => `local('${f}')`)
 
 /**
  * Marpit PostCSS emoji font plugin.
  *
- * Prepend the definition of `marpit-system-emoji` web font.
+ * Prepend the definition of `-marpit-system-emoji` web font.
  *
  * @alias module:postcss/emoji_font
  */
 const plugin = postcss.plugin(
   'marpit-postcss-emoji-font',
-  (familyName = defaultFamilyName, fonts = defaultFonts) => css => {
+  (fonts = defaultFonts) => css => {
     css.first.before(
       `
 @font-face {
   font-family: '${familyName}';
-  src: ${fonts.map(f => `local('${f}')`).join(',')};
+  src: ${fonts.join(',')};
+  unicode-range: ${unicodeRanges.join(' ')};
+}
+@font-face {
+  font-family: '${familyName}';
+  font-weight: bold;
+  src: ${fonts.join(',')};
   unicode-range: ${unicodeRanges.join(' ')};
 }
 `.trim()
