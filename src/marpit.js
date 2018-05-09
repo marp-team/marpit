@@ -9,10 +9,10 @@ import marpitContainerPlugin from './markdown/container'
 import marpitInlineSVG from './markdown/inline_svg'
 import marpitParseDirectives from './markdown/directives/parse'
 import marpitParseImage from './markdown/parse_image'
-import marpitPrintableEmoji from './markdown/printable_emoji'
 import marpitSlide from './markdown/slide'
 import marpitSlideContainer from './markdown/slide_container'
 import marpitSweep from './markdown/sweep'
+import marpitUnicodeEmoji from './markdown/unicode_emoji'
 
 const defaultOptions = {
   backgroundSyntax: true,
@@ -92,11 +92,11 @@ class Marpit {
       .use(marpitSlideContainer, this.slideContainers)
       .use(marpitContainerPlugin, this.containers)
       .use(marpitParseImage, { filters: this.options.filters })
+      .use(marpitUnicodeEmoji)
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
 
     if (this.options.backgroundSyntax) md.use(marpitBackgroundImage)
-    if (this.options.printable) md.use(marpitPrintableEmoji)
   }
 
   /**

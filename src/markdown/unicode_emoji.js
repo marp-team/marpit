@@ -5,13 +5,15 @@ import Token from 'markdown-it/lib/token'
 const regexForSplit = new RegExp(`(${emojiRegex().source})`, 'g')
 
 /**
- * Marpit printable emoji plugin.
+ * Marpit unicode emoji plugin.
  *
- * @alias module:markdown/printable_emoji
+ * Wrap unicode emoji by `<span data-marpit-emoji></span>`
+ *
+ * @alias module:markdown/unicode_emoji
  * @param {MarkdownIt} md markdown-it instance.
  */
-function printableEmoji(md) {
-  md.core.ruler.after('inline', 'marpit_printable_emoji', ({ tokens }) => {
+function unicodeEmoji(md) {
+  md.core.ruler.after('inline', 'marpit_unicode_emoji', ({ tokens }) => {
     tokens.forEach(token => {
       if (token.type !== 'inline') return
 
@@ -35,4 +37,4 @@ function printableEmoji(md) {
   })
 }
 
-export default printableEmoji
+export default unicodeEmoji
