@@ -22,6 +22,10 @@ section::after {
   right: 0;
 }
 
+[data-marpit-emoji] {
+  font-family: -marpit-system-emoji;
+}
+
 /* Normalization */
 h1 {
   font-size: 2em;
