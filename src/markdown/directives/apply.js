@@ -32,7 +32,7 @@ function apply(md, opts = {}) {
       if (state.inlineMode) return
 
       state.tokens.forEach(token => {
-        const { marpitDirectives } = token.meta || {}
+        const { marpitDirectives, marpitSlide } = token.meta || {}
         if (!marpitDirectives) return
 
         const styles = {}
@@ -67,6 +67,9 @@ function apply(md, opts = {}) {
           if (marpitDirectives.backgroundSize)
             styles['background-size'] = marpitDirectives.backgroundSize
         }
+
+        if (marpitDirectives.paginate)
+          token.attrSet('data-marpit-pagination', marpitSlide + 1)
 
         const styleStr = Object.keys(styles).reduce(
           (arr, dir) => `${arr}${dir}:${styles[dir]};`,

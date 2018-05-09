@@ -8,8 +8,18 @@ section {
 
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 
   scroll-snap-align: center center;
+}
+
+section::after {
+  bottom: 0;
+  content: attr(data-marpit-pagination);
+  padding: inherit;
+  pointer-events: none;
+  position: absolute;
+  right: 0;
 }
 
 /* Normalization */

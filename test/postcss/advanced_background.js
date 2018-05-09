@@ -14,7 +14,6 @@ describe('Marpit PostCSS advanced background plugin', () => {
 
       root.nodes.slice(1).forEach(node => {
         node.selectors.forEach(selector => {
-          assert(selector.startsWith('section'))
           assert(selector.includes('data-marpit-advanced-background'))
         })
       })
