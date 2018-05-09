@@ -1,7 +1,6 @@
 /** @module */
 import emojiRegex from 'emoji-regex'
 import Token from 'markdown-it/lib/token'
-import wrapTokens from '../helpers/wrap_tokens'
 
 const regexForSplit = new RegExp(`(${emojiRegex().source})`, 'g')
 
@@ -12,43 +11,26 @@ const regexForSplit = new RegExp(`(${emojiRegex().source})`, 'g')
  * @param {MarkdownIt} md markdown-it instance.
  */
 function printableEmoji(md) {
-  md.core.ruler.after('inline', 'marpit_printable_emoji', state => {
-    if (state.inlineMode) return
+  md.core.ruler.after('inline', 'marpit_printable_emoji', ({ tokens }) => {
+    tokens.forEach(token => {
+      if (token.type !== 'inline') return
 
-    state.tokens.forEach(token => {
-      // TODO: Wrap unicode emoji by `<span data-marpit-emoji>`
-      if (token.type === 'inline') {
-        token.children = token.children.reduce((arr, t) => {
-          if (t.type === 'text') {
-            token.children = t.content
-              .split(regexForSplit)
-              .reduce((splitedArr, text, idx) => {
-                const textToken = Object.assign(new Token(), {
-                  ...t,
-                  content: text,
-                })
+      token.children = token.children.reduce((arr, t) => {
+        if (t.type !== 'text') return [...arr, t]
 
-                if (idx % 2 === 0)
-                  return text.length === 0
-                    ? splitedArr
-                    : [...splitedArr, textToken]
-
-                return [
-                  ...splitedArr,
-                  ...wrapTokens(
-                    'marpit_printable_emoji',
-                    {
-                      tag: 'span',
-                      'data-marpit-emoji': true,
-                    },
-                    [textToken]
-                  ),
-                ]
-              }, [])
-          }
-          return [...arr, t]
-        }, [])
-      }
+        return [
+          ...arr,
+          ...t.content.split(regexForSplit).reduce((splitedArr, text, idx) => {
+            const isText = idx % 2 === 0
+            const textToken = Object.assign(new Token(), {
+              ...t,
+              content: isText ? text : `<span data-marpit-emoji>${text}</span>`,
+              type: isText ? 'text' : 'html_inline',
+            })
+            return text.length === 0 ? splitedArr : [...splitedArr, textToken]
+          }, []),
+        ]
+      }, [])
     })
   })
 }

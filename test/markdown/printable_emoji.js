@@ -6,6 +6,6 @@ describe('Marpit printable emoji plugin', () => {
   const md = () => new MarkdownIt('commonmark').use(printableEmoji)
 
   it('wrap emoji by span tag', () => {
-    assert(md().render('⬇️') === '<p><span data-marpit-emoji>⬇️</span></p>')
+    assert(md().renderInline('👨‍👩‍👧‍👦') === '<span data-marpit-emoji>👨‍👩‍👧‍👦</span>')
   })
 })
