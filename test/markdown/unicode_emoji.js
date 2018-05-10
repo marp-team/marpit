@@ -5,7 +5,7 @@ import unicodeEmoji from '../../src/markdown/unicode_emoji'
 describe('Marpit unicode emoji plugin', () => {
   const md = () => new MarkdownIt('commonmark').use(unicodeEmoji)
 
-  it('wrap each emoji by span tag with data attribute', () => {
+  it('wraps each emoji by span tag with data attribute', () => {
     // Simple emoji
     assert(md().renderInline('😃') === '<span data-marpit-emoji>😃</span>')
 
