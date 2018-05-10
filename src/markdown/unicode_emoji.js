@@ -3,6 +3,21 @@ import emojiRegex from 'emoji-regex'
 import Token from 'markdown-it/lib/token'
 
 const regexForSplit = new RegExp(`(${emojiRegex().source})`, 'g')
+const wrap = text =>
+  text
+    .split(/(<[^>]*>)/g)
+    .reduce(
+      (ret, part, idx) =>
+        `${ret}${
+          idx % 2 === 1
+            ? part
+            : part.replace(
+                regexForSplit,
+                ([emoji]) => `<span data-marpit-emoji>${emoji}</span>`
+              )
+        }`,
+      ''
+    )
 
 /**
  * Marpit unicode emoji plugin.
@@ -35,6 +50,15 @@ function unicodeEmoji(md) {
       }, [])
     })
   })
+
+  // We have to override renderer rules to wrap emoji in the code
+  const originalCodeInline = md.renderer.rules.code_inline
+  const originalCodeBlock = md.renderer.rules.code_block
+  const originalFence = md.renderer.rules.fence
+
+  md.renderer.rules.code_inline = (...args) => wrap(originalCodeInline(...args))
+  md.renderer.rules.code_block = (...args) => wrap(originalCodeBlock(...args))
+  md.renderer.rules.fence = (...args) => wrap(originalFence(...args))
 }
 
 export default unicodeEmoji

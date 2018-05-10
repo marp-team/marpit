@@ -43,6 +43,14 @@ describe('Marpit unicode emoji plugin', () => {
 
     assert(fenced.startsWith(expectedStart))
     assert(indented.startsWith(expectedStart))
+
+    // Prevent wrapping in attributes
+    const langFence = md().render('```<😃>\n👍\n```')
+    assert(
+      langFence.startsWith(
+        '<pre><code class="language-&lt;😃&gt;"><span data-marpit-emoji>👍</span>'
+      )
+    )
   })
 
   it('follows variation sequence', () => {
