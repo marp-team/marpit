@@ -72,6 +72,7 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
+    "emoji-regex": "^6.5.1",
     "js-yaml": "^3.11.0",
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^8.4.1",

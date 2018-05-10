@@ -1,6 +1,18 @@
 /** @module */
 import Theme from '../theme'
 
+const emojiFonts = [
+  'Apple Color Emoji',
+  'Segoe UI Emoji',
+  'Noto Color Emoji',
+  'Segoe UI Symbol',
+  'Android Emoji',
+  'Twitter Color Emoji',
+  'EmojiOne Color',
+  'Symbola',
+  'EmojiSymbols',
+]
+
 const css = `
 section {
   width: 1280px;
@@ -22,6 +34,10 @@ section::after {
   right: 0;
 }
 
+[data-marpit-emoji] {
+  font-family: ${emojiFonts.map(f => `'${f}'`).join(',')};
+}
+
 /* Normalization */
 h1 {
   font-size: 2em;
@@ -34,6 +50,7 @@ h1 {
  *
  * - Define the default slide size.
  * - Set default style for `<section>`.
+ * - Set unicode emoji style for using system emoji fonts.
  * - Normalize `<h1>` heading style.
  *
  * @alias module:theme/scaffold

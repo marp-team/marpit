@@ -39,6 +39,10 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
     height: 100vh;
     width: 100vw;
   }
+
+  [data-marpit-emoji] {
+    filter: invert(0);
+  }
 }
 `.trim()
   )
