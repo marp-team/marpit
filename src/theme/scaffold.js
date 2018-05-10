@@ -36,7 +36,6 @@ section::after {
 
 [data-marpit-emoji] {
   font-family: ${emojiFonts.map(f => `'${f}'`).join(',')};
-  font-weight: normal;
 }
 
 /* Normalization */
