@@ -77,8 +77,7 @@
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^8.4.1",
     "markdown-it-front-matter": "^0.1.2",
-    "postcss": "^6.0.22",
-    "unicode-tr51": "^9.0.0"
+    "postcss": "^6.0.22"
   },
   "publishConfig": {
     "access": "public"
