@@ -1,6 +1,5 @@
 /** @module */
-const escapeStyle = target =>
-  target.replace(/[\\;:()]/g, matched => `\\${matched[0]}`)
+import escapeStyle from '../helpers/escape_style'
 
 /**
  * Marpit parse image plugin.
