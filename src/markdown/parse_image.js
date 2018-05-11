@@ -1,7 +1,11 @@
 /** @module */
-import { generateEscapeStyle } from '../helpers/escape_style'
+import InlineStyle from '../helpers/inline_style'
 
-const escape = generateEscapeStyle('\\;:()')
+const escape = target =>
+  target.replace(
+    /[\\;:()]/g,
+    matched => `\\${matched[0].codePointAt(0).toString(16)} `
+  )
 
 /**
  * Marpit parse image plugin.
@@ -113,7 +117,12 @@ function parseImage(md, opts = {}) {
             .reduce((arr, fltrs) => [...arr, `${fltrs[0]}(${fltrs[1]})`], [])
             .join(' ')
 
-          token.attrJoin('style', `filter:${token.meta.marpitImage.filter};`)
+          const style = new InlineStyle(token.attrGet('style')).set(
+            'filter',
+            token.meta.marpitImage.filter
+          )
+
+          token.attrSet('style', style.toString())
         }
       }
     })
