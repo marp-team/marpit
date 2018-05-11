@@ -256,8 +256,8 @@ describe('Marpit background image plugin', () => {
         })
       })
 
-      it('sanitizes arguments', () => {
-        const xsses = [
+      it('sanitizes arguments to prevent style injection', () => {
+        const injections = [
           'blur',
           'brightness',
           'contrast',
@@ -270,7 +270,7 @@ describe('Marpit background image plugin', () => {
         ].reduce(
           (o, fltr) => ({
             ...o,
-            [`${fltr}:1);color:red;--xss:(`]: `filter:${fltr}(1\\29 \\3b color\\3a red\\3b --xss\\3a \\28 );`,
+            [`${fltr}:1);color:red;--a:(`]: `filter:${fltr}(1\\29 \\3b color\\3a red\\3b --a\\3a \\28 );`,
           }),
           {
             // drop-shadow filter cannot escape in the same way as other.
@@ -280,11 +280,11 @@ describe('Marpit background image plugin', () => {
           }
         )
 
-        Object.keys(xsses).forEach(filter => {
+        Object.keys(injections).forEach(filter => {
           const $ = $load(mdSVG(true).render(`![${filter}](a)`))
           const style = $('img').attr('style')
 
-          assert(style === xsses[filter])
+          assert(style === injections[filter])
         })
       })
     })
