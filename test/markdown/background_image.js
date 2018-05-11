@@ -257,18 +257,34 @@ describe('Marpit background image plugin', () => {
       })
 
       it('sanitizes arguments', () => {
-        const xsses = {
-          'brightness:1);color:red;--xss:(':
-            'filter:brightness(1);color:red;--xss:();',
-          'drop-shadow:0,0,0,rgba());color:red;--xss:(':
-            'filter:drop-shadow(0,0,0,rgba());color:red;--xss:();',
-        }
+        const xsses = [
+          'blur',
+          'brightness',
+          'contrast',
+          'grayscale',
+          'hue-rotate',
+          'invert',
+          'opacity',
+          'saturate',
+          'sepia',
+        ].reduce(
+          (o, fltr) => ({
+            ...o,
+            [`${fltr}:1);color:red;--xss:(`]: `filter:${fltr}(1\\29 \\3b color\\3a red\\3b --xss\\3a \\28 );`,
+          }),
+          {
+            // drop-shadow filter cannot escape in the same way as other.
+            // It won't escape the brackets that is wrapping the color syntax.
+            'drop-shadow:0,0,0,rgba(0,0,0,1;)':
+              'filter:drop-shadow(0 0 0 rgba(0,0,0,1\\3b ));',
+          }
+        )
 
         Object.keys(xsses).forEach(filter => {
           const $ = $load(mdSVG(true).render(`![${filter}](a)`))
           const style = $('img').attr('style')
 
-          assert(!style.includes(xsses[filter]))
+          assert(style === xsses[filter])
         })
       })
     })
