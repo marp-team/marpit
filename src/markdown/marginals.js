@@ -1,11 +1,11 @@
 /** @module */
-import split from '../helpers/split'
+import Token from 'markdown-it/lib/token'
 import wrapTokens from '../helpers/wrap_tokens'
 
 /**
  * Marpit marginals plugin.
  *
- * Add header and footer to each slide.
+ * At each slide, add header and footer that are provided by directives.
  *
  * @alias module:markdown/marginals
  * @param {MarkdownIt} md markdown-it instance.
@@ -14,15 +14,51 @@ function marginals(md) {
   md.core.ruler.after('marpit_directives_apply', 'marpit_marginals', state => {
     if (state.inlineMode) return
 
-    state.tokens = split(
-      state.tokens,
-      t => t.meta && (t.meta.marpitHeader || t.meta.marpitFooter),
-      true
-    ).reduce((arr, tokens) => {
-      if (tokens.length === 0) return arr
+    const renderedInlines = new Map()
+    const getRendered = markdown => {
+      let rendered = renderedInlines.get(markdown)
 
-      // TODO: Add marginals
-      return [...arr, ...tokens]
+      if (!rendered) {
+        rendered = md.renderInline(markdown, state.env)
+        renderedInlines.set(markdown, rendered)
+      }
+
+      return rendered
+    }
+
+    const createMarginalTokens = (tag, markdown) => {
+      const token = new Token('html_block', '', 0)
+      token.content = getRendered(markdown)
+
+      return wrapTokens(`marpit_${tag}`, { tag, close: { block: true } }, [
+        token,
+      ])
+    }
+
+    let current
+
+    state.tokens = state.tokens.reduce((arr, token) => {
+      let concats = [token]
+
+      if (token.meta) {
+        if (token.meta.marpitSlideElement === 1) {
+          current = token
+
+          if (current.meta.marpitHeader)
+            concats = [
+              ...concats,
+              ...createMarginalTokens('header', current.meta.marpitHeader),
+            ]
+        } else if (token.meta.marpitSlideElement === -1) {
+          if (current.meta.marpitFooter)
+            concats = [
+              ...createMarginalTokens('footer', current.meta.marpitFooter),
+              ...concats,
+            ]
+        }
+      }
+
+      return [...arr, ...concats]
     }, [])
   })
 }

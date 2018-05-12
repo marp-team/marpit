@@ -1,8 +1,8 @@
 import assert from 'assert'
 import cheerio from 'cheerio'
-import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
+import comment from '../../src/markdown/comment'
 import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
 import marginals from '../../src/markdown/marginals'
@@ -19,6 +19,7 @@ describe('Marpit marginals plugin', () => {
 
   const md = (marpitInstance = marpitStub()) =>
     new MarkdownIt('commonmark')
+      .use(comment)
       .use(slide)
       .use(parseDirectives, { themeSet: marpitInstance.themeSet })
       .use(applyDirectives)
@@ -32,9 +33,10 @@ describe('Marpit marginals plugin', () => {
 
       $('section').each((i, elm) => {
         const children = $(elm).children()
+        const firstChild = children.first()
 
-        assert(children.first().tagName === 'header')
-        assert(children.first().html() === 'text')
+        assert(firstChild.get(0).tagName === 'header')
+        assert(firstChild.html() === 'text')
       })
     })
   })
@@ -47,9 +49,10 @@ describe('Marpit marginals plugin', () => {
 
       $('section').each((i, elm) => {
         const children = $(elm).children()
+        const lastChild = children.last()
 
-        assert(children.last().tagName === 'footer')
-        assert(children.last().html() === 'text')
+        assert(lastChild.get(0).tagName === 'footer')
+        assert(lastChild.html() === 'text')
       })
     })
   })
