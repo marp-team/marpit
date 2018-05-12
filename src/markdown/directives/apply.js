@@ -76,6 +76,12 @@ function apply(md, opts = {}) {
         if (marpitDirectives.paginate)
           token.attrSet('data-marpit-pagination', marpitSlide + 1)
 
+        if (marpitDirectives.header)
+          token.meta.marpitHeader = marpitDirectives.header
+
+        if (marpitDirectives.footer)
+          token.meta.marpitFooter = marpitDirectives.footer
+
         const styleStr = style.toString()
         if (styleStr !== '') token.attrSet('style', styleStr)
       })
