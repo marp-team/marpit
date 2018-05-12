@@ -1,6 +1,7 @@
 /** @module */
 import kebabCase from 'lodash.kebabcase'
 import { globals, locals } from './directives'
+import InlineStyle from '../../helpers/inline_style'
 
 const publicDirectives = [...Object.keys(globals), ...Object.keys(locals)]
 
@@ -35,7 +36,7 @@ function apply(md, opts = {}) {
         const { marpitDirectives, marpitSlide } = token.meta || {}
         if (!marpitDirectives) return
 
-        const styles = {}
+        const style = new InlineStyle(token.attrGet('style'))
 
         Object.keys(marpitDirectives)
           .filter(filterFunc)
@@ -45,7 +46,7 @@ function apply(md, opts = {}) {
 
             const kebabCaseDir = kebabCase(dir)
             if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
-            if (css) styles[`--${kebabCaseDir}`] = value
+            if (css) style.set(`--${kebabCaseDir}`, value)
           })
 
         // Apply attribute to token
@@ -53,29 +54,30 @@ function apply(md, opts = {}) {
           token.attrJoin('class', marpitDirectives.class)
 
         if (marpitDirectives.backgroundImage) {
-          styles['background-image'] = marpitDirectives.backgroundImage
-          styles['background-position'] = 'center'
-          styles['background-repeat'] = 'no-repeat'
-          styles['background-size'] = 'cover'
+          style
+            .set('background-image', marpitDirectives.backgroundImage)
+            .set('background-position', 'center')
+            .set('background-repeat', 'no-repeat')
+            .set('background-size', 'cover')
 
           if (marpitDirectives.backgroundPosition)
-            styles['background-position'] = marpitDirectives.backgroundPosition
+            style.set(
+              'background-position',
+              marpitDirectives.backgroundPosition
+            )
 
           if (marpitDirectives.backgroundRepeat)
-            styles['background-repeat'] = marpitDirectives.backgroundRepeat
+            style.set('background-repeat', marpitDirectives.backgroundRepeat)
 
           if (marpitDirectives.backgroundSize)
-            styles['background-size'] = marpitDirectives.backgroundSize
+            style.set('background-size', marpitDirectives.backgroundSize)
         }
 
         if (marpitDirectives.paginate)
           token.attrSet('data-marpit-pagination', marpitSlide + 1)
 
-        const styleStr = Object.keys(styles).reduce(
-          (arr, dir) => `${arr}${dir}:${styles[dir]};`,
-          ''
-        )
-        if (styleStr.length > 0) token.attrSet('style', styleStr)
+        const styleStr = style.toString()
+        if (styleStr !== '') token.attrSet('style', styleStr)
       })
     }
   )

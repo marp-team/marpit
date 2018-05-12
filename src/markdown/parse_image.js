@@ -1,6 +1,11 @@
 /** @module */
-const escapeStyle = target =>
-  target.replace(/[\\;:()]/g, matched => `\\${matched[0]}`)
+import InlineStyle from '../helpers/inline_style'
+
+const escape = target =>
+  target.replace(
+    /[\\;:()]/g,
+    matched => `\\${matched[0].codePointAt(0).toString(16)} `
+  )
 
 /**
  * Marpit parse image plugin.
@@ -26,16 +31,13 @@ function parseImage(md, opts = {}) {
   if (pluginOptions.filters) {
     // CSS filters
     optionMatchers.set(/^blur(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['blur', escapeStyle(matches[1] || '10px')]],
+      filters: [...meta.filters, ['blur', escape(matches[1] || '10px')]],
     }))
     optionMatchers.set(/^brightness(?::(.+))?$/, (matches, meta) => ({
-      filters: [
-        ...meta.filters,
-        ['brightness', escapeStyle(matches[1] || '1.5')],
-      ],
+      filters: [...meta.filters, ['brightness', escape(matches[1] || '1.5')]],
     }))
     optionMatchers.set(/^contrast(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['contrast', escapeStyle(matches[1] || '2')]],
+      filters: [...meta.filters, ['contrast', escape(matches[1] || '2')]],
     }))
     optionMatchers.set(
       /^drop-shadow(?::(.+?),(.+?)(?:,(.+?))?(?:,(.+?))?)?$/,
@@ -47,8 +49,8 @@ function parseImage(md, opts = {}) {
             const colorFunc = arg.match(/^(rgba?|hsla?)\((.*)\)$/)
 
             return colorFunc
-              ? `${colorFunc[1]}(${escapeStyle(colorFunc[2])})`
-              : escapeStyle(arg)
+              ? `${colorFunc[1]}(${escape(colorFunc[2])})`
+              : escape(arg)
           })
 
         return {
@@ -60,25 +62,25 @@ function parseImage(md, opts = {}) {
       }
     )
     optionMatchers.set(/^grayscale(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['grayscale', escapeStyle(matches[1] || '1')]],
+      filters: [...meta.filters, ['grayscale', escape(matches[1] || '1')]],
     }))
     optionMatchers.set(/^hue-rotate(?::(.+))?$/, (matches, meta) => ({
       filters: [
         ...meta.filters,
-        ['hue-rotate', escapeStyle(matches[1] || '180deg')],
+        ['hue-rotate', escape(matches[1] || '180deg')],
       ],
     }))
     optionMatchers.set(/^invert(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['invert', escapeStyle(matches[1] || '1')]],
+      filters: [...meta.filters, ['invert', escape(matches[1] || '1')]],
     }))
     optionMatchers.set(/^opacity(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['opacity', escapeStyle(matches[1] || '.5')]],
+      filters: [...meta.filters, ['opacity', escape(matches[1] || '.5')]],
     }))
     optionMatchers.set(/^saturate(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['saturate', escapeStyle(matches[1] || '2')]],
+      filters: [...meta.filters, ['saturate', escape(matches[1] || '2')]],
     }))
     optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['sepia', escapeStyle(matches[1] || '1')]],
+      filters: [...meta.filters, ['sepia', escape(matches[1] || '1')]],
     }))
   }
 
@@ -115,7 +117,12 @@ function parseImage(md, opts = {}) {
             .reduce((arr, fltrs) => [...arr, `${fltrs[0]}(${fltrs[1]})`], [])
             .join(' ')
 
-          token.attrJoin('style', `filter:${token.meta.marpitImage.filter};`)
+          const style = new InlineStyle(token.attrGet('style')).set(
+            'filter',
+            token.meta.marpitImage.filter
+          )
+
+          token.attrSet('style', style.toString())
         }
       }
     })

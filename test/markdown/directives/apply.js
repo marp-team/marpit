@@ -177,6 +177,32 @@ describe('Marpit directives apply plugin', () => {
           assert(styleThree['background-size'] === undefined)
         })
       })
+
+      context('when directives about images has a style injection', () => {
+        const bgInjectionDirs = dedent`
+          ---
+          backgroundImage: "none;--injection1:injection1"
+          backgroundPosition: "left;--injection2:injection2"
+          backgroundRepeat: "no-repeat;--injection3:injection3"
+          backgroundSize: "auto;--injection4:injection4"
+          ---
+        `
+
+        it('sanitizes injected styles', () => {
+          const $ = cheerio.load(mdForTest().render(bgInjectionDirs))
+          const section = $('section').first()
+          const style = toObjStyle(section.attr('style'))
+
+          assert(style['background-image'] === 'none')
+          assert(style['background-position'] === 'left')
+          assert(style['background-repeat'] === 'no-repeat')
+          assert(style['background-size'] === 'auto')
+          assert(style['--injection1'] === undefined)
+          assert(style['--injection2'] === undefined)
+          assert(style['--injection3'] === undefined)
+          assert(style['--injection4'] === undefined)
+        })
+      })
     })
 
     describe('Paginate', () => {
