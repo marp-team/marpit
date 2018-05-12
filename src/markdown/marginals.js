@@ -40,22 +40,20 @@ function marginals(md) {
     state.tokens = state.tokens.reduce((arr, token) => {
       let concats = [token]
 
-      if (token.meta) {
-        if (token.meta.marpitSlideElement === 1) {
-          current = token
+      if (token.type === 'marpit_slide_open') {
+        current = token
 
-          if (current.meta.marpitHeader)
-            concats = [
-              ...concats,
-              ...createMarginalTokens('header', current.meta.marpitHeader),
-            ]
-        } else if (token.meta.marpitSlideElement === -1) {
-          if (current.meta.marpitFooter)
-            concats = [
-              ...createMarginalTokens('footer', current.meta.marpitFooter),
-              ...concats,
-            ]
-        }
+        if (current.meta && current.meta.marpitHeader)
+          concats = [
+            ...concats,
+            ...createMarginalTokens('header', current.meta.marpitHeader),
+          ]
+      } else if (token.type === 'marpit_slide_close') {
+        if (current.meta && current.meta.marpitFooter)
+          concats = [
+            ...createMarginalTokens('footer', current.meta.marpitFooter),
+            ...concats,
+          ]
       }
 
       return [...arr, ...concats]
