@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.5 - 2018-05-12
+
 * Add `paginate` local directive ([#17](https://github.com/marp-team/marpit/pull/17))
 * Make Unicode emoji printable ([#18](https://github.com/marp-team/marpit/pull/18))
 * Prevent style injections ([#19](https://github.com/marp-team/marpit/pull/19))
