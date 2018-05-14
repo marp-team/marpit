@@ -254,10 +254,6 @@ Naturally multiple filters can apply to a image.
 ![brightness:.8 sepia:50%](https://example.com/image.jpg)
 ```
 
-### ToDo
-
-* [ ] Header and footer directive
-
 ## Markup
 
 ### HTML output
