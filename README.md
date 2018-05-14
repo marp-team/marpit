@@ -340,6 +340,38 @@ Please refer to [the default style of `section::after` in a scaffold theme](src/
 
 > :information_source: The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
 
+#### Header and footer
+
+`header` element and `footer` element have a possible to be rendered by [local directives](#header-and-footer). _Marpit has no default style for these elements._
+
+If you want to place to marginals of slide, using `position: absolute` would be a good solution.
+
+```css
+section {
+  padding: 50px;
+}
+
+header,
+footer {
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  height: 20px;
+}
+
+header {
+  top: 30px;
+}
+
+footer {
+  bottom: 30px;
+}
+```
+
+Of course, you can use the other way as needed (Flexbox, Grid, etc...).
+
+You can even hide by `display: none` when you are scared a corrupted layout caused by inserted elements. Poof!
+
 #### Theme set
 
 The `Marpit` instance has a `themeSet` member that manages usable themes in the `theme` directive of Marpit Markdown. You have to add theme CSS by using `themeSet.add(string)`.
