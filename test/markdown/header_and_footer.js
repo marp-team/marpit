@@ -26,10 +26,11 @@ describe('Marpit header and footer plugin', () => {
       .use(headerAndFooter)
 
   describe('Header local directive', () => {
-    const markdown = '<!-- header: text -->\n# Page 1\n\n---\n\n# Page 2'
+    const markdown = header =>
+      `<!-- header: "${header}" -->\n# Page 1\n\n---\n\n# Page 2`
 
     it('appends <header> element to each slide', () => {
-      const $ = cheerio.load(md().render(markdown))
+      const $ = cheerio.load(md().render(markdown('text')))
 
       $('section').each((i, elm) => {
         const children = $(elm).children()
@@ -39,13 +40,32 @@ describe('Marpit header and footer plugin', () => {
         assert(firstChild.html() === 'text')
       })
     })
+
+    it('renders tags when it includes inline markdown syntax', () => {
+      const mdText = '**bold** _italic_ ![image](https://example.com/image.jpg)'
+      const $ = cheerio.load(md().render(markdown(mdText)))
+
+      $('section').each((i, elm) => {
+        const header = $(elm)
+          .children()
+          .first()
+
+        const img = header.find('img')
+
+        assert(header.find('strong').length === 1)
+        assert(header.find('em').length === 1)
+        assert(img.length === 1)
+        assert(img.attr('src') === 'https://example.com/image.jpg')
+      })
+    })
   })
 
   describe('Footer local directive', () => {
-    const markdown = '<!-- footer: text -->\n# Page 1\n\n---\n\n# Page 2'
+    const markdown = footer =>
+      `<!-- footer: "${footer}" -->\n# Page 1\n\n---\n\n# Page 2`
 
     it('prepends <footer> element to each slide', () => {
-      const $ = cheerio.load(md().render(markdown))
+      const $ = cheerio.load(md().render(markdown('text')))
 
       $('section').each((i, elm) => {
         const children = $(elm).children()
@@ -53,6 +73,24 @@ describe('Marpit header and footer plugin', () => {
 
         assert(lastChild.get(0).tagName === 'footer')
         assert(lastChild.html() === 'text')
+      })
+    })
+
+    it('renders tags when it includes inline markdown syntax', () => {
+      const mdText = '**bold** _italic_ ![image](https://example.com/image.jpg)'
+      const $ = cheerio.load(md().render(markdown(mdText)))
+
+      $('section').each((i, elm) => {
+        const footer = $(elm)
+          .children()
+          .last()
+
+        const img = footer.find('img')
+
+        assert(footer.find('strong').length === 1)
+        assert(footer.find('em').length === 1)
+        assert(img.length === 1)
+        assert(img.attr('src') === 'https://example.com/image.jpg')
       })
     })
   })
