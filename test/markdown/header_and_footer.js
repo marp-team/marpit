@@ -5,9 +5,9 @@ import applyDirectives from '../../src/markdown/directives/apply'
 import comment from '../../src/markdown/comment'
 import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
-import marginals from '../../src/markdown/marginals'
+import headerAndFooter from '../../src/markdown/header_and_footer'
 
-describe('Marpit marginals plugin', () => {
+describe('Marpit header and footer plugin', () => {
   const themeSet = new Map()
   themeSet.set('test_theme', true)
 
@@ -23,7 +23,7 @@ describe('Marpit marginals plugin', () => {
       .use(slide)
       .use(parseDirectives, { themeSet: marpitInstance.themeSet })
       .use(applyDirectives)
-      .use(marginals)
+      .use(headerAndFooter)
 
   describe('Header local directive', () => {
     const markdown = '<!-- header: text -->\n# Page 1\n\n---\n\n# Page 2'
