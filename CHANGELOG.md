@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+* Add `header` and `footer` directives ([#22](https://github.com/marp-team/marpit/pull/22))
+
 ## v0.0.5 - 2018-05-12
 
 * Add `paginate` local directive ([#17](https://github.com/marp-team/marpit/pull/17))
