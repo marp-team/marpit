@@ -6,6 +6,7 @@ import marpitApplyDirectives from './markdown/directives/apply'
 import marpitBackgroundImage from './markdown/background_image'
 import marpitComment from './markdown/comment'
 import marpitContainerPlugin from './markdown/container'
+import marpitHeaderAndFooter from './markdown/header_and_footer'
 import marpitInlineSVG from './markdown/inline_svg'
 import marpitParseDirectives from './markdown/directives/parse'
 import marpitParseImage from './markdown/parse_image'
@@ -89,6 +90,7 @@ class Marpit {
       .use(marpitSlide)
       .use(marpitParseDirectives, this)
       .use(marpitApplyDirectives)
+      .use(marpitHeaderAndFooter)
       .use(marpitSlideContainer, this.slideContainers)
       .use(marpitContainerPlugin, this.containers)
       .use(marpitParseImage, { filters: this.options.filters })

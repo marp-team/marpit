@@ -45,6 +45,10 @@ export const globals = {
  * @prop {Directive} backgroundSize Specify background-size style. The default
  *     value while setting backgroundImage is `cover`.
  * @prop {Directive} class Specify HTML class of section element(s).
+ * @prop {Directive} footer Specify the content of slide footer. It will insert
+ *     a `<footer>` element to the last of each slide contents.
+ * @prop {Directive} header Specify the content of slide header. It will insert
+ *     a `<header>` element to the first of each slide contents.
  * @prop {Directive} pagination Show page number on the slide if you set `true`.
  */
 export const locals = {
@@ -62,6 +66,12 @@ export const locals = {
   },
   class(value) {
     return { class: value }
+  },
+  footer(value) {
+    return { footer: value }
+  },
+  header(value) {
+    return { header: value }
   },
   paginate(value) {
     return { paginate: (value || '').toLowerCase() === 'true' }

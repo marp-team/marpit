@@ -70,6 +70,57 @@ Simply you have to move a definition of `paginate` directive to an inside of a s
 It will paginate slide from a this page.
 ```
 
+#### Header and footer
+
+When you have to be shown the same content across multiple slides like a title of the slide deck, you can use `header` or `footer` local directives.
+
+```markdown
+---
+header: "Header content"
+footer: "Footer content"
+---
+
+# Page 1
+
+---
+
+## Page 2
+```
+
+In above case, it will render to HTML like this:
+
+```html
+<section>
+  <header>Header content</header>
+  <h1>Page 1</h1>
+  <footer>Footer content</footer>
+</section>
+<section>
+  <header>Header content</header>
+  <h2>Page 2</h2>
+  <footer>Footer content</footer>
+</section>
+```
+
+The specified contents will wrap by a corresponding element, and insert to a right place of each slide.
+
+If you want to place these contents in the marginals of the slide, **you have to use a theme that is supported it.** If not, you could simply see header and footer as the part of slide content.
+
+##### Styling header and footer
+
+In addition, you can format the header and footer content with inline styling through markdown syntax. You can also insert inline images.
+
+```html
+---
+header: "**bold** _italic_"
+footer: "![image](https://example.com/image.jpg)"
+---
+```
+
+> :warning: Marpit uses YAML for parsing directives, so **you should wrap with quotes** when the value includes invalid chars in YAML.
+
+> :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
+
 ### Slide backgrounds
 
 We provide a background image syntax to specify slide's background through Markdown. Include `bg` to the alternate text.
@@ -118,8 +169,6 @@ This feature is available regardless of `backgroundSyntax` option in Marpit cons
 ```markdown
 <!-- _backgroundImage: "linear-gradient(to bottom, #67b8e3, #0288d1)" -->
 ```
-
-Marpit uses YAML for parsing directives, so you should wrap by quote when the value includes space.
 
 ##### Directives
 
@@ -204,10 +253,6 @@ Naturally multiple filters can apply to a image.
 ```markdown
 ![brightness:.8 sepia:50%](https://example.com/image.jpg)
 ```
-
-### ToDo
-
-* [ ] Header and footer directive
 
 ## Markup
 
@@ -294,6 +339,38 @@ section::after {
 Please refer to [the default style of `section::after` in a scaffold theme](src/theme/scaffold.js) as well.
 
 > :information_source: The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
+
+#### Header and footer
+
+`header` element and `footer` element have a possible to be rendered by [local directives](#header-and-footer). _Marpit has no default style for these elements._
+
+If you want to place to marginals of slide, using `position: absolute` would be a good solution.
+
+```css
+section {
+  padding: 50px;
+}
+
+header,
+footer {
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  height: 20px;
+}
+
+header {
+  top: 30px;
+}
+
+footer {
+  bottom: 30px;
+}
+```
+
+Of course, you can use the other way as needed (Flexbox, Grid, etc...).
+
+You can even hide by `display: none` when you are scared a corrupted layout caused by inserted elements. Poof!
 
 #### Theme set
 
