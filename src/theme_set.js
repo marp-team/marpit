@@ -1,5 +1,6 @@
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssImportTheme from './postcss/import_theme'
 import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
@@ -160,6 +161,7 @@ class ThemeSet {
 
     const packer = postcss(
       [
+        postcssImportTheme(this, theme),
         opts.printable &&
           postcssPrintable({
             width: this.getThemeProp(theme, 'width'),

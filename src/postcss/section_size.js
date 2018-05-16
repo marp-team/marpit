@@ -19,6 +19,7 @@ const plugin = postcss.plugin(
           const { prop } = decl
           const value = decl.value.trim()
 
+          // TODO: Support import theme plugin
           ret.marpitSectionSize[prop] = value
         })
       }
