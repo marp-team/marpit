@@ -1,7 +1,6 @@
 /* eslint no-prototype-builtins: 0 */
 import assert from 'assert'
 import dedent from 'dedent'
-import postcss from 'postcss'
 import scaffoldTheme from '../src/theme/scaffold'
 import { ThemeSet, Theme } from '../src/index'
 
@@ -210,29 +209,6 @@ describe('ThemeSet', () => {
 
     it('returns false when specified name is not contained', () =>
       assert(!instance.has('test-theme')))
-  })
-
-  describe('#pack', () => {
-    it.only('returns imported CSS when packaged theme has @import with another theme', () => {
-      instance.add(dedent`
-        /* @theme override */
-        @import "base";
-        section { --decl: override; }
-      `)
-
-      instance.add(dedent`
-        /* @theme base */
-        section { --decl: base; }
-      `)
-
-      return postcss()
-        .process(instance.pack('override'), { from: undefined })
-        .then(result => {
-          const decls = []
-          result.root.walkDecls('--decl', decl => decls.push(decl.value))
-          assert.deepStrictEqual(decls, ['base', 'override'])
-        })
-    })
   })
 
   describe('#themes', () => {
