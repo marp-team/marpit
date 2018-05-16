@@ -7,7 +7,7 @@ import postcss from 'postcss'
  *
  * Parse `@import` and `@import-theme` rules that specify a plain string.
  *
- * @alias module:postcss/import_theme
+ * @alias module:postcss/import/parse
  */
 const plugin = postcss.plugin(
   'marpit-postcss-import-parse',
