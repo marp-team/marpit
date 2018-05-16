@@ -49,7 +49,7 @@ export const globals = {
  *     a `<footer>` element to the last of each slide contents.
  * @prop {Directive} header Specify the content of slide header. It will insert
  *     a `<header>` element to the first of each slide contents.
- * @prop {Directive} pagination Show page number on the slide if you set `true`.
+ * @prop {Directive} paginate Show page number on the slide if you set `true`.
  */
 export const locals = {
   backgroundImage(value) {
