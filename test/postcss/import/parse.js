@@ -24,6 +24,12 @@ describe('Marpit PostCSS import parse plugin', () => {
       }
     ))
 
+  it('parses multiple @import rules', () =>
+    run("@import 'theme1';\n@import 'theme2'").then(result => {
+      const values = result.marpitImport.map(rule => rule.value)
+      assert.deepStrictEqual(values, ['theme1', 'theme2'])
+    }))
+
   it('parses @import rule with escaped character correctly', () =>
     run('@import "\\"escaped\\""').then(result => {
       const [imported] = result.marpitImport
