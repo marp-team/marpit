@@ -3,6 +3,19 @@
 import postcss from 'postcss'
 
 /**
+ * @typedef {object} ImportMeta
+ * @prop {ImportMetaSource} end The ending position of source.
+ * @prop {ImportMetaSource} start The starting position of source.
+ * @prop {string} value The specified value.
+ */
+
+/**
+ * @typedef {object} ImportMetaSource
+ * @prop {number} column
+ * @prop {number} line
+ */
+
+/**
  * Marpit PostCSS import parse plugin.
  *
  * Parse `@import` and `@import-theme` rules that specify a plain string.
