@@ -4,15 +4,8 @@ import postcss from 'postcss'
 
 /**
  * @typedef {object} ImportMeta
- * @prop {ImportMetaSource} end The ending position of source.
- * @prop {ImportMetaSource} start The starting position of source.
+ * @prop {AtRule} node The at-rule node parsed by PostCSS.
  * @prop {string} value The specified value.
- */
-
-/**
- * @typedef {object} ImportMetaSource
- * @prop {number} column
- * @prop {number} line
  */
 
 /**
@@ -45,11 +38,7 @@ const plugin = postcss.plugin(
             return false
           })
 
-          ret.marpitImport.push({
-            end: node.source.end,
-            start: node.source.start,
-            value,
-          })
+          ret.marpitImport.push({ node, value })
         } else if (node.name !== 'charset') {
           return false
         }

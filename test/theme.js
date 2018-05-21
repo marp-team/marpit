@@ -62,17 +62,9 @@ describe('Theme', () => {
       `)
 
       it('returns Theme instance that has width and height props', () =>
-        assert.deepStrictEqual(instance.importRules, [
-          {
-            value: 'another-theme',
-            start: { line: 2, column: 1 },
-            end: { line: 2, column: 24 },
-          },
-          {
-            value: 'yet-another',
-            start: { line: 3, column: 1 },
-            end: { line: 3, column: 27 },
-          },
+        assert.deepStrictEqual(instance.importRules.map(r => r.value), [
+          'another-theme',
+          'yet-another',
         ]))
     })
   })

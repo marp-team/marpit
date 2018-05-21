@@ -18,9 +18,8 @@ describe('Marpit PostCSS import parse plugin', () => {
       result => {
         const [imported] = result.marpitImport
 
+        assert(imported.node.type === 'atrule')
         assert(imported.value === 'theme')
-        assert.deepStrictEqual(imported.start, { line: 3, column: 1 })
-        assert.deepStrictEqual(imported.end, { line: 3, column: 16 })
       }
     ))
 
@@ -41,8 +40,6 @@ describe('Marpit PostCSS import parse plugin', () => {
       const [imported] = result.marpitImport
 
       assert(imported.value === "'theme'")
-      assert.deepStrictEqual(imported.start, { line: 1, column: 1 })
-      assert.deepStrictEqual(imported.end, { line: 1, column: 48 })
     }))
 
   it('does not parse @import rule when it is not preceded any rules', () =>
