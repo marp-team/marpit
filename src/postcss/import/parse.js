@@ -38,6 +38,7 @@ const plugin = postcss.plugin(
             return false
           })
 
+          node.marpitImportParse = value
           ret.marpitImport.push({ node, value })
         } else if (node.name !== 'charset') {
           return false

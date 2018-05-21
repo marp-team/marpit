@@ -221,8 +221,14 @@ describe('ThemeSet', () => {
       })
 
       it('throws error when circular import is detected', () => {
-        assert.throws(() => instance.getThemeProp('circular-import', 'width'))
-        assert.throws(() => instance.getThemeProp('nested-circular', 'width'))
+        assert.throws(
+          () => instance.getThemeProp('circular-import', 'width'),
+          'Circular "circular-import" theme import is detected.'
+        )
+        assert.throws(
+          () => instance.getThemeProp('nested-circular', 'width'),
+          'Circular "nested-circular" theme import is detected.'
+        )
       })
 
       it('ignores importing undefined theme and fallbacks to scaffold value', () =>

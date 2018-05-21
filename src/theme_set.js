@@ -1,5 +1,6 @@
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssImportReplace from './postcss/import/replace'
 import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
@@ -120,7 +121,7 @@ class ThemeSet {
       const { name } = themeInstance
 
       if (importedThemes.includes(name))
-        throw new Error('Circular theme import is detected.')
+        throw new Error(`Circular "${name}" theme import is detected.`)
 
       importedProps = themeInstance.importRules
         .map(r => {
@@ -184,6 +185,7 @@ class ThemeSet {
 
     const packer = postcss(
       [
+        postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
             width: this.getThemeProp(theme, 'width'),
