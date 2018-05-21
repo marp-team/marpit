@@ -13,16 +13,28 @@ import postcss from 'postcss'
  *
  * Parse `@import` and `@import-theme` rules that specify a plain string.
  *
+ * The `@import` rule for Marpit theme follows CSS spec. It must precede all
+ * other statements. (excepted `@charset`)
+ *
+ * When you are using CSS preprocessors like Sass, `@import` would resolve path
+ * in compiling and would be lost definition. So you can use `@import-theme`
+ * rule alternatively.
+ *
+ * A specification of `@import-theme` has a bit different from `@import`. You
+ * can place `@import-theme` rule at any in the CSS root, and the content of
+ * imported theme will always append to the beginning of CSS.
+ *
  * @alias module:postcss/import/parse
  */
 const plugin = postcss.plugin(
   'marpit-postcss-import-parse',
   () => (css, ret) => {
-    ret.marpitImport = ret.marpitImport || []
+    const imports = { import: [], importTheme: [] }
+    let allowImport = true
 
     css.walk(node => {
       if (node.type === 'atrule') {
-        if (node.name === 'import' || node.name === 'import-theme') {
+        const push = target => {
           const [quote] = node.params
           if (quote !== '"' && quote !== "'") return
 
@@ -39,14 +51,26 @@ const plugin = postcss.plugin(
           })
 
           node.marpitImportParse = value
-          ret.marpitImport.push({ node, value })
-        } else if (node.name !== 'charset') {
-          return false
+          target.push({ node, value })
+        }
+
+        if (allowImport) {
+          if (node.name === 'import') {
+            push(imports.import)
+          } else if (node.name !== 'charset') {
+            allowImport = false
+          }
+        }
+
+        if (node.name === 'import-theme' && node.parent.type === 'root') {
+          push(imports.importTheme)
         }
       } else if (node.type !== 'comment') {
-        return false
+        allowImport = false
       }
     })
+
+    ret.marpitImport = [...imports.importTheme, ...imports.import]
   }
 )
 

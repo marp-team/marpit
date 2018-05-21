@@ -7,6 +7,9 @@ import postcssImportParse from './parse'
  *
  * Replace parsed `@import` / `@import-theme` rules.
  *
+ * Please see {@link module:postcss/import/parse} about the specification of
+ * each syntax.
+ *
  * @alias module:postcss/import/replace
  * @param {ThemeSet} themeSet ThemeSet instance.
  */
@@ -16,6 +19,8 @@ const plugin = postcss.plugin(
     postcss([
       postcssImportParse,
       css => {
+        const prepends = []
+
         css.walk(node => {
           const name = node.marpitImportParse
 
@@ -26,14 +31,22 @@ const plugin = postcss.plugin(
               if (importedThemes.includes(name))
                 throw new Error(`Circular "${name}" theme import is detected.`)
 
-              node.replaceWith(
-                postcss([plugin(themeSet, [...importedThemes, name])]).process(
-                  theme.css
-                ).root || ''
-              )
+              const processed = postcss([
+                plugin(themeSet, [...importedThemes, name]),
+              ]).process(theme.css)
+
+              if (node.name === 'import') {
+                node.replaceWith(processed.root || '')
+              } else if (node.name === 'import-theme') {
+                node.remove()
+                prepends.push(processed.root)
+              }
             }
           }
         })
+
+        if (prepends.length > 0)
+          [...prepends].reverse().forEach(root => css.first.before(root))
       },
     ])
 )
