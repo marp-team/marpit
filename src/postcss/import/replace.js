@@ -36,8 +36,8 @@ const plugin = postcss.plugin(
               ]).process(theme.css)
 
               if (node.name === 'import') {
-                node.replaceWith(processed.root || '')
-              } else if (node.name === 'import-theme') {
+                node.replaceWith(processed.root)
+              } else {
                 node.remove()
                 prepends.push(processed.root)
               }

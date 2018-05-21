@@ -37,6 +37,11 @@ describe('Marpit PostCSS import replace plugin', () => {
       )
     ))
 
+  it('ignores when the specified theme is not defined in ThemeSet', () =>
+    run('@import "unknown";').then(({ css }) =>
+      assert(css === '@import "unknown";')
+    ))
+
   context('with using @import-theme rule', () => {
     it('imports to the beginning of CSS', () =>
       run('body { color: red; }\n\n@import-theme "imported"').then(({ css }) =>

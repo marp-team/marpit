@@ -42,6 +42,11 @@ describe('Marpit PostCSS import parse plugin', () => {
       assert(imported.value === "'theme'")
     }))
 
+  it('does not parse @import rule when it specifies URL data type', () =>
+    run("@import url('https://example.com/example.css')").then(result =>
+      assert(result.marpitImport.length === 0)
+    ))
+
   it('does not parse @import rule when it is not preceded any rules', () =>
     Promise.all([
       run("b { color: red; }\n@import 'theme';").then(result =>
