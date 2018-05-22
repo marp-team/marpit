@@ -1,6 +1,7 @@
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
+import postcssImportRollup from './postcss/import/rollup'
 import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
@@ -197,6 +198,7 @@ class ThemeSet {
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
         opts.inlineSVG === 'workaround' && postcssInlineSVGWorkaround,
+        postcssImportRollup,
       ].filter(p => p)
     )
 
