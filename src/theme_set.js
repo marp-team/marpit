@@ -1,5 +1,6 @@
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssImportReplace from './postcss/import/replace'
 import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
@@ -103,22 +104,46 @@ class ThemeSet {
   }
 
   /**
-   * Returns the value of property from a specified theme.
+   * Returns the value of property from a specified theme. It considers
+   * `@import` rules in getting property value.
    *
    * It will fallback the reference object into the instance's default theme or
-   * scaffold theme when the specified theme/property is undefined.
+   * scaffold theme when the specified theme is undefined.
    *
    * @param {string|Theme} theme The theme name or instance.
    * @param {string} prop The property name to get.
    */
-  getThemeProp(theme, prop) {
+  getThemeProp(theme, prop, importedThemes = []) {
+    let importedProps = []
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
 
-    return (
-      (themeInstance && themeInstance[prop]) ||
-      (this.default && this.default[prop]) ||
-      scaffold[prop]
-    )
+    if (themeInstance) {
+      const { name } = themeInstance
+
+      if (importedThemes.includes(name))
+        throw new Error(`Circular "${name}" theme import is detected.`)
+
+      importedProps = themeInstance.importRules
+        .map(r => {
+          const importTheme = this.get(r.value)
+          return importTheme
+            ? this.getThemeProp(
+                importTheme,
+                prop,
+                [...importedThemes, name].filter(n => n)
+              )
+            : undefined
+        })
+        .filter(r => r)
+        .reverse()
+    }
+
+    return [
+      themeInstance && themeInstance[prop],
+      ...importedProps,
+      this.default && this.default[prop],
+      scaffold[prop],
+    ].find(t => t)
   }
 
   /**
@@ -160,6 +185,7 @@ class ThemeSet {
 
     const packer = postcss(
       [
+        postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
             width: this.getThemeProp(theme, 'width'),

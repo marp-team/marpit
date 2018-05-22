@@ -13,7 +13,8 @@ describe('Theme', () => {
 
       assert(instance.name === 'test-theme')
       assert(instance.css === css)
-      assert.deepEqual(instance.meta, { theme: 'test-theme' })
+      assert.deepStrictEqual(instance.meta, { theme: 'test-theme' })
+      assert.deepStrictEqual(instance.importRules, [])
       assert(instance.width === undefined)
       assert(instance.height === undefined)
     })
@@ -51,6 +52,20 @@ describe('Theme', () => {
         assert(instance.width === '960px')
         assert(instance.height === '720px')
       })
+    })
+
+    context('when CSS has @import rules', () => {
+      const instance = Theme.fromCSS(dedent`
+        /* @theme test-theme */
+        @import "another-theme";
+        @import-theme "yet-another"
+      `)
+
+      it('returns Theme instance that has width and height props', () =>
+        assert.deepStrictEqual(instance.importRules.map(r => r.value), [
+          'yet-another', // @import-theme prepends to the beginning
+          'another-theme',
+        ]))
     })
   })
 
