@@ -1,4 +1,5 @@
 import postcss from 'postcss'
+import postcssImportParse from './postcss/import/parse'
 import postcssMeta from './postcss/meta'
 import postcssSectionSize from './postcss/section_size'
 
@@ -26,7 +27,11 @@ const convertToPixel = value => {
 }
 
 const memoizeProp = name => `${name}Memoized`
-const postcssParser = postcss([postcssMeta, postcssSectionSize])
+const postcssParser = postcss([
+  postcssMeta,
+  postcssSectionSize,
+  postcssImportParse,
+])
 
 /**
  * Marpit theme class.
@@ -62,6 +67,12 @@ class Theme {
     this.meta = {}
 
     /**
+     * Parsed `@import` rules.
+     * @type {module:postcss/import/parse~ImportMeta[]}
+     */
+    this.importRules = []
+
+    /**
      * Slide width. It requires the absolute unit supported in CSS.
      * @type {string}
      */
@@ -94,7 +105,9 @@ class Theme {
 
     const theme = new Theme(result.marpitMeta.theme, css)
 
+    theme.importRules = [...result.marpitImport]
     theme.meta = { ...result.marpitMeta }
+
     Object.assign(theme, { ...result.marpitSectionSize })
 
     return Object.freeze(theme)

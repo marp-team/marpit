@@ -145,6 +145,20 @@ describe('ThemeSet', () => {
           height: 480px;
         }
       `)
+
+      // @import rules
+      instance.add('/* @theme import */\n@import "imported";')
+      instance.add('/* @theme imported */\nsection { width: 100px; }')
+      instance.add('/* @theme double-import */\n@import "double-imported";')
+      instance.add('/* @theme double-imported */\n@import "imported";')
+
+      // Circular @import
+      instance.add('/* @theme circular-import */\n@import "circular-import";')
+      instance.add('/* @theme nested-circular */\n@import "nested-circular2";')
+      instance.add('/* @theme nested-circular2 */\n@import "nested-circular";')
+
+      // Import undefined theme
+      instance.add('/* @theme undefined-theme */\n@import "ignore"')
     })
 
     const { width, height } = scaffoldTheme
@@ -198,6 +212,27 @@ describe('ThemeSet', () => {
 
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
         assert(instance.getThemeProp('not-contained', 'height') === height))
+    })
+
+    context('with @import rules', () => {
+      it('returns the value defined at imported theme', () => {
+        assert(instance.getThemeProp('import', 'width') === '100px')
+        assert(instance.getThemeProp('double-import', 'width') === '100px')
+      })
+
+      it('throws error when circular import is detected', () => {
+        assert.throws(
+          () => instance.getThemeProp('circular-import', 'width'),
+          'Circular "circular-import" theme import is detected.'
+        )
+        assert.throws(
+          () => instance.getThemeProp('nested-circular', 'width'),
+          'Circular "nested-circular" theme import is detected.'
+        )
+      })
+
+      it('ignores importing undefined theme and fallbacks to scaffold value', () =>
+        assert(instance.getThemeProp('undefined-theme', 'width') === width))
     })
   })
 

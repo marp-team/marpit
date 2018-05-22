@@ -372,6 +372,54 @@ Of course, you can use the other way as needed (Flexbox, Grid, etc...).
 
 You can even hide by `display: none` when you are scared a corrupted layout caused by inserted elements. Poof!
 
+#### `@import` another theme
+
+We support importing another theme with CSS [`@import`](https://developer.mozilla.org/en-US/docs/Web/CSS/@import) rule. You can make a customized theme based on any theme.
+
+For example, you can dye a boring monochrome theme to a brilliant orange as follows:
+
+```css
+/* @theme base */
+
+section {
+  background: #fff;
+  color: #333;
+}
+```
+
+```css
+/* @theme customized */
+
+@import 'base';
+
+section {
+  background: #f80;
+  color: #fff;
+}
+```
+
+`@import` follows [CSS rules](https://developer.mozilla.org/en-US/docs/Web/CSS/@import): it must precede all other statements excepted `@charset`.
+
+> :information_source: The base theme must be added by using `Marpit.themeSet.add(css)` in advance.
+
+##### `@import-theme`
+
+When you are using CSS preprocessors like [Sass](https://sass-lang.com/), _`@import` might resolve path in compiling_ and be lost definitions. So you can use `@import-theme` rule alternatively.
+
+```scss
+$bg-color: #f80;
+$text-color: #fff;
+
+@import-theme 'base';
+
+section {
+  background: $bg-color;
+  color: $text-color;
+}
+```
+
+`@import-theme` can place on anywhere of the root of CSS, and the imported contents is inserted to the beginning of CSS in order.
+
 #### Theme set
 
 The `Marpit` instance has a `themeSet` member that manages usable themes in the `theme` directive of Marpit Markdown. You have to add theme CSS by using `themeSet.add(string)`.
