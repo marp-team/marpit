@@ -4,6 +4,7 @@
 
 * Add `header` and `footer` directives ([#22](https://github.com/marp-team/marpit/pull/22))
 * Support importing other theme CSS with `@import` (or `@import-theme`) ([#24](https://github.com/marp-team/marpit/pull/24))
+* Add PostCSS import rollup plugin to work `@charset` and `@import` at-rules correctly ([#26](https://github.com/marp-team/marpit/pull/26))
 
 ## v0.0.5 - 2018-05-12
 
