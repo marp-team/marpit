@@ -108,9 +108,9 @@ describe('Marpit background image plugin', () => {
         lowerCaseTags: false,
       })
 
-    it('renders the structure for advanced background to another foreignObject', () => {
+    it('renders advanced background to another foreignObject', () => {
       const $ = $load(mdSVG().render('![bg](image)'))
-      assert($('svg[viewBox="0 0 100 100"] > foreignObject').length === 2)
+      assert($('svg[viewBox="0 0 100 100"] > foreignObject').length === 3)
 
       const bg = $('svg > foreignObject:first-child')
       const bgSection = bg.find(
@@ -134,7 +134,9 @@ describe('Marpit background image plugin', () => {
 
     it('assigns data attribute to section element of the slide content', () => {
       const $ = $load(mdSVG().render('![bg](image)\n\n# test'))
-      const slideSection = $('svg > foreignObject:last-child > section')
+      const slideSection = $(
+        'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+      )
 
       assert(slideSection.find('h1').length === 1)
       assert(slideSection.attr('data-marpit-advanced-background') === 'content')
@@ -174,24 +176,28 @@ describe('Marpit background image plugin', () => {
     splitBackgroundKeywords.forEach(keyword => {
       context(`with the ${keyword} keyword for split background`, () => {
         const $ = $load(mdSVG().render(`![bg ${keyword}](image)`))
-        const foreignObject = $('svg > foreignObject:last-child')
+        const section = $(
+          'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+        )
+        const foreignObject = section.parent()
 
-        it('assigns the width attribute of foreignObject for content as 50%', () => {
-          assert(foreignObject.attr('width') === '50%')
-        })
+        it('assigns the width attribute of foreignObject for content as 50%', () =>
+          assert(foreignObject.attr('width') === '50%'))
 
-        it('assigns data attribute of the keyword for split background', () => {
-          const section = foreignObject.find('> section')
+        it('assigns data attribute of the keyword for split background', () =>
           assert(
             section.attr('data-marpit-advanced-background-split') === keyword
-          )
-        })
+          ))
       })
     })
 
     it('assigns x attribute of foreignObject for content as 50% with left keyword', () => {
       const $ = $load(mdSVG().render(`![bg left](image)`))
-      const foreignObject = $('svg > foreignObject:last-child')
+      const section = $(
+        'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+      )
+      const foreignObject = section.parent()
+
       assert(foreignObject.attr('x') === '50%')
     })
 
@@ -201,7 +207,9 @@ describe('Marpit background image plugin', () => {
         const $ = $load(mdSVG().render(`![bg right](a) ![bg left](b)`))
 
         it('uses the last defined keyword', () => {
-          const section = $('svg > foreignObject:last-child > section')
+          const section = $(
+            'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+          )
           assert(
             section.attr('data-marpit-advanced-background-split') === 'left'
           )
@@ -292,17 +300,13 @@ describe('Marpit background image plugin', () => {
     context('with paginate directive', () => {
       const $ = $load(mdSVG().render('<!-- paginate: true --> ![bg](test)'))
 
-      it('appends <foreignObject data-marpit-advanced-background="pagination"> to last', () => {
+      it('assigns data-marpit-pagination attribute to pseudo layer', () => {
         const foreignObjects = $('svg > foreignObject')
         assert(foreignObjects.length === 3)
 
         const lastFO = foreignObjects.eq(2)
-        assert(lastFO.is('[data-marpit-advanced-background="pagination"]'))
-        assert(
-          lastFO
-            .find('> section')
-            .is('[data-marpit-advanced-background="pagination"]')
-        )
+        assert(lastFO.is('[data-marpit-advanced-background="pseudo"]'))
+        assert(lastFO.find('> section').is('[data-marpit-pagination="1"]'))
       })
     })
   })

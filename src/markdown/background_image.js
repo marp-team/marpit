@@ -189,29 +189,27 @@ function backgroundImage(md) {
             t,
           ]
         } else if (current && t.type === 'marpit_inline_svg_content_close') {
-          const { open } = current.meta.marpitBackground
-          const marpitPagination = open.attrGet('data-marpit-pagination')
+          const { open, height, width } = current.meta.marpitBackground
 
-          if (marpitPagination) {
-            const { height, width } = current.meta.marpitBackground
-            tokens = [
-              t,
-              ...wrapTokens(
-                'marpit_advanced_background_foreign_object',
-                {
-                  tag: 'foreignObject',
-                  width,
-                  height,
-                  'data-marpit-advanced-background': 'pagination',
-                },
-                wrapTokens('marpit_advanced_pagination_section', {
-                  tag: 'section',
-                  'data-marpit-advanced-background': 'pagination',
-                  'data-marpit-pagination': marpitPagination,
-                })
-              ),
-            ]
-          }
+          tokens = [
+            t,
+            ...wrapTokens(
+              'marpit_advanced_background_foreign_object',
+              {
+                tag: 'foreignObject',
+                width,
+                height,
+                'data-marpit-advanced-background': 'pseudo',
+              },
+              wrapTokens('marpit_advanced_pseudo_section', {
+                tag: 'section',
+                'data-marpit-advanced-background': 'pseudo',
+                'data-marpit-pagination': open.attrGet(
+                  'data-marpit-pagination'
+                ),
+              })
+            ),
+          ]
 
           current = undefined
         }
