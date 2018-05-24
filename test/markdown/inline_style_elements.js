@@ -30,20 +30,39 @@ describe('Marpit inline style elements plugin', () => {
 
       it('extracts style and stores to token meta', () => {
         const parsed = markdown.parse(text)
-        const styles = parsed.reduce((arr, token) => {
-          if (token.meta && token.meta.marpitInlineStyleElements)
-            return [...arr, ...token.meta.marpitInlineStyleElements]
-
-          return arr
-        }, [])
+        const styles = parsed.reduce(
+          (arr, token) =>
+            token.meta && token.meta.marpitInlineStyleElements
+              ? [...arr, ...token.meta.marpitInlineStyleElements]
+              : arr,
+          []
+        )
 
         assert(styles.includes('strong { color: red; }'))
         assert(styles.includes('a { color: blue; }'))
       })
 
-      it('strips comment in rendering', () => {
+      it('strips style element in rendering', () => {
         const $ = cheerio.load(markdown.render(text))
         assert($('style').length === 0)
+      })
+
+      const ignoreCases = {
+        'inline code': '`<style>b { color: red; }</style>`',
+        'code block': '\t<style>b { color: red; }</style>',
+        fence: '```\n<style>b { color: red; }</style>\n```',
+      }
+
+      Object.keys(ignoreCases).forEach(elementType => {
+        context(`when ${elementType} has <style> HTML tag`, () => {
+          it('keeps HTML', () => {
+            const $ = cheerio.load(markdown.render(ignoreCases[elementType]))
+            const code = $('code').text()
+
+            assert($('style').length === 0)
+            assert(code.trim() === '<style>b { color: red; }</style>')
+          })
+        })
       })
     })
   })
