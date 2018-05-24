@@ -2,11 +2,11 @@ import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
-import styleElements from '../../src/markdown/style_elements'
+import styleParse from '../../../src/markdown/style/parse'
 
-describe('Marpit style elements plugin', () => {
+describe('Marpit style parse plugin', () => {
   const md = (mdOption = {}) =>
-    new MarkdownIt('commonmark', mdOption).use(styleElements)
+    new MarkdownIt('commonmark', mdOption).use(styleParse)
 
   const text = dedent`
     <style>strong { color: red; }</style>

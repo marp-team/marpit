@@ -4,25 +4,25 @@ const styleMatcherOpening = /^<style(?=(\s|>|$))/i
 const styleMatcherClosing = /<\/style>/i
 
 /**
- * Marpit style elements plugin.
+ * Marpit style parse plugin.
  *
- * Parse `<style>` element as the hidden `marpit_style` token. The parsed style
+ * Parse `<style>` elements as the hidden `marpit_style` token. The parsed style
  * token's content will use in {@link ThemeSet#pack} to append custom style.
  *
  * `<style>` elements will strip regardless of html setting provided by
  * markdown-it.
  *
- * @alias module:markdown/style_elements
+ * @alias module:markdown/style/parse
  * @param {MarkdownIt} md markdown-it instance.
  */
-function styleElements(md) {
+function parse(md) {
   /**
    * Based on markdown-it html_block rule
    * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
    */
   md.block.ruler.before(
     'html_block',
-    'marpit_style_elements',
+    'marpit_style_parse',
     (state, startLine, endLine, silent) => {
       // Fast fail
       let pos = state.bMarks[startLine] + state.tShift[startLine]
@@ -64,4 +64,4 @@ function styleElements(md) {
   )
 }
 
-export default styleElements
+export default parse
