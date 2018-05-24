@@ -67,7 +67,7 @@ describe('Marpit comment plugin', () => {
       })
 
       const ignoreCases = {
-        'inline code': 'try <!-- code -->',
+        'inline code': '`<!-- code -->`',
         'code block': '\t<!-- code -->',
         fence: '```\n<!-- code -->\n```',
       }
