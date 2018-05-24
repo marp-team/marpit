@@ -5,8 +5,16 @@ import MarkdownIt from 'markdown-it'
 import styleParse from '../../../src/markdown/style/parse'
 
 describe('Marpit style parse plugin', () => {
-  const md = (mdOption = {}) =>
-    new MarkdownIt('commonmark', mdOption).use(styleParse)
+  const marpitStub = { options: { inlineStyle: true } }
+  const md = (marpit = marpitStub, mdOption = {}) =>
+    new MarkdownIt('commonmark', mdOption).use(styleParse, marpit)
+
+  it("ignores parse when Marpit's inlineStyle option is false", () =>
+    assert(
+      md({ options: { inlineStyle: false } })
+        .parse('<style>b { color: #000; }</style>')
+        .every(t => t.type !== 'marpit_style')
+    ))
 
   const text = dedent`
     <style>strong { color: red; }</style>
@@ -27,14 +35,11 @@ describe('Marpit style parse plugin', () => {
     fence: '```\n<style>b { color: red; }</style>\n```',
   }
 
-  it('ignores in #renderInline', () =>
-    assert(md().renderInline('<!-- test -->') === '<!-- test -->'))
-
   const htmls = [true, false]
 
   htmls.forEach(html => {
     context(`with html option as ${html}`, () => {
-      const markdown = md({ html })
+      const markdown = md(marpitStub, { html })
       const pickStyles = tokens =>
         tokens.reduce(
           (arr, token) =>
