@@ -34,6 +34,10 @@ section::after {
   right: 0;
 }
 
+section:not([data-marpit-pagination])::after {
+  display: none;
+}
+
 [data-marpit-emoji] {
   font-family: ${emojiFonts.map(f => `'${f}'`).join(',')};
 }
