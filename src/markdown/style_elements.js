@@ -1,5 +1,5 @@
 /** @module */
-const styleMatcher = /^<style.*?>([\s\S]*?)<\/style>/i
+const styleMatcher = /<style[\s\S]*?>([\s\S]*?)<\/style>/i
 const styleMatcherOpening = /^<style(?=(\s|>|$))/i
 const styleMatcherClosing = /<\/style>/i
 

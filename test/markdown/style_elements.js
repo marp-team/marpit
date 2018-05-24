@@ -13,9 +13,10 @@ describe('Marpit style elements plugin', () => {
 
     **Inline style**
 
-    parse
+    <style-like></style-like>
 
-    <style type="text/css">
+    <style
+      type="text/css">
       a { color: blue; }
     </style>
   `
@@ -26,9 +27,8 @@ describe('Marpit style elements plugin', () => {
     fence: '```\n<style>b { color: red; }</style>\n```',
   }
 
-  it('ignores in #renderInline', () => {
-    assert(md().renderInline('<!-- test -->') === '<!-- test -->')
-  })
+  it('ignores in #renderInline', () =>
+    assert(md().renderInline('<!-- test -->') === '<!-- test -->'))
 
   const htmls = [true, false]
 
@@ -42,13 +42,11 @@ describe('Marpit style elements plugin', () => {
           []
         )
 
-      it('extracts style and stores to "marpit_style" token', () => {
-        const parsed = markdown.parse(text)
-        assert.deepStrictEqual(pickStyles(parsed), [
+      it('extracts style and stores to "marpit_style" token', () =>
+        assert.deepStrictEqual(pickStyles(markdown.parse(text)), [
           'strong { color: red; }',
           'a { color: blue; }',
-        ])
-      })
+        ]))
 
       it('strips style element in rendering', () => {
         const $ = cheerio.load(markdown.render(text))
