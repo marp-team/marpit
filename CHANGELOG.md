@@ -6,6 +6,7 @@
 * Support importing other theme CSS with `@import` (or `@import-theme`) ([#24](https://github.com/marp-team/marpit/pull/24))
 * Add PostCSS import rollup plugin to work `@charset` and `@import` at-rules correctly ([#26](https://github.com/marp-team/marpit/pull/26))
 * Change role of pagination layer to pseudo layer on advanced background ([#27](https://github.com/marp-team/marpit/pull/27))
+* Hide `section::after` pseudo-element without pagination ([#29](https://github.com/marp-team/marpit/pull/29))
 
 ## v0.0.5 - 2018-05-12
 
