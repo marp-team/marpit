@@ -31,6 +31,12 @@ describe('Marpit comment plugin', () => {
   htmls.forEach(html => {
     context(`with html option as ${html}`, () => {
       const markdown = md({ html })
+      const extractComments = $cheerio =>
+        $cheerio('*')
+          .contents()
+          .filter(function filterComment() {
+            return this.nodeType === 8
+          })
 
       it('extracts comment and stores to token meta', () => {
         const parsed = markdown.parse(text)
@@ -49,11 +55,7 @@ describe('Marpit comment plugin', () => {
 
       it('strips comment in rendering', () => {
         const $ = cheerio.load(markdown.render(text))
-        const comments = $('*')
-          .contents()
-          .filter(function filterComment() {
-            return this.nodeType === 8
-          })
+        const comments = extractComments($)
 
         assert(comments.length === 0)
         assert($('h1').length === 1)
@@ -62,6 +64,25 @@ describe('Marpit comment plugin', () => {
         assert($('h2').text() === 'bar')
         assert($('h3').length === 1)
         assert($('h3').text() === '')
+      })
+
+      const ignoreCases = {
+        'inline code': 'try <!-- code -->',
+        'code block': '\t<!-- code -->',
+        fence: '```\n<!-- code -->\n```',
+      }
+
+      Object.keys(ignoreCases).forEach(elementType => {
+        context(`when ${elementType} has HTML comment`, () => {
+          it('keeps HTML comment', () => {
+            const $ = cheerio.load(markdown.render(ignoreCases[elementType]))
+            const comments = extractComments($)
+            const code = $('code')
+
+            assert(comments.length === 0)
+            assert(code.text().trim() === '<!-- code -->')
+          })
+        })
       })
     })
   })
