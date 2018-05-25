@@ -12,6 +12,7 @@ import marpitParseDirectives from './markdown/directives/parse'
 import marpitParseImage from './markdown/parse_image'
 import marpitSlide from './markdown/slide'
 import marpitSlideContainer from './markdown/slide_container'
+import marpitStyleAssign from './markdown/style/assign'
 import marpitStyleParse from './markdown/style/parse'
 import marpitSweep from './markdown/sweep'
 import marpitUnicodeEmoji from './markdown/unicode_emoji'
@@ -103,6 +104,7 @@ class Marpit {
       .use(marpitUnicodeEmoji)
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
+      .use(marpitStyleAssign, this)
 
     if (this.options.backgroundSyntax) md.use(marpitBackgroundImage)
   }
