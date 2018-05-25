@@ -27,6 +27,14 @@ describe('Marpit style assign plugin', () => {
 
       assert.deepStrictEqual(marpit.lastStyles, ['b { color: red; }'])
     })
+
+    it('ignores parsing style in #renderInline', () => {
+      const marpit = marpitStub()
+      const text = '<style>b { color: red; }</style>'
+
+      assert(md(marpit).renderInline(text) === text)
+      assert(!marpit.lastStyles)
+    })
   })
 
   context('with style global directive', () => {
