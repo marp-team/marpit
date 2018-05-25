@@ -153,6 +153,7 @@ class Marpit {
    */
   renderStyle(theme) {
     return this.themeSet.pack(theme, {
+      appendStyle: this.lastStyles && this.lastStyles.join('\n'),
       containers: [...this.containers, ...this.slideContainers],
       inlineSVG: this.options.inlineSVG,
       printable: this.options.printable,

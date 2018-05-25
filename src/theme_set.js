@@ -168,6 +168,7 @@ class ThemeSet {
    * @param {string} name The theme name. It will use the instance's default
    *     theme or scaffold theme when a specific named theme does not exist.
    * @param {Object} [opts] The option object passed by {@link Marpit#render}.
+   * @param {string} [opts.appendStyle] A CSS string to append into theme.
    * @param {Element[]} [opts.containers] Container elements wrapping whole
    *     slide deck.
    * @param {boolean} [opts.printable] Make style printable to PDF.
@@ -186,6 +187,7 @@ class ThemeSet {
 
     const packer = postcss(
       [
+        opts.appendStyle && (css => css.last.after(opts.appendStyle)),
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
