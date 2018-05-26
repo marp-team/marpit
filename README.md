@@ -325,6 +325,8 @@ section {
 
 Please notice _these must define a length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
+> :warning: Currently, you cannot tweak slide size through [`<style>` elements](#tweak-theme-in-markdown) or [`style` global directive](#style-global-directive).
+
 ##### Styling paginations
 
 You can style the page number through `section::after` pseudo-element. (It is shown by `paginate` local directive)
