@@ -19,7 +19,7 @@
  * You can use prefix `$` as the name of a directive for the clarity (or
  * compatibility with the old version of Marp).
  *
- * @prop {Directive} style Specify the CSS style to apply additional.
+ * @prop {Directive} style Specify the CSS style to apply additionally.
  * @prop {Directive} theme Specify theme of the slide deck.
  */
 export const globals = {

@@ -7,7 +7,7 @@ const styleMatcherClosing = /<\/style>/i
  * Marpit style parse plugin.
  *
  * Parse `<style>` elements as the hidden `marpit_style` token. The parsed style
- * token's content will use in {@link ThemeSet#pack} to append custom style.
+ * will use in {@link ThemeSet#pack} to append the style additionally.
  *
  * `<style>` elements will strip regardless of html setting provided by
  * markdown-it.

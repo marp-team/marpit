@@ -3,8 +3,8 @@
 /**
  * Marpit style assign plugin.
  *
- * Assign parsed styles in parse plugin and style global directive to Marpit
- * instance's `lastStyles' property.
+ * Assign style global directive and parsed styles to Marpit instance's
+ * `lastStyles' property.
  *
  * @alias module:markdown/style/assign
  * @param {MarkdownIt} md markdown-it instance.
