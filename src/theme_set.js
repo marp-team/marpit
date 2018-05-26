@@ -185,9 +185,16 @@ class ThemeSet {
     if (opts.inlineSVG)
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
 
+    let appendStyle
+    try {
+      appendStyle = postcss.parse(opts.appendStyle, { from: undefined })
+    } catch (e) {
+      // Ignore invalid style
+    }
+
     const packer = postcss(
       [
-        opts.appendStyle && (css => css.last.after(opts.appendStyle)),
+        appendStyle && (css => css.last.after(appendStyle)),
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({

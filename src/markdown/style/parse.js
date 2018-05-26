@@ -59,8 +59,10 @@ function parse(md, marpit) {
       const token = state.push('marpit_style', '', 0)
       token.map = [startLine, nextLine]
       token.markup = state.getLines(startLine, nextLine, state.blkIndent, true)
-      token.content = styleMatcher.exec(token.markup)[1].trim()
       token.hidden = true
+
+      const matchedContent = styleMatcher.exec(token.markup)
+      token.content = matchedContent ? matchedContent[1].trim() : ''
 
       return true
     }
