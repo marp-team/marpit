@@ -325,6 +325,8 @@ section {
 
 Please notice _these must define a length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
+> :warning: Currently, you cannot tweak slide size through [`<style>` elements](#tweak-theme-in-markdown) or [`style` global directive](#style-global-directive).
+
 ##### Styling paginations
 
 You can style the page number through `section::after` pseudo-element. (It is shown by `paginate` local directive)
@@ -419,6 +421,42 @@ section {
 ```
 
 `@import-theme` can place on anywhere of the root of CSS, and the imported contents is inserted to the beginning of CSS in order.
+
+#### Tweak theme in Markdown
+
+You can tweak the theme's style in Markdown. Marpit parses `<style>` HTML element in the context of as same as a theme.
+
+```markdown
+---
+theme: base
+---
+
+<style>
+section {
+  background: yellow;
+}
+</style>
+
+# Tweak theme through the `style` element
+
+You would see a yellow slide.
+```
+
+> :information_source: By default, `<style>` elements will not render in HTML because of processing to bundle additional CSS with theme.
+>
+> You can set `inlineStyle: false` in Marpit constructor option to disable bundling the style elements. In this case, it follows `html` markdown-it option whether render `<style>` as HTML element. Marpit would NOT apply post-processing even though the raw style was rendered as HTML. (e.g. scoping, import theme, etc.)
+
+##### `style` global directive
+
+Instead of a `<style>` element, you can use a [global directive](#directives) too. It could prevent additional styling in the other Markdown editor.
+
+```yaml
+theme: base
+style: |
+  section {
+    background: yellow;
+  }
+```
 
 #### Theme set
 

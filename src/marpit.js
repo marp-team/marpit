@@ -12,6 +12,8 @@ import marpitParseDirectives from './markdown/directives/parse'
 import marpitParseImage from './markdown/parse_image'
 import marpitSlide from './markdown/slide'
 import marpitSlideContainer from './markdown/slide_container'
+import marpitStyleAssign from './markdown/style/assign'
+import marpitStyleParse from './markdown/style/parse'
 import marpitSweep from './markdown/sweep'
 import marpitUnicodeEmoji from './markdown/unicode_emoji'
 
@@ -19,6 +21,7 @@ const defaultOptions = {
   backgroundSyntax: true,
   container: marpitContainer,
   filters: true,
+  inlineStyle: true,
   markdown: 'commonmark',
   printable: true,
   slideContainer: undefined,
@@ -42,6 +45,9 @@ class Marpit {
    *     element(s) wrapping whole slide deck.
    * @param {boolean} [opts.filters=true] Support filter syntax for markdown
    *     image. It can apply to inline image and the advanced backgrounds.
+   * @param {boolean} [opts.inlineStyle=true] Recognize `<style>` elements to
+   *     append additional styles to theme. When it is `true`, Marpit will parse
+   *     style regardless markdown-it's `html` option.
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
@@ -87,6 +93,7 @@ class Marpit {
   applyMarkdownItPlugins(md = this.markdown) {
     md
       .use(marpitComment)
+      .use(marpitStyleParse, this)
       .use(marpitSlide)
       .use(marpitParseDirectives, this)
       .use(marpitApplyDirectives)
@@ -97,6 +104,7 @@ class Marpit {
       .use(marpitUnicodeEmoji)
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
+      .use(marpitStyleAssign, this)
 
     if (this.options.backgroundSyntax) md.use(marpitBackgroundImage)
   }
@@ -145,6 +153,7 @@ class Marpit {
    */
   renderStyle(theme) {
     return this.themeSet.pack(theme, {
+      appendStyle: this.lastStyles && this.lastStyles.join('\n'),
       containers: [...this.containers, ...this.slideContainers],
       inlineSVG: this.options.inlineSVG,
       printable: this.options.printable,
