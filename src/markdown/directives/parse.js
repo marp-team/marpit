@@ -98,8 +98,8 @@ function parse(md, marpit, opts = {}) {
         }
 
         cursor.spot = {}
-      } else if (token.meta.marpitComment) {
-        token.meta.marpitComment.forEach(comment => applyDirectives(comment))
+      } else if (token.type === 'marpit_comment') {
+        applyDirectives(token.content)
       }
     })
 
