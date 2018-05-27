@@ -1,5 +1,5 @@
 /** @module */
-const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/g
+const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/
 const commentMatcherClosing = /-->/
 
