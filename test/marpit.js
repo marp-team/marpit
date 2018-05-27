@@ -156,6 +156,27 @@ describe('Marpit', () => {
         assert(style.includes('filter:blur'))
       })
     })
+
+    context('with inlineStyle option in instance', () => {
+      const instance = inlineStyle => new Marpit({ inlineStyle })
+      const markdown = '<style>section { --style: appended; }</style>'
+
+      it('keeps inline style in HTML when inlineStyle is false', () => {
+        const rendered = instance(false).render(markdown)
+        const $ = cheerio.load(rendered.html)
+
+        assert($('style').length === 1)
+        assert(!rendered.css.includes('--style: appended;'))
+      })
+
+      it('appends style to css when inlineStyle is true', () => {
+        const rendered = instance(true).render(markdown)
+        const $ = cheerio.load(rendered.html)
+
+        assert($('style').length === 0)
+        assert(rendered.css.includes('--style: appended;'))
+      })
+    })
   })
 
   describe('#renderMarkdown', () => {
