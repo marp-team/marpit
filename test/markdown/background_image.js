@@ -30,7 +30,7 @@ describe('Marpit background image plugin', () => {
 
   const bgDirective = (url, mdInstance) => {
     const [first, second] = mdInstance.parse(`![bg](${url})\n\n---`)
-    const secondDirectives = second.meta.marpitDirectives || {}
+    const secondDirectives = (second.meta && second.meta.marpitDirectives) || {}
 
     assert(secondDirectives.backgroundImage === undefined)
     return first.meta.marpitDirectives.backgroundImage
@@ -45,7 +45,7 @@ describe('Marpit background image plugin', () => {
     assert(bgDirective('"md\\Abg"', md()) === 'url("%22md%5CAbg%22")'))
 
   it('overrides an already assigned directive', () => {
-    const mdText = `<!-- backgroundImage: url(A) --> ![bg](B)`
+    const mdText = `<!-- backgroundImage: url(A) -->\n\n![bg](B)`
     const [firstSlide] = md().parse(mdText)
 
     assert(firstSlide.meta.marpitDirectives.backgroundImage === 'url("B")')
@@ -144,7 +144,7 @@ describe('Marpit background image plugin', () => {
 
     it("inherits slide section's style assigned by directive", () => {
       const $ = $load(
-        mdSVG().render('<!-- backgroundImage: url(A) --> ![bg](B)')
+        mdSVG().render('<!-- backgroundImage: url(A) -->\n\n![bg](B)')
       )
       const bgSection = $(
         'section[data-marpit-advanced-background="background"]'
@@ -298,7 +298,7 @@ describe('Marpit background image plugin', () => {
     })
 
     context('with paginate directive', () => {
-      const $ = $load(mdSVG().render('<!-- paginate: true --> ![bg](test)'))
+      const $ = $load(mdSVG().render('<!-- paginate: true -->\n\n![bg](test)'))
 
       it('assigns data-marpit-pagination attribute to pseudo layer', () => {
         const foreignObjects = $('svg > foreignObject')

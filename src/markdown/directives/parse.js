@@ -82,14 +82,13 @@ function parse(md, marpit, opts = {}) {
 
     // Walk tokens to parse slides and comments.
     state.tokens.forEach(token => {
-      if (!token.meta) return
-      if (token.meta.marpitSlideElement === 1) {
+      if (token.meta && token.meta.marpitSlideElement === 1) {
         // Initialize Marpit directives meta
         token.meta.marpitDirectives = {}
 
         slides.push(token)
         cursor.slide = token
-      } else if (token.meta.marpitSlideElement === -1) {
+      } else if (token.meta && token.meta.marpitSlideElement === -1) {
         // Assign local and spot directives to meta
         cursor.slide.meta.marpitDirectives = {
           ...cursor.slide.meta.marpitDirectives,
@@ -98,8 +97,8 @@ function parse(md, marpit, opts = {}) {
         }
 
         cursor.spot = {}
-      } else if (token.meta.marpitComment) {
-        token.meta.marpitComment.forEach(comment => applyDirectives(comment))
+      } else if (token.type === 'marpit_comment') {
+        applyDirectives(token.content)
       }
     })
 
