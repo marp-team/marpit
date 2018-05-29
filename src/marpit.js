@@ -91,8 +91,7 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    md
-      .use(marpitComment)
+    md.use(marpitComment)
       .use(marpitStyleParse, this)
       .use(marpitSlide)
       .use(marpitParseDirectives, this)

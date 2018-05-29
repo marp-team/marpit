@@ -4,11 +4,11 @@ import postcssMeta from './postcss/meta'
 import postcssSectionSize from './postcss/section_size'
 
 const absoluteUnits = {
-  cm: v => v * 960 / 25.4,
+  cm: v => (v * 960) / 25.4,
   in: v => v * 96,
-  mm: v => v * 96 / 25.4,
+  mm: v => (v * 96) / 25.4,
   pc: v => v * 16,
-  pt: v => v * 4 / 3,
+  pt: v => (v * 4) / 3,
   px: v => v,
 }
 
