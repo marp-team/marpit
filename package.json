@@ -42,7 +42,7 @@
     "preversion": "npm-run-all --npm-path yarn --parallel format:check lint:all test:coverage",
     "test": "cross-env NODE_ENV=test mocha",
     "test:coverage": "cross-env NODE_ENV=test nyc mocha",
-    "version": "bash version.sh",
+    "version": "node version.js && git add -A CHANGELOG.md",
     "watch": "babel src --out-dir lib -w"
   },
   "devDependencies": {
