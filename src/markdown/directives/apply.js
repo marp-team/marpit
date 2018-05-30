@@ -53,6 +53,13 @@ function apply(md, opts = {}) {
         if (marpitDirectives.class)
           token.attrJoin('class', marpitDirectives.class)
 
+        if (marpitDirectives.color) style.set('color', marpitDirectives.color)
+
+        if (marpitDirectives.backgroundColor)
+          style
+            .set('background-color', marpitDirectives.backgroundColor)
+            .set('background-image', 'none')
+
         if (marpitDirectives.backgroundImage) {
           style
             .set('background-image', marpitDirectives.backgroundImage)
