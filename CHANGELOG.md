@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Support `backgroundColor` and `color` local directives ([#32](https://github.com/marp-team/marpit/pull/32))
+
 ## v0.0.6 - 2018-05-29
 
 - Add `header` and `footer` directives ([#22](https://github.com/marp-team/marpit/pull/22))
