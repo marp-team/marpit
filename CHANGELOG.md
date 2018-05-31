@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Suppress confusable theme import when tweaking ([#33](https://github.com/marp-team/marpit/pull/33))
+
 ## v0.0.6 - 2018-05-29
 
 - Add `header` and `footer` directives ([#22](https://github.com/marp-team/marpit/pull/22))
