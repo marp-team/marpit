@@ -162,22 +162,35 @@ The percentage value will specify the scaling factor of image.
 
 #### Styling through directives
 
-If you want to use the gradient as background, you can set style directly through local or spot directives.
-
-This feature is available regardless of `backgroundSyntax` option in Marpit constructor.
+If you want to use any color or the gradient as background, you can set style directly through local or spot directives.
 
 ```markdown
 <!-- _backgroundImage: "linear-gradient(to bottom, #67b8e3, #0288d1)" -->
+
+Gradient background
+
+---
+
+<!--
+_backgroundColor: black
+_color: white
+-->
+
+Black background + White text
 ```
+
+This feature is available regardless of `backgroundSyntax` option in Marpit constructor.
 
 ##### Directives
 
-| Spot directive        | Description                          | Default     |
-| --------------------- | ------------------------------------ | ----------- |
-| `_backgroundImage`    | Specify `background-image` style.    |             |
-| `_backgroundPosition` | Specify `background-position` style. | `center`    |
-| `_backgroundRepeat`   | Specify `background-repeat` style.   | `no-repeat` |
-| `_backgroundSize`     | Specify `background-size` style.     | `cover`     |
+| Spot directive        | Description                                                     | Default     |
+| --------------------- | --------------------------------------------------------------- | ----------- |
+| `_backgroundColor`    | Specify `background-color` style.                               |             |
+| `_backgroundImage`    | Specify `background-image` style.                               |             |
+| `_backgroundPosition` | Specify `background-position` style.                            | `center`    |
+| `_backgroundRepeat`   | Specify `background-repeat` style.                              | `no-repeat` |
+| `_backgroundSize`     | Specify `background-size` style.                                | `cover`     |
+| `_color`              | Specify `color` style. It's usable if the text is hard to read. |             |
 
 The beginning underbar of directive means "_Apply only to current slide page_". (Spot directive)
 
