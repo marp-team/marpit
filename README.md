@@ -400,9 +400,9 @@ section {
 }
 ```
 
-`@import` follows [CSS rules](https://developer.mozilla.org/en-US/docs/Web/CSS/@import): it must precede all other statements excepted `@charset`.
+`@import` must precede all other statements excepted `@charset`. (It follows [the original specification](https://developer.mozilla.org/en-US/docs/Web/CSS/@import))
 
-> :information_source: The base theme must be added by using `Marpit.themeSet.add(css)` in advance.
+> :information_source: An importing theme must add by using `Marpit.themeSet.add(css)` in advance.
 
 ##### `@import-theme`
 
@@ -421,6 +421,8 @@ section {
 ```
 
 `@import-theme` can place on anywhere of the root of CSS, and the imported contents is inserted to the beginning of CSS in order.
+
+> :warning: You cannot import another theme while [tweaking style by using inline `<style>`](#tweak-theme-in-markdown) and [`style` global directive](#style-global-directive).
 
 #### Tweak theme in Markdown
 
