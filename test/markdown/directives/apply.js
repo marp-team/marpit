@@ -104,10 +104,12 @@ describe('Marpit directives apply plugin', () => {
     describe('Background image', () => {
       const bgDirs = dedent`
         ---
+        backgroundColor: white
         backgroundImage: url(//example.com/a.jpg)
         backgroundPosition: left top
         backgroundRepeat: repeat-y
         backgroundSize: 25%
+        color: black
         ---
       `
 
@@ -116,10 +118,12 @@ describe('Marpit directives apply plugin', () => {
         const section = $('section').first()
         const style = toObjStyle(section.attr('style'))
 
+        assert(style['background-color'] === 'white')
         assert(style['background-image'] === 'url(//example.com/a.jpg)')
         assert(style['background-position'] === 'left top')
         assert(style['background-repeat'] === 'repeat-y')
         assert(style['background-size'] === '25%')
+        assert(style.color === 'black')
       })
 
       context('when directives of image options are not defined', () => {
@@ -185,6 +189,8 @@ describe('Marpit directives apply plugin', () => {
           backgroundPosition: "left;--injection2:injection2"
           backgroundRepeat: "no-repeat;--injection3:injection3"
           backgroundSize: "auto;--injection4:injection4"
+          backgroundColor: "white;--injection5:injection5"
+          color: "black;--injection6:injection6"
           ---
         `
 
@@ -197,10 +203,12 @@ describe('Marpit directives apply plugin', () => {
           assert(style['background-position'] === 'left')
           assert(style['background-repeat'] === 'no-repeat')
           assert(style['background-size'] === 'auto')
-          assert(style['--injection1'] === undefined)
-          assert(style['--injection2'] === undefined)
-          assert(style['--injection3'] === undefined)
-          assert(style['--injection4'] === undefined)
+          assert(style['background-color'] === 'white')
+          assert(style.color === 'black')
+
+          Array.from({ length: 6 }, (v, k) => k + 1).forEach(i =>
+            assert(style[`--injection${i}`] === undefined)
+          )
         })
       })
     })

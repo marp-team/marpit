@@ -41,6 +41,7 @@ export const globals = {
  * If you want to set a local directive to single page only, you can add the
  * prefix `_` (underbar) to directive name. (Spot directives)
  *
+ * @prop {Directive} backgroundColor Specify background-color style.
  * @prop {Directive} backgroundImage Specify background-image style.
  * @prop {Directive} backgroundPosition Specify background-position style. The
  *     default value while setting backgroundImage is `center`.
@@ -49,6 +50,7 @@ export const globals = {
  * @prop {Directive} backgroundSize Specify background-size style. The default
  *     value while setting backgroundImage is `cover`.
  * @prop {Directive} class Specify HTML class of section element(s).
+ * @prop {Directive} class Specify color style (base text color).
  * @prop {Directive} footer Specify the content of slide footer. It will insert
  *     a `<footer>` element to the last of each slide contents.
  * @prop {Directive} header Specify the content of slide header. It will insert
@@ -56,6 +58,9 @@ export const globals = {
  * @prop {Directive} paginate Show page number on the slide if you set `true`.
  */
 export const locals = {
+  backgroundColor(value) {
+    return { backgroundColor: value }
+  },
   backgroundImage(value) {
     return { backgroundImage: value }
   },
@@ -70,6 +75,9 @@ export const locals = {
   },
   class(value) {
     return { class: value }
+  },
+  color(value) {
+    return { color: value }
   },
   footer(value) {
     return { footer: value }
