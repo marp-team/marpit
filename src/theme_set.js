@@ -3,7 +3,6 @@ import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
 import postcssImportRollup from './postcss/import/rollup'
 import postcssImportSuppress from './postcss/import/suppress'
-import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
 import postcssPseudoPrepend from './postcss/pseudo_selector/prepend'
@@ -173,10 +172,8 @@ class ThemeSet {
    * @param {Element[]} [opts.containers] Container elements wrapping whole
    *     slide deck.
    * @param {boolean} [opts.printable] Make style printable to PDF.
-   * @param {boolean|'workaround'} [opts.inlineSVG] Apply a hierarchy of inline
-   *     SVG to CSS selector by setting `true`. In addition if you set
-   *     `workaround`, a few basic styling will disable to avoid a rendering bug
-   *     of Chromium. _(Experimental)_
+   * @param {boolean} [opts.inlineSVG] Apply a hierarchy of inline SVG to CSS
+   *     selector by setting `true`. _(Experimental)_
    * @return {string} The converted CSS string.
    */
   pack(name, opts = {}) {
@@ -211,7 +208,6 @@ class ThemeSet {
         postcssPagination,
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
-        opts.inlineSVG === 'workaround' && postcssInlineSVGWorkaround,
         postcssImportRollup,
       ].filter(p => p)
     )
