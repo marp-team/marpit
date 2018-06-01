@@ -21,9 +21,9 @@
 
 It could transform the Markdown and CSS theme(s) to slide deck composed by static HTML and CSS. (powered by [markdown-it](https://github.com/markdown-it/markdown-it) and [PostCSS](https://github.com/postcss/postcss))
 
-- **[Marpit Markdown](#marpit-markdown)** - Based on CommonMark, and have extended _Directives_.
-- **[Clear markup](#markup)** - Marpit theme CSS has no own class, so you can focus on _your_ markup.
-- **[Inline SVG slide](#inline-svg-slide-experimental)** _(Experimental)_ - Support slide auto-scaling without extra JavaScript.
+- **[Marpit Markdown](#marpit-markdown)** - It has extended several features such as [_directives_](#directives) and [_slide backgrounds_](#slide-backgrounds) with keeping a compatibility with the Markdown documents.
+- **[Clear markup](#markup)** - Marpit [theme CSS](#theme-css) has no own class, so you can focus on _your_ markup.
+- **[Inline SVG slide](#inline-svg-slide-experimental)** _(Experimental)_ - Support a browser-native slide auto-scaling. The bare slide deck _has never required JavaScript_.
 
 Marpit will become a core of _the next version of **[Marp](https://github.com/yhatt/marp/)**_.
 
