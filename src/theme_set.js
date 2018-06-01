@@ -2,6 +2,7 @@ import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
 import postcssImportRollup from './postcss/import/rollup'
+import postcssImportSuppress from './postcss/import/suppress'
 import postcssInlineSVGWorkaround from './postcss/inline_svg_workaround'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable from './postcss/printable'
@@ -185,16 +186,20 @@ class ThemeSet {
     if (opts.inlineSVG)
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
 
-    let appendStyle
+    let append
+
     try {
-      appendStyle = postcss.parse(opts.appendStyle, { from: undefined })
+      if (opts.appendStyle)
+        append = postcss([postcssImportSuppress(this)]).process(
+          opts.appendStyle
+        ).css
     } catch (e) {
       // Ignore invalid style
     }
 
     const packer = postcss(
       [
-        appendStyle && (css => css.last.after(appendStyle)),
+        append && (css => css.last.after(append)),
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
