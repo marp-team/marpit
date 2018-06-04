@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.7 - 2018-06-04
+
 - Support `backgroundColor` and `color` local directives ([#32](https://github.com/marp-team/marpit/pull/32))
 - Suppress confusable theme import when tweaking ([#33](https://github.com/marp-team/marpit/pull/33))
 - Remove `workaround` flag support from Marpit's `inlineSVG` option ([#35](https://github.com/marp-team/marpit/pull/35))
