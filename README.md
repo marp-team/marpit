@@ -489,7 +489,7 @@ A specified theme will convert to static CSS in rendering by `marpit.render()`. 
 
 ## Inline SVG slide _(experimental)_
 
-> :warning: _This feature is experimental_ because of [a Chromium issue](https://bugs.chromium.org/p/chromium/issues/detail?id=771852). A workaround to style can enable by `inlineSVG: 'workaround'`, but it will disable a few basic styling defined in theme CSS. It includes `position`, `transform` and `overflow` with scrolling (`auto` and `scroll`).
+> :warning: This feature is experimental because of some strange rendering in Chrome. [Track chromium issues about `<foreignObject>`.](https://bugs.chromium.org/p/chromium/issues/list?q=foreignObject&sort=-stars)
 
 When you set `inlineSVG: true` in Marpit constructor option, the each `<section>` are wrapped by inline SVG.
 

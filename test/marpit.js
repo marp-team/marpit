@@ -103,19 +103,6 @@ describe('Marpit', () => {
             assert(countDecl(ret.root, '--theme-defined') === 1)
           })
       })
-
-      it('comments out basic styles when inlineSVG is a string "workaround"', () => {
-        const rendered = instance('workaround').render('# Hi')
-        const $ = cheerio.load(rendered.html, { lowerCaseTags: false })
-
-        return postcss()
-          .process(rendered.css, { from: undefined })
-          .then(ret => {
-            assert($('svg > foreignObject > section > h1').length === 1)
-            assert(countDecl(ret.root, 'position') === 0)
-            assert(countDecl(ret.root, 'transform') === 0)
-          })
-      })
     })
 
     context('with backgroundSyntax option in instance', () => {
