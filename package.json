@@ -26,15 +26,17 @@
     "url": "https://github.com/marp-team/marpit"
   },
   "main": "lib/index.js",
+  "types": "index.d.ts",
   "files": [
-    "lib/"
+    "lib/",
+    "index.d.ts"
   ],
   "scripts": {
     "build": "yarn --mutex file run clean && babel src --out-dir lib",
     "clean": "rimraf lib",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "docs": "jsdoc src -c .jsdoc.json",
-    "format": "prettier **/*.{md,json}",
+    "format": "prettier **/*.{md,json,ts}",
     "format:check": "yarn --mutex file run format -l",
     "lint": "eslint",
     "lint:all": "eslint .",
