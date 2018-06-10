@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Apply `color` style to pseudo layer of advanced backgrounds ([#37](https://github.com/marp-team/marpit/pull/37))
+
 ## v0.0.7 - 2018-06-04
 
 - Support `backgroundColor` and `color` local directives ([#32](https://github.com/marp-team/marpit/pull/32))

@@ -1,4 +1,5 @@
 /** @module */
+import InlineStyle from '../helpers/inline_style'
 import wrapTokens from '../helpers/wrap_tokens'
 
 const bgSizeKeywords = {
@@ -191,6 +192,16 @@ function backgroundImage(md) {
         } else if (current && t.type === 'marpit_inline_svg_content_close') {
           const { open, height, width } = current.meta.marpitBackground
 
+          // Apply styles
+          const style = new InlineStyle()
+
+          if (
+            open.meta &&
+            open.meta.marpitDirectives &&
+            open.meta.marpitDirectives.color
+          )
+            style.set('color', open.meta.marpitDirectives.color)
+
           tokens = [
             t,
             ...wrapTokens(
@@ -203,6 +214,7 @@ function backgroundImage(md) {
               },
               wrapTokens('marpit_advanced_pseudo_section', {
                 tag: 'section',
+                style: style.toString(),
                 'data-marpit-advanced-background': 'pseudo',
                 'data-marpit-pagination': open.attrGet(
                   'data-marpit-pagination'
