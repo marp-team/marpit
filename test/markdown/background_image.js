@@ -304,9 +304,18 @@ describe('Marpit background image plugin', () => {
         const foreignObjects = $('svg > foreignObject')
         assert(foreignObjects.length === 3)
 
-        const lastFO = foreignObjects.eq(2)
-        assert(lastFO.is('[data-marpit-advanced-background="pseudo"]'))
-        assert(lastFO.find('> section').is('[data-marpit-pagination="1"]'))
+        const pseudoFO = foreignObjects.eq(2)
+        assert(pseudoFO.is('[data-marpit-advanced-background="pseudo"]'))
+        assert(pseudoFO.find('> section').is('[data-marpit-pagination="1"]'))
+      })
+    })
+
+    context('with color directive', () => {
+      const $ = $load(mdSVG().render('<!-- color: white -->\n\n![bg](test)'))
+
+      it('assigns color style to pseudo layer', () => {
+        const pseudoSection = $('svg > foreignObject > section').eq(2)
+        assert(pseudoSection.attr('style').includes('color:white;'))
       })
     })
   })
