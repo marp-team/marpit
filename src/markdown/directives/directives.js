@@ -50,7 +50,7 @@ export const globals = {
  * @prop {Directive} backgroundSize Specify background-size style. The default
  *     value while setting backgroundImage is `cover`.
  * @prop {Directive} class Specify HTML class of section element(s).
- * @prop {Directive} class Specify color style (base text color).
+ * @prop {Directive} color Specify color style (base text color).
  * @prop {Directive} footer Specify the content of slide footer. It will insert
  *     a `<footer>` element to the last of each slide contents.
  * @prop {Directive} header Specify the content of slide header. It will insert
