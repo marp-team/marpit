@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Apply `color` style to pseudo layer of advanced backgrounds ([#37](https://github.com/marp-team/marpit/pull/37))
+- Fix JSDoc: Missing `color` prop in the definition of local directives ([#38](https://github.com/marp-team/marpit/pull/38))
 
 ## v0.0.7 - 2018-06-04
 
