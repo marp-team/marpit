@@ -29,6 +29,12 @@ describe('Marpit unicode emoji plugin', () => {
       const out = md().renderInline(markdown)
       assert(out === `<span data-marpit-emoji>${ligatures[markdown]}</span>`)
     })
+
+    // Unicode 11
+    assert(
+      md().renderInline('\u{1f9f6}') ===
+        '<span data-marpit-emoji>\u{1f9f6}</span>'
+    )
   })
 
   it('wraps emoji in inline code ', () => {
