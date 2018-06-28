@@ -14,11 +14,12 @@ const plugin = postcss.plugin(
   () => css =>
     css.walkRules(rule => {
       rule.selectors = rule.selectors.map(selector => {
-        if (/^section(?![\w-])/.test(selector)) {
+        if (/^section(?![\w-])/.test(selector))
           return `:marpit-container > :marpit-slide${selector.slice(7)}`
-        } else if (/^(:marpit-container|html|body)(?![\w-])/.test(selector)) {
+
+        if (/^(:marpit-container|html|body)(?![\w-])/.test(selector))
           return selector
-        }
+
         return `:marpit-container > :marpit-slide ${selector}`
       })
     })
