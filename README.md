@@ -121,6 +121,62 @@ footer: "![image](https://example.com/image.jpg)"
 
 > :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 
+#### [PLANNING] Heading divider
+
+This feature is similar to [Pandoc](https://pandoc.org/)'s [`--slide-level` option](https://pandoc.org/MANUAL.html#structuring-the-slide-show) and [Deckset 2](https://www.deckset.com/2/)'s "Slide Dividers" option.
+
+By using `headingDivider` global directive, you can instruct to divide slide pages automatically at before of headings whose larger than or equal to specified level.
+
+For example, the below 2 markdowns have the same output.
+
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">Regular syntax</th>
+<th style="text-align:center;">Heading divider</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+
+```markdown
+# 1st page
+
+The content of 1st page
+
+---
+
+## 2nd page
+
+### The content of 2nd page
+
+Hello, world!
+```
+
+</td><td>
+
+```markdown
+<!-- headingDivider: 2 -->
+
+# 1st page
+
+The content of 1st page
+
+## 2nd page
+
+### The content of 2nd page
+
+Hello, world!
+```
+
+</td>
+</tr>
+</tbody>
+</table>
+
+It is useful when you want to create a slide deck from a plain Markdown. Even if you opened an above example of `headingDivider` in general Markdown editor, it keeps a beautiful rendering without the obtrusive horizontal rulers.
+
 ### Slide backgrounds
 
 We provide a background image syntax to specify slide's background through Markdown. Include `bg` to the alternate text.
