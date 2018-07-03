@@ -66,7 +66,7 @@ declare module '@marp-team/marpit' {
   export class ThemeSet {
     constructor()
 
-    default: Theme | undefined
+    default?: Theme
 
     readonly size: number
     private readonly themeMap: Map<string, Theme>
