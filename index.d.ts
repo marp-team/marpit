@@ -76,7 +76,7 @@ declare module '@marp-team/marpit' {
     clear(): void
     delete(name: string): boolean
     get(name: string, fallback?: boolean): Theme | undefined
-    getThemeProp(theme: string | Theme, prop: string): any
+    getThemeProp(theme: string | Theme, prop: keyof Theme): any
     has(name: string): boolean
     pack(name: string, opts: ThemeSetPackOptions): string
     themes(): IterableIterator<Theme>
