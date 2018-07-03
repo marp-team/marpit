@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Add the basic TypeScript definition ([#40](https://github.com/marp-team/marpit/pull/40))
+
 ## v0.0.8 - 2018-06-28
 
 - Apply `color` style to pseudo layer of advanced backgrounds ([#37](https://github.com/marp-team/marpit/pull/37))
