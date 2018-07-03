@@ -10,9 +10,6 @@ declare module '@marp-team/marpit' {
     inlineSVG?: boolean
   }
 
-  type MarkdownIt = any
-  type PostCSSAtRule = any
-
   type MarpitRenderResult = {
     html: string
     css: string
@@ -28,14 +25,14 @@ declare module '@marp-team/marpit' {
   export class Marpit {
     constructor(opts?: MarpitOptions)
 
-    markdown: MarkdownIt
+    markdown: any
     themeSet: ThemeSet
 
-    readonly markdownItPlugins: (md: MarkdownIt) => void
+    readonly markdownItPlugins: (md: any) => void
 
     render(markdown: string): MarpitRenderResult
 
-    protected applyMarkdownItPlugins(md: MarkdownIt): void
+    protected applyMarkdownItPlugins(md: any): void
     protected renderMarkdown(markdown: string): string
     protected renderStyle(theme?: string): string
   }
@@ -55,7 +52,7 @@ declare module '@marp-team/marpit' {
     css: string
     height: string
     importRules: {
-      node: PostCSSAtRule
+      node: any
       value: string
     }[]
     meta: {}
