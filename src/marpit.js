@@ -7,6 +7,7 @@ import marpitBackgroundImage from './markdown/background_image'
 import marpitComment from './markdown/comment'
 import marpitContainerPlugin from './markdown/container'
 import marpitHeaderAndFooter from './markdown/header_and_footer'
+import marpitHeadingDivider from './markdown/heading_divider'
 import marpitInlineSVG from './markdown/inline_svg'
 import marpitParseDirectives from './markdown/directives/parse'
 import marpitParseImage from './markdown/parse_image'
@@ -21,6 +22,7 @@ const defaultOptions = {
   backgroundSyntax: true,
   container: marpitContainer,
   filters: true,
+  headingDivider: false,
   inlineStyle: true,
   markdown: 'commonmark',
   printable: true,
@@ -45,8 +47,10 @@ class Marpit {
    *     element(s) wrapping whole slide deck.
    * @param {boolean} [opts.filters=true] Support filter syntax for markdown
    *     image. It can apply to inline image and the advanced backgrounds.
-   * @param {false|number} [opts.headingDivider=false] Start a new slide page at
-   *     before of heading whose larger than or equal to specified level.
+   * @param {false|number|number[]} [opts.headingDivider=false] Start a new
+   *     slide page at before of headings. it would apply to headings whose
+   *     larger than or equal to the specified level if a number is given, or
+   *     ONLY specified levels if a number array.
    * @param {boolean} [opts.inlineStyle=true] Recognize `<style>` elements to
    *     append additional styles to theme. When it is `true`, Marpit will parse
    *     style regardless markdown-it's `html` option.
@@ -98,6 +102,7 @@ class Marpit {
       .use(marpitParseDirectives, this)
       .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)
+      .use(marpitHeadingDivider, this)
       .use(marpitSlideContainer, this.slideContainers)
       .use(marpitContainerPlugin, this.containers)
       .use(marpitParseImage, { filters: this.options.filters })
