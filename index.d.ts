@@ -3,12 +3,15 @@ declare module '@marp-team/marpit' {
     backgroundSyntax?: boolean
     container?: Element | Element[]
     filters?: boolean
+    headingDivider?: false | MarpitHeadingDivider | MarpitHeadingDivider[]
     inlineStyle?: boolean
     markdown?: string | object | [string, object]
     printable?: boolean
     slideContainer?: Element | Element[]
     inlineSVG?: boolean
   }
+
+  type MarpitHeadingDivider = 1 | 2 | 3 | 4 | 5 | 6
 
   type MarpitRenderResult = {
     html: string
