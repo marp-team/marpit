@@ -175,7 +175,7 @@ Hello, world!
 </tbody>
 </table>
 
-It is useful when you want to create a slide deck from a plain Markdown. Even if you opened an above example of `headingDivider` in general Markdown editor, it keeps a beautiful rendering without the obtrusive horizontal rulers.
+It is useful when you want to create a slide deck from a plain Markdown. Even if you opened an example about `headingDivider` in general Markdown editor, it keeps a beautiful rendering without horizontal rulers.
 
 ### Slide backgrounds
 
