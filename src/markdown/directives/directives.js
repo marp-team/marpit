@@ -19,10 +19,23 @@
  * You can use prefix `$` as the name of a directive for the clarity (or
  * compatibility with the old version of Marp).
  *
+ * @prop {Directive} headingDivider Specify heading divider option.
  * @prop {Directive} style Specify the CSS style to apply additionally.
  * @prop {Directive} theme Specify theme of the slide deck.
  */
 export const globals = {
+  headingDivider(value) {
+    const headings = [1, 2, 3, 4, 5, 6]
+    const converted = Number.isNaN(value) ? value : Number.parseInt(value, 10)
+
+    if (Array.isArray(converted))
+      return { headingDivider: headings.filter(v => converted.includes(v)) }
+
+    if (headings.includes(converted) || converted === false)
+      return { headingDivider: converted }
+
+    return {}
+  },
   style(value) {
     return { style: value }
   },

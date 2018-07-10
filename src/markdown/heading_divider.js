@@ -16,6 +16,15 @@ function headingDivider(md, marpit) {
   md.core.ruler.before('marpit_slide', 'marpit_heading_divider', state => {
     let target = marpit.options.headingDivider
 
+    if (
+      marpit.lastGlobalDirectives &&
+      Object.prototype.hasOwnProperty.call(
+        marpit.lastGlobalDirectives,
+        'headingDivider'
+      )
+    )
+      target = marpit.lastGlobalDirectives.headingDivider
+
     if (state.inlineMode || target === false) return
 
     if (Number.isInteger(target) && target >= 1 && target <= 6)
