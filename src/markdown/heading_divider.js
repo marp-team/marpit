@@ -1,10 +1,12 @@
 /** @module */
+import Token from 'markdown-it/lib/token'
 import split from '../helpers/split'
 
 /**
  * Marpit heading divider plugin.
  *
- * Start a new slide page at before of headings.
+ * Start a new slide page at before of headings by prepending hidden `<hr>`
+ * elements.
  *
  * @alias module:markdown/heading_divider
  * @param {MarkdownIt} md markdown-it instance.
@@ -17,23 +19,31 @@ function headingDivider(md, marpit) {
     if (state.inlineMode || target === false) return
 
     if (Number.isInteger(target) && target >= 1 && target <= 6)
-      target = [...Array(headingDivider).keys()].map(i => i + 1)
+      target = [...Array(target).keys()].map(i => i + 1)
 
     if (!Array.isArray(target))
       throw new Error('Invalid headingDivider option.')
 
     const splitTag = target.map(i => `h${i}`)
+    const splitFunc = t => t.type === 'heading_open' && splitTag.includes(t.tag)
 
-    state.tokens = split(
-      state.tokens,
-      t => t.type === 'heading_open' && splitTag.includes(t.tag),
-      true
-    ).reduce((arr, slideTokens) => {
-      // TODO: Prepend hidden ruler token at before headings
-      const isHeading = slideTokens[0] && slideTokens[0].type === 'heading_open'
+    state.tokens = split(state.tokens, splitFunc, true).reduce(
+      (arr, slideTokens) => {
+        const [firstToken] = slideTokens
 
-      return [...arr, ...slideTokens]
-    }, [])
+        if (
+          !(firstToken && splitFunc(firstToken)) ||
+          arr.filter(t => !t.hidden).length === 0
+        )
+          return [...arr, ...slideTokens]
+
+        const token = new Token('hr', '', 0)
+        token.hidden = true
+
+        return [...arr, token, ...slideTokens]
+      },
+      []
+    )
   })
 }
 
