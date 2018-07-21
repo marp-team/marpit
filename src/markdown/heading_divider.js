@@ -30,8 +30,7 @@ function headingDivider(md, marpit) {
     if (Number.isInteger(target) && target >= 1 && target <= 6)
       target = [...Array(target).keys()].map(i => i + 1)
 
-    if (!Array.isArray(target))
-      throw new Error('Invalid headingDivider option.')
+    if (!Array.isArray(target)) return
 
     const splitTag = target.map(i => `h${i}`)
     const splitFunc = t => t.type === 'heading_open' && splitTag.includes(t.tag)

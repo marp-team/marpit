@@ -26,13 +26,19 @@
 export const globals = {
   headingDivider(value) {
     const headings = [1, 2, 3, 4, 5, 6]
-    const converted = Number.isNaN(value) ? value : Number.parseInt(value, 10)
+    const toInt = v =>
+      Array.isArray(v) || Number.isNaN(v) ? v : Number.parseInt(v, 10)
+    const converted = toInt(value)
 
-    if (Array.isArray(converted))
-      return { headingDivider: headings.filter(v => converted.includes(v)) }
+    if (Array.isArray(converted)) {
+      const convertedArr = converted.map(toInt)
+      return {
+        headingDivider: headings.filter(v => convertedArr.includes(v)),
+      }
+    }
 
-    if (headings.includes(converted) || converted === false)
-      return { headingDivider: converted }
+    if (value === 'false') return { headingDivider: false }
+    if (headings.includes(converted)) return { headingDivider: converted }
 
     return {}
   },
