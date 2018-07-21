@@ -163,16 +163,20 @@ describe('Marpit heading divider plugin', () => {
       }
     )
 
-    context('with headingDivider option and directive', () => {
+    context('with headingDivider constructor option', () => {
       const markdown = md(marpitStub(4))
-      const text = markdownTextWithDirective('false')
 
       it('overrides headingDivider option by directive', () => {
         const tokens = markdown.parse(markdownText)
         assert(tokens.filter(t => t.type === 'hr').length === 3)
 
-        const tokensWithOverride = markdown.parse(text)
-        assert(tokensWithOverride.filter(t => t.type === 'hr').length === 0)
+        const overridden = markdown.parse(markdownTextWithDirective('false'))
+        assert(overridden.filter(t => t.type === 'hr').length === 0)
+      })
+
+      it('ignores invalid headingDivider directive', () => {
+        const overridden = markdown.parse(markdownTextWithDirective('invalid'))
+        assert(overridden.filter(t => t.type === 'hr').length === 3)
       })
     })
   })
