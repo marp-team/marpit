@@ -121,7 +121,7 @@ footer: "![image](https://example.com/image.jpg)"
 
 > :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 
-#### [PLANNING] Heading divider
+#### Heading divider
 
 This feature is similar to [Pandoc](https://pandoc.org/)'s [`--slide-level` option](https://pandoc.org/MANUAL.html#structuring-the-slide-show) and [Deckset 2](https://www.deckset.com/2/)'s "Slide Dividers" option.
 
