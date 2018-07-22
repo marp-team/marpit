@@ -1,19 +1,7 @@
 /** @module */
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
-import YAML, { FAILSAFE_SCHEMA } from 'js-yaml'
+import parseYAML from '../../helpers/parse_yaml'
 import { globals, locals } from './directives'
-
-// Parse text as YAML by using js-yaml's FAILSAFE_SCHEMA.
-function parseYAMLObject(text) {
-  try {
-    const obj = YAML.safeLoad(text, { schema: FAILSAFE_SCHEMA })
-    if (obj === null || typeof obj !== 'object') return false
-
-    return obj
-  } catch (e) {
-    return false
-  }
-}
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -32,15 +20,18 @@ function parseYAMLObject(text) {
 function parse(md, marpit, opts = {}) {
   // Front-matter support
   const frontMatter = opts.frontMatter === undefined ? true : !!opts.frontMatter
-  let frontMatterText
+  let frontMatterObject = {}
 
   if (frontMatter) {
     md.core.ruler.before('block', 'marpit_directives_front_matter', state => {
-      frontMatterText = undefined
+      frontMatterObject = {}
       if (!state.inlineMode) marpit.lastGlobalDirectives = {}
     })
     md.use(MarkdownItFrontMatter, fm => {
-      frontMatterText = fm
+      frontMatterObject.text = fm
+
+      const yaml = parseYAML(fm)
+      if (yaml !== false) frontMatterObject.yaml = yaml
     })
   }
 
@@ -49,25 +40,23 @@ function parse(md, marpit, opts = {}) {
     if (state.inlineMode) return
 
     let globalDirectives = {}
-    const applyDirectives = text => {
-      const parsed = parseYAMLObject(text)
-      if (parsed === false) return
-
-      Object.keys(parsed).forEach(key => {
+    const applyDirectives = yaml => {
+      Object.keys(yaml).forEach(key => {
         const globalKey = key.startsWith('$') ? key.slice(1) : key
 
         if (globals[globalKey])
           globalDirectives = {
             ...globalDirectives,
-            ...globals[globalKey](parsed[key], marpit),
+            ...globals[globalKey](yaml[key], marpit),
           }
       })
     }
 
-    if (frontMatter && frontMatterText) applyDirectives(frontMatterText)
+    if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
     state.tokens.forEach(token => {
-      if (token.type === 'marpit_comment') applyDirectives(token.content)
+      if (token.type === 'marpit_comment' && token.meta.marpitParsedYAML)
+        applyDirectives(token.meta.marpitParsedYAML)
     })
 
     marpit.lastGlobalDirectives = { ...globalDirectives }
@@ -80,16 +69,10 @@ function parse(md, marpit, opts = {}) {
     const slides = []
     const cursor = { slide: undefined, local: {}, spot: {} }
 
-    const applyDirectives = text => {
-      const parsed = parseYAMLObject(text)
-      if (parsed === false) return
-
-      Object.keys(parsed).forEach(key => {
+    const applyDirectives = yaml => {
+      Object.keys(yaml).forEach(key => {
         if (locals[key])
-          cursor.local = {
-            ...cursor.local,
-            ...locals[key](parsed[key], marpit),
-          }
+          cursor.local = { ...cursor.local, ...locals[key](yaml[key], marpit) }
 
         // Spot directives
         // (Apply local directive to only current slide by prefix "_")
@@ -99,13 +82,13 @@ function parse(md, marpit, opts = {}) {
           if (locals[spotKey])
             cursor.spot = {
               ...cursor.spot,
-              ...locals[spotKey](parsed[key], marpit),
+              ...locals[spotKey](yaml[key], marpit),
             }
         }
       })
     }
 
-    if (frontMatter && frontMatterText) applyDirectives(frontMatterText)
+    if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
     state.tokens.forEach(token => {
       if (token.meta && token.meta.marpitSlideElement === 1) {
@@ -123,8 +106,11 @@ function parse(md, marpit, opts = {}) {
         }
 
         cursor.spot = {}
-      } else if (token.type === 'marpit_comment') {
-        applyDirectives(token.content)
+      } else if (
+        token.type === 'marpit_comment' &&
+        token.meta.marpitParsedYAML
+      ) {
+        applyDirectives(token.meta.marpitParsedYAML)
       }
     })
 

@@ -1,4 +1,6 @@
 /** @module */
+import parseYAML from '../helpers/parse_yaml'
+
 const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/
 const commentMatcherClosing = /-->/
@@ -57,6 +59,10 @@ function comment(md) {
 
       const matchedContent = commentMatcher.exec(token.markup)
       token.content = matchedContent ? matchedContent[1].trim() : ''
+
+      // Parse YAML
+      const yaml = parseYAML(token.content)
+      token.meta = { marpitParsedYAML: yaml === false ? {} : yaml }
 
       return true
     }
