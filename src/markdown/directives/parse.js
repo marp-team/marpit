@@ -1,19 +1,7 @@
 /** @module */
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
-import YAML, { FAILSAFE_SCHEMA } from 'js-yaml'
+import parseYAML from '../../helpers/parse_yaml'
 import { globals, locals } from './directives'
-
-// Parse text as YAML by using js-yaml's FAILSAFE_SCHEMA.
-function parseYAMLObject(text) {
-  try {
-    const obj = YAML.safeLoad(text, { schema: FAILSAFE_SCHEMA })
-    if (obj === null || typeof obj !== 'object') return false
-
-    return obj
-  } catch (e) {
-    return false
-  }
-}
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -32,39 +20,59 @@ function parseYAMLObject(text) {
 function parse(md, marpit, opts = {}) {
   // Front-matter support
   const frontMatter = opts.frontMatter === undefined ? true : !!opts.frontMatter
-  let frontMatterText
+  let frontMatterObject = {}
 
   if (frontMatter) {
     md.core.ruler.before('block', 'marpit_directives_front_matter', state => {
-      frontMatterText = undefined
+      frontMatterObject = {}
       if (!state.inlineMode) marpit.lastGlobalDirectives = {}
     })
     md.use(MarkdownItFrontMatter, fm => {
-      frontMatterText = fm
+      frontMatterObject.text = fm
+
+      const yaml = parseYAML(fm)
+      if (yaml !== false) frontMatterObject.yaml = yaml
     })
   }
 
+  // Parse global directives
+  md.core.ruler.after('block', 'marpit_directives_global_parse', state => {
+    if (state.inlineMode) return
+
+    let globalDirectives = {}
+    const applyDirectives = yaml => {
+      Object.keys(yaml).forEach(key => {
+        const globalKey = key.startsWith('$') ? key.slice(1) : key
+
+        if (globals[globalKey])
+          globalDirectives = {
+            ...globalDirectives,
+            ...globals[globalKey](yaml[key], marpit),
+          }
+      })
+    }
+
+    if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
+
+    state.tokens.forEach(token => {
+      if (token.type === 'marpit_comment' && token.meta.marpitParsedYAML)
+        applyDirectives(token.meta.marpitParsedYAML)
+    })
+
+    marpit.lastGlobalDirectives = { ...globalDirectives }
+  })
+
+  // Parse local directives and apply meta to slide
   md.core.ruler.after('marpit_slide', 'marpit_directives_parse', state => {
     if (state.inlineMode) return
 
     const slides = []
-    const cursor = { slide: undefined, global: {}, local: {}, spot: {} }
+    const cursor = { slide: undefined, local: {}, spot: {} }
 
-    const applyDirectives = text => {
-      const parsed = parseYAMLObject(text)
-      if (parsed === false) return
-
-      Object.keys(parsed).forEach(key => {
-        const v = parsed[key]
-
-        // Global directives (Support prefix "$" for clarity/compatibility)
-        const globalKey = key.startsWith('$') ? key.slice(1) : key
-        if (globals[globalKey])
-          cursor.global = { ...cursor.global, ...globals[globalKey](v, marpit) }
-
-        // Local directives
+    const applyDirectives = yaml => {
+      Object.keys(yaml).forEach(key => {
         if (locals[key])
-          cursor.local = { ...cursor.local, ...locals[key](v, marpit) }
+          cursor.local = { ...cursor.local, ...locals[key](yaml[key], marpit) }
 
         // Spot directives
         // (Apply local directive to only current slide by prefix "_")
@@ -72,15 +80,16 @@ function parse(md, marpit, opts = {}) {
           const spotKey = key.slice(1)
 
           if (locals[spotKey])
-            cursor.spot = { ...cursor.spot, ...locals[spotKey](v, marpit) }
+            cursor.spot = {
+              ...cursor.spot,
+              ...locals[spotKey](yaml[key], marpit),
+            }
         }
       })
     }
 
-    // At first, parse and apply YAML to cursor if assigned front-matter.
-    if (frontMatter && frontMatterText) applyDirectives(frontMatterText)
+    if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
-    // Walk tokens to parse slides and comments.
     state.tokens.forEach(token => {
       if (token.meta && token.meta.marpitSlideElement === 1) {
         // Initialize Marpit directives meta
@@ -97,8 +106,11 @@ function parse(md, marpit, opts = {}) {
         }
 
         cursor.spot = {}
-      } else if (token.type === 'marpit_comment') {
-        applyDirectives(token.content)
+      } else if (
+        token.type === 'marpit_comment' &&
+        token.meta.marpitParsedYAML
+      ) {
+        applyDirectives(token.meta.marpitParsedYAML)
       }
     })
 
@@ -106,12 +118,9 @@ function parse(md, marpit, opts = {}) {
     slides.forEach(token => {
       token.meta.marpitDirectives = {
         ...token.meta.marpitDirectives,
-        ...cursor.global,
+        ...marpit.lastGlobalDirectives,
       }
     })
-
-    // Store last parsed global directives to Marpit instance
-    marpit.lastGlobalDirectives = { ...cursor.global }
   })
 }
 
