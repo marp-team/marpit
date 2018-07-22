@@ -152,6 +152,12 @@ The content of 1st page
 ### The content of 2nd page
 
 Hello, world!
+
+---
+
+# 3rd page
+
+😃
 ```
 
 </td><td>
@@ -168,6 +174,10 @@ The content of 1st page
 ### The content of 2nd page
 
 Hello, world!
+
+# 3rd page
+
+😃
 ```
 
 </td>
