@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.9 - 2018-07-23
+
 - Add the basic TypeScript definition ([#40](https://github.com/marp-team/marpit/pull/40))
 - Support heading divider ([#41](https://github.com/marp-team/marpit/pull/41))
 - Upgrade Node LTS and depenent packages ([#42](https://github.com/marp-team/marpit/pull/42))
