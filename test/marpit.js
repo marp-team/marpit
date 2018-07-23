@@ -6,6 +6,9 @@ import MarkdownIt from 'markdown-it'
 import { Marpit, ThemeSet } from '../src/index'
 
 describe('Marpit', () => {
+  // Suppress PostCSS warning while running test
+  const postcssInstance = postcss([() => {}])
+
   describe('#constructor', () => {
     const instance = new Marpit()
 
@@ -96,7 +99,7 @@ describe('Marpit', () => {
         const rendered = instance(true).render('# Hi')
         const $ = cheerio.load(rendered.html, { lowerCaseTags: false })
 
-        return postcss()
+        return postcssInstance
           .process(rendered.css, { from: undefined })
           .then(ret => {
             assert($('svg > foreignObject > section > h1').length === 1)
@@ -116,7 +119,7 @@ describe('Marpit', () => {
       it('has background-image style on section tag when backgroundSyntax is true', () => {
         const $ = cheerio.load(instance(true).render('![bg](test)').html)
 
-        return postcss()
+        return postcssInstance
           .process($('section').attr('style'), { from: undefined })
           .then(ret =>
             ret.root.walkDecls('background-image', decl => {
