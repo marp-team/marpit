@@ -1,2 +1,5 @@
 env:
-  mocha: true
+  jest: true
+
+globals:
+  context: true

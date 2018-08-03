@@ -89,11 +89,11 @@ describe('Marpit inline SVG plugin', () => {
           'section',
         ].join(' > ')
 
-        before(() => {
+        beforeEach(() => {
           themeSet.default = defaultTheme
         })
 
-        after(() => {
+        afterEach(() => {
           themeSet.default = undefined
         })
 

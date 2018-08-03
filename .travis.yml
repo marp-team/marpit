@@ -9,6 +9,6 @@ sudo: false
 script:
   - yarn lint:all
   - yarn format:check
-  - yarn test:coverage
+  - yarn test:coverage --ci --maxWorkers=2
 
 after_success: yarn coveralls
