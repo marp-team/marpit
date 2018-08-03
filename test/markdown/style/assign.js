@@ -1,4 +1,3 @@
-import assert from 'assert'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../../src/markdown/directives/apply'
@@ -25,15 +24,15 @@ describe('Marpit style assign plugin', () => {
       const marpit = marpitStub()
       md(marpit).render('<style>b { color: red; }</style>')
 
-      assert.deepStrictEqual(marpit.lastStyles, ['b { color: red; }'])
+      expect(marpit.lastStyles).toStrictEqual(['b { color: red; }'])
     })
 
     it('ignores parsing style in #renderInline', () => {
       const marpit = marpitStub()
       const text = '<style>b { color: red; }</style>'
 
-      assert(md(marpit).renderInline(text) === text)
-      assert(!marpit.lastStyles)
+      expect(md(marpit).renderInline(text)).toBe(text)
+      expect(marpit.lastStyles).toBeUndefined()
     })
   })
 
@@ -54,7 +53,7 @@ describe('Marpit style assign plugin', () => {
         -->
       `)
 
-      assert.deepStrictEqual(marpit.lastStyles, ['b { color: red; }'])
+      expect(marpit.lastStyles).toStrictEqual(['b { color: red; }'])
     })
   })
 
@@ -85,7 +84,7 @@ describe('Marpit style assign plugin', () => {
         -->
       `)
 
-      assert.deepStrictEqual(marpit.lastStyles, [
+      expect(marpit.lastStyles).toStrictEqual([
         'h1 { font-size: 3em; }',
         'h2 { font-size: 2em; }',
         'h3 { font-size: 1em; }',

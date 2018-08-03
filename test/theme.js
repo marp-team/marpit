@@ -1,4 +1,3 @@
-import assert from 'assert'
 import dedent from 'dedent'
 import { Theme } from '../src/index'
 
@@ -8,33 +7,33 @@ describe('Theme', () => {
       const css = '/* @theme test-theme */'
       const instance = Theme.fromCSS(css)
 
-      assert(instance instanceof Theme)
-      assert(Object.isFrozen(instance))
+      expect(instance).toBeInstanceOf(Theme)
+      expect(Object.isFrozen(instance)).toBe(true)
 
-      assert(instance.name === 'test-theme')
-      assert(instance.css === css)
-      assert.deepStrictEqual(instance.meta, { theme: 'test-theme' })
-      assert.deepStrictEqual(instance.importRules, [])
-      assert(instance.width === undefined)
-      assert(instance.height === undefined)
+      expect(instance.name).toBe('test-theme')
+      expect(instance.css).toBe(css)
+      expect(instance.meta).toStrictEqual({ theme: 'test-theme' })
+      expect(instance.importRules).toStrictEqual([])
+      expect(instance.width).toBeUndefined()
+      expect(instance.height).toBeUndefined()
     })
 
     context('when CSS has not @theme meta', () => {
       const css = 'section { background: #fff; }'
 
       it('throws error', () =>
-        assert.throws(() => {
-          Theme.fromCSS(css)
-        }, 'Marpit theme CSS requires @theme meta.'))
+        expect(() => Theme.fromCSS(css)).toThrow(
+          'Marpit theme CSS requires @theme meta.'
+        ))
 
       context('with validate option as false (for internal)', () => {
         it('returns theme instance without name', () => {
           let instance
-          assert.doesNotThrow(() => {
+          expect(() => {
             instance = Theme.fromCSS(css, false)
-          })
+          }).not.toThrow()
 
-          assert(instance.name === undefined)
+          expect(instance.name).toBeUndefined()
         })
       })
     })
@@ -49,8 +48,8 @@ describe('Theme', () => {
       `)
 
       it('returns Theme instance that has width and height props', () => {
-        assert(instance.width === '960px')
-        assert(instance.height === '720px')
+        expect(instance.width).toBe('960px')
+        expect(instance.height).toBe('720px')
       })
     })
 
@@ -62,7 +61,7 @@ describe('Theme', () => {
       `)
 
       it('returns Theme instance that has width and height props', () =>
-        assert.deepStrictEqual(instance.importRules.map(r => r.value), [
+        expect(instance.importRules.map(r => r.value)).toStrictEqual([
           'yet-another', // @import-theme prepends to the beginning
           'another-theme',
         ]))
@@ -74,25 +73,25 @@ describe('Theme', () => {
       Theme.fromCSS(`section { width: ${width}; }`, false)
 
     it('returns a width pixel as number', () =>
-      assert(instance('1280px').widthPixel === 1280))
+      expect(instance('1280px').widthPixel).toBe(1280))
 
     it('converts absolute unit into pixel', () => {
-      assert(instance('127cm').widthPixel === 4800)
-      assert(instance('2.5in').widthPixel === 240)
-      assert(instance('635mm').widthPixel === 2400)
-      assert(instance('8pc').widthPixel === 128)
-      assert(instance('300pt').widthPixel === 400)
+      expect(instance('127cm').widthPixel).toBe(4800)
+      expect(instance('2.5in').widthPixel).toBe(240)
+      expect(instance('635mm').widthPixel).toBe(2400)
+      expect(instance('8pc').widthPixel).toBe(128)
+      expect(instance('300pt').widthPixel).toBe(400)
     })
 
     it('returns undefined when width has not absolute unit', () => {
-      assert(instance('100em').widthPixel === undefined)
+      expect(instance('100em').widthPixel).toBeUndefined()
     })
 
     it('returns undefined when width property is invalid', () => {
       const theme = new Theme()
       const assertWidth = width => {
         theme.width = width
-        assert(theme.widthPixel === undefined)
+        expect(theme.widthPixel).toBeUndefined()
       }
 
       assertWidth(undefined)
@@ -107,25 +106,25 @@ describe('Theme', () => {
       Theme.fromCSS(`section { height: ${height}; }`, false)
 
     it('returns a width pixel as number', () =>
-      assert(instance('960px').heightPixel === 960))
+      expect(instance('960px').heightPixel).toBe(960))
 
     it('converts absolute unit into pixel', () => {
-      assert(instance('31.75cm').heightPixel === 1200)
-      assert(instance('1.25in').heightPixel === 120)
-      assert(instance('127mm').heightPixel === 480)
-      assert(instance('10.1pc').heightPixel === 161.6)
-      assert(instance('5.625pt').heightPixel === 7.5)
+      expect(instance('31.75cm').heightPixel).toBe(1200)
+      expect(instance('1.25in').heightPixel).toBe(120)
+      expect(instance('127mm').heightPixel).toBe(480)
+      expect(instance('10.1pc').heightPixel).toBe(161.6)
+      expect(instance('5.625pt').heightPixel).toBe(7.5)
     })
 
     it('returns undefined when width has not absolute unit', () => {
-      assert(instance('100%').heightPixel === undefined)
+      expect(instance('100%').heightPixel).toBeUndefined()
     })
 
     it('returns undefined when width property is invalid', () => {
       const theme = new Theme()
       const assertHeight = height => {
         theme.height = height
-        assert(theme.heightPixel === undefined)
+        expect(theme.heightPixel).toBeUndefined()
       }
 
       assertHeight(undefined)

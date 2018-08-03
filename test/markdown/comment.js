@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
@@ -22,9 +21,8 @@ describe('Marpit comment plugin', () => {
     ### <!-- comment in header -->
   `
 
-  it('ignores in #renderInline', () => {
-    assert(md().renderInline('<!-- test -->') === '<!-- test -->')
-  })
+  it('ignores in #renderInline', () =>
+    expect(md().renderInline('<!-- test -->')).toBe('<!-- test -->'))
 
   const htmls = [true, false]
 
@@ -46,12 +44,12 @@ describe('Marpit comment plugin', () => {
           []
         )
 
-        assert(comments.includes('comment!'))
-        assert(comments.includes('supports\nmultiline'))
+        expect(comments).toContain('comment!')
+        expect(comments).toContain('supports\nmultiline')
 
         // TODO: Supports inline comment
-        // assert(comments.includes('inline'))
-        // assert(comments.includes('comment in header'))
+        // expect(comments).toContain('inline')
+        // expect(comments).toContain('comment in header')
       })
 
       // TODO: Supports inline comment
@@ -59,13 +57,13 @@ describe('Marpit comment plugin', () => {
         const $ = cheerio.load(markdown.render(text))
         const comments = extractComments($)
 
-        assert(comments.length === 0)
-        assert($('h1').length === 1)
-        assert($('h1').text() === 'foo')
-        assert($('h2').length === 1)
-        assert($('h2').text() === 'bar')
-        assert($('h3').length === 1)
-        assert($('h3').text() === '')
+        expect(comments).toHaveLength(0)
+        expect($('h1')).toHaveLength(1)
+        expect($('h1').text()).toBe('foo')
+        expect($('h2')).toHaveLength(1)
+        expect($('h2').text()).toBe('bar')
+        expect($('h3')).toHaveLength(1)
+        expect($('h3').text()).toBe('')
       })
 
       const ignoreCases = {
@@ -81,8 +79,8 @@ describe('Marpit comment plugin', () => {
             const comments = extractComments($)
             const code = $('code')
 
-            assert(comments.length === 0)
-            assert(code.text().trim() === '<!-- code -->')
+            expect(comments).toHaveLength(0)
+            expect(code.text().trim()).toBe('<!-- code -->')
           })
         })
       })

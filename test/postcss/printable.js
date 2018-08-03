@@ -1,4 +1,3 @@
-import assert from 'assert'
 import postcss from 'postcss'
 import printable from '../../src/postcss/printable'
 
@@ -20,16 +19,18 @@ describe('Marpit PostCSS printable plugin', () => {
           rules.push(node)
       })
 
-      assert(rules[0].type === 'atrule' && rules[0].name === 'page')
-      assert(rules[1].type === 'atrule' && rules[1].name === 'media')
-      assert(rules[2].type === 'rule' && rules[2].selector === 'section.theme')
+      expect(rules).toStrictEqual([
+        expect.objectContaining({ type: 'atrule', name: 'page' }),
+        expect.objectContaining({ type: 'atrule', name: 'media' }),
+        expect.objectContaining({ type: 'rule', selector: 'section.theme' }),
+      ])
 
       let sizeDecl
       result.root.walkDecls('size', rule => {
         sizeDecl = rule
       })
 
-      assert(sizeDecl.value === '640px 480px')
+      expect(sizeDecl.value).toBe('640px 480px')
     })
   })
 })

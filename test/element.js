@@ -1,4 +1,3 @@
-import assert from 'assert'
 import { Element } from '../src/index'
 
 describe('Element', () => {
@@ -6,19 +5,19 @@ describe('Element', () => {
     it('creates a instance with tag', () => {
       const elm = new Element('span')
 
-      assert(elm.tag === 'span')
-      assert.deepStrictEqual(elm.attributes, {})
+      expect(elm.tag).toBe('span')
+      expect(elm.attributes).toStrictEqual({})
     })
 
     it('creates a instance with tag and attributes', () => {
       const attributes = { id: 'foo', class: 'bar' }
       const elm = new Element('div', attributes)
 
-      assert(elm.tag === 'div')
-      assert.deepStrictEqual(elm.attributes, attributes)
+      expect(elm.tag).toBe('div')
+      expect(elm.attributes).toStrictEqual(attributes)
 
-      assert(elm.id === 'foo')
-      assert(elm.class === 'bar')
+      expect(elm.id).toBe('foo')
+      expect(elm.class).toBe('bar')
     })
   })
 
@@ -26,19 +25,19 @@ describe('Element', () => {
     const elm = new Element('a', { href: '#', target: '_blank' })
     const obj = { tag: 'a', href: '#', target: '_blank' }
 
-    assert.deepStrictEqual(obj, { ...elm })
+    expect(obj).toStrictEqual({ ...elm })
   })
 
   it('has been frozen', () => {
     const elm = new Element('article')
-    assert(Object.isFrozen(elm))
+    expect(Object.isFrozen(elm)).toBe(true)
 
-    assert.throws(() => {
+    expect(() => {
       elm.tag = 'section'
-    })
+    }).toThrow()
 
-    assert.throws(() => {
+    expect(() => {
       elm.extraAttr = 'extra'
-    })
+    }).toThrow()
   })
 })

@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
@@ -55,13 +54,13 @@ describe('Marpit directives apply plugin', () => {
     const section = $('section').first()
     const style = toObjStyle(section.attr('style'))
 
-    assert(section.is('.test'))
-    assert(section.attr('data-class') === 'test')
-    assert(section.attr('data-theme') === 'test_theme')
-    assert(!section.attr('data-unknown-dir'))
-    assert(style['--class'] === 'test')
-    assert(style['--theme'] === 'test_theme')
-    assert(style['--unknown-dir'] !== 'directive')
+    expect(section.is('.test')).toBe(true)
+    expect(section.attr('data-class')).toBe('test')
+    expect(section.attr('data-theme')).toBe('test_theme')
+    expect(section.attr('data-unknown-dir')).toBeUndefined()
+    expect(style['--class']).toBe('test')
+    expect(style['--theme']).toBe('test_theme')
+    expect(style['--unknown-dir']).not.toBe('directive')
   })
 
   context('with dataset option as false', () => {
@@ -71,8 +70,8 @@ describe('Marpit directives apply plugin', () => {
       const $ = cheerio.load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
 
-      assert(!section.attr('data-class'))
-      assert(!section.attr('data-theme'))
+      expect(section.attr('data-class')).toBeUndefined()
+      expect(section.attr('data-theme')).toBeUndefined()
     })
   })
 
@@ -83,7 +82,7 @@ describe('Marpit directives apply plugin', () => {
       const $ = cheerio.load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
 
-      assert(!section.attr('style'))
+      expect(section.attr('style')).toBeUndefined()
     })
   })
 
@@ -95,8 +94,8 @@ describe('Marpit directives apply plugin', () => {
       const section = $('section').first()
       const style = toObjStyle(section.attr('style'))
 
-      assert(section.attr('data-unknown-dir') === 'directive')
-      assert(style['--unknown-dir'] === 'directive')
+      expect(section.attr('data-unknown-dir')).toBe('directive')
+      expect(style['--unknown-dir']).toBe('directive')
     })
   })
 
@@ -118,12 +117,12 @@ describe('Marpit directives apply plugin', () => {
         const section = $('section').first()
         const style = toObjStyle(section.attr('style'))
 
-        assert(style['background-color'] === 'white')
-        assert(style['background-image'] === 'url(//example.com/a.jpg)')
-        assert(style['background-position'] === 'left top')
-        assert(style['background-repeat'] === 'repeat-y')
-        assert(style['background-size'] === '25%')
-        assert(style.color === 'black')
+        expect(style['background-color']).toBe('white')
+        expect(style['background-image']).toBe('url(//example.com/a.jpg)')
+        expect(style['background-position']).toBe('left top')
+        expect(style['background-repeat']).toBe('repeat-y')
+        expect(style['background-size']).toBe('25%')
+        expect(style.color).toBe('black')
       })
 
       context('when directives of image options are not defined', () => {
@@ -135,9 +134,9 @@ describe('Marpit directives apply plugin', () => {
           const section = $('section').first()
           const style = toObjStyle(section.attr('style'))
 
-          assert(style['background-position'] === 'center')
-          assert(style['background-repeat'] === 'no-repeat')
-          assert(style['background-size'] === 'cover')
+          expect(style['background-position']).toBe('center')
+          expect(style['background-repeat']).toBe('no-repeat')
+          expect(style['background-size']).toBe('cover')
         })
       })
 
@@ -170,15 +169,15 @@ describe('Marpit directives apply plugin', () => {
             toObjStyle($('section#3').attr('style')),
           ]
 
-          assert(styleOne['background-position'] === undefined)
-          assert(styleOne['background-repeat'] === undefined)
-          assert(styleOne['background-size'] === undefined)
-          assert(styleTwo['background-position'] === 'top')
-          assert(styleTwo['background-repeat'] === 'repeat')
-          assert(styleTwo['background-size'] === '150px')
-          assert(styleThree['background-position'] === undefined)
-          assert(styleThree['background-repeat'] === undefined)
-          assert(styleThree['background-size'] === undefined)
+          expect(styleOne['background-position']).toBeUndefined()
+          expect(styleOne['background-repeat']).toBeUndefined()
+          expect(styleOne['background-size']).toBeUndefined()
+          expect(styleTwo['background-position']).toBe('top')
+          expect(styleTwo['background-repeat']).toBe('repeat')
+          expect(styleTwo['background-size']).toBe('150px')
+          expect(styleThree['background-position']).toBeUndefined()
+          expect(styleThree['background-repeat']).toBeUndefined()
+          expect(styleThree['background-size']).toBeUndefined()
         })
       })
 
@@ -199,15 +198,15 @@ describe('Marpit directives apply plugin', () => {
           const section = $('section').first()
           const style = toObjStyle(section.attr('style'))
 
-          assert(style['background-image'] === 'none')
-          assert(style['background-position'] === 'left')
-          assert(style['background-repeat'] === 'no-repeat')
-          assert(style['background-size'] === 'auto')
-          assert(style['background-color'] === 'white')
-          assert(style.color === 'black')
+          expect(style['background-image']).toBe('none')
+          expect(style['background-position']).toBe('left')
+          expect(style['background-repeat']).toBe('no-repeat')
+          expect(style['background-size']).toBe('auto')
+          expect(style['background-color']).toBe('white')
+          expect(style.color).toBe('black')
 
           Array.from({ length: 6 }, (v, k) => k + 1).forEach(i =>
-            assert(style[`--injection${i}`] === undefined)
+            expect(style[`--injection${i}`]).toBeUndefined()
           )
         })
       })
@@ -231,8 +230,8 @@ describe('Marpit directives apply plugin', () => {
         const $ = cheerio.load(mdForTest().render(paginateDirs))
         const sections = $('section')
 
-        assert(!sections.eq(0).data('marpit-pagination'))
-        assert(sections.eq(1).data('marpit-pagination'))
+        expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
+        expect(sections.eq(1).data('marpit-pagination')).toBeTruthy()
       })
     })
   })

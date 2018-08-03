@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
@@ -32,42 +31,42 @@ describe('Marpit background image plugin', () => {
     const [first, second] = mdInstance.parse(`![bg](${url})\n\n---`)
     const secondDirectives = (second.meta && second.meta.marpitDirectives) || {}
 
-    assert(secondDirectives.backgroundImage === undefined)
+    expect(secondDirectives.backgroundImage).toBeUndefined()
     return first.meta.marpitDirectives.backgroundImage
   }
 
   it('assigns specified image to backgroundImage spot directive', () => {
     const url = 'https://example.com/bg.jpg'
-    assert(bgDirective(url, md()) === `url("${url}")`)
+    expect(bgDirective(url, md())).toBe(`url("${url}")`)
   })
 
   it('escapes doublequote and backslash', () =>
-    assert(bgDirective('"md\\Abg"', md()) === 'url("%22md%5CAbg%22")'))
+    expect(bgDirective('"md\\Abg"', md())).toBe('url("%22md%5CAbg%22")'))
 
   it('overrides an already assigned directive', () => {
     const mdText = `<!-- backgroundImage: url(A) -->\n\n![bg](B)`
     const [firstSlide] = md().parse(mdText)
 
-    assert(firstSlide.meta.marpitDirectives.backgroundImage === 'url("B")')
+    expect(firstSlide.meta.marpitDirectives.backgroundImage).toBe('url("B")')
   })
 
   it('does not render the image syntax with bg description as <img>', () => {
     const $ = cheerio.load(md().render('![bg](bgImage) ![notbg](notBgImage)'))
 
-    assert($('img').length === 1)
-    assert($('img').attr('alt') === 'notbg')
-    assert($('img').attr('src') === 'notBgImage')
+    expect($('img')).toHaveLength(1)
+    expect($('img').attr('alt')).toBe('notbg')
+    expect($('img').attr('src')).toBe('notBgImage')
   })
 
   context('when empty string is specified', () => {
     it('ignores assign if empty string is specified', () =>
-      assert(bgDirective('', md()) === undefined))
+      expect(bgDirective('', md())).toBe(undefined))
 
     it('fallbacks to an already assigned directive', () => {
       const mdText = '<!-- backgroundImage: url(A) --> ![bg]()'
       const [firstSlide] = md().parse(mdText)
 
-      assert(firstSlide.meta.marpitDirectives.backgroundImage === 'url(A)')
+      expect(firstSlide.meta.marpitDirectives.backgroundImage).toBe('url(A)')
     })
   })
 
@@ -78,25 +77,25 @@ describe('Marpit background image plugin', () => {
     }
 
     it('assigns corresponded backgroundSize spot directive', () => {
-      assert(directives('![bg auto](img)').backgroundSize === 'auto')
-      assert(directives('![bg contain](img)').backgroundSize === 'contain')
-      assert(directives('![bg cover](img)').backgroundSize === 'cover')
-      assert(directives('![bg fit](img)').backgroundSize === 'contain')
+      expect(directives('![bg auto](img)').backgroundSize).toBe('auto')
+      expect(directives('![bg contain](img)').backgroundSize).toBe('contain')
+      expect(directives('![bg cover](img)').backgroundSize).toBe('cover')
+      expect(directives('![bg fit](img)').backgroundSize).toBe('contain')
     })
 
     it('assigns specified scale to backgroundSize spot directive', () => {
-      assert(directives('![bg 50%](img)').backgroundSize === '50%')
-      assert(directives('![bg 123.45%](img)').backgroundSize === '123.45%')
-      assert(directives('![bg .25%](img)').backgroundSize === '.25%')
+      expect(directives('![bg 50%](img)').backgroundSize).toBe('50%')
+      expect(directives('![bg 123.45%](img)').backgroundSize).toBe('123.45%')
+      expect(directives('![bg .25%](img)').backgroundSize).toBe('.25%')
 
       // The percentage scale is prior to the background keyword.
-      assert(directives('![bg 100% contain](img)').backgroundSize === '100%')
+      expect(directives('![bg 100% contain](img)').backgroundSize).toBe('100%')
     })
 
     it('ignores invalid scale', () => {
-      assert(directives('![bg %](img)').backgroundSize !== '%')
-      assert(directives('![bg .%](img)').backgroundSize !== '.%')
-      assert(directives('![bg 25](img)').backgroundSize !== '25')
+      expect(directives('![bg %](img)').backgroundSize).not.toBe('%')
+      expect(directives('![bg .%](img)').backgroundSize).not.toBe('.%')
+      expect(directives('![bg 25](img)').backgroundSize).not.toBe('25')
     })
   })
 
@@ -110,26 +109,27 @@ describe('Marpit background image plugin', () => {
 
     it('renders advanced background to another foreignObject', () => {
       const $ = $load(mdSVG().render('![bg](image)'))
-      assert($('svg[viewBox="0 0 100 100"] > foreignObject').length === 3)
+      expect($('svg[viewBox="0 0 100 100"] > foreignObject')).toHaveLength(3)
 
       const bg = $('svg > foreignObject:first-child')
       const bgSection = bg.find(
         '> section[data-marpit-advanced-background="background"]'
       )
-      assert(bgSection.length === 1)
+      expect(bgSection).toHaveLength(1)
 
       const figure = bgSection.find(
         '> div[data-marpit-advanced-background-container] > figure'
       )
-      assert(figure.length === 1)
-      assert(figure.attr('style') === 'background-image:url("image");')
+      expect(figure).toHaveLength(1)
+      expect(figure.attr('style')).toBe('background-image:url("image");')
     })
 
     it('escapes doublequote to disallow XSS', () => {
       const $ = $load(mdSVG().render('![bg](img"\\);color:#f00;--xss:url\\(")'))
-      const style = $('figure').attr('style')
 
-      assert(style !== 'background-image:("img");color:#f00;--xss:url("");')
+      expect($('figure').attr('style')).not.toBe(
+        'background-image:("img");color:#f00;--xss:url("");'
+      )
     })
 
     it('assigns data attribute to section element of the slide content', () => {
@@ -138,8 +138,10 @@ describe('Marpit background image plugin', () => {
         'svg > foreignObject > section[data-marpit-advanced-background="content"]'
       )
 
-      assert(slideSection.find('h1').length === 1)
-      assert(slideSection.attr('data-marpit-advanced-background') === 'content')
+      expect(slideSection.find('h1')).toHaveLength(1)
+      expect(slideSection.attr('data-marpit-advanced-background')).toBe(
+        'content'
+      )
     })
 
     it("inherits slide section's style assigned by directive", () => {
@@ -150,16 +152,16 @@ describe('Marpit background image plugin', () => {
         'section[data-marpit-advanced-background="background"]'
       )
 
-      assert(bgSection.attr('style').includes('background-image:url(A);'))
+      expect(bgSection.attr('style')).toContain('background-image:url(A);')
     })
 
     it('renders multiple images', () => {
       const $ = $load(mdSVG().render('![bg](A) ![bg](B)'))
       const figures = $('figure')
 
-      assert(figures.length === 2)
-      assert(figures.eq(0).attr('style') === 'background-image:url("A");')
-      assert(figures.eq(1).attr('style') === 'background-image:url("B");')
+      expect(figures).toHaveLength(2)
+      expect(figures.eq(0).attr('style')).toBe('background-image:url("A");')
+      expect(figures.eq(1).attr('style')).toBe('background-image:url("B");')
     })
 
     it('assigns background-size style with resizing keyword / scale', () => {
@@ -167,10 +169,10 @@ describe('Marpit background image plugin', () => {
       const styleA = $('figure:first-child').attr('style')
       const styleB = $('figure:last-child').attr('style')
 
-      assert(styleA.includes('background-image:url("A");'))
-      assert(styleA.includes('background-size:contain;'))
-      assert(styleB.includes('background-image:url("B");'))
-      assert(styleB.includes('background-size:50%;'))
+      expect(styleA).toContain('background-image:url("A");')
+      expect(styleA).toContain('background-size:contain;')
+      expect(styleB).toContain('background-image:url("B");')
+      expect(styleB).toContain('background-size:50%;')
     })
 
     splitBackgroundKeywords.forEach(keyword => {
@@ -182,11 +184,11 @@ describe('Marpit background image plugin', () => {
         const foreignObject = section.parent()
 
         it('assigns the width attribute of foreignObject for content as 50%', () =>
-          assert(foreignObject.attr('width') === '50%'))
+          expect(foreignObject.attr('width')).toBe('50%'))
 
         it('assigns data attribute of the keyword for split background', () =>
-          assert(
-            section.attr('data-marpit-advanced-background-split') === keyword
+          expect(section.attr('data-marpit-advanced-background-split')).toBe(
+            keyword
           ))
       })
     })
@@ -198,7 +200,7 @@ describe('Marpit background image plugin', () => {
       )
       const foreignObject = section.parent()
 
-      assert(foreignObject.attr('x') === '50%')
+      expect(foreignObject.attr('x')).toBe('50%')
     })
 
     context(
@@ -210,8 +212,8 @@ describe('Marpit background image plugin', () => {
           const section = $(
             'svg > foreignObject > section[data-marpit-advanced-background="content"]'
           )
-          assert(
-            section.attr('data-marpit-advanced-background-split') === 'left'
+          expect(section.attr('data-marpit-advanced-background-split')).toBe(
+            'left'
           )
         })
       }
@@ -259,8 +261,8 @@ describe('Marpit background image plugin', () => {
           const inlineImageStyle = $('img').attr('style')
           const bgImageStyle = $('img').attr('style')
 
-          assert(inlineImageStyle.includes(filters[filter]))
-          assert(bgImageStyle.includes(filters[filter]))
+          expect(inlineImageStyle).toContain(filters[filter])
+          expect(bgImageStyle).toContain(filters[filter])
         })
       })
 
@@ -292,7 +294,7 @@ describe('Marpit background image plugin', () => {
           const $ = $load(mdSVG(true).render(`![${filter}](a)`))
           const style = $('img').attr('style')
 
-          assert(style === injections[filter])
+          expect(style).toBe(injections[filter])
         })
       })
     })
@@ -302,11 +304,16 @@ describe('Marpit background image plugin', () => {
 
       it('assigns data-marpit-pagination attribute to pseudo layer', () => {
         const foreignObjects = $('svg > foreignObject')
-        assert(foreignObjects.length === 3)
+        expect(foreignObjects).toHaveLength(3)
 
         const pseudoFO = foreignObjects.eq(2)
-        assert(pseudoFO.is('[data-marpit-advanced-background="pseudo"]'))
-        assert(pseudoFO.find('> section').is('[data-marpit-pagination="1"]'))
+        expect(pseudoFO.is('[data-marpit-advanced-background="pseudo"]')).toBe(
+          true
+        )
+
+        expect(
+          pseudoFO.find('> section').is('[data-marpit-pagination="1"]')
+        ).toBe(true)
       })
     })
 
@@ -315,7 +322,7 @@ describe('Marpit background image plugin', () => {
 
       it('assigns color style to pseudo layer', () => {
         const pseudoSection = $('svg > foreignObject > section').eq(2)
-        assert(pseudoSection.attr('style').includes('color:white;'))
+        expect(pseudoSection.attr('style')).toContain('color:white;')
       })
     })
   })

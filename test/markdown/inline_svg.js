@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
@@ -34,20 +33,20 @@ describe('Marpit inline SVG plugin', () => {
   it('wraps each section elements with inline SVG', () => {
     const $ = render(md(), '# test\n\n---\n\n# test')
 
-    assert(
-      $('svg[viewBox] > foreignObject[width][height] > section').length === 2
-    )
+    expect(
+      $('svg[viewBox] > foreignObject[width][height] > section')
+    ).toHaveLength(2)
   })
 
   it('ignores in #renderInline', () => {
     const $ = render(md(), '# test\n\n---\n\n# test', true)
-    assert($('svg').length === 0)
+    expect($('svg')).toHaveLength(0)
   })
 
   it('ignores when Marpit inlineSVG option is false', () => {
     const marpitStubInstance = marpitStub({ options: { inlineSVG: false } })
     const $ = render(md(marpitStubInstance), '# test\n\n---\n\n# test')
-    assert($('svg').length === 0)
+    expect($('svg')).toHaveLength(0)
   })
 
   context('with specified theme directive', () => {
@@ -68,13 +67,13 @@ describe('Marpit inline SVG plugin', () => {
 
     it('assigns defined slide size as attributes', () => {
       const $ = render(md(marpitInstance()), '# test\n\n---\n\n# test')
-      assert($(expectedSelector).length === 2)
+      expect($(expectedSelector)).toHaveLength(2)
     })
 
     context('when specified theme is not found', () => {
       it('does not assign defined slide size', () => {
         const $ = render(md(marpitInstance('foo')), '# test\n\n---\n\n# test')
-        assert($(expectedSelector).length === 0)
+        expect($(expectedSelector)).toHaveLength(0)
       })
 
       context('with specified default theme', () => {
@@ -99,7 +98,7 @@ describe('Marpit inline SVG plugin', () => {
 
         it('assigns defined slide size in default theme', () => {
           const $ = render(md(marpitInstance('foo')), '# test\n\n---\n\n# test')
-          assert($(defaultThemeSelector).length === 2)
+          expect($(defaultThemeSelector)).toHaveLength(2)
         })
       })
     })

@@ -1,4 +1,3 @@
-import assert from 'assert'
 import dedent from 'dedent'
 import postcss from 'postcss'
 import replace from '../../../src/postcss/pseudo_selector/replace'
@@ -19,7 +18,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       return run(css).then(result => {
         result.root.walkRules(rule => {
           rule.selectors.forEach(selector => {
-            assert(selector.startsWith('section h'))
+            expect(selector.startsWith('section h')).toBe(true)
           })
         })
       })
@@ -37,10 +36,10 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const rules = []
         result.root.walkRules(rule => rules.push(...rule.selectors))
 
-        assert(rules.includes('section#1'))
-        assert(rules.includes('section.invert'))
-        assert(rules.includes('section[data-theme="marpit"]'))
-        assert(rules.includes('section:first-child'))
+        expect(rules).toContain('section#1')
+        expect(rules).toContain('section.invert')
+        expect(rules).toContain('section[data-theme="marpit"]')
+        expect(rules).toContain('section:first-child')
       })
     })
   })
@@ -54,7 +53,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, container).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'div > section')
+          expect(selector).toBe('div > section')
         })
       })
     })
@@ -65,7 +64,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, containers).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'div > span > section')
+          expect(selector).toBe('div > span > section')
         })
       })
     })
@@ -76,7 +75,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, container).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'div.foo.bar > section')
+          expect(selector).toBe('div.foo.bar > section')
         })
       })
     })
@@ -89,7 +88,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('remove pseudo elements', () =>
         run(css, undefined, null).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'h1')
+          expect(selector).toBe('h1')
         }))
     })
 
@@ -99,7 +98,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, container).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'div h1')
+          expect(selector).toBe('div h1')
         })
       })
     })
@@ -110,7 +109,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, container).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'svg > foreignObject h1')
+          expect(selector).toBe('svg > foreignObject h1')
         })
       })
     })
@@ -121,7 +120,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, container).then(result => {
           const { selector } = result.root.first
-          assert(selector === 'div.foo.bar h1')
+          expect(selector).toBe('div.foo.bar h1')
         })
       })
     })

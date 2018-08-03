@@ -1,4 +1,3 @@
-import assert from 'assert'
 import MarkdownIt from 'markdown-it'
 import unicodeEmoji from '../../src/markdown/unicode_emoji'
 
@@ -7,12 +6,11 @@ describe('Marpit unicode emoji plugin', () => {
 
   it('wraps each emoji by span tag with data attribute', () => {
     // Simple emoji
-    assert(md().renderInline('😃') === '<span data-marpit-emoji>😃</span>')
+    expect(md().renderInline('😃')).toBe('<span data-marpit-emoji>😃</span>')
 
     // Multiple emojis
-    assert(
-      md().renderInline('👍+👎') ===
-        '<span data-marpit-emoji>👍</span>+<span data-marpit-emoji>👎</span>'
+    expect(md().renderInline('👍+👎')).toBe(
+      '<span data-marpit-emoji>👍</span>+<span data-marpit-emoji>👎</span>'
     )
 
     // Ligatures
@@ -27,19 +25,18 @@ describe('Marpit unicode emoji plugin', () => {
     }
     Object.keys(ligatures).forEach(markdown => {
       const out = md().renderInline(markdown)
-      assert(out === `<span data-marpit-emoji>${ligatures[markdown]}</span>`)
+      expect(out).toBe(`<span data-marpit-emoji>${ligatures[markdown]}</span>`)
     })
 
     // Unicode 11
-    assert(
-      md().renderInline('\u{1f9f6}') ===
-        '<span data-marpit-emoji>\u{1f9f6}</span>'
+    expect(md().renderInline('\u{1f9f6}')).toBe(
+      '<span data-marpit-emoji>\u{1f9f6}</span>'
     )
   })
 
   it('wraps emoji in inline code ', () => {
     const out = md().renderInline('`emoji 👌`')
-    assert(out === '<code>emoji <span data-marpit-emoji>👌</span></code>')
+    expect(out).toBe('<code>emoji <span data-marpit-emoji>👌</span></code>')
   })
 
   it('wraps emoji in code block', () => {
@@ -47,29 +44,27 @@ describe('Marpit unicode emoji plugin', () => {
     const indented = md().render('\temoji 👌')
     const expectedStart = '<pre><code>emoji <span data-marpit-emoji>👌</span>'
 
-    assert(fenced.startsWith(expectedStart))
-    assert(indented.startsWith(expectedStart))
+    expect(fenced.startsWith(expectedStart)).toBe(true)
+    expect(indented.startsWith(expectedStart)).toBe(true)
 
     // Prevent wrapping in attributes
     const langFence = md().render('```<😃>\n👍\n```')
-    assert(
+    expect(
       langFence.startsWith(
         '<pre><code class="language-&lt;😃&gt;"><span data-marpit-emoji>👍</span>'
       )
-    )
+    ).toBe(true)
   })
 
   it('follows variation sequence', () => {
     // Numbers
-    assert(
-      md().renderInline('1 2\u{fe0e} 3\u{fe0f}') ===
-        '1 2\u{fe0e} <span data-marpit-emoji>3\u{fe0f}</span>'
+    expect(md().renderInline('1 2\u{fe0e} 3\u{fe0f}')).toBe(
+      '1 2\u{fe0e} <span data-marpit-emoji>3\u{fe0f}</span>'
     )
 
     // Right arrow
-    assert(
-      md().renderInline('➡ ➡\u{fe0e} ➡\u{fe0f}') ===
-        '➡ ➡\u{fe0e} <span data-marpit-emoji>➡\u{fe0f}</span>'
+    expect(md().renderInline('➡ ➡\u{fe0e} ➡\u{fe0f}')).toBe(
+      '➡ ➡\u{fe0e} <span data-marpit-emoji>➡\u{fe0f}</span>'
     )
   })
 })

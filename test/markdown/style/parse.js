@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
@@ -9,12 +8,13 @@ describe('Marpit style parse plugin', () => {
   const md = (marpit = marpitStub, mdOption = {}) =>
     new MarkdownIt('commonmark', mdOption).use(styleParse, marpit)
 
-  it("ignores parse when Marpit's inlineStyle option is false", () =>
-    assert(
-      md({ options: { inlineStyle: false } })
-        .parse('<style>b { color: #000; }</style>')
-        .every(t => t.type !== 'marpit_style')
-    ))
+  it("ignores parse when Marpit's inlineStyle option is false", () => {
+    const types = md({ options: { inlineStyle: false } })
+      .parse('<style>b { color: #000; }</style>')
+      .map(t => t.type)
+
+    expect(types).toStrictEqual(expect.not.arrayContaining(['marpit_style']))
+  })
 
   const text = dedent`
     <style>strong { color: red; }</style>
@@ -48,28 +48,28 @@ describe('Marpit style parse plugin', () => {
         )
 
       it('extracts style and stores to "marpit_style" token', () =>
-        assert.deepStrictEqual(pickStyles(markdown.parse(text)), [
+        expect(pickStyles(markdown.parse(text))).toStrictEqual([
           'strong { color: red; }',
           'a { color: blue; }',
         ]))
 
       it('strips style element in rendering', () => {
         const $ = cheerio.load(markdown.render(text))
-        assert($('style').length === 0)
+        expect($('style')).toHaveLength(0)
       })
 
       Object.keys(ignoreCases).forEach(elementType => {
         context(`when ${elementType} has <style> HTML tag`, () => {
           it('keeps HTML', () => {
             const tokens = markdown.parse(ignoreCases[elementType])
-            assert(pickStyles(tokens).length === 0)
+            expect(pickStyles(tokens)).toHaveLength(0)
 
             const rendered = markdown.renderer.render(tokens, markdown.options)
             const $ = cheerio.load(rendered)
             const code = $('code').text()
 
-            assert($('style').length === 0)
-            assert(code.trim() === '<style>b { color: red; }</style>')
+            expect($('style')).toHaveLength(0)
+            expect(code.trim()).toBe('<style>b { color: red; }</style>')
           })
         })
       })

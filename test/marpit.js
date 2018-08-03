@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import postcss from 'postcss'
@@ -13,22 +12,22 @@ describe('Marpit', () => {
     const instance = new Marpit()
 
     it('has default options', () => {
-      assert(instance.options.container.tag === 'div')
-      assert(instance.options.container.class === 'marpit')
-      assert(instance.options.backgroundSyntax === true)
-      assert(instance.options.markdown === 'commonmark')
-      assert(instance.options.printable === true)
-      assert(instance.options.slideContainer === undefined)
-      assert(instance.options.inlineSVG === false)
+      expect(instance.options.container.tag).toBe('div')
+      expect(instance.options.container.class).toBe('marpit')
+      expect(instance.options.backgroundSyntax).toBe(true)
+      expect(instance.options.markdown).toBe('commonmark')
+      expect(instance.options.printable).toBe(true)
+      expect(instance.options.slideContainer).toBeUndefined()
+      expect(instance.options.inlineSVG).toBe(false)
     })
 
     it('has themeSet property', () => {
-      assert(instance.themeSet instanceof ThemeSet)
-      assert(instance.themeSet.size === 0)
+      expect(instance.themeSet).toBeInstanceOf(ThemeSet)
+      expect(instance.themeSet.size).toBe(0)
     })
 
     it('has markdown property', () => {
-      assert(instance.markdown instanceof MarkdownIt)
+      expect(instance.markdown).toBeInstanceOf(MarkdownIt)
     })
   })
 
@@ -40,7 +39,7 @@ describe('Marpit', () => {
       const md = new MarkdownIt().use(marpit.markdownItPlugins)
       md.render('<!-- theme: foobar -->')
 
-      assert(marpit.lastGlobalDirectives.theme === 'foobar')
+      expect(marpit.lastGlobalDirectives.theme).toBe('foobar')
     })
   })
 
@@ -50,23 +49,23 @@ describe('Marpit', () => {
       const instance = new Marpit()
 
       instance.renderMarkdown = md => {
-        assert(md === markdown)
+        expect(md).toBe(markdown)
         instance.lastGlobalDirectives = { theme: 'dummy-theme' }
         return 'HTML'
       }
 
       instance.themeSet.pack = (theme, opts) => {
-        assert(theme === 'dummy-theme')
-        assert(opts.containers.length === 1)
-        assert(opts.containers[0].tag === 'div')
-        assert(opts.containers[0].class === 'marpit')
-        assert(opts.inlineSVG === false)
-        assert(opts.printable === true)
+        expect(theme).toBe('dummy-theme')
+        expect(opts.containers).toHaveLength(1)
+        expect(opts.containers[0].tag).toBe('div')
+        expect(opts.containers[0].class).toBe('marpit')
+        expect(opts.inlineSVG).toBe(false)
+        expect(opts.printable).toBe(true)
         return 'CSS'
       }
 
       const ret = instance.render(markdown)
-      assert.deepStrictEqual(ret, { html: 'HTML', css: 'CSS' })
+      expect(ret).toStrictEqual({ html: 'HTML', css: 'CSS' })
     })
 
     context('with inlineSVG option in instance', () => {
@@ -92,7 +91,7 @@ describe('Marpit', () => {
         const rendered = instance(false).render('# Hi')
         const $ = cheerio.load(rendered.html, { lowerCaseTags: false })
 
-        assert($('svg').length === 0)
+        expect($('svg')).toHaveLength(0)
       })
 
       it('wraps section with svg when inlineSVG is true', () => {
@@ -102,8 +101,8 @@ describe('Marpit', () => {
         return postcssInstance
           .process(rendered.css, { from: undefined })
           .then(ret => {
-            assert($('svg > foreignObject > section > h1').length === 1)
-            assert(countDecl(ret.root, '--theme-defined') === 1)
+            expect($('svg > foreignObject > section > h1')).toHaveLength(1)
+            expect(countDecl(ret.root, '--theme-defined')).toBe(1)
           })
       })
     })
@@ -113,7 +112,7 @@ describe('Marpit', () => {
 
       it('renders img tag when backgroundSyntax is false', () => {
         const $ = cheerio.load(instance(false).render('![bg](test)').html)
-        assert($('img').length === 1)
+        expect($('img')).toHaveLength(1)
       })
 
       it('has background-image style on section tag when backgroundSyntax is true', () => {
@@ -123,7 +122,7 @@ describe('Marpit', () => {
           .process($('section').attr('style'), { from: undefined })
           .then(ret =>
             ret.root.walkDecls('background-image', decl => {
-              assert(decl.value === 'url("test")')
+              expect(decl.value).toBe('url("test")')
             })
           )
       })
@@ -136,14 +135,14 @@ describe('Marpit', () => {
         const $ = cheerio.load(instance(false).render('![blur](test)').html)
         const style = $('img').attr('style') || ''
 
-        assert(!style.includes('filter:blur'))
+        expect(style).not.toContain('filter:blur')
       })
 
       it('applies filter style when filters is true', () => {
         const $ = cheerio.load(instance(true).render('![blur](test)').html)
         const style = $('img').attr('style') || ''
 
-        assert(style.includes('filter:blur'))
+        expect(style).toContain('filter:blur')
       })
     })
 
@@ -162,17 +161,17 @@ describe('Marpit', () => {
         const rendered = instance(false).render(markdown)
         const $ = cheerio.load(rendered.html)
 
-        assert($('style').length === 1)
-        assert(!rendered.css.includes('--style: appended;'))
+        expect($('style')).toHaveLength(1)
+        expect(rendered.css).not.toContain('--style: appended;')
       })
 
       it('appends style to css with processing when inlineStyle is true', () => {
         const rendered = instance(true).render(markdown)
         const $ = cheerio.load(rendered.html)
 
-        assert($('style').length === 0)
-        assert(rendered.css.includes('--style: appended;'))
-        assert(rendered.css.includes('/* @import "valid-theme"; */'))
+        expect($('style')).toHaveLength(0)
+        expect(rendered.css).toContain('--style: appended;')
+        expect(rendered.css).toContain('/* @import "valid-theme"; */')
       })
     })
   })
@@ -182,7 +181,7 @@ describe('Marpit', () => {
       const instance = new Marpit()
       instance.markdown.render = md => `test of ${md}`
 
-      assert(instance.renderMarkdown('render') === 'test of render')
+      expect(instance.renderMarkdown('render')).toBe('test of render')
     })
   })
 
@@ -190,14 +189,14 @@ describe('Marpit', () => {
     it('returns the result of themeSet#pack', () => {
       const instance = new Marpit()
       instance.themeSet.pack = (theme, opts) => {
-        assert(Object.keys(opts).includes('containers'))
-        assert(Object.keys(opts).includes('inlineSVG'))
-        assert(Object.keys(opts).includes('printable'))
+        expect(Object.keys(opts)).toContain('containers')
+        expect(Object.keys(opts)).toContain('inlineSVG')
+        expect(Object.keys(opts)).toContain('printable')
 
         return `style of ${theme}`
       }
 
-      assert(instance.renderStyle('test-theme') === 'style of test-theme')
+      expect(instance.renderStyle('test-theme')).toBe('style of test-theme')
     })
   })
 })
