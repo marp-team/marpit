@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Migrate test framework from mocha to jest ([#43](https://github.com/marp-team/marpit/pull/43))
+
 ## v0.0.9 - 2018-07-23
 
 - Add the basic TypeScript definition ([#40](https://github.com/marp-team/marpit/pull/40))
