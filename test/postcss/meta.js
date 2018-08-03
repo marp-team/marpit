@@ -6,7 +6,7 @@ describe('Marpit PostCSS meta plugin', () => {
 
   it('adds marpitMeta object to result', () => {
     run('').then(result => {
-      expect(result.marpitMeta).toBeInstanceof(Object)
+      expect(result.marpitMeta).toBeInstanceOf(Object)
       expect(result.marpitMeta).toStrictEqual({})
     })
   })
