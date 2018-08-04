@@ -117,7 +117,7 @@ footer: "![image](https://example.com/image.jpg)"
 ---
 ```
 
-> :warning: Marpit uses YAML for parsing directives, so **you should wrap with quotes** when the value includes invalid chars in YAML.
+> :warning: Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML.
 
 > :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 
