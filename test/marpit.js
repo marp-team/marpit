@@ -21,6 +21,16 @@ describe('Marpit', () => {
       expect(instance.options.inlineSVG).toBe(false)
     })
 
+    it('marks options property as immutable', () => {
+      expect(() => {
+        instance.options = { updated: true }
+      }).toThrow(TypeError)
+
+      expect(() => {
+        instance.options.printable = false
+      }).not.toThrow(TypeError)
+    })
+
     it('has themeSet property', () => {
       expect(instance.themeSet).toBeInstanceOf(ThemeSet)
       expect(instance.themeSet.size).toBe(0)
