@@ -9,6 +9,7 @@ import postcssPseudoPrepend from './postcss/pseudo_selector/prepend'
 import postcssPseudoReplace from './postcss/pseudo_selector/replace'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
+import wrapArray from './helpers/wrap_array'
 
 /**
  * Marpit theme set class.
@@ -168,7 +169,8 @@ class ThemeSet {
    * @param {string} name The theme name. It will use the instance's default
    *     theme or scaffold theme when a specific named theme does not exist.
    * @param {Object} [opts] The option object passed by {@link Marpit#render}.
-   * @param {string} [opts.appendStyle] A CSS string to append into theme.
+   * @param {string} [opts.after] A CSS string to append into after theme.
+   * @param {string} [opts.before] A CSS string to prepend into before theme.
    * @param {Element[]} [opts.containers] Container elements wrapping whole
    *     slide deck.
    * @param {boolean} [opts.printable] Make style printable to PDF.
@@ -183,20 +185,23 @@ class ThemeSet {
     if (opts.inlineSVG)
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
 
-    let append
+    const additionalCSS = css => {
+      if (!css) return undefined
 
-    try {
-      if (opts.appendStyle)
-        append = postcss([postcssImportSuppress(this)]).process(
-          opts.appendStyle
-        ).css
-    } catch (e) {
-      // Ignore invalid style
+      try {
+        return postcss([postcssImportSuppress(this)]).process(css).css
+      } catch (e) {
+        return undefined
+      }
     }
+
+    const after = additionalCSS(opts.after)
+    const before = additionalCSS(opts.before)
 
     const packer = postcss(
       [
-        append && (css => css.last.after(append)),
+        before && (css => css.first.before(before)),
+        after && (css => css.last.after(after)),
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({

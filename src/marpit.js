@@ -163,7 +163,7 @@ class Marpit {
   /** @private */
   themeSetPackOptions() {
     return {
-      appendStyle: this.lastStyles && this.lastStyles.join('\n'),
+      after: this.lastStyles ? this.lastStyles.join('\n') : undefined,
       containers: [...this.containers, ...this.slideContainers],
       inlineSVG: this.options.inlineSVG,
       printable: this.options.printable,

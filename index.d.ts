@@ -19,7 +19,8 @@ declare module '@marp-team/marpit' {
   }
 
   type ThemeSetPackOptions = {
-    appendStyle?: string
+    after?: string
+    before?: string
     containers?: Element[]
     printable?: boolean
     inlineSVG?: boolean
