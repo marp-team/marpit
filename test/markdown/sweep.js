@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
@@ -15,7 +14,7 @@ describe('Marpit sweep plugin', () => {
   const md = (opts = {}) => new MarkdownIt('commonmark', opts).use(sweep)
 
   it('does not sweep whitespace in #renderInline', () =>
-    assert(md().renderInline(' ') === ' '))
+    expect(md().renderInline(' ')).toBe(' '))
 
   it('sweeps blank paragraph made by background image plugin', () => {
     const marpitStub = {
@@ -46,7 +45,7 @@ describe('Marpit sweep plugin', () => {
       `)
     )
 
-    assert($('p').length === 2)
+    expect($('p')).toHaveLength(2)
   })
 
   const htmlOptions = [true, false]
@@ -59,7 +58,7 @@ describe('Marpit sweep plugin', () => {
         const markdown = md({ html }).use(comment)
         const $ = cheerio.load(markdown.render(text))
 
-        assert($('p').length === 1)
+        expect($('p')).toHaveLength(1)
       })
     })
   })

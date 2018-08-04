@@ -1,4 +1,3 @@
-import assert from 'assert'
 import dedent from 'dedent'
 import postcss from 'postcss'
 import prepend from '../../../src/postcss/pseudo_selector/prepend'
@@ -15,7 +14,9 @@ describe('Marpit PostCSS pseudo selector prepending plugin', () => {
     return run(css).then(result => {
       result.root.walkRules(rule => {
         rule.selectors.forEach(selector => {
-          assert(selector.startsWith(':marpit-container > :marpit-slide h'))
+          expect(
+            selector.startsWith(':marpit-container > :marpit-slide h')
+          ).toBe(true)
         })
       })
     })
@@ -33,13 +34,13 @@ describe('Marpit PostCSS pseudo selector prepending plugin', () => {
       const rules = []
       result.root.walkRules(rule => rules.push(...rule.selectors))
 
-      assert(rules.includes(':marpit-container > :marpit-slide'))
-      assert(rules.includes(':marpit-container > :marpit-slide::after'))
-      assert(rules.includes(':marpit-container > :marpit-slide.invert'))
+      expect(rules).toContain(':marpit-container > :marpit-slide')
+      expect(rules).toContain(':marpit-container > :marpit-slide::after')
+      expect(rules).toContain(':marpit-container > :marpit-slide.invert')
 
       // Custom Elements
-      assert(
-        rules.includes(':marpit-container > :marpit-slide section-like-element')
+      expect(rules).toContain(
+        ':marpit-container > :marpit-slide section-like-element'
       )
     })
   })
@@ -53,7 +54,9 @@ describe('Marpit PostCSS pseudo selector prepending plugin', () => {
     return run(css).then(result => {
       result.root.walkRules(rule => {
         rule.selectors.forEach(selector => {
-          assert(!selector.startsWith(':marpit-container > :marpit-slide'))
+          expect(selector.startsWith(':marpit-container > :marpit-slide')).toBe(
+            false
+          )
         })
       })
     })

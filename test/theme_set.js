@@ -1,5 +1,3 @@
-/* eslint no-prototype-builtins: 0 */
-import assert from 'assert'
 import dedent from 'dedent'
 import scaffoldTheme from '../src/theme/scaffold'
 import { ThemeSet, Theme } from '../src/index'
@@ -16,69 +14,66 @@ describe('ThemeSet', () => {
     const bareInstance = new ThemeSet()
 
     it('has default property as undefined', () =>
-      assert(bareInstance.default === undefined))
+      expect(bareInstance.default).toBeUndefined())
 
     it('has unenumerable themeMap property', () => {
-      assert(bareInstance.themeMap instanceof Map)
-      assert(!bareInstance.propertyIsEnumerable('themeMap'))
+      expect(bareInstance.themeMap).toBeInstanceOf(Map)
+      expect({}.propertyIsEnumerable.call(bareInstance, 'themeMap')).toBe(false)
     })
   })
 
   describe('get #size', () => {
     it('returns the count of themes', () => {
       instance.add('/* @theme test-theme */')
-      assert(instance.size === 1)
+      expect(instance.size).toBe(1)
 
       instance.add('/* @theme test-theme2 */')
-      assert(instance.size === 2)
+      expect(instance.size).toBe(2)
     })
   })
 
   describe('#add', () => {
     it('adds theme and returns parsed Theme instance', () => {
-      const ret = instance.add('/* @theme test-theme */')
-      assert(ret instanceof Theme)
-      assert(instance.has('test-theme'))
+      expect(instance.add('/* @theme test-theme */')).toBeInstanceOf(Theme)
+      expect(instance.has('test-theme')).toBe(true)
     })
 
     it('throws error with invalid CSS', () =>
-      assert.throws(() => instance.add('h1 {')))
+      expect(() => instance.add('h1 {')).toThrow())
 
     it('throws error when CSS has not @theme meta', () =>
-      assert.throws(() => instance.add('h1 { color: #f00; }')))
+      expect(() => instance.add('h1 { color: #f00; }')).toThrow())
   })
 
   describe('#addTheme', () => {
     it('adds theme instance', () => {
       instance.addTheme(Theme.fromCSS('/* @theme test-theme */'))
-      assert(instance.has('test-theme'))
+      expect(instance.has('test-theme')).toBe(true)
     })
 
     it('throws error when passed theme is not an instance of Theme', () =>
-      assert.throws(
-        () => instance.addTheme('/* @theme test-theme */'),
+      expect(() => instance.addTheme('/* @theme test-theme */')).toThrow(
         'ThemeSet can add only an instance of Theme.'
       ))
 
     it('throws error when passed theme has not name', () => {
-      assert.throws(
-        () => instance.addTheme(new Theme(undefined, '')),
+      expect(() => instance.addTheme(new Theme(undefined, ''))).toThrow(
         'An instance of Theme requires name.'
       )
     })
 
     it('throws error when passed theme is scaffold theme', () =>
-      assert.throws(() => instance.addTheme(scaffoldTheme)))
+      expect(() => instance.addTheme(scaffoldTheme)).toThrow())
   })
 
   describe('#clear', () => {
     it('removes all themes', () => {
       instance.add('/* @theme test1 */')
       instance.add('/* @theme test2 */')
-      assert(instance.size === 2)
+      expect(instance.size).toBe(2)
 
       instance.clear()
-      assert(instance.size === 0)
+      expect(instance.size).toBe(0)
     })
   })
 
@@ -89,14 +84,14 @@ describe('ThemeSet', () => {
     })
 
     it('removes specified theme and returns true', () => {
-      assert(instance.delete('test1'))
-      assert(!instance.has('test1'))
-      assert(instance.has('test2'))
+      expect(instance.delete('test1')).toBe(true)
+      expect(instance.has('test1')).toBe(false)
+      expect(instance.has('test2')).toBe(true)
     })
 
     it('returns false when specified theme is not contain', () => {
-      assert(!instance.delete('test3'))
-      assert(instance.size === 2)
+      expect(instance.delete('test3')).toBe(false)
+      expect(instance.size).toBe(2)
     })
   })
 
@@ -108,16 +103,16 @@ describe('ThemeSet', () => {
     })
 
     it('returns specified Theme instance', () => {
-      assert(instance.get('test-theme') === testTheme)
+      expect(instance.get('test-theme')).toBe(testTheme)
     })
 
     it('returns undefined when specified theme is not contain', () => {
-      assert(instance.get('not-contain') === undefined)
+      expect(instance.get('not-contain')).toBe(undefined)
     })
 
     context('with fallback option as true', () => {
       it('returns scaffold theme when specified theme is not contain', () => {
-        assert(instance.get('not-contain', true) === scaffoldTheme)
+        expect(instance.get('not-contain', true)).toBe(scaffoldTheme)
       })
 
       context('when default theme is defined', () => {
@@ -126,7 +121,7 @@ describe('ThemeSet', () => {
         })
 
         it('returns default theme when specified theme is not contain', () => {
-          assert(instance.get('not-contain', true) === instance.default)
+          expect(instance.get('not-contain', true)).toBe(instance.default)
         })
       })
     })
@@ -165,37 +160,39 @@ describe('ThemeSet', () => {
 
     context('with passing theme as string', () => {
       it('returns the property value when specified theme is contained', () => {
-        assert(instance.getThemeProp('size-specified', 'width') === '640px')
-        assert(instance.getThemeProp('size-specified', 'height') === '480px')
+        expect(instance.getThemeProp('size-specified', 'width')).toBe('640px')
+        expect(instance.getThemeProp('size-specified', 'height')).toBe('480px')
       })
 
       it('returns scaffold value when specified theme is not defined props', () => {
-        assert(instance.getThemeProp('fallback', 'width') === width)
-        assert(instance.getThemeProp('fallback', 'height') === height)
+        expect(instance.getThemeProp('fallback', 'width')).toBe(width)
+        expect(instance.getThemeProp('fallback', 'height')).toBe(height)
       })
 
       it('returns scaffold value when specified theme is not contained', () => {
-        assert(instance.getThemeProp('not-contained', 'width') === width)
-        assert(instance.getThemeProp('not-contained', 'height') === height)
+        expect(instance.getThemeProp('not-contained', 'width')).toBe(width)
+        expect(instance.getThemeProp('not-contained', 'height')).toBe(height)
       })
     })
 
     context('with passing theme as Theme instance', () => {
       it('returns the property value when specified theme is contained', () => {
-        assert(instance.getThemeProp(sizeSpecifiedTheme, 'width') === '640px')
-        assert(instance.getThemeProp(sizeSpecifiedTheme, 'height') === '480px')
+        expect(instance.getThemeProp(sizeSpecifiedTheme, 'width')).toBe('640px')
+        expect(instance.getThemeProp(sizeSpecifiedTheme, 'height')).toBe(
+          '480px'
+        )
       })
 
       it('returns scaffold value when specified theme is not defined props', () => {
-        assert(instance.getThemeProp(fallbackTheme, 'width') === width)
-        assert(instance.getThemeProp(fallbackTheme, 'height') === height)
+        expect(instance.getThemeProp(fallbackTheme, 'width')).toBe(width)
+        expect(instance.getThemeProp(fallbackTheme, 'height')).toBe(height)
       })
 
       it('returns scaffold value when specified theme is not contained', () => {
         const theme = Theme.fromCSS('/* @theme not-contained */')
 
-        assert(instance.getThemeProp(theme, 'width') === width)
-        assert(instance.getThemeProp(theme, 'height') === height)
+        expect(instance.getThemeProp(theme, 'width')).toBe(width)
+        expect(instance.getThemeProp(theme, 'height')).toBe(height)
       })
     })
 
@@ -208,42 +205,40 @@ describe('ThemeSet', () => {
       })
 
       it('returns default value when specified theme is not contained', () =>
-        assert(instance.getThemeProp('not-contained', 'width') === '123px'))
+        expect(instance.getThemeProp('not-contained', 'width')).toBe('123px'))
 
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
-        assert(instance.getThemeProp('not-contained', 'height') === height))
+        expect(instance.getThemeProp('not-contained', 'height')).toBe(height))
     })
 
     context('with @import rules', () => {
       it('returns the value defined at imported theme', () => {
-        assert(instance.getThemeProp('import', 'width') === '100px')
-        assert(instance.getThemeProp('double-import', 'width') === '100px')
+        expect(instance.getThemeProp('import', 'width')).toBe('100px')
+        expect(instance.getThemeProp('double-import', 'width')).toBe('100px')
       })
 
       it('throws error when circular import is detected', () => {
-        assert.throws(
-          () => instance.getThemeProp('circular-import', 'width'),
+        expect(() => instance.getThemeProp('circular-import', 'width')).toThrow(
           'Circular "circular-import" theme import is detected.'
         )
-        assert.throws(
-          () => instance.getThemeProp('nested-circular', 'width'),
+        expect(() => instance.getThemeProp('nested-circular', 'width')).toThrow(
           'Circular "nested-circular" theme import is detected.'
         )
       })
 
       it('ignores importing undefined theme and fallbacks to scaffold value', () =>
-        assert(instance.getThemeProp('undefined-theme', 'width') === width))
+        expect(instance.getThemeProp('undefined-theme', 'width')).toBe(width))
     })
   })
 
   describe('#has', () => {
     it('returns true when specified name is contained', () => {
       instance.add('/* @theme test-theme */')
-      assert(instance.has('test-theme'))
+      expect(instance.has('test-theme')).toBe(true)
     })
 
     it('returns false when specified name is not contained', () =>
-      assert(!instance.has('test-theme')))
+      expect(instance.has('test-theme')).toBe(false))
   })
 
   describe('#themes', () => {
@@ -253,8 +248,8 @@ describe('ThemeSet', () => {
 
       const themes = instance.themes()
 
-      assert(typeof themes.next === 'function')
-      assert.deepStrictEqual([...themes].map(t => t.name), ['test1', 'test2'])
+      expect(typeof themes.next).toBe('function')
+      expect([...themes].map(t => t.name)).toStrictEqual(['test1', 'test2'])
     })
   })
 })

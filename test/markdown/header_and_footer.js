@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
@@ -36,8 +35,8 @@ describe('Marpit header and footer plugin', () => {
         const children = $(elm).children()
         const firstChild = children.first()
 
-        assert(firstChild.get(0).tagName === 'header')
-        assert(firstChild.html() === 'text')
+        expect(firstChild.get(0).tagName).toBe('header')
+        expect(firstChild.html()).toBe('text')
       })
     })
 
@@ -52,10 +51,10 @@ describe('Marpit header and footer plugin', () => {
 
         const img = header.find('img')
 
-        assert(header.find('strong').length === 1)
-        assert(header.find('em').length === 1)
-        assert(img.length === 1)
-        assert(img.attr('src') === 'https://example.com/image.jpg')
+        expect(header.find('strong')).toHaveLength(1)
+        expect(header.find('em')).toHaveLength(1)
+        expect(img).toHaveLength(1)
+        expect(img.attr('src')).toBe('https://example.com/image.jpg')
       })
     })
   })
@@ -71,8 +70,8 @@ describe('Marpit header and footer plugin', () => {
         const children = $(elm).children()
         const lastChild = children.last()
 
-        assert(lastChild.get(0).tagName === 'footer')
-        assert(lastChild.html() === 'text')
+        expect(lastChild.get(0).tagName).toBe('footer')
+        expect(lastChild.html()).toBe('text')
       })
     })
 
@@ -87,10 +86,10 @@ describe('Marpit header and footer plugin', () => {
 
         const img = footer.find('img')
 
-        assert(footer.find('strong').length === 1)
-        assert(footer.find('em').length === 1)
-        assert(img.length === 1)
-        assert(img.attr('src') === 'https://example.com/image.jpg')
+        expect(footer.find('strong')).toHaveLength(1)
+        expect(footer.find('em')).toHaveLength(1)
+        expect(img).toHaveLength(1)
+        expect(img.attr('src')).toBe('https://example.com/image.jpg')
       })
     })
   })

@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import { Element } from '../../src/index'
@@ -10,10 +9,10 @@ describe('Marpit container plugin', () => {
   context('with empty', () => {
     it('has no effect on rendered HTML', () => {
       const $undefined = cheerio.load(md().render('test'))
-      assert($undefined('body > p').text() === 'test')
+      expect($undefined('body > p').text()).toBe('test')
 
       const $emptyArray = cheerio.load(md([]).render('test'))
-      assert($emptyArray('body > p').text() === 'test')
+      expect($emptyArray('body > p').text()).toBe('test')
     })
   })
 
@@ -23,15 +22,15 @@ describe('Marpit container plugin', () => {
 
     it('wraps rendered HTML by specified element', () => {
       const $element = cheerio.load(md([elm]).render('test'))
-      assert($element('body > div.wrapper > p').text() === 'test')
+      expect($element('body > div.wrapper > p').text()).toBe('test')
 
       const $object = cheerio.load(md([obj]).render('test'))
-      assert($object('body > span#wrapper > p').text() === 'test')
+      expect($object('body > span#wrapper > p').text()).toBe('test')
     })
 
     it('ignores in #renderInline', () => {
       const $ = cheerio.load(md([elm]).renderInline(''))
-      assert($('div.wrapper').length === 0)
+      expect($('div.wrapper')).toHaveLength(0)
     })
   })
 
@@ -42,7 +41,7 @@ describe('Marpit container plugin', () => {
 
     it('wraps rendered HTML by each elements', () => {
       const $ = cheerio.load(markdown.render('test'))
-      assert($('body > div#one > span#two > p').text() === 'test')
+      expect($('body > div#one > span#two > p').text()).toBe('test')
     })
   })
 })

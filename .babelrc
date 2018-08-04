@@ -6,12 +6,7 @@
   ],
   "env": {
     "test": {
-      "plugins": [
-        ["transform-object-rest-spread", { "useBuiltIns": true }],
-        "babel-plugin-empower-assert",
-        "babel-plugin-espower",
-        "istanbul"
-      ]
+      "plugins": [["transform-object-rest-spread", { "useBuiltIns": true }]]
     }
   }
 }

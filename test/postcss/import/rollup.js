@@ -1,4 +1,3 @@
-import assert from 'assert'
 import dedent from 'dedent'
 import postcss from 'postcss'
 import importRollup from '../../../src/postcss/import/rollup'
@@ -20,16 +19,16 @@ describe('Marpit PostCSS import rollup plugin', () => {
       body { background: #fff; }
       h1 { color: red; }
     `
-    return run(before).then(({ css }) => assert(css === after))
+    return run(before).then(({ css }) => expect(css).toBe(after))
   })
 
   it('rolls up invalid @charset rule', () =>
     run('h1 { color: red; }\n@charset "utf-8";').then(({ css }) =>
-      assert(css === '@charset "utf-8";\nh1 { color: red; }')
+      expect(css).toBe('@charset "utf-8";\nh1 { color: red; }')
     ))
 
   it('applies the first rule when style has multiple @charset rules', () =>
     run('h1 { color: red; }\n@charset "utf-16";\n@charset "utf-8";').then(
-      ({ css }) => assert(css === '@charset "utf-16";\nh1 { color: red; }')
+      ({ css }) => expect(css).toBe('@charset "utf-16";\nh1 { color: red; }')
     ))
 })

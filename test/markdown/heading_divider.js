@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import comment from '../../src/markdown/comment'
@@ -29,7 +28,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('does not add any horizontal ruler tokens', () => {
         const tokens = markdown.parse(markdownText)
-        assert(tokens.filter(t => t.type === 'hr').length === 0)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(0)
       })
     })
 
@@ -38,17 +37,17 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before until 3rd level headings except first', () => {
         const tokens = markdown.parse(markdownText)
-        assert(tokens.filter(t => t.type === 'hr').length === 2)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
-        assert(hrAndHeadings[0].type === 'hr')
-        assert(hrAndHeadings[0].hidden)
-        assert(hrAndHeadings[1].type === 'heading_open')
-        assert(hrAndHeadings[1].tag === 'h2')
-        assert(hrAndHeadings[2].type === 'hr')
-        assert(hrAndHeadings[2].hidden)
-        assert(hrAndHeadings[3].type === 'heading_open')
-        assert(hrAndHeadings[3].tag === 'h3')
+        expect(hrAndHeadings[0].type).toBe('hr')
+        expect(hrAndHeadings[0].hidden).toBe(true)
+        expect(hrAndHeadings[1].type).toBe('heading_open')
+        expect(hrAndHeadings[1].tag).toBe('h2')
+        expect(hrAndHeadings[2].type).toBe('hr')
+        expect(hrAndHeadings[2].hidden).toBe(true)
+        expect(hrAndHeadings[3].type).toBe('heading_open')
+        expect(hrAndHeadings[3].tag).toBe('h3')
       })
     })
 
@@ -57,13 +56,13 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before 3rd level heading', () => {
         const tokens = markdown.parse(markdownText)
-        assert(tokens.filter(t => t.type === 'hr').length === 1)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(1)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
-        assert(hrAndHeadings[0].type === 'hr')
-        assert(hrAndHeadings[0].hidden)
-        assert(hrAndHeadings[1].type === 'heading_open')
-        assert(hrAndHeadings[1].tag === 'h3')
+        expect(hrAndHeadings[0].type).toBe('hr')
+        expect(hrAndHeadings[0].hidden).toBe(true)
+        expect(hrAndHeadings[1].type).toBe('heading_open')
+        expect(hrAndHeadings[1].tag).toBe('h3')
       })
     })
 
@@ -72,17 +71,17 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before 2nd and 4th level heading', () => {
         const tokens = markdown.parse(markdownText)
-        assert(tokens.filter(t => t.type === 'hr').length === 2)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
-        assert(hrAndHeadings[0].type === 'hr')
-        assert(hrAndHeadings[0].hidden)
-        assert(hrAndHeadings[1].type === 'heading_open')
-        assert(hrAndHeadings[1].tag === 'h2')
-        assert(hrAndHeadings[2].type === 'hr')
-        assert(hrAndHeadings[2].hidden)
-        assert(hrAndHeadings[3].type === 'heading_open')
-        assert(hrAndHeadings[3].tag === 'h4')
+        expect(hrAndHeadings[0].type).toBe('hr')
+        expect(hrAndHeadings[0].hidden).toBe(true)
+        expect(hrAndHeadings[1].type).toBe('heading_open')
+        expect(hrAndHeadings[1].tag).toBe('h2')
+        expect(hrAndHeadings[2].type).toBe('hr')
+        expect(hrAndHeadings[2].hidden).toBe(true)
+        expect(hrAndHeadings[3].type).toBe('heading_open')
+        expect(hrAndHeadings[3].tag).toBe('h4')
       })
     })
 
@@ -92,7 +91,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('renders four <section> elements', () => {
         const $ = cheerio.load(mdWithSlide(marpitStub(4)).render(markdownText))
-        assert($('section').length === 4)
+        expect($('section')).toHaveLength(4)
       })
     })
 
@@ -101,7 +100,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('does not add any horizontal ruler tokens', () => {
         const tokens = markdown.parse(markdownText)
-        assert(tokens.filter(t => t.type === 'hr').length === 0)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(0)
       })
     })
   })
@@ -126,17 +125,17 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before until 3rd level headings except first', () => {
         const tokens = markdown.parse(text)
-        assert(tokens.filter(t => t.type === 'hr').length === 2)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
-        assert(hrAndHeadings[0].type === 'hr')
-        assert(hrAndHeadings[0].hidden)
-        assert(hrAndHeadings[1].type === 'heading_open')
-        assert(hrAndHeadings[1].tag === 'h2')
-        assert(hrAndHeadings[2].type === 'hr')
-        assert(hrAndHeadings[2].hidden)
-        assert(hrAndHeadings[3].type === 'heading_open')
-        assert(hrAndHeadings[3].tag === 'h3')
+        expect(hrAndHeadings[0].type).toBe('hr')
+        expect(hrAndHeadings[0].hidden).toBe(true)
+        expect(hrAndHeadings[1].type).toBe('heading_open')
+        expect(hrAndHeadings[1].tag).toBe('h2')
+        expect(hrAndHeadings[2].type).toBe('hr')
+        expect(hrAndHeadings[2].hidden).toBe(true)
+        expect(hrAndHeadings[3].type).toBe('heading_open')
+        expect(hrAndHeadings[3].tag).toBe('h3')
       })
     })
 
@@ -148,17 +147,17 @@ describe('Marpit heading divider plugin', () => {
 
         it('adds hidden hr token to before 2nd and 4th level heading', () => {
           const tokens = markdown.parse(text)
-          assert(tokens.filter(t => t.type === 'hr').length === 2)
+          expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
 
           const hrAndHeadings = pickHrAndHeading(tokens)
-          assert(hrAndHeadings[0].type === 'hr')
-          assert(hrAndHeadings[0].hidden)
-          assert(hrAndHeadings[1].type === 'heading_open')
-          assert(hrAndHeadings[1].tag === 'h2')
-          assert(hrAndHeadings[2].type === 'hr')
-          assert(hrAndHeadings[2].hidden)
-          assert(hrAndHeadings[3].type === 'heading_open')
-          assert(hrAndHeadings[3].tag === 'h4')
+          expect(hrAndHeadings[0].type).toBe('hr')
+          expect(hrAndHeadings[0].hidden).toBe(true)
+          expect(hrAndHeadings[1].type).toBe('heading_open')
+          expect(hrAndHeadings[1].tag).toBe('h2')
+          expect(hrAndHeadings[2].type).toBe('hr')
+          expect(hrAndHeadings[2].hidden).toBe(true)
+          expect(hrAndHeadings[3].type).toBe('heading_open')
+          expect(hrAndHeadings[3].tag).toBe('h4')
         })
       }
     )
@@ -168,15 +167,15 @@ describe('Marpit heading divider plugin', () => {
 
       it('overrides headingDivider option by directive', () => {
         const tokens = markdown.parse(markdownText)
-        assert(tokens.filter(t => t.type === 'hr').length === 3)
+        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(3)
 
         const overridden = markdown.parse(markdownTextWithDirective('false'))
-        assert(overridden.filter(t => t.type === 'hr').length === 0)
+        expect(overridden.filter(t => t.type === 'hr')).toHaveLength(0)
       })
 
       it('ignores invalid headingDivider directive', () => {
         const overridden = markdown.parse(markdownTextWithDirective('invalid'))
-        assert(overridden.filter(t => t.type === 'hr').length === 3)
+        expect(overridden.filter(t => t.type === 'hr')).toHaveLength(3)
       })
     })
   })

@@ -1,4 +1,3 @@
-import assert from 'assert'
 import InlineStyle from '../../src/helpers/inline_style'
 
 describe('InlineStyle helper class', () => {
@@ -12,29 +11,28 @@ describe('InlineStyle helper class', () => {
       .set('overflow', 'hidden')
       .delete('color')
 
-    assert(instance.toString() === 'background:url(";");overflow:hidden;')
+    expect(instance.toString()).toBe('background:url(";");overflow:hidden;')
   })
 
   describe('constructor()', () => {
-    context('with decls argument in string', () => {
+    context('with decls argument in string', () =>
       it('assigns parsed declarations', () =>
-        assert(
-          new InlineStyle('font-size: 20px;').toString() === 'font-size:20px;'
+        expect(new InlineStyle('font-size: 20px;').toString()).toBe(
+          'font-size:20px;'
         ))
-    })
+    )
 
-    context('with decls argument in object', () => {
+    context('with decls argument in object', () =>
       it('assigns the pair of declaration and value', () =>
-        assert(
-          new InlineStyle({ border: '1px solid #000' }).toString() ===
-            'border:1px solid #000;'
+        expect(new InlineStyle({ border: '1px solid #000' }).toString()).toBe(
+          'border:1px solid #000;'
         ))
-    })
+    )
 
     context('with decls argument in InlineStyle', () => {
       it('assigns sanitized declarations', () => {
         const base = new InlineStyle({ color: 'red }', background: 'yellow' })
-        assert(new InlineStyle(base).toString() === 'background:yellow;')
+        expect(new InlineStyle(base).toString()).toBe('background:yellow;')
       })
     })
   })

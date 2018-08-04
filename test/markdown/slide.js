@@ -1,4 +1,3 @@
-import assert from 'assert'
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import slide from '../../src/markdown/slide'
@@ -12,18 +11,18 @@ describe('Marpit slide plugin', () => {
     it('renders <section> tag with number anchor', () => {
       // Empty content
       const $ = cheerio.load(markdown.render(''))
-      assert($('section#1').length === 1)
+      expect($('section#1')).toHaveLength(1)
 
       // Multi page
       const $multi = cheerio.load(markdown.render('# foo\n\n---\n\n## bar'))
-      assert($multi('section').length === 2)
-      assert($multi('section#1 > h1').text() === 'foo')
-      assert($multi('section#2 > h2').text() === 'bar')
+      expect($multi('section')).toHaveLength(2)
+      expect($multi('section#1 > h1').text()).toBe('foo')
+      expect($multi('section#2 > h2').text()).toBe('bar')
     })
 
     it('ignores in #renderInline', () => {
       const $ = cheerio.load(md().renderInline(''))
-      assert($('section').length === 0)
+      expect($('section')).toHaveLength(0)
     })
   })
 
@@ -32,11 +31,11 @@ describe('Marpit slide plugin', () => {
 
     it('renders <section> tag with specified attributes', () => {
       const $ = cheerio.load(markdown.render(''))
-      assert($('section.page#1[tabindex=-1]').length === 1)
+      expect($('section.page#1[tabindex=-1]')).toHaveLength(1)
 
       const $multi = cheerio.load(markdown.render('# foo\n\n---\n\n## bar'))
-      assert($multi('section.page#1[tabindex=-1] > h1').text() === 'foo')
-      assert($multi('section.page#2[tabindex=-1] > h2').text() === 'bar')
+      expect($multi('section.page#1[tabindex=-1] > h1').text()).toBe('foo')
+      expect($multi('section.page#2[tabindex=-1] > h2').text()).toBe('bar')
     })
   })
 
@@ -46,7 +45,7 @@ describe('Marpit slide plugin', () => {
 
       it('renders <section> tag without id attribute', () => {
         const $ = cheerio.load(markdown.render(''))
-        assert($('section:not([id])').length === 1)
+        expect($('section:not([id])')).toHaveLength(1)
       })
     })
 
@@ -55,13 +54,13 @@ describe('Marpit slide plugin', () => {
 
       it('renders <section> tag with id provided by custom function', () => {
         const $ = cheerio.load(markdown(i => `page${i + 1}`).render(''))
-        assert($('section#page1').length === 1)
+        expect($('section#page1')).toHaveLength(1)
 
         const $multi = cheerio.load(
           markdown(i => (i + 1) * 2).render('# foo\n\n---\n\n## bar')
         )
-        assert($multi('section#2 > h1').text() === 'foo')
-        assert($multi('section#4 > h2').text() === 'bar')
+        expect($multi('section#2 > h1').text()).toBe('foo')
+        expect($multi('section#4 > h2').text()).toBe('bar')
       })
     })
   })

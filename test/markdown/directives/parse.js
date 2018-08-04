@@ -1,4 +1,3 @@
-import assert from 'assert'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import comment from '../../../src/markdown/comment'
@@ -31,7 +30,7 @@ describe('Marpit directives parse plugin', () => {
 
       parsed.forEach(t => {
         if (t.type === 'marpit_slide_open')
-          assert.deepStrictEqual(t.meta.marpitDirectives, {})
+          expect(t.meta.marpitDirectives).toStrictEqual({})
       })
     })
 
@@ -39,12 +38,12 @@ describe('Marpit directives parse plugin', () => {
       const parsed = md({ frontMatter: true }).parse(text)
       const slideTokens = parsed.filter(t => t.type === 'marpit_slide_open')
 
-      assert(slideTokens.length === 2)
-      assert.deepStrictEqual(slideTokens[0].meta.marpitDirectives, {
+      expect(slideTokens).toHaveLength(2)
+      expect(slideTokens[0].meta.marpitDirectives).toStrictEqual({
         theme: 'test_theme',
         class: 'first',
       })
-      assert.deepStrictEqual(slideTokens[1].meta.marpitDirectives, {
+      expect(slideTokens[1].meta.marpitDirectives).toStrictEqual({
         theme: 'test_theme',
         class: 'all',
       })
@@ -67,21 +66,21 @@ describe('Marpit directives parse plugin', () => {
         const parsed = md().parse(text)
         parsed.forEach(t => {
           if (t.type === 'marpit_slide_open')
-            assert.deepStrictEqual(t.meta.marpitDirectives, expected)
+            expect(t.meta.marpitDirectives).toStrictEqual(expected)
         })
       })
 
       it('applies global directives to Marpit instance', () => {
         md().parse(text)
-        assert.deepStrictEqual(marpitStub.lastGlobalDirectives, expected)
+        expect(marpitStub.lastGlobalDirectives).toStrictEqual(expected)
 
         md().parse('<!-- class: test -->')
-        assert.deepStrictEqual(marpitStub.lastGlobalDirectives, {})
+        expect(marpitStub.lastGlobalDirectives).toStrictEqual({})
       })
 
       it('allows global directive name prefixed "$"', () => {
         md().parse('<!-- $theme: test_theme -->')
-        assert.deepStrictEqual(marpitStub.lastGlobalDirectives, expected)
+        expect(marpitStub.lastGlobalDirectives).toStrictEqual(expected)
       })
     })
   })
@@ -102,9 +101,9 @@ describe('Marpit directives parse plugin', () => {
         []
       )
 
-      assert.deepStrictEqual(first.meta.marpitDirectives, {})
-      assert.deepStrictEqual(second.meta.marpitDirectives, { class: 'test' })
-      assert.deepStrictEqual(third.meta.marpitDirectives, { class: 'test' })
+      expect(first.meta.marpitDirectives).toStrictEqual({})
+      expect(second.meta.marpitDirectives).toStrictEqual({ class: 'test' })
+      expect(third.meta.marpitDirectives).toStrictEqual({ class: 'test' })
     })
 
     context(
@@ -124,11 +123,9 @@ describe('Marpit directives parse plugin', () => {
             []
           )
 
-          assert.deepStrictEqual(first.meta.marpitDirectives, {})
-          assert.deepStrictEqual(second.meta.marpitDirectives, {
-            class: 'test',
-          })
-          assert.deepStrictEqual(third.meta.marpitDirectives, {})
+          expect(first.meta.marpitDirectives).toStrictEqual({})
+          expect(second.meta.marpitDirectives).toStrictEqual({ class: 'test' })
+          expect(third.meta.marpitDirectives).toStrictEqual({})
         })
       }
     )

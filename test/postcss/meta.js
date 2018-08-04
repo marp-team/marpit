@@ -1,4 +1,3 @@
-import assert from 'assert'
 import postcss from 'postcss'
 import meta from '../../src/postcss/meta'
 
@@ -7,14 +6,14 @@ describe('Marpit PostCSS meta plugin', () => {
 
   it('adds marpitMeta object to result', () => {
     run('').then(result => {
-      assert(result.marpitMeta instanceof Object)
-      assert.deepEqual(result.marpitMeta, {})
+      expect(result.marpitMeta).toBeInstanceOf(Object)
+      expect(result.marpitMeta).toStrictEqual({})
     })
   })
 
   it('parses meta comment and store to marpitMeta', () =>
     run('/* @meta value */').then(result =>
-      assert(result.marpitMeta.meta === 'value')
+      expect(result.marpitMeta.meta).toBe('value')
     ))
 
   context('with multiline metas', () => {
@@ -28,7 +27,7 @@ describe('Marpit PostCSS meta plugin', () => {
 
     it('parses multiline metas correctly', () =>
       run(css).then(result =>
-        assert.deepEqual(result.marpitMeta, {
+        expect(result.marpitMeta).toStrictEqual({
           meta: 'value',
           multiline: 'is supported.',
         })
