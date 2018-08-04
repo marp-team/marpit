@@ -38,6 +38,7 @@ declare module '@marp-team/marpit' {
     protected applyMarkdownItPlugins(md: any): void
     protected renderMarkdown(markdown: string): string
     protected renderStyle(theme?: string): string
+    protected themeSetPackOptions(): ThemeSetPackOptions
   }
 
   export class Element {
