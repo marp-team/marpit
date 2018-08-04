@@ -9,7 +9,6 @@ import postcssPseudoPrepend from './postcss/pseudo_selector/prepend'
 import postcssPseudoReplace from './postcss/pseudo_selector/replace'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
-import wrapArray from './helpers/wrap_array'
 
 /**
  * Marpit theme set class.
