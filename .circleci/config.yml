@@ -26,7 +26,7 @@ references:
 
       - run:
           name: Jest
-          command: yarn test:coverage --ci --maxWorkers=2
+          command: yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT: tmp/test-results/jest.xml
 
