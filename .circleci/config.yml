@@ -1,5 +1,4 @@
-version: 2
-jobs:
+references:
   base: &base
     working_directory: ~/marp-core
     steps:
@@ -40,6 +39,8 @@ jobs:
           path: ./coverage
           destination: coverage
 
+version: 2
+jobs:
   "8.11.3":
     <<: *base
     docker:
