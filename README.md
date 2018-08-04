@@ -7,7 +7,7 @@
   </p>
   <p>
 
-[![Travis CI](https://img.shields.io/travis/marp-team/marpit/master.svg?style=flat-square)](https://travis-ci.org/marp-team/marpit)
+[![CircleCI](https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square)](https://circleci.com/gh/marp-team/marpit/)
 [![Coveralls](https://img.shields.io/coveralls/marp-team/marpit/master.svg?style=flat-square)](https://coveralls.io/github/marp-team/marpit?branch=master)
 [![npm](https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square)](https://www.npmjs.com/package/@marp-team/marpit)
 [![LICENSE](https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square)](./LICENSE)
@@ -76,8 +76,8 @@ When you have to be shown the same content across multiple slides like a title o
 
 ```markdown
 ---
-header: "Header content"
-footer: "Footer content"
+header: 'Header content'
+footer: 'Footer content'
 ---
 
 # Page 1

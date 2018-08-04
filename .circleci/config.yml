@@ -1,0 +1,59 @@
+references:
+  base: &base
+    working_directory: ~/marp-core
+    steps:
+      - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
+            - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-
+            - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-
+
+      - run: yarn install
+
+      - save_cache:
+          key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
+          paths:
+            - node_modules
+            - ~/.cache/yarn
+
+      - run:
+          name: Prettier formatting
+          command: yarn format:check
+
+      - run: yarn lint:all
+
+      - run:
+          name: Jest
+          command: yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
+          environment:
+            JEST_JUNIT_OUTPUT: tmp/test-results/jest.xml
+
+      - run: yarn coveralls
+
+      - store_test_results:
+          path: tmp/test-results
+
+      - store_artifacts:
+          path: ./coverage
+          destination: coverage
+
+version: 2
+jobs:
+  "8.11.3":
+    <<: *base
+    docker:
+      - image: circleci/node:8.11.3
+
+  boron:
+    <<: *base
+    docker:
+      - image: circleci/node:boron
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - 8.11.3
+      - boron
