@@ -28,7 +28,7 @@ describe('Marpit', () => {
 
       expect(() => {
         instance.options.printable = false
-      }).not.toThrow(TypeError)
+      }).toThrow(TypeError)
     })
 
     it('has themeSet property', () => {
