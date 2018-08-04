@@ -76,8 +76,8 @@ When you have to be shown the same content across multiple slides like a title o
 
 ```markdown
 ---
-header: "Header content"
-footer: "Footer content"
+header: 'Header content'
+footer: 'Footer content'
 ---
 
 # Page 1

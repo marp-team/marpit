@@ -36,7 +36,7 @@
     "clean": "rimraf lib",
     "coveralls": "cat coverage/lcov.info | coveralls",
     "docs": "jsdoc src -c .jsdoc.json",
-    "format": "prettier **/*.{md,json,ts}",
+    "format": "prettier **/*.{json,md,ts,yaml,yml}",
     "format:check": "yarn --mutex file run format -l",
     "lint": "eslint",
     "lint:all": "eslint .",
