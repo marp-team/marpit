@@ -19,7 +19,8 @@ declare module '@marp-team/marpit' {
   }
 
   type ThemeSetPackOptions = {
-    appendStyle?: string
+    after?: string
+    before?: string
     containers?: Element[]
     printable?: boolean
     inlineSVG?: boolean
@@ -39,6 +40,7 @@ declare module '@marp-team/marpit' {
     protected applyMarkdownItPlugins(md: any): void
     protected renderMarkdown(markdown: string): string
     protected renderStyle(theme?: string): string
+    protected themeSetPackOptions(): ThemeSetPackOptions
   }
 
   export class Element {

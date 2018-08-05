@@ -170,12 +170,17 @@ class Marpit {
    * @returns {string} The result string of rendering style.
    */
   renderStyle(theme) {
-    return this.themeSet.pack(theme, {
-      appendStyle: this.lastStyles && this.lastStyles.join('\n'),
+    return this.themeSet.pack(theme, this.themeSetPackOptions())
+  }
+
+  /** @private */
+  themeSetPackOptions() {
+    return {
+      after: this.lastStyles ? this.lastStyles.join('\n') : undefined,
       containers: [...this.containers, ...this.slideContainers],
       inlineSVG: this.options.inlineSVG,
       printable: this.options.printable,
-    })
+    }
   }
 }
 
