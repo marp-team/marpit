@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.10 - 2018-08-05
+
 - **[BREAKING]** Improve appending/prepending style on `ThemeSet#pack` ([#47](https://github.com/marp-team/marpit/pull/47))
   - `ThemeSet#pack`'s [`appendStyle` option](https://github.com/marp-team/marpit/blob/c1fce7c7f80fb563111b8b0e34d98eabc5c834a3/src/theme_set.js#L171) is renamed to [`after`](https://github.com/marp-team/marpit/blob/e68f0bb38a6d894cce80fa811d41952635a886b6/src/theme_set.js#L172).
 - Migrate test framework from mocha to jest ([#43](https://github.com/marp-team/marpit/pull/43))
