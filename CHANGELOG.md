@@ -4,6 +4,7 @@
 
 - Migrate test framework from mocha to jest ([#43](https://github.com/marp-team/marpit/pull/43))
 - Migrate CI from Travis CI to CircleCI ([#44](https://github.com/marp-team/marpit/pull/44))
+- Mark Marpit's `options` property as immutable ([#46](https://github.com/marp-team/marpit/pull/46))
 
 ## v0.0.9 - 2018-07-23
 
