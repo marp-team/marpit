@@ -31,6 +31,7 @@ declare module '@marp-team/marpit' {
     markdown: any
     themeSet: ThemeSet
 
+    readonly options: MarpitOptions
     readonly markdownItPlugins: (md: any) => void
 
     render(markdown: string): MarpitRenderResult
