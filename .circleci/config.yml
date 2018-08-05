@@ -13,7 +13,8 @@ references:
       - run: yarn install
 
       - save_cache:
-          key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
+          key:
+            v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
           paths:
             - node_modules
             - ~/.cache/yarn
@@ -26,7 +27,8 @@ references:
 
       - run:
           name: Jest
-          command: yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
+          command:
+            yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT: tmp/test-results/jest.xml
 
@@ -41,7 +43,7 @@ references:
 
 version: 2
 jobs:
-  "8.11.3":
+  '8.11.3':
     <<: *base
     docker:
       - image: circleci/node:8.11.3

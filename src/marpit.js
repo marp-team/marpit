@@ -63,7 +63,20 @@ class Marpit {
    *     _(Experimental)_
    */
   constructor(opts = {}) {
-    this.options = { ...defaultOptions, ...opts }
+    /**
+     * The current options for this instance.
+     *
+     * This property is read-only and marked as immutable. You cannot change the
+     * value of options after creating instance.
+     *
+     * @member {Object} options
+     * @memberOf Marpit#
+     * @readonly
+     */
+    Object.defineProperty(this, 'options', {
+      enumerable: true,
+      value: Object.freeze({ ...defaultOptions, ...opts }),
+    })
 
     Object.defineProperties(this, {
       containers: { value: [...wrapArray(this.options.container)] },
