@@ -214,6 +214,7 @@ function backgroundImage(md) {
               },
               wrapTokens('marpit_advanced_pseudo_section', {
                 tag: 'section',
+                class: open.attrGet('class'),
                 style: style.toString(),
                 'data-marpit-advanced-background': 'pseudo',
                 'data-marpit-pagination': open.attrGet(
