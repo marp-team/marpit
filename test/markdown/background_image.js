@@ -299,8 +299,12 @@ describe('Marpit background image plugin', () => {
       })
     })
 
-    context('with paginate directive', () => {
-      const $ = $load(mdSVG().render('<!-- paginate: true -->\n\n![bg](test)'))
+    context('with paginate and class directive', () => {
+      const $ = $load(
+        mdSVG().render(
+          '---\npaginate: true\nclass: pseudo layer\n---\n\n![bg](test)'
+        )
+      )
 
       it('assigns data-marpit-pagination attribute to pseudo layer', () => {
         const foreignObjects = $('svg > foreignObject')
@@ -312,7 +316,9 @@ describe('Marpit background image plugin', () => {
         )
 
         expect(
-          pseudoFO.find('> section').is('[data-marpit-pagination="1"]')
+          pseudoFO
+            .find('> section.pseudo.layer')
+            .is('[data-marpit-pagination="1"]')
         ).toBe(true)
       })
     })
