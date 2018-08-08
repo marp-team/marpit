@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Bugfix: Pass `class` attribute to pseudo section on advanced background ([#48](https://github.com/marp-team/marpit/pull/48))
+
 ## v0.0.10 - 2018-08-05
 
 - **[BREAKING]** Improve appending/prepending style on `ThemeSet#pack` ([#47](https://github.com/marp-team/marpit/pull/47))
