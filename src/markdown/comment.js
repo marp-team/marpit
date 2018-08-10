@@ -1,5 +1,5 @@
 /** @module */
-import parseYAML from '../helpers/parse_yaml'
+import yaml from './directives/yaml'
 
 const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/
@@ -13,8 +13,10 @@ const commentMatcherClosing = /-->/
  *
  * @alias module:markdown/comment
  * @param {MarkdownIt} md markdown-it instance.
+ * @param {Object} [opts]
+ * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
  */
-function comment(md) {
+function comment(md, opts = {}) {
   /**
    * Based on markdown-it html_block rule
    * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
@@ -60,9 +62,9 @@ function comment(md) {
       const matchedContent = commentMatcher.exec(token.markup)
       token.content = matchedContent ? matchedContent[1].trim() : ''
 
-      // Parse YAML
-      const yaml = parseYAML(token.content)
-      token.meta = { marpitParsedYAML: yaml === false ? {} : yaml }
+      // Parse object
+      const parsed = yaml(token.content, !!opts.lazyYAML)
+      token.meta = { marpitParsedDirectives: parsed === false ? {} : parsed }
 
       return true
     }

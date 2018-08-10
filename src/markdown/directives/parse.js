@@ -1,6 +1,6 @@
 /** @module */
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
-import parseYAML from '../../helpers/parse_yaml'
+import yaml from './yaml'
 import { globals, locals } from './directives'
 
 /**
@@ -16,6 +16,7 @@ import { globals, locals } from './directives'
  * @param {boolean} [opts.frontMatter=true] Switch feature to support YAML
  *     front-matter. If true, you can use Jekyll style directive setting to the
  *     first page.
+ * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
  */
 function parse(md, marpit, opts = {}) {
   // Front-matter support
@@ -30,8 +31,8 @@ function parse(md, marpit, opts = {}) {
     md.use(MarkdownItFrontMatter, fm => {
       frontMatterObject.text = fm
 
-      const yaml = parseYAML(fm)
-      if (yaml !== false) frontMatterObject.yaml = yaml
+      const parsed = yaml(fm, !!opts.lazyYAML)
+      if (parsed !== false) frontMatterObject.yaml = parsed
     })
   }
 
@@ -40,14 +41,14 @@ function parse(md, marpit, opts = {}) {
     if (state.inlineMode) return
 
     let globalDirectives = {}
-    const applyDirectives = yaml => {
-      Object.keys(yaml).forEach(key => {
+    const applyDirectives = obj => {
+      Object.keys(obj).forEach(key => {
         const globalKey = key.startsWith('$') ? key.slice(1) : key
 
         if (globals[globalKey])
           globalDirectives = {
             ...globalDirectives,
-            ...globals[globalKey](yaml[key], marpit),
+            ...globals[globalKey](obj[key], marpit),
           }
       })
     }
@@ -55,8 +56,8 @@ function parse(md, marpit, opts = {}) {
     if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
     state.tokens.forEach(token => {
-      if (token.type === 'marpit_comment' && token.meta.marpitParsedYAML)
-        applyDirectives(token.meta.marpitParsedYAML)
+      if (token.type === 'marpit_comment' && token.meta.marpitParsedDirectives)
+        applyDirectives(token.meta.marpitParsedDirectives)
     })
 
     marpit.lastGlobalDirectives = { ...globalDirectives }
@@ -69,10 +70,10 @@ function parse(md, marpit, opts = {}) {
     const slides = []
     const cursor = { slide: undefined, local: {}, spot: {} }
 
-    const applyDirectives = yaml => {
-      Object.keys(yaml).forEach(key => {
+    const applyDirectives = obj => {
+      Object.keys(obj).forEach(key => {
         if (locals[key])
-          cursor.local = { ...cursor.local, ...locals[key](yaml[key], marpit) }
+          cursor.local = { ...cursor.local, ...locals[key](obj[key], marpit) }
 
         // Spot directives
         // (Apply local directive to only current slide by prefix "_")
@@ -82,7 +83,7 @@ function parse(md, marpit, opts = {}) {
           if (locals[spotKey])
             cursor.spot = {
               ...cursor.spot,
-              ...locals[spotKey](yaml[key], marpit),
+              ...locals[spotKey](obj[key], marpit),
             }
         }
       })
@@ -108,9 +109,9 @@ function parse(md, marpit, opts = {}) {
         cursor.spot = {}
       } else if (
         token.type === 'marpit_comment' &&
-        token.meta.marpitParsedYAML
+        token.meta.marpitParsedDirectives
       ) {
-        applyDirectives(token.meta.marpitParsedYAML)
+        applyDirectives(token.meta.marpitParsedDirectives)
       }
     })
 
