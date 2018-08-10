@@ -11,8 +11,9 @@ import directives from './directives'
  * @returns {Object|false} Return parse result, or `false` when failed to parse.
  */
 
+const dirs = directives.join('|')
 const directivesMatcher = new RegExp(
-  `^\\s*?[_$](${directives.join('|')})\\s*?:\\s*(?![\\["'{|>!~&*])(.*)\\s*$`
+  `^\\s*([_$]?(?:${dirs}))\\s*:\\s*(?![\\["'{|>!~&*])(.*)$`
 )
 const whitespaceMatcher = /^\s*$/
 
@@ -38,7 +39,7 @@ export function lazy(text) {
     if (!matched) return false
 
     const [, directive, value] = matched
-    collected[directive] = value
+    collected[directive] = value.trim()
 
     return true
   })

@@ -109,6 +109,6 @@ export const locals = {
   },
 }
 
-const directiveNames = [...Object.keys(globals), Object.keys(locals)]
+const directiveNames = [...Object.keys(globals), ...Object.keys(locals)]
 
 export default directiveNames
