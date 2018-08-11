@@ -119,7 +119,7 @@ footer: "![image](https://example.com/image.jpg)"
 
 > :warning: Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML.
 >
-> You can enable a lazy YAML parser by `lazyYAML` Marpit constructor option if you want recognize without quotes.
+> You can enable a lazy YAML parser by `lazyYAML` Marpit constructor option if you want to recognize string without quotes.
 
 > :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 
