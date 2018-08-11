@@ -13,11 +13,11 @@ import directives from './directives'
 
 const dirs = directives.join('|')
 const directivesMatcher = new RegExp(
-  `^\\s*([_$]?(?:${dirs}))\\s*:\\s*(?![\\["'{|>!~&*])(.*)$`
+  `^\\s*([_$]?(?:${dirs}))\\s*:(?!\\s*[\\["'{|>~&*])(.*)$`
 )
 const whitespaceMatcher = /^\s*$/
 
-export function strict(text) {
+function strict(text) {
   try {
     const obj = YAML.safeLoad(text, { schema: FAILSAFE_SCHEMA })
     if (obj === null || typeof obj !== 'object') return false
@@ -28,7 +28,7 @@ export function strict(text) {
   }
 }
 
-export function lazy(text) {
+function lazy(text) {
   const collected = {}
   const lines = text.split(/\r?\n/)
 
