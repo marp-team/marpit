@@ -11,10 +11,9 @@ import directives from './directives'
  * @returns {Object|false} Return parse result, or `false` when failed to parse.
  */
 
-const dirs = directives.join('|')
-const directivesMatcher = new RegExp(
-  `^\\s*([_$]?(?:${dirs}))\\s*:(?!\\s*[\\["'{|>~&*])(.*)$`
-)
+const keyPattern = `[_$]?(?:${directives.join('|')})`
+const directivesMatcher = new RegExp(`^\\s*(${keyPattern})\\s*:(.*)$`)
+const specialChars = `["'{|>~&*`
 const whitespaceMatcher = /^\s*$/
 
 function strict(text) {
@@ -38,9 +37,11 @@ function lazy(text) {
     const matched = directivesMatcher.exec(line)
     if (!matched) return false
 
-    const [, directive, value] = matched
-    collected[directive] = value.trim()
+    const [, directive, originalValue] = matched
+    const value = originalValue.trim()
+    if (specialChars.includes(value[0])) return false
 
+    collected[directive] = value
     return true
   })
     ? collected
