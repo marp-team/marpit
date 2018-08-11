@@ -32,7 +32,7 @@ references:
           environment:
             JEST_JUNIT_OUTPUT: tmp/test-results/jest.xml
 
-      - run: yarn coveralls
+      - run: yarn codecov
 
       - store_test_results:
           path: tmp/test-results
