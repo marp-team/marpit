@@ -78,7 +78,7 @@ describe('Marpit', () => {
       expect(ret).toStrictEqual({ html: 'HTML', css: 'CSS' })
     })
 
-    context('with inlineSVG option in instance', () => {
+    context('with inlineSVG option', () => {
       const instance = inlineSVG => {
         const marpit = new Marpit({ inlineSVG })
 
@@ -117,7 +117,7 @@ describe('Marpit', () => {
       })
     })
 
-    context('with backgroundSyntax option in instance', () => {
+    context('with backgroundSyntax option', () => {
       const instance = backgroundSyntax => new Marpit({ backgroundSyntax })
 
       it('renders img tag when backgroundSyntax is false', () => {
@@ -138,7 +138,7 @@ describe('Marpit', () => {
       })
     })
 
-    context('with filters option in instance', () => {
+    context('with filters option', () => {
       const instance = filters => new Marpit({ filters })
 
       it('does not apply filter style when filters is false', () => {
@@ -156,7 +156,7 @@ describe('Marpit', () => {
       })
     })
 
-    context('with inlineStyle option in instance', () => {
+    context('with inlineStyle option', () => {
       const instance = inlineStyle => {
         const marpit = new Marpit({ inlineStyle })
 
@@ -182,6 +182,37 @@ describe('Marpit', () => {
         expect($('style')).toHaveLength(0)
         expect(rendered.css).toContain('--style: appended;')
         expect(rendered.css).toContain('/* @import "valid-theme"; */')
+      })
+    })
+
+    context('with lazyYAML option', () => {
+      const instance = lazyYAML => new Marpit({ lazyYAML })
+      const markdown = dedent`
+        ---
+        backgroundImage:  url('/image.jpg')
+                 _color:  #123${' \t'}
+        ---
+
+        ---
+      `
+
+      it('allows lazy YAML format when lazyYaml is true', () => {
+        const rendered = instance(true).render(markdown)
+        const $ = cheerio.load(rendered.html)
+        const firstStyle = $('section:nth-of-type(1)').attr('style')
+        const secondStyle = $('section:nth-of-type(2)').attr('style')
+
+        expect(firstStyle).toContain("background-image:url('/image.jpg')")
+        expect(firstStyle).toContain('color:#123;')
+        expect(secondStyle).toContain("background-image:url('/image.jpg')")
+        expect(secondStyle).not.toContain('color:')
+      })
+
+      it('disallows lazy YAML format when lazyYaml is false', () => {
+        const rendered = instance(false).render(markdown)
+        const $ = cheerio.load(rendered.html)
+
+        expect($('section[style]')).toHaveLength(0)
       })
     })
   })

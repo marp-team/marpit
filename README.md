@@ -38,7 +38,7 @@ Marpit will become a core of _the next version of **[Marp](https://github.com/yh
 #### Difference from [pre-released Marp](https://github.com/yhatt/marp/)
 
 - Removed directives about slide size. [Use `width` / `height` declaration of theme CSS.](#slide-size)
-- Parse directives by YAML parser. ([js-yaml](https://github.com/nodeca/js-yaml) + [`FAILSAFE_SCHEMA`](http://www.yaml.org/spec/1.2/spec.html#id2802346))
+- Parse directives by YAML parser. ([js-yaml](https://github.com/nodeca/js-yaml) + [`FAILSAFE_SCHEMA`](http://www.yaml.org/spec/1.2/spec.html#id2802346), but we still support lazy YAML parser by `lazyYAML` option)
 - Support [Jekyll style front-matter](https://jekyllrb.com/docs/frontmatter/).
 - _[Global directives](https://github.com/yhatt/marp/blob/master/example.md#global-directives)_ is no longer requires `$` prefix. (but it still supports because of compatibility and clarity)
 - [Page directives](https://github.com/yhatt/marp/blob/master/example.md#page-directives) is renamed to _local directives_.
@@ -118,6 +118,8 @@ footer: "![image](https://example.com/image.jpg)"
 ```
 
 > :warning: Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML.
+>
+> You can enable a lazy YAML parser by `lazyYAML` Marpit constructor option if you want to recognize string without quotes.
 
 > :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 

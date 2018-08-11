@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Bugfix: Pass `class` attribute to pseudo section on advanced background ([#48](https://github.com/marp-team/marpit/pull/48))
+- Lazy yaml support by `lazyYAML` option ([#49](https://github.com/marp-team/marpit/pull/49))
 
 ## v0.0.10 - 2018-08-05
 

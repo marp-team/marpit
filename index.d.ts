@@ -5,6 +5,7 @@ declare module '@marp-team/marpit' {
     filters?: boolean
     headingDivider?: false | MarpitHeadingDivider | MarpitHeadingDivider[]
     inlineStyle?: boolean
+    lazyYAML?: boolean
     markdown?: string | object | [string, object]
     printable?: boolean
     slideContainer?: Element | Element[]

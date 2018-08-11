@@ -24,6 +24,7 @@ const defaultOptions = {
   filters: true,
   headingDivider: false,
   inlineStyle: true,
+  lazyYAML: false,
   markdown: 'commonmark',
   printable: true,
   slideContainer: undefined,
@@ -54,6 +55,7 @@ class Marpit {
    * @param {boolean} [opts.inlineStyle=true] Recognize `<style>` elements to
    *     append additional styles to theme. When it is `true`, Marpit will parse
    *     style regardless markdown-it's `html` option.
+   * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
@@ -109,22 +111,24 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    md.use(marpitComment)
+    const { backgroundSyntax, filters, lazyYAML } = this.options
+
+    md.use(marpitComment, { lazyYAML })
       .use(marpitStyleParse, this)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this)
+      .use(marpitParseDirectives, this, { lazyYAML })
       .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider, this)
       .use(marpitSlideContainer, this.slideContainers)
       .use(marpitContainerPlugin, this.containers)
-      .use(marpitParseImage, { filters: this.options.filters })
+      .use(marpitParseImage, { filters })
       .use(marpitUnicodeEmoji)
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
       .use(marpitStyleAssign, this)
 
-    if (this.options.backgroundSyntax) md.use(marpitBackgroundImage)
+    if (backgroundSyntax) md.use(marpitBackgroundImage)
   }
 
   /**
