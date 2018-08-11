@@ -4,6 +4,7 @@
 
 - Bugfix: Pass `class` attribute to pseudo section on advanced background ([#48](https://github.com/marp-team/marpit/pull/48))
 - Lazy yaml support by `lazyYAML` option ([#49](https://github.com/marp-team/marpit/pull/49))
+- Migrate coverage report service from [Coveralls](https://coveralls.io/github/marp-team/marpit?branch=master) to [Codecov](https://codecov.io/gh/marp-team/marpit) ([#50](https://github.com/marp-team/marpit/pull/50))
 
 ## v0.0.10 - 2018-08-05
 

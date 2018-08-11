@@ -34,7 +34,6 @@
   "scripts": {
     "build": "yarn --mutex file run clean && babel src --out-dir lib",
     "clean": "rimraf lib",
-    "coveralls": "cat coverage/lcov.info | coveralls",
     "docs": "jsdoc src -c .jsdoc.json",
     "format": "prettier **/*.{json,md,ts,yaml,yml}",
     "format:check": "yarn --mutex file run format -l",
@@ -55,7 +54,7 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "cheerio": "^1.0.0-rc.2",
-    "coveralls": "^3.0.2",
+    "codecov": "^3.0.4",
     "cross-env": "^5.2.0",
     "dedent": "^0.7.0",
     "eslint": "^5.3.0",
