@@ -36,8 +36,11 @@ function parse(md, marpit, opts = {}) {
     })
   }
 
+  const isComment = token =>
+    token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
+
   // Parse global directives
-  md.core.ruler.after('block', 'marpit_directives_global_parse', state => {
+  md.core.ruler.after('inline', 'marpit_directives_global_parse', state => {
     if (state.inlineMode) return
 
     let globalDirectives = {}
@@ -56,8 +59,13 @@ function parse(md, marpit, opts = {}) {
     if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
     state.tokens.forEach(token => {
-      if (token.type === 'marpit_comment' && token.meta.marpitParsedDirectives)
+      if (isComment(token)) {
         applyDirectives(token.meta.marpitParsedDirectives)
+      } else if (token.type === 'inline') {
+        token.children
+          .filter(isComment)
+          .forEach(t => applyDirectives(t.meta.marpitParsedDirectives))
+      }
     })
 
     marpit.lastGlobalDirectives = { ...globalDirectives }
@@ -107,11 +115,12 @@ function parse(md, marpit, opts = {}) {
         }
 
         cursor.spot = {}
-      } else if (
-        token.type === 'marpit_comment' &&
-        token.meta.marpitParsedDirectives
-      ) {
+      } else if (isComment(token)) {
         applyDirectives(token.meta.marpitParsedDirectives)
+      } else if (token.type === 'inline') {
+        token.children
+          .filter(isComment)
+          .forEach(t => applyDirectives(t.meta.marpitParsedDirectives))
       }
     })
 

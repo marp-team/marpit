@@ -57,7 +57,7 @@ describe('Marpit directives parse plugin', () => {
       const text = dedent`
         <!-- Theme accepts that only defined in Marpit#themeSet -->
         ***
-        <!-- theme: test_theme -->
+        Inline<!-- theme: test_theme -->comment
         ***
         <!-- theme: undefined_theme -->
       `
