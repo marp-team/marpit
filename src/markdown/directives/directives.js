@@ -93,7 +93,7 @@ export const locals = {
     return { backgroundSize: value }
   },
   class(value) {
-    return { class: value }
+    return { class: Array.isArray(value) ? value.join(' ') : value }
   },
   color(value) {
     return { color: value }

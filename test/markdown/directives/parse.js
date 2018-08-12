@@ -141,10 +141,12 @@ describe('Marpit directives parse plugin', () => {
         expect(flatOpen.meta.marpitDirectives).toMatchObject(expected)
 
         const multilineParsed = md().parse(dedent`
+          ---
           class:
             - one
             - two
             - three
+          ---
         `)
         const [multilineOpen] = multilineParsed.filter(
           t => t.type === 'marpit_slide_open'
