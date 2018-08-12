@@ -46,14 +46,11 @@ describe('Marpit comment plugin', () => {
 
         expect(comments).toContain('comment!')
         expect(comments).toContain('supports\nmultiline')
-
-        // TODO: Supports inline comment
-        // expect(comments).toContain('inline')
-        // expect(comments).toContain('comment in header')
+        expect(comments).toContain('inline')
+        expect(comments).toContain('comment in header')
       })
 
-      // TODO: Supports inline comment
-      it.skip('strips comment in rendering', () => {
+      it('strips comment in rendering', () => {
         const $ = cheerio.load(markdown.render(text))
         const comments = extractComments($)
 
