@@ -17,10 +17,15 @@ const commentMatcherClosing = /-->/
  * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
  */
 function comment(md, opts = {}) {
-  /**
-   * Based on markdown-it html_block rule
-   * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
-   */
+  const parse = (token, content) => {
+    const parsed = yaml(content, !!opts.lazyYAML)
+
+    token.meta = {
+      ...(token.meta || {}),
+      marpitParsedDirectives: parsed === false ? {} : parsed,
+    }
+  }
+
   md.block.ruler.before(
     'html_block',
     'marpit_comment',
@@ -61,11 +66,40 @@ function comment(md, opts = {}) {
 
       const matchedContent = commentMatcher.exec(token.markup)
       token.content = matchedContent ? matchedContent[1].trim() : ''
+      parse(token, token.content)
 
-      // Parse object
-      const parsed = yaml(token.content, !!opts.lazyYAML)
-      token.meta = { marpitParsedDirectives: parsed === false ? {} : parsed }
+      return true
+    }
+  )
 
+  md.inline.ruler.before(
+    'html_inline',
+    'marpit_inline_comment',
+    (state, silent) => {
+      const { posMax, src } = state
+
+      // Quick fail by checking `<` and `!`
+      if (
+        state.pos + 2 >= posMax ||
+        src.charCodeAt(state.pos) !== 0x3c ||
+        src.charCodeAt(state.pos + 1) !== 0x21
+      )
+        return false
+
+      const match = src.slice(state.pos).match(commentMatcher)
+      if (!match) return false
+
+      if (!silent) {
+        const token = state.push('marpit_comment', '', 0)
+
+        token.hidden = true
+        token.markup = src.slice(state.pos, state.pos + match[0].length)
+        token.content = match[1].trim()
+
+        parse(token, token.content)
+      }
+
+      state.pos += match[0].length
       return true
     }
   )

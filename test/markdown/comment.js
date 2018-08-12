@@ -21,9 +21,6 @@ describe('Marpit comment plugin', () => {
     ### <!-- comment in header -->
   `
 
-  it('ignores in #renderInline', () =>
-    expect(md().renderInline('<!-- test -->')).toBe('<!-- test -->'))
-
   const htmls = [true, false]
 
   htmls.forEach(html => {
@@ -38,11 +35,15 @@ describe('Marpit comment plugin', () => {
 
       it('extracts comment and stores to token meta', () => {
         const parsed = markdown.parse(text)
-        const comments = parsed.reduce(
-          (arr, token) =>
-            token.type === 'marpit_comment' ? [...arr, token.content] : arr,
-          []
-        )
+        const reducer = (arr, token) => {
+          if (token.type === 'marpit_comment') return [...arr, token.content]
+          if (token.type === 'inline')
+            return [...arr, ...token.children.reduce(reducer, [])]
+
+          return arr
+        }
+
+        const comments = parsed.reduce(reducer, [])
 
         expect(comments).toContain('comment!')
         expect(comments).toContain('supports\nmultiline')
@@ -59,6 +60,7 @@ describe('Marpit comment plugin', () => {
         expect($('h1').text()).toBe('foo')
         expect($('h2')).toHaveLength(1)
         expect($('h2').text()).toBe('bar')
+        expect($('h2 + p').text()).toBe('commentTest')
         expect($('h3')).toHaveLength(1)
         expect($('h3').text()).toBe('')
       })
