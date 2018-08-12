@@ -129,5 +129,28 @@ describe('Marpit directives parse plugin', () => {
         })
       }
     )
+
+    context('with class directive', () => {
+      const expected = { class: 'one two three' }
+
+      it('supports class definition by array', () => {
+        const flatParsed = md().parse('<!-- class: ["one", "two", "three"] -->')
+        const [flatOpen] = flatParsed.filter(
+          t => t.type === 'marpit_slide_open'
+        )
+        expect(flatOpen.meta.marpitDirectives).toMatchObject(expected)
+
+        const multilineParsed = md().parse(dedent`
+          class:
+            - one
+            - two
+            - three
+        `)
+        const [multilineOpen] = multilineParsed.filter(
+          t => t.type === 'marpit_slide_open'
+        )
+        expect(multilineOpen.meta.marpitDirectives).toMatchObject(expected)
+      })
+    })
   })
 })
