@@ -6,6 +6,7 @@
 - Lazy yaml support by `lazyYAML` option ([#49](https://github.com/marp-team/marpit/pull/49))
 - Migrate coverage report service from [Coveralls](https://coveralls.io/github/marp-team/marpit?branch=master) to [Codecov](https://codecov.io/gh/marp-team/marpit) ([#50](https://github.com/marp-team/marpit/pull/50))
 - Support `class` directive defined by array ([#51](https://github.com/marp-team/marpit/pull/51))
+- Parse inline comment ([#52](https://github.com/marp-team/marpit/pull/52))
 
 ## v0.0.10 - 2018-08-05
 
