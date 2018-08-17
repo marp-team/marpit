@@ -7,16 +7,16 @@ import directives from './directives'
  *
  * @alias module:markdown/directives/yaml
  * @param {String} text Target text.
- * @param {boolean} allowLazy By `true`, it try to parse lazy YAML at first.
+ * @param {boolean} allowLazy By `true`, it try to parse lazy YAML in defined
+ *     directives.
  * @returns {Object|false} Return parse result, or `false` when failed to parse.
  */
 
 const keyPattern = `[_$]?(?:${directives.join('|')})`
-const directivesMatcher = new RegExp(`^\\s*(${keyPattern})\\s*:(.*)$`)
+const lazyMatcher = new RegExp(`^(\\s*(?:-\\s+)?(?:${keyPattern})\\s*:)(.+)$`)
 const specialChars = `["'{|>~&*`
-const whitespaceMatcher = /^\s*$/
 
-function strict(text) {
+function parse(text) {
   try {
     const obj = YAML.safeLoad(text, { schema: FAILSAFE_SCHEMA })
     if (obj === null || typeof obj !== 'object') return false
@@ -27,32 +27,25 @@ function strict(text) {
   }
 }
 
-function lazy(text) {
-  const collected = {}
-  const lines = text.split(/\r?\n/)
+function convertLazy(text) {
+  return text
+    .split(/\r?\n/)
+    .reduce(
+      (ret, line) =>
+        `${ret}${line.replace(lazyMatcher, (original, prop, value) => {
+          const trimmed = value.trim()
 
-  return lines.every(line => {
-    if (whitespaceMatcher.test(line)) return true
+          if (trimmed.length === 0 || specialChars.includes(trimmed[0]))
+            return original
 
-    const matched = directivesMatcher.exec(line)
-    if (!matched) return false
+          const spaceLength = value.length - value.trimLeft().length
+          const spaces = value.substring(0, spaceLength)
 
-    const [, directive, originalValue] = matched
-    const value = originalValue.trim()
-    if (specialChars.includes(value[0])) return false
-
-    collected[directive] = value
-    return true
-  })
-    ? collected
-    : false
+          return `${prop}${spaces}"${trimmed.split('"').join('\\"')}"`
+        })}\n`,
+      ''
+    )
+    .trim()
 }
 
-export default function(text, allowLazy) {
-  if (allowLazy) {
-    const lazyResult = lazy(text)
-    if (lazyResult !== false) return lazyResult
-  }
-
-  return strict(text)
-}
+export default (text, allowLazy) => parse(allowLazy ? convertLazy(text) : text)
