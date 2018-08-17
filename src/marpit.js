@@ -16,7 +16,6 @@ import marpitSlideContainer from './markdown/slide_container'
 import marpitStyleAssign from './markdown/style/assign'
 import marpitStyleParse from './markdown/style/parse'
 import marpitSweep from './markdown/sweep'
-import marpitUnicodeEmoji from './markdown/unicode_emoji'
 
 const defaultOptions = {
   backgroundSyntax: true,
@@ -123,7 +122,6 @@ class Marpit {
       .use(marpitSlideContainer, this.slideContainers)
       .use(marpitContainerPlugin, this.containers)
       .use(marpitParseImage, { filters })
-      .use(marpitUnicodeEmoji)
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
       .use(marpitStyleAssign, this)

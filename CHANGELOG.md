@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Remove Unicode Emoji support due to many issues on stable Chrome ([#53](https://github.com/marp-team/marpit/pull/53))
+
 ## v0.0.11 - 2018-08-12
 
 - Bugfix: Pass `class` attribute to pseudo section on advanced background ([#48](https://github.com/marp-team/marpit/pull/48))
