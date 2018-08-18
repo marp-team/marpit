@@ -364,7 +364,7 @@ This container element(s) can change in Marpit constructor option. Also `contain
 
 ### Theme CSS
 
-> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use the [`@marp-team/marp`](https://github.com/marp-team/marp/tree/master/packages/marp) package if you want (UNDER CONSTRUCTION).
+> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`](https://github.com/marp-team/marp-core) if you want.
 
 In theme CSS, you need not think about the hierarchy of Marpit. All that you have to know is just that a `<section>` element becomes a slide.
 
