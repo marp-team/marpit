@@ -43,10 +43,10 @@ references:
 
 version: 2
 jobs:
-  '8.11.3':
+  '8.11.4':
     <<: *base
     docker:
-      - image: circleci/node:8.11.3
+      - image: circleci/node:8.11.4
 
   boron:
     <<: *base
@@ -57,5 +57,5 @@ workflows:
   version: 2
   build:
     jobs:
-      - 8.11.3
+      - 8.11.4
       - boron
