@@ -190,13 +190,13 @@ describe('Marpit', () => {
       const markdown = dedent`
         ---
         backgroundImage:  url('/image.jpg')
-                 _color:  #123${' \t'}
+        _color:           #123${' \t'}
         ---
 
         ---
       `
 
-      it('allows lazy YAML format when lazyYaml is true', () => {
+      it('allows lazy YAML parsing when lazyYaml is true', () => {
         const rendered = instance(true).render(markdown)
         const $ = cheerio.load(rendered.html)
         const firstStyle = $('section:nth-of-type(1)').attr('style')
@@ -208,11 +208,13 @@ describe('Marpit', () => {
         expect(secondStyle).not.toContain('color:')
       })
 
-      it('disallows lazy YAML format when lazyYaml is false', () => {
+      it('disallows lazy YAML parsing when lazyYaml is false', () => {
         const rendered = instance(false).render(markdown)
         const $ = cheerio.load(rendered.html)
+        const style = $('section:nth-of-type(1)').attr('style')
 
-        expect($('section[style]')).toHaveLength(0)
+        expect(style).toContain("background-image:url('/image.jpg')")
+        expect(style).not.toContain('color:#123;')
       })
     })
   })
