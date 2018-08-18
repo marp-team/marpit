@@ -13,7 +13,7 @@ import directives from './directives'
  */
 
 const keyPattern = `[_$]?(?:${directives.join('|')})`
-const lazyMatcher = new RegExp(`^(\\s*(?:-\\s+)?(?:${keyPattern})\\s*:)(.+)$`)
+const lazyMatcher = new RegExp(`^(${keyPattern}\\s*:)(.+)$`)
 const specialChars = `["'{|>~&*`
 
 function parse(text) {
