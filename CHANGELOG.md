@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Remove Unicode Emoji support due to many issues on stable Chrome ([#53](https://github.com/marp-team/marpit/pull/53))
+- Improve lazy YAML parsing to apply in defined directives only ([#54](https://github.com/marp-team/marpit/pull/54))
 
 ## v0.0.11 - 2018-08-12
 
