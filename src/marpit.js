@@ -26,7 +26,7 @@ const defaultOptions = {
   lazyYAML: false,
   markdown: 'commonmark',
   printable: true,
-  slideContainer: undefined,
+  slideContainer: false,
   inlineSVG: false,
 }
 
@@ -42,7 +42,7 @@ class Marpit {
    *     with the alternate text including `bg`. Normally it converts into spot
    *     directives about background image. If `inlineSVG` is enabled, it
    *     supports the advanced backgrounds.
-   * @param {Element|Element[]}
+   * @param {false|Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
    * @param {boolean} [opts.filters=true] Support filter syntax for markdown
@@ -58,7 +58,7 @@ class Marpit {
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
-   * @param {Element|Element[]} [opts.slideContainer] Container element(s)
+   * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
    * @param {boolean} [opts.inlineSVG=false] Wrap each sections by inline SVG.
    *     _(Experimental)_

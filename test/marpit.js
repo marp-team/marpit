@@ -17,7 +17,7 @@ describe('Marpit', () => {
       expect(instance.options.backgroundSyntax).toBe(true)
       expect(instance.options.markdown).toBe('commonmark')
       expect(instance.options.printable).toBe(true)
-      expect(instance.options.slideContainer).toBeUndefined()
+      expect(instance.options.slideContainer).toBe(false)
       expect(instance.options.inlineSVG).toBe(false)
     })
 
