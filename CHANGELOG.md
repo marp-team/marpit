@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Improve type definition about slide containers ([#56](https://github.com/marp-team/marpit/pull/56))
+
 ## v0.0.12 - 2018-08-18
 
 - Remove Unicode Emoji support due to many issues on stable Chrome ([#53](https://github.com/marp-team/marpit/pull/53))
