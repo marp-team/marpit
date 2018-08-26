@@ -51,10 +51,9 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into an element', () => {
         const container = new Element('div')
 
-        return run(css, container).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('div > section')
-        })
+        return run(css, container).then(result =>
+          expect(result.root.first.selector).toBe('div > section')
+        )
       })
     })
 
@@ -62,21 +61,45 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into multiple elements combined by child combinator', () => {
         const containers = [new Element('div'), new Element('span')]
 
-        return run(css, containers).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('div > span > section')
-        })
+        return run(css, containers).then(result =>
+          expect(result.root.first.selector).toBe('div > span > section')
+        )
       })
     })
 
     context('when container element has specified class', () => {
-      it('replaces container into an element combined by class selectors', () => {
+      it('replaces container into an element with class selectors', () => {
         const container = new Element('div', { class: 'foo bar' })
 
-        return run(css, container).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('div.foo.bar > section')
-        })
+        return run(css, container).then(result =>
+          expect(result.root.first.selector).toBe('div.foo.bar > section')
+        )
+      })
+
+      it('removes duplicated class from selector', () => {
+        const container = new Element('div', { class: 'one two one' })
+
+        return run(css, container).then(result =>
+          expect(result.root.first.selector).toBe('div.one.two > section')
+        )
+      })
+    })
+
+    context('when container element has id', () => {
+      it('replaces container into an element with id selectors', () => {
+        const container = new Element('div', { id: 'identifier' })
+
+        return run(css, container).then(result =>
+          expect(result.root.first.selector).toBe('div#identifier > section')
+        )
+      })
+
+      it('replaces container into selector consisted by class and id', () => {
+        const container = new Element('div', { class: 'one two', id: 'id' })
+
+        return run(css, container).then(result =>
+          expect(result.root.first.selector).toBe('div.one.two#id > section')
+        )
       })
     })
   })
@@ -86,20 +109,18 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
     context('when slide element is null', () => {
       it('remove pseudo elements', () =>
-        run(css, undefined, null).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('h1')
-        }))
+        run(css, undefined, null).then(result =>
+          expect(result.root.first.selector).toBe('h1')
+        ))
     })
 
     context('when slide element is a single element', () => {
       it('replaces slide into an element', () => {
         const container = new Element('div')
 
-        return run(css, undefined, container).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('div h1')
-        })
+        return run(css, undefined, container).then(result =>
+          expect(result.root.first.selector).toBe('div h1')
+        )
       })
     })
 
@@ -107,21 +128,45 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces slide into multiple elements combined by child combinator', () => {
         const container = [new Element('svg'), new Element('foreignObject')]
 
-        return run(css, undefined, container).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('svg > foreignObject h1')
-        })
+        return run(css, undefined, container).then(result =>
+          expect(result.root.first.selector).toBe('svg > foreignObject h1')
+        )
       })
     })
 
     context('when slide element has specified class', () => {
-      it('replaces slide into an element combined by class selectors', () => {
+      it('replaces slide into an element with class selectors', () => {
         const container = new Element('div', { class: 'foo bar' })
 
-        return run(css, undefined, container).then(result => {
-          const { selector } = result.root.first
-          expect(selector).toBe('div.foo.bar h1')
-        })
+        return run(css, undefined, container).then(result =>
+          expect(result.root.first.selector).toBe('div.foo.bar h1')
+        )
+      })
+
+      it('removes duplicated class from selector', () => {
+        const container = new Element('div', { class: 'one two one' })
+
+        return run(css, undefined, container).then(result =>
+          expect(result.root.first.selector).toBe('div.one.two h1')
+        )
+      })
+    })
+
+    context('when slide element has id', () => {
+      it('replaces slide into an element with id selectors', () => {
+        const container = new Element('div', { id: 'identifier' })
+
+        return run(css, undefined, container).then(result =>
+          expect(result.root.first.selector).toBe('div#identifier h1')
+        )
+      })
+
+      it('replaces slide into selector consisted by class and id', () => {
+        const container = new Element('div', { class: 'one two', id: 'id' })
+
+        return run(css, undefined, container).then(result =>
+          expect(result.root.first.selector).toBe('div.one.two#id h1')
+        )
       })
     })
   })

@@ -4,7 +4,14 @@ import wrapArray from '../../helpers/wrap_array'
 
 const buildSelector = elms =>
   elms
-    .map(e => [e.tag, ...(e.class || '').split(/\s+/).filter(c => c)].join('.'))
+    .map(e => {
+      const classes = new Set((e.class || '').split(/\s+/).filter(c => c))
+
+      let element = [e.tag, ...classes].join('.')
+      if (e.id) element += `#${e.id}`
+
+      return element
+    })
     .join(' > ')
 
 /**
