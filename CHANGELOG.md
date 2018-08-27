@@ -2,7 +2,7 @@
 
 ## [Unreleased]
 
-- Improve type definition about slide containers ([#56](https://github.com/marp-team/marpit/pull/56))
+- Improve type definition about slide containers, theme metas, and internal variables ([#56](https://github.com/marp-team/marpit/pull/56), [#58](https://github.com/marp-team/marpit/pull/58))
 - Support CSS scoping by element id ([#57](https://github.com/marp-team/marpit/pull/57))
 
 ## v0.0.12 - 2018-08-18

@@ -36,6 +36,9 @@ declare module '@marp-team/marpit' {
     readonly options: MarpitOptions
     readonly markdownItPlugins: (md: any) => void
 
+    protected lastGlobalDirectives?: { [directive: string]: any }
+    protected lastStyles?: string[]
+
     render(markdown: string): MarpitRenderResult
 
     protected applyMarkdownItPlugins(md: any): void
@@ -62,7 +65,10 @@ declare module '@marp-team/marpit' {
       node: any
       value: string
     }[]
-    meta: {}
+    meta: {
+      theme: string
+      [key: string]: string
+    }
     name: string
     width: string
 
