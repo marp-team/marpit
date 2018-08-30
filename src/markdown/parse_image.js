@@ -28,12 +28,12 @@ function parseImage(md, opts = {}) {
 
   // width and height
   optionMatchers.set(
-    /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw)?|auto)$/,
+    /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
     matches => ({ width: matches[1] })
   )
 
   optionMatchers.set(
-    /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw)?|auto)$/,
+    /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
     matches => ({ height: matches[1] })
   )
 

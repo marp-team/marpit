@@ -29,11 +29,6 @@ describe('Marpit parse image plugin', () => {
       expect(style('w:7pc')).toBe('width:7pc;')
       expect(style('w:8pt')).toBe('width:8pt;')
       expect(style('w:9px')).toBe('width:9px;')
-      expect(style('w:10rem')).toBe('width:10rem;')
-      expect(style('w:11vh')).toBe('width:11vh;')
-      expect(style('w:12vmax')).toBe('width:12vmax;')
-      expect(style('w:13vmin')).toBe('width:13vmin;')
-      expect(style('w:14vw')).toBe('width:14vw;')
 
       // Percentage and not supported keyword in inline image will ignore
       expect(style('w:100%')).not.toBe('width:100%;')
@@ -56,11 +51,6 @@ describe('Marpit parse image plugin', () => {
       expect(style('h:7pc')).toBe('height:7pc;')
       expect(style('h:8pt')).toBe('height:8pt;')
       expect(style('h:9px')).toBe('height:9px;')
-      expect(style('h:10rem')).toBe('height:10rem;')
-      expect(style('h:11vh')).toBe('height:11vh;')
-      expect(style('h:12vmax')).toBe('height:12vmax;')
-      expect(style('h:13vmin')).toBe('height:13vmin;')
-      expect(style('h:14vw')).toBe('height:14vw;')
 
       expect(style('h:100%')).not.toBe('height:100%;')
       expect(style('h:12.345%')).not.toBe('height:12.345%;')

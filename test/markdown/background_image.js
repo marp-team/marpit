@@ -96,7 +96,7 @@ describe('Marpit background image plugin', () => {
       expect(directives('![bg w:300](i)').backgroundSize).toBe('300px auto')
       expect(directives('![bg h:25%](i)').backgroundSize).toBe('auto 25%')
       expect(directives('![bg 50% w:100%](i)').backgroundSize).toBe('100% 50%')
-      expect(directives('![bg h:10vh 30%](i)').backgroundSize).toBe('30% 10vh')
+      expect(directives('![bg h:10em 30%](i)').backgroundSize).toBe('30% 10em')
       expect(directives('![bg 1% w:auto](i)').backgroundSize).toBe('auto 1%')
 
       // The background keyword are prior to the width and height scale.
