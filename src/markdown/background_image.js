@@ -102,17 +102,27 @@ function backgroundImage(md) {
             backgroundSize,
             backgroundSplit,
             filter,
+            height,
             size,
             url,
+            width,
           } = t.meta.marpitImage
 
           if (background && !url.match(/^\s*$/)) {
             current.images = [
               ...(current.images || []),
               {
-                url,
-                size: size || backgroundSize || undefined,
                 filter,
+                height,
+                size: (() => {
+                  const s = size || backgroundSize || undefined
+
+                  return !['contain', 'cover'].includes(s) && (width || height)
+                    ? `${width || s || 'auto'} ${height || s || 'auto'}`
+                    : s
+                })(),
+                url,
+                width,
               },
             ]
           }

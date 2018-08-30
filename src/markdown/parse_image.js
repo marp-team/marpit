@@ -28,12 +28,12 @@ function parseImage(md, opts = {}) {
 
   // width and height
   optionMatchers.set(
-    /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw)?|contain|cover|auto)$/,
+    /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw)?|auto)$/,
     matches => ({ width: matches[1] })
   )
 
   optionMatchers.set(
-    /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw)?|contain|cover|auto)$/,
+    /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px|rem|vh|vmax|vmin|vw)?|auto)$/,
     matches => ({ height: matches[1] })
   )
 
@@ -125,14 +125,14 @@ function parseImage(md, opts = {}) {
         const style = new InlineStyle(token.attrGet('style'))
 
         const assign = (decl, value) => {
-          if (!value || ['contain', 'cover'].includes(value)) return
-          if (value.endsWith('%')) return // Percentage breaks layout on Firefox
+          const normalize = `${value}${/^(\d*\.)?\d+$/.test(value) ? 'px' : ''}`
+          token.meta.marpitImage[decl] = normalize
 
-          style.set(decl, `${value}${/^(\d*\.)?\d+$/.test(value) ? 'px' : ''}`)
+          if (!value.endsWith('%')) style.set(decl, normalize)
         }
 
-        assign('width', width)
-        assign('height', height)
+        if (width) assign('width', width)
+        if (height) assign('height', height)
 
         if (filters) {
           token.meta.marpitImage.filter = filters
