@@ -23,7 +23,7 @@ It could transform the Markdown and CSS theme(s) to slide deck composed by stati
 
 - **[Marpit Markdown](#marpit-markdown)** - It has extended several features such as [_directives_](#directives) and [_slide backgrounds_](#slide-backgrounds) with keeping a compatibility with the Markdown documents.
 - **[Clear markup](#markup)** - Marpit [theme CSS](#theme-css) has no own class, so you can focus on _your_ markup.
-- **[Inline SVG slide](#inline-svg-slide-experimental)** _(Experimental)_ - Support a browser-native slide auto-scaling and isolate the original DOM structure for advanced features. The bare slide deck _has never required JavaScript._
+- **[Inline SVG slide][inline-svg]** _(Experimental)_ - Support a browser-native slide auto-scaling and isolate the original DOM structure for advanced features. The bare slide deck _has never required JavaScript._
 
 Marpit will become a core of _the next version of **[Marp](https://github.com/yhatt/marp/)**_.
 
@@ -197,13 +197,13 @@ We provide a background image syntax to specify slide's background through Markd
 ![bg](https://example.com/background.jpg)
 ```
 
-When you defined 2 or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mode) by enabling [inline SVG mode](#inline-svg-slide-experimental).
+When you defined 2 or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling [inline SVG mode][inline-svg].
 
 You can disable by `backgroundSyntax: false` in Marpit constructor option if you not want the `bg` syntax.
 
 #### Resize images
 
-You can resize the image by space-separated options. The basic option value follows `background-size` style (but except length).
+You can resize the background image by space-separated options. The basic option value follows `background-size` style.
 
 ```markdown
 `cover` will scale image to fill the slide (default):
@@ -227,6 +227,8 @@ You can also use the `fit` keyword like Deckset:
 The percentage value will specify the scaling factor of image.
 ![bg 150%](https://example.com/background.jpg)
 ```
+
+You can also use `width` (`w`) and `height` (`h`) options if you want specify background-size by absolute lengths.
 
 #### Styling through directives
 
@@ -266,7 +268,9 @@ When you remove the underbar, the background would apply to current and _the fol
 
 #### Advanced backgrounds with inline SVG mode
 
-The advanced backgrounds will work _only with [`inlineSVG: true`](#inline-svg-slide-experimental)_. It supports multiple background images, image filters, and split backgrounds.
+[advanced-bg]: #advanced-backgrounds-with-inline-svg-mode
+
+The advanced backgrounds will work _only with [`inlineSVG: true`][inline-svg]_. It supports multiple background images, image filters, and split backgrounds.
 
 ##### Multiple background images
 
@@ -304,17 +308,21 @@ This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/
 
 > Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple background images.
 
-### Image filters
+### Image syntax
 
-You can apply CSS filters to image through markdown image syntax. Include `<filter-name>(:<param>(,<params>...))` to the space-separated alternate text of image syntax.
-
-Filters can use in the inline image and [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mode). You can disable this feature with `filters: false` in Marpit constructor option.
+|                                          |  Inline<br>images  | Background images<br>_(`inlineSVG: false`)_ | [Advanced backgrounds][advanced-bg]<br>_([`inlineSVG: true`][inline-svg])_ |
+| ---------------------------------------: | :----------------: | :-----------------------------------------: | :------------------------------------------------------------------------: |
+| _**Resizing**<br>(keyword & percentage)_ |         -          |             :heavy_check_mark:              |                             :heavy_check_mark:                             |
+|     _**Resizing**<br>(absolute legnths)_ | :heavy_check_mark: |             :heavy_check_mark:              |                             :heavy_check_mark:                             |
+|                **_[Filters](#filters)_** | :heavy_check_mark: |                      -                      |                             :heavy_check_mark:                             |
 
 #### Filters
 
-We are following the function of the [`filter` style](https://developer.mozilla.org/en-US/docs/Web/CSS/filter).
+You can apply CSS filters to image through markdown image syntax. Include `<filter-name>(:<param>(,<params>...))` to the space-separated alternate text of image syntax.
 
-| Markdown           | (with arguments)                             | `filter` style                              |
+Filters can use in the inline image and [the advanced backgrounds][advanced-bg]. You can disable this feature with `filters: false` in Marpit constructor option.
+
+| Markdown           | (with arguments)                             | [`filter` style][filter-mdn]                |
 | ------------------ | -------------------------------------------- | ------------------------------------------- |
 | `![blur]()`        | `![blur:10px]()`                             | `blur(10px)`                                |
 | `![brightness]()`  | `![brightness:1.5]()`                        | `brightness(1.5)`                           |
@@ -326,6 +334,8 @@ We are following the function of the [`filter` style](https://developer.mozilla.
 | `![opacity]()`     | `![opacity:.5]()`                            | `opacity(.5)`                               |
 | `![saturate]()`    | `![saturate:2.0]()`                          | `saturate(2.0)`                             |
 | `![sepia]()`       | `![sepia:1.0]()`                             | `sepia(1.0)`                                |
+
+[filter-mdn]: https://developer.mozilla.org/en-US/docs/Web/CSS/filter
 
 Marpit will use the default arguments shown in above when you omit arguments.
 
@@ -557,6 +567,8 @@ A specified theme will convert to static CSS in rendering by `marpit.render()`. 
 
 ## Inline SVG slide _(experimental)_
 
+[inline-svg]: #inline-svg-slide-experimental
+
 > :warning: This feature is experimental because of some strange rendering in Chrome. [Track chromium issues about `<foreignObject>`.](https://bugs.chromium.org/p/chromium/issues/list?q=foreignObject&sort=-stars)
 
 When you set `inlineSVG: true` in Marpit constructor option, the each `<section>` are wrapped by inline SVG.
@@ -575,7 +587,7 @@ SVG elements can scale contents with keeping aspect ratio. If you are creating a
 
 If it combines with [CSS Scroll Snap](https://www.w3.org/TR/css-scroll-snap-1/), _we would not need to require any JavaScript logic_ for the simple HTML-based presentation.
 
-In addition, [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mode) will support in the layer of this SVG. The injected elements to support advanced background will not affect the DOM structure of each slide.
+In addition, [the advanced backgrounds][advanced-bg] will support in the layer of this SVG. The injected elements to support advanced background will not affect the DOM structure of each slide.
 
 ## API
 
