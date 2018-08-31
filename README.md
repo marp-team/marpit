@@ -579,7 +579,7 @@ In addition, [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mo
 
 ## API
 
-Refer JSDoc: **[https://marpit.netlify.com/](https://marpit.netlify.com/)**
+Refer JSDoc: **[https://marpit-api.marp.app/](https://marpit-api.marp.app/)**
 
 ## Development
 
