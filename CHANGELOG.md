@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Update Marpit API URL to use own domains ([#59](https://github.com/marp-team/marpit/pull/59))
+
 ## v0.0.13 - 2018-08-27
 
 - Improve type definition about slide containers, theme metas, and internal variables ([#56](https://github.com/marp-team/marpit/pull/56), [#58](https://github.com/marp-team/marpit/pull/58))
