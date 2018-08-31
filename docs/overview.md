@@ -1,17 +1,9 @@
 <div align="center">
   <p>
-    <img src="./docs/marpit.png" alt="Marpit" width="500" />
+    <img src="./marpit.png" alt="Marpit" width="500" />
   </p>
   <p>
     <strong>Marpit</strong>: Markdown slide deck framework
-  </p>
-  <p>
-
-[![CircleCI](https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square)](https://circleci.com/gh/marp-team/marpit/)
-[![Codecov](https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square)](https://codecov.io/gh/marp-team/marpit)
-[![npm](https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square)](https://www.npmjs.com/package/@marp-team/marpit)
-[![LICENSE](https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square)](./LICENSE)
-
   </p>
 </div>
 
@@ -23,11 +15,11 @@ It can transform Markdown and CSS theme(s) to slide deck composed by static HTML
 
 - **[Marpit Markdown](#marpit-markdown)** - It has extended several features such as [_directives_](#directives) and [_slide backgrounds_](#slide-backgrounds) with keeping a compatibility with the Markdown documents.
 - **[Clear markup](#markup)** - Marpit [theme CSS](#theme-css) has no own class, so you can focus on _your_ markup.
-- **[Inline SVG slide][inline-svg]** _(Experimental)_ - Support a browser-native slide auto-scaling and isolate the original DOM structure for advanced features. The bare slide deck _has never required JavaScript._
+- **[Inline SVG slide](#inline-svg-slide-experimental)** _(Experimental)_ - Support a browser-native slide auto-scaling and isolate the original DOM structure for advanced features. The bare slide deck _has never required JavaScript._
 
 Marpit will become a core of _the next version of **[Marp](https://github.com/yhatt/marp/)**_.
 
-> :warning: **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
+!> **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
 
 ## Marpit Markdown
 
@@ -117,11 +109,9 @@ footer: "![image](https://example.com/image.jpg)"
 ---
 ```
 
-> :warning: Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML.
->
-> You can enable a lazy YAML parsing by `lazyYAML` Marpit constructor option if you want to recognize defined directive's string without quotes.
+!> Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML. You can enable a lazy YAML parsing by `lazyYAML` Marpit constructor option if you want to recognize defined directive's string without quotes.
 
-> :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
+?> Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 
 #### Heading divider
 
@@ -131,16 +121,7 @@ By using `headingDivider` global directive, you can instruct to divide slide pag
 
 For example, the below 2 markdowns have the same output.
 
-<table>
-<thead>
-<tr>
-<th style="text-align:center;">Regular syntax</th>
-<th style="text-align:center;">Heading divider</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
+##### Regular syntax
 
 ```markdown
 # 1st page
@@ -162,7 +143,7 @@ Hello, world!
 😃
 ```
 
-</td><td>
+##### Heading divider
 
 ```markdown
 <!-- headingDivider: 2 -->
@@ -182,11 +163,6 @@ Hello, world!
 😃
 ```
 
-</td>
-</tr>
-</tbody>
-</table>
-
 It is useful when you want to create a slide deck from a plain Markdown. Even if you opened an example about `headingDivider` in general Markdown editor, it keeps a beautiful rendering without horizontal rulers.
 
 ### Slide backgrounds
@@ -197,13 +173,13 @@ We provide a background image syntax to specify slide's background through Markd
 ![bg](https://example.com/background.jpg)
 ```
 
-When you defined 2 or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling [inline SVG mode][inline-svg].
+When you defined 2 or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mode) by enabling [inline SVG mode](#inline-svg-slide-experimental).
 
 You can disable by `backgroundSyntax: false` in Marpit constructor option if you not want the `bg` syntax.
 
 #### Resize images
 
-You can resize the background image by space-separated options. The basic option value follows `background-size` style.
+You can resize the image by space-separated options. The basic option value follows `background-size` style (but except length).
 
 ```markdown
 `cover` will scale image to fill the slide (default):
@@ -227,8 +203,6 @@ You can also use the `fit` keyword like Deckset:
 The percentage value will specify the scaling factor of image.
 ![bg 150%](https://example.com/background.jpg)
 ```
-
-You can also use `width` (`w`) and `height` (`h`) options if you want specify background-size by absolute lengths.
 
 #### Styling through directives
 
@@ -260,7 +234,7 @@ This feature is available regardless of `backgroundSyntax` option in Marpit cons
 | `_backgroundPosition` | Specify `background-position` style.                            | `center`    |
 | `_backgroundRepeat`   | Specify `background-repeat` style.                              | `no-repeat` |
 | `_backgroundSize`     | Specify `background-size` style.                                | `cover`     |
-| `_color`              | Specify `color` style. It's usable if the text is hard to read. |             |
+| `_color`              | Specify `color` style. It's usable if the text is hard to read. | &nbsp;      |
 
 The beginning underbar of directive means "_Apply only to current slide page_". (Spot directive)
 
@@ -268,9 +242,7 @@ When you remove the underbar, the background would apply to current and _the fol
 
 #### Advanced backgrounds with inline SVG mode
 
-[advanced-bg]: #advanced-backgrounds-with-inline-svg-mode
-
-The advanced backgrounds will work _only with [`inlineSVG: true`][inline-svg]_. It supports multiple background images, image filters, and split backgrounds.
+The advanced backgrounds will work _only with [`inlineSVG: true`](#inline-svg-slide-experimental)_. It supports multiple background images, image filters, and split backgrounds.
 
 ##### Multiple background images
 
@@ -308,21 +280,17 @@ This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/
 
 > Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple background images.
 
-### Image syntax
-
-|                                          |  Inline<br>images  | Background images<br>_(`inlineSVG: false`)_ | [Advanced backgrounds][advanced-bg]<br>_([`inlineSVG: true`][inline-svg])_ |
-| ---------------------------------------: | :----------------: | :-----------------------------------------: | :------------------------------------------------------------------------: |
-| _**Resizing**<br>(keyword & percentage)_ |         -          |             :heavy_check_mark:              |                             :heavy_check_mark:                             |
-|     _**Resizing**<br>(absolute legnths)_ | :heavy_check_mark: |             :heavy_check_mark:              |                             :heavy_check_mark:                             |
-|                **_[Filters](#filters)_** | :heavy_check_mark: |                      -                      |                             :heavy_check_mark:                             |
-
-#### Filters
+### Image filters
 
 You can apply CSS filters to image through markdown image syntax. Include `<filter-name>(:<param>(,<params>...))` to the space-separated alternate text of image syntax.
 
-Filters can use in the inline image and [the advanced backgrounds][advanced-bg]. You can disable this feature with `filters: false` in Marpit constructor option.
+Filters can use in the inline image and [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mode). You can disable this feature with `filters: false` in Marpit constructor option.
 
-| Markdown           | (with arguments)                             | [`filter` style][filter-mdn]                |
+#### Filters
+
+We are following the function of the [`filter` style](https://developer.mozilla.org/en-US/docs/Web/CSS/filter).
+
+| Markdown           | (with arguments)                             | `filter` style                              |
 | ------------------ | -------------------------------------------- | ------------------------------------------- |
 | `![blur]()`        | `![blur:10px]()`                             | `blur(10px)`                                |
 | `![brightness]()`  | `![brightness:1.5]()`                        | `brightness(1.5)`                           |
@@ -334,8 +302,6 @@ Filters can use in the inline image and [the advanced backgrounds][advanced-bg].
 | `![opacity]()`     | `![opacity:.5]()`                            | `opacity(.5)`                               |
 | `![saturate]()`    | `![saturate:2.0]()`                          | `saturate(2.0)`                             |
 | `![sepia]()`       | `![sepia:1.0]()`                             | `sepia(1.0)`                                |
-
-[filter-mdn]: https://developer.mozilla.org/en-US/docs/Web/CSS/filter
 
 Marpit will use the default arguments shown in above when you omit arguments.
 
@@ -374,7 +340,7 @@ This container element(s) can change in Marpit constructor option. Also `contain
 
 ### Theme CSS
 
-> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`](https://github.com/marp-team/marp-core) if you want.
+?> Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`](https://github.com/marp-team/marp-core) if you want.
 
 In theme CSS, you need not think about the hierarchy of Marpit. All that you have to know is just that a `<section>` element becomes a slide.
 
@@ -416,7 +382,7 @@ section {
 
 Please notice _these must define a length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
-> :warning: Currently, you cannot tweak slide size through [`<style>` elements](#tweak-theme-in-markdown) or [`style` global directive](#style-global-directive).
+!> Currently, you cannot tweak slide size through [`<style>` elements](#tweak-theme-in-markdown) or [`style` global directive](#style-global-directive).
 
 ##### Styling paginations
 
@@ -431,7 +397,7 @@ section::after {
 
 Please refer to [the default style of `section::after` in a scaffold theme](src/theme/scaffold.js) as well.
 
-> :information_source: The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
+?> The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
 
 #### Header and footer
 
@@ -493,7 +459,7 @@ section {
 
 `@import` must precede all other statements excepted `@charset`. (It follows [the original specification](https://developer.mozilla.org/en-US/docs/Web/CSS/@import))
 
-> :information_source: An importing theme must add by using `Marpit.themeSet.add(css)` in advance.
+?> An importing theme must add by using `Marpit.themeSet.add(css)` in advance.
 
 ##### `@import-theme`
 
@@ -513,7 +479,7 @@ section {
 
 `@import-theme` can place on anywhere of the root of CSS, and the imported contents is inserted to the beginning of CSS in order.
 
-> :warning: You cannot import another theme while [tweaking style by using inline `<style>`](#tweak-theme-in-markdown) and [`style` global directive](#style-global-directive).
+!> You cannot import another theme while [tweaking style by using inline `<style>`](#tweak-theme-in-markdown) and [`style` global directive](#style-global-directive).
 
 #### Tweak theme in Markdown
 
@@ -535,9 +501,7 @@ section {
 You would see a yellow slide.
 ```
 
-> :information_source: By default, `<style>` elements will not render in HTML because of processing to bundle additional CSS with theme.
->
-> You can set `inlineStyle: false` in Marpit constructor option to disable bundling the style elements. In this case, it follows `html` markdown-it option whether render `<style>` as HTML element. Marpit would NOT apply post-processing even though the raw style was rendered as HTML. (e.g. scoping, import theme, etc.)
+?> By default, `<style>` elements will not render in HTML because of processing to bundle additional CSS with theme. You can set `inlineStyle: false` in Marpit constructor option to disable bundling the style elements. In this case, it follows `html` markdown-it option whether render `<style>` as HTML element. Marpit would NOT apply post-processing even though the raw style was rendered as HTML. (e.g. scoping, import theme, etc.)
 
 ##### `style` global directive
 
@@ -567,9 +531,7 @@ A specified theme will convert to static CSS in rendering by `marpit.render()`. 
 
 ## Inline SVG slide _(experimental)_
 
-[inline-svg]: #inline-svg-slide-experimental
-
-> :warning: This feature is experimental because of some strange rendering in Chrome. [Track chromium issues about `<foreignObject>`.](https://bugs.chromium.org/p/chromium/issues/list?q=foreignObject&sort=-stars)
+!> This feature is experimental because of some strange rendering in Chrome. [Track chromium issues about `<foreignObject>`.](https://bugs.chromium.org/p/chromium/issues/list?q=foreignObject&sort=-stars)
 
 When you set `inlineSVG: true` in Marpit constructor option, the each `<section>` are wrapped by inline SVG.
 
@@ -587,7 +549,7 @@ SVG elements can scale contents with keeping aspect ratio. If you are creating a
 
 If it combines with [CSS Scroll Snap](https://www.w3.org/TR/css-scroll-snap-1/), _we would not need to require any JavaScript logic_ for the simple HTML-based presentation.
 
-In addition, [the advanced backgrounds][advanced-bg] will support in the layer of this SVG. The injected elements to support advanced background will not affect the DOM structure of each slide.
+In addition, [the advanced backgrounds](#advanced-backgrounds-with-inline-svg-mode) will support in the layer of this SVG. The injected elements to support advanced background will not affect the DOM structure of each slide.
 
 ## API
 
