@@ -2,7 +2,7 @@
 
 The documentation of Marpit API on `master` branch has been published at **[https://marpit-api.marp.app/](https://marpit-api.marp.app/)**.
 
-Please run `yarn docs` if you want to build documentation at local. It would build docs in `jsdoc` directory.
+Please run `yarn jsdoc` if you want to build documentation at local. It would build docs in `jsdoc` directory.
 
 ## Classes
 
