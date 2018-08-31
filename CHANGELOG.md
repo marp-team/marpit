@@ -79,7 +79,7 @@
 ## v0.0.2 - 2018-04-28
 
 - Support background image syntax ([#4](https://github.com/marp-team/marpit/pull/4), [#5](https://github.com/marp-team/marpit/pull/5), and [#8](https://github.com/marp-team/marpit/pull/8))
-- Add [JSDoc documentation to `ThemeSet` class methods](https://marpit.netlify.com/themeset) ([#7](https://github.com/marp-team/marpit/pull/7))
+- Add [JSDoc documentation to `ThemeSet` class methods](https://marpit-api.marp.app/themeset) ([#7](https://github.com/marp-team/marpit/pull/7))
 - Improve the sweep logic of blank paragraphs by split into another plugin ([#8](https://github.com/marp-team/marpit/pull/8))
 
 ## v0.0.1 - 2018-03-28
