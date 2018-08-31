@@ -1,17 +1,9 @@
 <div align="center">
   <p>
-    <img src="./docs/marpit.png" alt="Marpit" width="500" />
+    <img src="./marpit.png" alt="Marpit" width="500" />
   </p>
   <p>
     <strong>Marpit</strong>: Markdown slide deck framework
-  </p>
-  <p>
-
-[![CircleCI](https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square)](https://circleci.com/gh/marp-team/marpit/)
-[![Codecov](https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square)](https://codecov.io/gh/marp-team/marpit)
-[![npm](https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square)](https://www.npmjs.com/package/@marp-team/marpit)
-[![LICENSE](https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square)](./LICENSE)
-
   </p>
 </div>
 
@@ -27,7 +19,7 @@ It can transform Markdown and CSS theme(s) to slide deck composed by static HTML
 
 Marpit will become a core of _the next version of **[Marp](https://github.com/yhatt/marp/)**_.
 
-> :warning: **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
+!> **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
 
 ## Marpit Markdown
 
@@ -117,11 +109,9 @@ footer: "![image](https://example.com/image.jpg)"
 ---
 ```
 
-> :warning: Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML.
->
-> You can enable a lazy YAML parsing by `lazyYAML` Marpit constructor option if you want to recognize defined directive's string without quotes.
+!> Marpit uses YAML for parsing directives, so **you should wrap with (double-)quotes** when the value includes invalid chars in YAML. You can enable a lazy YAML parsing by `lazyYAML` Marpit constructor option if you want to recognize defined directive's string without quotes.
 
-> :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
+?> Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
 
 #### Heading divider
 
@@ -131,16 +121,7 @@ By using `headingDivider` global directive, you can instruct to divide slide pag
 
 For example, the below 2 markdowns have the same output.
 
-<table>
-<thead>
-<tr>
-<th style="text-align:center;">Regular syntax</th>
-<th style="text-align:center;">Heading divider</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
+##### Regular syntax
 
 ```markdown
 # 1st page
@@ -162,7 +143,7 @@ Hello, world!
 😃
 ```
 
-</td><td>
+##### Heading divider
 
 ```markdown
 <!-- headingDivider: 2 -->
@@ -181,11 +162,6 @@ Hello, world!
 
 😃
 ```
-
-</td>
-</tr>
-</tbody>
-</table>
 
 It is useful when you want to create a slide deck from a plain Markdown. Even if you opened an example about `headingDivider` in general Markdown editor, it keeps a beautiful rendering without horizontal rulers.
 
@@ -258,7 +234,7 @@ This feature is available regardless of `backgroundSyntax` option in Marpit cons
 | `_backgroundPosition` | Specify `background-position` style.                            | `center`    |
 | `_backgroundRepeat`   | Specify `background-repeat` style.                              | `no-repeat` |
 | `_backgroundSize`     | Specify `background-size` style.                                | `cover`     |
-| `_color`              | Specify `color` style. It's usable if the text is hard to read. |             |
+| `_color`              | Specify `color` style. It's usable if the text is hard to read. | &nbsp;      |
 
 The beginning underbar of directive means "_Apply only to current slide page_". (Spot directive)
 
@@ -364,7 +340,7 @@ This container element(s) can change in Marpit constructor option. Also `contain
 
 ### Theme CSS
 
-> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`](https://github.com/marp-team/marp-core) if you want.
+?> Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`](https://github.com/marp-team/marp-core) if you want.
 
 In theme CSS, you need not think about the hierarchy of Marpit. All that you have to know is just that a `<section>` element becomes a slide.
 
@@ -406,7 +382,7 @@ section {
 
 Please notice _these must define a length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
-> :warning: Currently, you cannot tweak slide size through [`<style>` elements](#tweak-theme-in-markdown) or [`style` global directive](#style-global-directive).
+!> Currently, you cannot tweak slide size through [`<style>` elements](#tweak-theme-in-markdown) or [`style` global directive](#style-global-directive).
 
 ##### Styling paginations
 
@@ -421,7 +397,7 @@ section::after {
 
 Please refer to [the default style of `section::after` in a scaffold theme](src/theme/scaffold.js) as well.
 
-> :information_source: The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
+?> The root `section::after` has preserved a content of page number from Marpit. At present, you cannot use the root `section::after` selector for other use.
 
 #### Header and footer
 
@@ -483,7 +459,7 @@ section {
 
 `@import` must precede all other statements excepted `@charset`. (It follows [the original specification](https://developer.mozilla.org/en-US/docs/Web/CSS/@import))
 
-> :information_source: An importing theme must add by using `Marpit.themeSet.add(css)` in advance.
+?> An importing theme must add by using `Marpit.themeSet.add(css)` in advance.
 
 ##### `@import-theme`
 
@@ -503,7 +479,7 @@ section {
 
 `@import-theme` can place on anywhere of the root of CSS, and the imported contents is inserted to the beginning of CSS in order.
 
-> :warning: You cannot import another theme while [tweaking style by using inline `<style>`](#tweak-theme-in-markdown) and [`style` global directive](#style-global-directive).
+!> You cannot import another theme while [tweaking style by using inline `<style>`](#tweak-theme-in-markdown) and [`style` global directive](#style-global-directive).
 
 #### Tweak theme in Markdown
 
@@ -525,9 +501,7 @@ section {
 You would see a yellow slide.
 ```
 
-> :information_source: By default, `<style>` elements will not render in HTML because of processing to bundle additional CSS with theme.
->
-> You can set `inlineStyle: false` in Marpit constructor option to disable bundling the style elements. In this case, it follows `html` markdown-it option whether render `<style>` as HTML element. Marpit would NOT apply post-processing even though the raw style was rendered as HTML. (e.g. scoping, import theme, etc.)
+?> By default, `<style>` elements will not render in HTML because of processing to bundle additional CSS with theme. You can set `inlineStyle: false` in Marpit constructor option to disable bundling the style elements. In this case, it follows `html` markdown-it option whether render `<style>` as HTML element. Marpit would NOT apply post-processing even though the raw style was rendered as HTML. (e.g. scoping, import theme, etc.)
 
 ##### `style` global directive
 
@@ -557,7 +531,7 @@ A specified theme will convert to static CSS in rendering by `marpit.render()`. 
 
 ## Inline SVG slide _(experimental)_
 
-> :warning: This feature is experimental because of some strange rendering in Chrome. [Track chromium issues about `<foreignObject>`.](https://bugs.chromium.org/p/chromium/issues/list?q=foreignObject&sort=-stars)
+!> This feature is experimental because of some strange rendering in Chrome. [Track chromium issues about `<foreignObject>`.](https://bugs.chromium.org/p/chromium/issues/list?q=foreignObject&sort=-stars)
 
 When you set `inlineSVG: true` in Marpit constructor option, the each `<section>` are wrapped by inline SVG.
 
