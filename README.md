@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <a href="https://marpit.marp.app"><img src="./docs/marpit.png" alt="Marpit" width="500" /></a>
+    <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/master/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
   </p>
   <p>
     <strong>Marpit</strong>: Markdown slide deck framework
@@ -33,7 +33,7 @@ This framework is actually created for use as [a core][marp-core] of the next ve
 
 We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [Directives](#directives) and [Slide backgrounds](#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
 
-### [:art: **CSS theme by clear markup**](#theme-css)
+### [:art: **CSS theme by clean markup**](#theme-css)
 
 Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 

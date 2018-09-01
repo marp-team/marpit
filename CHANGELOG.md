@@ -5,7 +5,7 @@
 ### Added
 
 - Support image resizing with `width` and `height` keyword ([#62](https://github.com/marp-team/marpit/pull/62))
-- Add document page on [https://marpit.marp.app/](https://marpit.marp.app/) ([#60](https://github.com/marp-team/marpit/pull/60), [#61](https://github.com/marp-team/marpit/pull/61))
+- Add document page on [https://marpit.marp.app/](https://marpit.marp.app/) ([#60](https://github.com/marp-team/marpit/pull/60), [#61](https://github.com/marp-team/marpit/pull/61), [#63](https://github.com/marp-team/marpit/pull/63))
 
 ### Changed
 
