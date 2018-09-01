@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <img src="./docs/marpit.png" alt="Marpit" width="500" />
+    <a href="https://marpit.marp.app"><img src="./docs/marpit.png" alt="Marpit" width="500" /></a>
   </p>
   <p>
     <strong>Marpit</strong>: Markdown slide deck framework
@@ -17,17 +17,31 @@
 
 ---
 
-**Marpit** /mɑːrpɪt/ is the skinny framework for creating slide deck from Markdown.
+**Marpit** /mɑːrpɪt/ is the skinny framework for creating slide deck from Markdown. It can transform Markdown and CSS theme(s) to slide deck composed of static HTML and CSS and create a web page convertible into slide PDF by printing.
 
-It can transform Markdown and CSS theme(s) to slide deck composed by static HTML and CSS. (powered by [markdown-it](https://github.com/markdown-it/markdown-it) and [PostCSS](https://github.com/postcss/postcss))
+Marpit is designed to _output minimum assets for the slide deck_. You can use the bare assets as a logicless slide deck, but mainly we expect to integrate output with other tools and applications.
 
-- **[Marpit Markdown](#marpit-markdown)** - It has extended several features such as [_directives_](#directives) and [_slide backgrounds_](#slide-backgrounds) with keeping a compatibility with the Markdown documents.
-- **[Clear markup](#markup)** - Marpit [theme CSS](#theme-css) has no own class, so you can focus on _your_ markup.
-- **[Inline SVG slide][inline-svg]** _(Experimental)_ - Support a browser-native slide auto-scaling and isolate the original DOM structure for advanced features. The bare slide deck _has never required JavaScript._
+This framework is actually created for use as [a core][marp-core] of the next version of [Marp](https://github.com/yhatt/marp/).
 
-Marpit will become a core of _the next version of **[Marp](https://github.com/yhatt/marp/)**_.
+[marp-core]: https://github.com/marp-team/marp-core/
 
 > :warning: **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
+
+## Features
+
+### [:pencil: **Marpit Markdown**](#marpit-markdown)
+
+We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [Directives](#directives) and [Slide backgrounds](#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
+
+### [:art: **CSS theme by clear markup**](#theme-css)
+
+Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
+
+### [:triangular_ruler: **Inline SVG slide**][inline-svg] <i>(Experimental)</i>
+
+Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated HTML space made by `<foreignObject>` can provide [_Advanced backgrounds_][advanced-bg] for the slide with keeping the original Markdown DOM structure.
+
+> :information_source: We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
 
 ## Marpit Markdown
 
@@ -121,7 +135,7 @@ footer: "![image](https://example.com/image.jpg)"
 >
 > You can enable a lazy YAML parsing by `lazyYAML` Marpit constructor option if you want to recognize defined directive's string without quotes.
 
-> :information_source: Due to the parsing order of Markdown, you cannot use [slide background images](#slide-background) in `header` and `footer` directives.
+> :information_source: Due to the parsing order of Markdown, you cannot use [slide backgrounds](#slide-backgrounds) in `header` and `footer` directives.
 
 #### Heading divider
 
@@ -221,14 +235,14 @@ Black background + White text
 
 Marpit provides Markdown image syntaxes `![](image.jpg)` with extended to be helpful creating beautiful slides.
 
-|              Extended features              |       Inline image       |    Slide backgrounds     | [Advanced backgrounds][advanced-bg] |
-| :-----------------------------------------: | :----------------------: | :----------------------: | :---------------------------------: |
-| **[Resizing](#resizing-image)** by keywords |       `auto` only        |    :heavy_check_mark:    |         :heavy_check_mark:          |
-|         **Resizing** by percentage          | :heavy_multiplication_x: |    :heavy_check_mark:    |         :heavy_check_mark:          |
-|           **Resizing** by length            |    :heavy_check_mark:    |    :heavy_check_mark:    |         :heavy_check_mark:          |
-|     **[Image filters](#image-filters)**     |    :heavy_check_mark:    | :heavy_multiplication_x: |         :heavy_check_mark:          |
-|          **Multiple backgrounds**           |            -             | :heavy_multiplication_x: |         :heavy_check_mark:          |
-|           **Splited backgrounds**           |            -             | :heavy_multiplication_x: |         :heavy_check_mark:          |
+|                 Extended features                 |       Inline image       | [Slide backgrounds](#slide-backgrounds) | [Advanced backgrounds][advanced-bg] |
+| :-----------------------------------------------: | :----------------------: | :-------------------------------------: | :---------------------------------: |
+|    **[Resizing](#resizing-image)** by keywords    |       `auto` only        |           :heavy_check_mark:            |         :heavy_check_mark:          |
+|            **Resizing** by percentage             | :heavy_multiplication_x: |           :heavy_check_mark:            |         :heavy_check_mark:          |
+|              **Resizing** by length               |    :heavy_check_mark:    |           :heavy_check_mark:            |         :heavy_check_mark:          |
+|        **[Image filters](#image-filters)**        |    :heavy_check_mark:    |        :heavy_multiplication_x:         |         :heavy_check_mark:          |
+| **[Multiple backgrounds](#multiple-backgrounds)** |            -             |        :heavy_multiplication_x:         |         :heavy_check_mark:          |
+|    **[Split backgrounds](#split-backgrounds)**    |            -             |        :heavy_multiplication_x:         |         :heavy_check_mark:          |
 
 Basically the extended features can turn enable by including corresponded keywords to the image's alternative text.
 
@@ -317,9 +331,9 @@ You also can continue to use [`width` (`w`) and `height` (`h`) option keywords](
 
 [advanced-bg]: #advanced-backgrounds-with-inline-svg-mode
 
-The advanced backgrounds will work _only with [`inlineSVG: true`][inline-svg]_. It supports multiple background images, image filters, and split backgrounds.
+The advanced backgrounds will work _only with [`inlineSVG: true`][inline-svg]_. It supports image filters, multiple backgrounds, and split backgrounds.
 
-##### Multiple background images
+##### Multiple backgrounds
 
 ```markdown
 ![bg](https://example.com/backgroundA.jpg)
@@ -341,7 +355,7 @@ The space of a slide content will shrink to the right side.
 
 ---
 
-<!-- Multiple background images will work well in the specified background side. -->
+<!-- Multiple backgrounds will work well in the specified background side. -->
 
 ![bg right](https://example.com/backgroundB.jpg)
 ![bg](https://example.com/backgroundC.jpg)
@@ -353,7 +367,7 @@ The space of a slide content will shrink to the left side.
 
 This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Images%20and%20Videos/01-background-images.html).
 
-> Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple background images.
+> :information_source: Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple backgrounds.
 
 ## Markup
 
@@ -384,7 +398,7 @@ This container element(s) can change in Marpit constructor option. Also `contain
 
 ### Theme CSS
 
-> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`](https://github.com/marp-team/marp-core) if you want.
+> :information_source: Marpit provides only [the minimum style for scaffolding presentation](src/theme/scaffold.js), and does not provide default theme. You can use [`@marp-team/marp-core`][marp-core] if you want.
 
 In theme CSS, you need not think about the hierarchy of Marpit. All that you have to know is just that a `<section>` element becomes a slide.
 
