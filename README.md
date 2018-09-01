@@ -189,53 +189,12 @@ Hello, world!
 
 It is useful when you want to create a slide deck from a plain Markdown. Even if you opened an example about `headingDivider` in general Markdown editor, it keeps a beautiful rendering without horizontal rulers.
 
-### Slide backgrounds
+#### Styling backgrounds
 
-We provide a background image syntax to specify slide's background through Markdown. Include `bg` to the alternate text.
-
-```markdown
-![bg](https://example.com/background.jpg)
-```
-
-When you defined 2 or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling [inline SVG mode][inline-svg].
-
-You can disable by `backgroundSyntax: false` in Marpit constructor option if you not want the `bg` syntax.
-
-#### Resize images
-
-You can resize the background image by space-separated options. The basic option value follows `background-size` style.
+If you want to use any color or the gradient as background, you can set style through `backgroundColor` or `backgroundImage` local directives.
 
 ```markdown
-`cover` will scale image to fill the slide (default):
-![bg cover](https://example.com/background.jpg)
-
----
-
-`contain` will scale image to fit the slide:
-![bg contain](https://example.com/background.jpg)
-
-You can also use the `fit` keyword like Deckset:
-![bg fit](https://example.com/background.jpg)
-
----
-
-`auto` will not scale image, and use the original size:
-![bg auto](https://example.com/background.jpg)
-
----
-
-The percentage value will specify the scaling factor of image.
-![bg 150%](https://example.com/background.jpg)
-```
-
-You can also use `width` (`w`) and `height` (`h`) options if you want specify background-size by absolute lengths.
-
-#### Styling through directives
-
-If you want to use any color or the gradient as background, you can set style directly through local or spot directives.
-
-```markdown
-<!-- _backgroundImage: "linear-gradient(to bottom, #67b8e3, #0288d1)" -->
+<!-- backgroundImage: "linear-gradient(to bottom, #67b8e3, #0288d1)" -->
 
 Gradient background
 
@@ -249,22 +208,110 @@ _color: white
 Black background + White text
 ```
 
-This feature is available regardless of `backgroundSyntax` option in Marpit constructor.
+|     Local directives | Description                                                     | Default     |
+| -------------------: | --------------------------------------------------------------- | ----------- |
+|    `backgroundColor` | Specify `background-color` style.                               |             |
+|    `backgroundImage` | Specify `background-image` style.                               |             |
+| `backgroundPosition` | Specify `background-position` style.                            | `center`    |
+|   `backgroundRepeat` | Specify `background-repeat` style.                              | `no-repeat` |
+|     `backgroundSize` | Specify `background-size` style.                                | `cover`     |
+|              `color` | Specify `color` style. It's usable if the text is hard to read. |             |
 
-##### Directives
+### Image syntaxes
 
-| Spot directive        | Description                                                     | Default     |
-| --------------------- | --------------------------------------------------------------- | ----------- |
-| `_backgroundColor`    | Specify `background-color` style.                               |             |
-| `_backgroundImage`    | Specify `background-image` style.                               |             |
-| `_backgroundPosition` | Specify `background-position` style.                            | `center`    |
-| `_backgroundRepeat`   | Specify `background-repeat` style.                              | `no-repeat` |
-| `_backgroundSize`     | Specify `background-size` style.                                | `cover`     |
-| `_color`              | Specify `color` style. It's usable if the text is hard to read. |             |
+Marpit provides Markdown image syntaxes `![](image.jpg)` with extended to be helpful creating beautiful slides.
 
-The beginning underbar of directive means "_Apply only to current slide page_". (Spot directive)
+|              Extended features              |       Inline image       |    Slide backgrounds     | [Advanced backgrounds][advanced-bg] |
+| :-----------------------------------------: | :----------------------: | :----------------------: | :---------------------------------: |
+| **[Resizing](#resizing-image)** by keywords |       `auto` only        |    :heavy_check_mark:    |         :heavy_check_mark:          |
+|         **Resizing** by percentage          | :heavy_multiplication_x: |    :heavy_check_mark:    |         :heavy_check_mark:          |
+|           **Resizing** by length            |    :heavy_check_mark:    |    :heavy_check_mark:    |         :heavy_check_mark:          |
+|     **[Image filters](#image-filters)**     |    :heavy_check_mark:    | :heavy_multiplication_x: |         :heavy_check_mark:          |
+|          **Multiple backgrounds**           |            -             | :heavy_multiplication_x: |         :heavy_check_mark:          |
+|           **Splited backgrounds**           |            -             | :heavy_multiplication_x: |         :heavy_check_mark:          |
 
-When you remove the underbar, the background would apply to current and _the following pages_ (Local directive).
+Basically the extended features can turn enable by including corresponded keywords to the image's alternative text.
+
+#### Resizing image
+
+You can resize image by using `width` and `height` keyword options.
+
+```markdown
+![width:200px](image.jpg) <!-- Setting width to 200px -->
+![height:30cm](image.jpg) <!-- Setting height to 300px -->
+![width:200px height:30cm](image.jpg) <!-- Setting both lengths -->
+```
+
+We also support the shorthand options `w` and `h`. Normally it's useful to use these.
+
+```markdown
+![w:32 h:32](image.jpg) <!-- Setting size to 32x32 px -->
+```
+
+Inline images _only allow `auto` keyword and the length units defined in CSS._
+
+> :warning: Several units related to the size of the viewport (e.g. `vw`, `vh`, `vmin`, `vmax`) cannot use to ensure immutable render result.
+
+#### Image filters
+
+You can apply CSS filters to image through markdown image syntax. Include `<filter-name>(:<param>(,<params>...))` to the alternate text of image.
+
+Filters can use in the inline image and [the advanced backgrounds][advanced-bg].
+
+| Markdown           | (with arguments)                             | Corresponded [`filter` style][filter-mdn]   |
+| ------------------ | -------------------------------------------- | ------------------------------------------- |
+| `![blur]()`        | `![blur:10px]()`                             | `blur(10px)`                                |
+| `![brightness]()`  | `![brightness:1.5]()`                        | `brightness(1.5)`                           |
+| `![contrast]()`    | `![contrast:200%]()`                         | `contrast(200%)`                            |
+| `![drop-shadow]()` | `![drop-shadow:0,5px,10px,rgba(0,0,0,.4)]()` | `drop-shadow(0 5px 10px rgba(0, 0, 0, .4))` |
+| `![grayscale]()`   | `![grayscale:1]()`                           | `grayscale(1)`                              |
+| `![hue-rotate]()`  | `![hue-rotate:180deg]()`                     | `hue-rotate(180deg)`                        |
+| `![invert]()`      | `![invert:100%]()`                           | `invert(100%)`                              |
+| `![opacity]()`     | `![opacity:.5]()`                            | `opacity(.5)`                               |
+| `![saturate]()`    | `![saturate:2.0]()`                          | `saturate(2.0)`                             |
+| `![sepia]()`       | `![sepia:1.0]()`                             | `sepia(1.0)`                                |
+
+[filter-mdn]: https://developer.mozilla.org/en-US/docs/Web/CSS/filter
+
+Marpit will use the default arguments shown in above when you omit arguments.
+
+Naturally multiple filters can apply to a image.
+
+```markdown
+![brightness:.8 sepia:50%](https://example.com/image.jpg)
+```
+
+> :information_source: You can disable this feature with `filters: false` in Marpit constructor option if you not want.
+
+#### Slide backgrounds
+
+We provide a background image syntax to specify slide's background through Markdown. It only have to include `bg` keyword to the alternate text.
+
+```markdown
+![bg](https://example.com/background.jpg)
+```
+
+When you defined two or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling [inline SVG mode][inline-svg].
+
+> :information_source: You can disable by `backgroundSyntax: false` in Marpit constructor option if you not want. However, you can still style background image through [directives](#styling-backgrounds).
+
+#### Background size
+
+You can resize the background image by keywords. The basic keyword value follows `background-size` style.
+
+```markdown
+![bg contain](https://example.com/background.jpg)
+```
+
+|       Keyword | Description                                     | Example                    |
+| ------------: | :---------------------------------------------- | :------------------------- |
+|   **`cover`** | Scale image to fill the slide. _(Default)_      | `![bg cover](image.jpg)`   |
+| **`contain`** | Scale image to fit the slide.                   | `![bg contain](image.jpg)` |
+|         `fit` | Alias to `contain`, compatible with Deckset.    | `![bg fit](image.jpg)`     |
+|    **`auto`** | Not scale image, and use the original size.     | `![bg auto](image.jpg)`    |
+|        _`x%`_ | Specify the scaling factor by percentage value. | `![bg 150%](image.jpg)`    |
+
+You also can continue to use [`width` (`w`) and `height` (`h`) option keywords](#resizing-image) to specify size by length.
 
 #### Advanced backgrounds with inline SVG mode
 
@@ -307,43 +354,6 @@ The space of a slide content will shrink to the left side.
 This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Images%20and%20Videos/01-background-images.html).
 
 > Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple background images.
-
-### Image syntax
-
-|                                          |  Inline<br>images  | Background images<br>_(`inlineSVG: false`)_ | [Advanced backgrounds][advanced-bg]<br>_([`inlineSVG: true`][inline-svg])_ |
-| ---------------------------------------: | :----------------: | :-----------------------------------------: | :------------------------------------------------------------------------: |
-| _**Resizing**<br>(keyword & percentage)_ |         -          |             :heavy_check_mark:              |                             :heavy_check_mark:                             |
-|     _**Resizing**<br>(absolute legnths)_ | :heavy_check_mark: |             :heavy_check_mark:              |                             :heavy_check_mark:                             |
-|                **_[Filters](#filters)_** | :heavy_check_mark: |                      -                      |                             :heavy_check_mark:                             |
-
-#### Filters
-
-You can apply CSS filters to image through markdown image syntax. Include `<filter-name>(:<param>(,<params>...))` to the space-separated alternate text of image syntax.
-
-Filters can use in the inline image and [the advanced backgrounds][advanced-bg]. You can disable this feature with `filters: false` in Marpit constructor option.
-
-| Markdown           | (with arguments)                             | [`filter` style][filter-mdn]                |
-| ------------------ | -------------------------------------------- | ------------------------------------------- |
-| `![blur]()`        | `![blur:10px]()`                             | `blur(10px)`                                |
-| `![brightness]()`  | `![brightness:1.5]()`                        | `brightness(1.5)`                           |
-| `![contrast]()`    | `![contrast:200%]()`                         | `contrast(200%)`                            |
-| `![drop-shadow]()` | `![drop-shadow:0,5px,10px,rgba(0,0,0,.4)]()` | `drop-shadow(0 5px 10px rgba(0, 0, 0, .4))` |
-| `![grayscale]()`   | `![grayscale:1]()`                           | `grayscale(1)`                              |
-| `![hue-rotate]()`  | `![hue-rotate:180deg]()`                     | `hue-rotate(180deg)`                        |
-| `![invert]()`      | `![invert:100%]()`                           | `invert(100%)`                              |
-| `![opacity]()`     | `![opacity:.5]()`                            | `opacity(.5)`                               |
-| `![saturate]()`    | `![saturate:2.0]()`                          | `saturate(2.0)`                             |
-| `![sepia]()`       | `![sepia:1.0]()`                             | `sepia(1.0)`                                |
-
-[filter-mdn]: https://developer.mozilla.org/en-US/docs/Web/CSS/filter
-
-Marpit will use the default arguments shown in above when you omit arguments.
-
-Naturally multiple filters can apply to a image.
-
-```markdown
-![brightness:.8 sepia:50%](https://example.com/image.jpg)
-```
 
 ## Markup
 
