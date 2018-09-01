@@ -19,17 +19,17 @@ This framework is actually created for use as [a core][marp-core] of the next ve
 
 ## Features
 
-- :pencil: **Marpit Markdown**
+### :pencil: Marpit Markdown {docsify-ignore}
 
-  - We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](https://github.com/marp-team/marpit#directives) and [_Slide backgrounds_](https://github.com/marp-team/marpit#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
+We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](https://github.com/marp-team/marpit#directives) and [_Slide backgrounds_](https://github.com/marp-team/marpit#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
 
-- :art: **CSS theme by clear markup**
+### :art: CSS theme by clear markup {docsify-ignore}
 
-  - Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
+Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 
-- :triangular_ruler: **Inline SVG slide** <i>(Experimental)</i>
+### :triangular_ruler: Inline SVG slide <i>(Experimental)</i> {docsify-ignore}
 
-  - Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated HTML space made by `<foreignObject>` can provide [_Advanced backgrounds_](https://github.com/marp-team/marpit#advanced-backgrounds-with-inline-svg-mode) for the slide with keeping the original Markdown DOM structure.
+Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated HTML space made by `<foreignObject>` can provide [_Advanced backgrounds_](https://github.com/marp-team/marpit#advanced-backgrounds-with-inline-svg-mode) for the slide with keeping the original Markdown DOM structure.
 
 ?> We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
 

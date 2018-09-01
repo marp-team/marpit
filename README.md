@@ -1,6 +1,6 @@
 <div align="center">
   <p>
-    <a href="https://marpit.marp.app"><img src="./docs/marpit.png" alt="Marpit" width="500" /></a>
+    <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/master/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
   </p>
   <p>
     <strong>Marpit</strong>: Markdown slide deck framework
