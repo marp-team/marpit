@@ -77,25 +77,37 @@ describe('Marpit background image plugin', () => {
     }
 
     it('assigns corresponded backgroundSize spot directive', () => {
-      expect(directives('![bg auto](img)').backgroundSize).toBe('auto')
-      expect(directives('![bg contain](img)').backgroundSize).toBe('contain')
-      expect(directives('![bg cover](img)').backgroundSize).toBe('cover')
-      expect(directives('![bg fit](img)').backgroundSize).toBe('contain')
+      expect(directives('![bg auto](i)').backgroundSize).toBe('auto')
+      expect(directives('![bg contain](i)').backgroundSize).toBe('contain')
+      expect(directives('![bg cover](i)').backgroundSize).toBe('cover')
+      expect(directives('![bg fit](i)').backgroundSize).toBe('contain')
     })
 
     it('assigns specified scale to backgroundSize spot directive', () => {
-      expect(directives('![bg 50%](img)').backgroundSize).toBe('50%')
-      expect(directives('![bg 123.45%](img)').backgroundSize).toBe('123.45%')
-      expect(directives('![bg .25%](img)').backgroundSize).toBe('.25%')
+      expect(directives('![bg 50%](i)').backgroundSize).toBe('50%')
+      expect(directives('![bg 123.45%](i)').backgroundSize).toBe('123.45%')
+      expect(directives('![bg .25%](i)').backgroundSize).toBe('.25%')
 
       // The percentage scale is prior to the background keyword.
-      expect(directives('![bg 100% contain](img)').backgroundSize).toBe('100%')
+      expect(directives('![bg 100% contain](i)').backgroundSize).toBe('100%')
+    })
+
+    it('assigns specifid scale per direction', () => {
+      expect(directives('![bg w:300](i)').backgroundSize).toBe('300px auto')
+      expect(directives('![bg h:25%](i)').backgroundSize).toBe('auto 25%')
+      expect(directives('![bg 50% w:100%](i)').backgroundSize).toBe('100% 50%')
+      expect(directives('![bg h:10em 30%](i)').backgroundSize).toBe('30% 10em')
+      expect(directives('![bg 1% w:auto](i)').backgroundSize).toBe('auto 1%')
+
+      // The background keyword are prior to the width and height scale.
+      expect(directives('![bg contain w:50](i)').backgroundSize).toBe('contain')
+      expect(directives('![bg fit h:50](i)').backgroundSize).toBe('contain')
     })
 
     it('ignores invalid scale', () => {
-      expect(directives('![bg %](img)').backgroundSize).not.toBe('%')
-      expect(directives('![bg .%](img)').backgroundSize).not.toBe('.%')
-      expect(directives('![bg 25](img)').backgroundSize).not.toBe('25')
+      expect(directives('![bg %](i)').backgroundSize).not.toBe('%')
+      expect(directives('![bg .%](i)').backgroundSize).not.toBe('.%')
+      expect(directives('![bg 25](i)').backgroundSize).not.toBe('25')
     })
   })
 
@@ -165,14 +177,23 @@ describe('Marpit background image plugin', () => {
     })
 
     it('assigns background-size style with resizing keyword / scale', () => {
-      const $ = $load(mdSVG().render('![bg fit](A) ![bg 50%](B)'))
-      const styleA = $('figure:first-child').attr('style')
-      const styleB = $('figure:last-child').attr('style')
+      const markdown =
+        '![bg fit](A) ![bg 50%](B) ![bg w:40px](C) ![bg 10% h:20%](D)'
+
+      const $ = $load(mdSVG().render(markdown))
+      const styleA = $('figure:nth-of-type(1)').attr('style')
+      const styleB = $('figure:nth-of-type(2)').attr('style')
+      const styleC = $('figure:nth-of-type(3)').attr('style')
+      const styleD = $('figure:nth-of-type(4)').attr('style')
 
       expect(styleA).toContain('background-image:url("A");')
       expect(styleA).toContain('background-size:contain;')
       expect(styleB).toContain('background-image:url("B");')
       expect(styleB).toContain('background-size:50%;')
+      expect(styleC).toContain('background-image:url("C");')
+      expect(styleC).toContain('background-size:40px auto;')
+      expect(styleD).toContain('background-image:url("D");')
+      expect(styleD).toContain('background-size:10% 20%;')
     })
 
     splitBackgroundKeywords.forEach(keyword => {
