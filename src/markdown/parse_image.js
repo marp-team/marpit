@@ -23,10 +23,19 @@ function parseImage(md, opts = {}) {
   const pluginOptions = { filters: true, ...opts }
   const optionMatchers = new Map()
 
-  // The scale percentage for resize
-  // TODO: Implement cross-browser image zoom without affecting DOM tree
-  // (Pre-released Marp uses `zoom` but it has not supported in Firefox)
+  // The scale percentage for resize background
   optionMatchers.set(/^(\d*\.)?\d+%$/, matches => ({ size: matches[0] }))
+
+  // width and height
+  optionMatchers.set(
+    /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
+    matches => ({ width: matches[1] })
+  )
+
+  optionMatchers.set(
+    /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
+    matches => ({ height: matches[1] })
+  )
 
   if (pluginOptions.filters) {
     // CSS filters
@@ -111,19 +120,30 @@ function parseImage(md, opts = {}) {
           })
         })
 
-        // Build and apply filter style
-        if (token.meta.marpitImage.filters) {
-          token.meta.marpitImage.filter = token.meta.marpitImage.filters
+        // Build and apply styles
+        const { filters, height, width } = token.meta.marpitImage
+        const style = new InlineStyle(token.attrGet('style'))
+
+        const assign = (decl, value) => {
+          const normalize = `${value}${/^(\d*\.)?\d+$/.test(value) ? 'px' : ''}`
+          token.meta.marpitImage[decl] = normalize
+
+          if (!value.endsWith('%')) style.set(decl, normalize)
+        }
+
+        if (width) assign('width', width)
+        if (height) assign('height', height)
+
+        if (filters) {
+          token.meta.marpitImage.filter = filters
             .reduce((arr, fltrs) => [...arr, `${fltrs[0]}(${fltrs[1]})`], [])
             .join(' ')
 
-          const style = new InlineStyle(token.attrGet('style')).set(
-            'filter',
-            token.meta.marpitImage.filter
-          )
-
-          token.attrSet('style', style.toString())
+          style.set('filter', token.meta.marpitImage.filter)
         }
+
+        const stringified = style.toString()
+        if (stringified) token.attrSet('style', stringified)
       }
     })
   })
