@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 - Update Marpit API URL to use own domains ([#59](https://github.com/marp-team/marpit/pull/59))
-- Add document page on [https://marpit.marp.app/](https://marpit.marp.app/) ([#60](https://github.com/marp-team/marpit/pull/60))
+- Add document page on [https://marpit.marp.app/](https://marpit.marp.app/) ([#60](https://github.com/marp-team/marpit/pull/60), [#61](https://github.com/marp-team/marpit/pull/61))
 
 ## v0.0.13 - 2018-08-27
 
