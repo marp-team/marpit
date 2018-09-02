@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.0.14 - 2018-09-02
+
 ### Added
 
 - Support image resizing with `width` and `height` keyword ([#62](https://github.com/marp-team/marpit/pull/62))
