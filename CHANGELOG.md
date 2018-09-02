@@ -9,6 +9,7 @@
 
 ### Changed
 
+- Upgrade Babel to 7 stable ([#64](https://github.com/marp-team/marpit/pull/64))
 - Update Marpit API URL to use own domains ([#59](https://github.com/marp-team/marpit/pull/59))
 
 ## v0.0.13 - 2018-08-27
