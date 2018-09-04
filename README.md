@@ -1,19 +1,15 @@
-<div align="center">
-  <p>
-    <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/master/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
-  </p>
-  <p>
-    <strong>Marpit</strong>: Markdown slide deck framework
-  </p>
-  <p>
-
-[![CircleCI](https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square)](https://circleci.com/gh/marp-team/marpit/)
-[![Codecov](https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square)](https://codecov.io/gh/marp-team/marpit)
-[![npm](https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square)](https://www.npmjs.com/package/@marp-team/marpit)
-[![LICENSE](https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square)](./LICENSE)
-
-  </p>
-</div>
+<p align="center">
+  <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/master/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
+</p>
+<p align="center">
+  <strong>Marpit</strong>: Markdown slide deck framework
+</p>
+<p align="center">
+  <a href="https://circleci.com/gh/marp-team/marpit/"><img src="https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square" alt="CircleCI" /></a>
+  <a href="https://codecov.io/gh/marp-team/marpit"><img src="https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square" alt="Codecov" /></a>
+  <a href="https://www.npmjs.com/package/@marp-team/marpit"><img src="https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square" alt="npm" /></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square" alt="LICENSE" /></a>
+</p>
 
 ---
 
