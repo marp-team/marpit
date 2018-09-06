@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Improve rendering header and footer to use inline tokens ([#66](https://github.com/marp-team/marpit/pull/66))
+
 ## v0.0.14 - 2018-09-02
 
 ### Added
