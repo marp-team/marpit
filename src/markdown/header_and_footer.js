@@ -1,5 +1,4 @@
 /** @module */
-import Token from 'markdown-it/lib/token'
 import wrapTokens from '../helpers/wrap_tokens'
 
 /**
@@ -17,26 +16,26 @@ function headerAndFooter(md) {
     state => {
       if (state.inlineMode) return
 
-      const renderedInlines = new Map()
-      const getRendered = markdown => {
-        let rendered = renderedInlines.get(markdown)
+      const parsedInlines = new Map()
+      const getParsed = markdown => {
+        let parsed = parsedInlines.get(markdown)
 
-        if (!rendered) {
-          rendered = md.renderInline(markdown, state.env)
-          renderedInlines.set(markdown, rendered)
+        if (!parsed) {
+          parsed = md.parseInline(markdown, state.env)
+          delete parsed.map
+
+          parsedInlines.set(markdown, parsed)
         }
 
-        return rendered
+        return parsed
       }
 
-      const createMarginalTokens = (tag, markdown) => {
-        const token = new Token('html_block', '', 0)
-        token.content = getRendered(markdown)
-
-        return wrapTokens(`marpit_${tag}`, { tag, close: { block: true } }, [
-          token,
-        ])
-      }
+      const createMarginalTokens = (tag, markdown) =>
+        wrapTokens(
+          `marpit_${tag}`,
+          { tag, close: { block: true } },
+          getParsed(markdown)
+        )
 
       let current
 

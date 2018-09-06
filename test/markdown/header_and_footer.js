@@ -57,6 +57,11 @@ describe('Marpit header and footer plugin', () => {
         expect(img.attr('src')).toBe('https://example.com/image.jpg')
       })
     })
+
+    it('ignores invalid directives like defined as object', () => {
+      const $ = cheerio.load(md().render('<!-- header: ["test"] -->'))
+      expect($('header')).toHaveLength(0)
+    })
   })
 
   describe('Footer local directive', () => {
@@ -91,6 +96,11 @@ describe('Marpit header and footer plugin', () => {
         expect(img).toHaveLength(1)
         expect(img.attr('src')).toBe('https://example.com/image.jpg')
       })
+    })
+
+    it('ignores invalid directives like defined as object', () => {
+      const $ = cheerio.load(md().render('<!-- footer: ["test"] -->'))
+      expect($('footer')).toHaveLength(0)
     })
   })
 })
