@@ -99,10 +99,10 @@ export const locals = {
     return { color: value }
   },
   footer(value) {
-    return { footer: value }
+    return typeof value === 'string' ? { footer: value } : {}
   },
   header(value) {
-    return { header: value }
+    return typeof value === 'string' ? { header: value } : {}
   },
   paginate(value) {
     return { paginate: (value || '').toLowerCase() === 'true' }
