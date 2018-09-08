@@ -1,11 +1,6 @@
 - [Introduction](/)
 - [Usage](/usage)
-
-<!---
-
-- [Marpit Markdown](/markdown)
-
--->
+- <br>[Marpit Markdown](/markdown)
 
 ---
 

@@ -19,7 +19,7 @@ By passing object of options, you can customize the behavior of Marpit instance 
 
 _**[See all options at JSDoc](https://marpit-api.marp.app/marpit)** to details._ Here we will introduce useful recipes.
 
-#### :pencil: **[markdown-it](https://github.com/markdown-it/markdown-it) parser setting**
+#### :pencil: [markdown-it](https://github.com/markdown-it/markdown-it) parser setting
 
 You can customize the behavior of Markdown parser by `markdown` option. It will pass to [markdown-it initializer](https://github.com/markdown-it/markdown-it#init-with-presets-and-options) as it is.
 
@@ -32,7 +32,7 @@ const marpit = new Marpit({
 })
 ```
 
-#### :package: **Customize container elements**
+#### :package: Customize container elements
 
 You can customize container HTML elements too. These settings are using to scope the converted CSS. [`Element` class](https://marpit-api.marp.app/element) helps to specify container(s).
 
@@ -67,7 +67,7 @@ It would render elements like this:
 
 The default container is [`<div class="marpit">`](https://marpit-api.marp.app/module-element.html#.marpitContainer), and no slide containers (render only `<section>`). If you may not use any containers and CSS scoping, please set `container` option as `false`.
 
-#### :triangular_ruler: **Inline SVG slide**
+#### :triangular_ruler: Inline SVG slide
 
 Turn on the _(experimental)_ inline SVG slide.
 
