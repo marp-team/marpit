@@ -110,7 +110,27 @@ The second page would not apply setting of directives.
 
 ### Theme
 
+Choose a theme with `theme` global directive.
+
+```markdown
+<!-- theme: registered-theme-name -->
+```
+
+It recognizes the name of theme added to [`themeSet` of `Marpit` instance](https://marpit-api.marp.app/marpit#themeSet).
+
 #### Tweak theme style
+
+Normally you may tweak theme by `<style>` element's inline style, but it might break a style for documentation when opening in another Markdown editor. Thus you can use `style` global directive instead of `<style>`.
+
+```markdown
+---
+theme: base-theme
+style: |
+  section {
+    background-color: #ccc;
+  }
+---
+```
 
 ### Heading divider
 

@@ -127,7 +127,7 @@ h1 {
 `)
 ```
 
-We require `@theme` meta comment in CSS. You can use added theme if you are selected it through directive (`<!-- theme: my-first-theme -->`).
+We require `@theme` meta comment in CSS. You can use added theme if you are selected it [through directive (`<!-- theme: my-first-theme -->`)](/markdown#theme).
 
 ### Default theme
 
