@@ -185,7 +185,7 @@ It is useful when you want to create a slide deck from a plain Markdown. Even if
 
 We support a pagination by the `paginate` local directive.
 
-```
+```markdown
 <!-- paginate: true -->
 
 You would be able to see a page number of slide in the lower right.
@@ -256,10 +256,10 @@ If you want to place these contents to the marginal of the slide as like as Powe
 
 In addition, you can format the content of header/footer through markdown syntax and insert inline images.
 
-```html
+```markdown
 ---
-header: "**bold** _italic_"
-footer: "![image](https://example.com/image.jpg)"
+header: '**bold** _italic_'
+footer: '![image](https://example.com/image.jpg)'
 ---
 
 NOTE: Wrap by (double-)quotes to avoid parsed as invalid YAML.
