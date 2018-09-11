@@ -1,8 +1,8 @@
 - [Introduction](/)
 - [Usage](/usage)
 - <br>[Marpit Markdown](/markdown)
-  - [Directives](/markdown/directives)
-  - [Image syntax](/markdown/image-syntax)
+  - [Directives](/directives)
+  - [Image syntax](/image-syntax)
 
 ---
 

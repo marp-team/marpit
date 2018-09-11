@@ -21,7 +21,7 @@ This framework is actually created for use as [a core][marp-core] of the next ve
 
 ### :pencil: Marpit Markdown {docsify-ignore}
 
-We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](/markdown/directives) and [_Slide backgrounds_](https://github.com/marp-team/marpit#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
+We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](/directives) and [_Slide backgrounds_](https://github.com/marp-team/marpit#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
 
 ### :art: CSS theme by clean markup {docsify-ignore}
 

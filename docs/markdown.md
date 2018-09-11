@@ -22,5 +22,5 @@ bar
 
 ## Extended features
 
-- [Directives](/markdown/directives)
-- [Image syntax](/markdown/image-syntax)
+- [Directives](/directives)
+- [Image syntax](/image-syntax)
