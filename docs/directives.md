@@ -265,7 +265,7 @@ footer: "![image](https://example.com/image.jpg)"
 NOTE: Wrap by (double-)quotes to avoid parsed as invalid YAML.
 ```
 
-?> You cannot use [`![bg]()` syntax](#slide-backgrounds) in `header` and `footer` directives due to the parsing order of Markdown.
+?> You cannot use [`![bg]()` syntax](/image-syntax#slide-backgrounds) in `header` and `footer` directives due to the parsing order of Markdown.
 
 ### Styling slide
 
@@ -316,3 +316,5 @@ In addition, we have supported customize for these declarations:
 - `backgroundRepeat` (`no-repeat` by default)
 - `backgroundSize` (`cover` by default)
 - `color`
+
+?> It also can use [extended image syntax](/image-syntax#slide-backgrounds) if you want to set an image as background.
