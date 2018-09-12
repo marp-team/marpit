@@ -4,6 +4,7 @@
   - [Directives](/directives)
   - [Image syntax](/image-syntax)
 - [Theme CSS](/theme-css)
+- [Inline SVG slide](/inline-svg)
 
 ---
 
