@@ -68,7 +68,7 @@ section {
 
 !> Please notice _it must define the length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
-?> It is determined one size per theme. The slide size cannot tweak through using [inline style](#tweak-style-through-markdown) or [custom class](/directives#class), but may shrink the size of contents if user was using [split backgrounds](/image-syntax#split-backgrounds).
+?> It is determined one size per theme. The slide size cannot tweak through using [inline style](#tweak-style-through-markdown) or [custom class](/directives#class), but may shrink the width of contents if user was using [split backgrounds](/image-syntax#split-backgrounds).
 
 ### Pagination
 

@@ -69,7 +69,7 @@ The default container is [`<div class="marpit">`](https://marpit-api.marp.app/mo
 
 #### :triangular_ruler: Inline SVG slide
 
-Turn on the _(experimental)_ inline SVG slide.
+Turn on the _(experimental)_ [inline SVG slide](/inline-svg).
 
 ```javascript
 const marpit = new Marpit({
@@ -138,3 +138,7 @@ marpit.themeSet.default = marpit.themeSet.add('...')
 ```
 
 [The applied example is here.](/assets/hello-marpit-theme.pdf ':ignore')
+
+## Full API documentation
+
+The documentation of Marpit API, created by JSDoc, is hosted on another site. Please refer to **[https://marpit-api.marp.app/](https://marpit-api.marp.app/)**.

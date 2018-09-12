@@ -77,7 +77,7 @@ We provide a background image syntax to specify slide's background through Markd
 ![bg](https://example.com/background.jpg)
 ```
 
-When you defined two or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling inline SVG slide.
+When you defined two or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling [inline SVG slide](/inline-svg).
 
 ?> You can disable by [`backgroundSyntax: false` in Marpit constructor option][constructor] if you not want. However, you can still style background image through [directives](/directives#backgrounds).
 

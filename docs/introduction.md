@@ -15,8 +15,6 @@ Marpit is designed to _output minimum assets for the slide deck_. You can use th
 
 This framework is actually created for use as [a core][marp-core] of the next version of [Marp](https://github.com/yhatt/marp/).
 
-!> **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
-
 ## Features
 
 ### [:pencil: Marpit Markdown](/markdown) {docsify-ignore}
@@ -29,7 +27,7 @@ Marpit has the CSS theming system that can design slides everything. Unlike othe
 
 ### [:triangular_ruler: Inline SVG slide <i>(Experimental)</i>](/inline-svg) {docsify-ignore}
 
-Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated HTML space made by `<foreignObject>` can provide [_advanced backgrounds_](/image-syntax#advanced-backgrounds) for the slide with keeping the original Markdown DOM structure.
+Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated layer made by `<foreignObject>` can provide [_advanced backgrounds_](/image-syntax#advanced-backgrounds) for the slide with keeping the original Markdown DOM structure.
 
 ?> We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
 
@@ -111,12 +109,6 @@ fs.writeFileSync('example.html', htmlFile.trim())
 Outputted HTML is [here](/assets/how-to-use/example.html ':ignore'). It can convert into [PDF slide deck](/assets/how-to-use/example.pdf ':ignore') through printing by Chrome.
 
 We are introducing the basic usage step-by-step in [Usage](usage.md) section.
-
-## Need more helps?
-
-_The documentation on this site is now writing._ For more Marpit features, [please refer repository's README.](https://github.com/marp-team/marpit#readme)
-
-?> [The documentation of Marpit API](https://marpit-api.marp.app/) is hosted on another site.
 
 ## Author
 
