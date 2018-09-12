@@ -14,11 +14,11 @@ const commentMatcherClosing = /-->/
  * @alias module:markdown/comment
  * @param {MarkdownIt} md markdown-it instance.
  * @param {Object} [opts]
- * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
+ * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
  */
 function comment(md, opts = {}) {
   const parse = (token, content) => {
-    const parsed = yaml(content, !!opts.lazyYAML)
+    const parsed = yaml(content, !!opts.looseYAML)
 
     token.meta = {
       ...(token.meta || {}),
