@@ -23,7 +23,7 @@ This framework is actually created for use as [a core][marp-core] of the next ve
 
 We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](/directives) and [_Slide backgrounds_](/image-syntax#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
 
-### :art: CSS theme by clean markup {docsify-ignore}
+### [:art: Theme CSS by clean markup](/theme-css) {docsify-ignore}
 
 Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 

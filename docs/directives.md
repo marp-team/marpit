@@ -100,7 +100,7 @@ It recognizes the name of theme added to [`themeSet` of `Marpit` instance](https
 
 #### Tweak theme style
 
-Normally you may tweak theme by `<style>` element's inline style, but it might break a style for documentation when opening in another Markdown editor. Thus you can use `style` global directive instead of `<style>`.
+Normally [you may tweak theme by `<style>` element](/theme-css#tweak-style-through-markdown), but it might break a style for documentation when opening in another Markdown editor. Thus you can use `style` global directive instead of `<style>`.
 
 ```markdown
 ---

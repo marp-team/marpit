@@ -104,11 +104,11 @@ If the outputted CSS applies into this HTML, [it become to be able to print slid
 
 We had not assigned any theme in previous example. The rendered CSS only includes minimum declarations to work as slide deck.
 
-You may assign themes through Marpit instance's [**`themeSet`** property](https://marpit-api.marp.app/marpit#themeSet).
+You may assign the set of [theme CSS](/theme-css) through Marpit instance's [**`themeSet`** property](https://marpit-api.marp.app/marpit#themeSet).
 
 ### Add to theme set
 
-Use [**`themeSet.add(css)`**](https://marpit-api.marp.app/themeset#add) to add theme. It returns created [`Theme`](https://marpit-api.marp.app/theme) instance.
+Use [**`themeSet.add(css)`**](https://marpit-api.marp.app/themeset#add) to add theme CSS. It returns created [`Theme`](https://marpit-api.marp.app/theme) instance.
 
 ```javascript
 const theme = marpit.themeSet.add(`
@@ -137,4 +137,4 @@ By assigning `Theme` instance to [**`themeSet.default`**](https://marpit-api.mar
 marpit.themeSet.default = marpit.themeSet.add('...')
 ```
 
-[The applied example is here.](/assets/hello-marpit-theme.pdf ':ignore') _It can design slide everything!_
+[The applied example is here.](/assets/hello-marpit-theme.pdf ':ignore')
