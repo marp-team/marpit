@@ -4,7 +4,7 @@
 
 ### Breaking
 
-- Renamed `lazyYAML` constructor option into `looseYAML`. ([#68](https://github.com/marp-team/marpit/pull/68))
+- Rename `lazyYAML` constructor option into `looseYAML` ([#68](https://github.com/marp-team/marpit/pull/68))
 
 ### Changed
 
