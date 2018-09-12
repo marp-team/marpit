@@ -15,21 +15,19 @@ Marpit is designed to _output minimum assets for the slide deck_. You can use th
 
 This framework is actually created for use as [a core][marp-core] of the next version of [Marp](https://github.com/yhatt/marp/).
 
-!> **This framework is under development and not ready to use.** In addition, we are not ready to accept your contributes because it is proof of concept about the next version of Marp.
-
 ## Features
 
-### :pencil: Marpit Markdown {docsify-ignore}
+### [:pencil: Marpit Markdown](/markdown) {docsify-ignore}
 
-We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](https://github.com/marp-team/marpit#directives) and [_Slide backgrounds_](https://github.com/marp-team/marpit#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
+We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](/directives) and [_Slide backgrounds_](/image-syntax#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
 
-### :art: CSS theme by clean markup {docsify-ignore}
+### [:art: Theme CSS by clean markup](/theme-css) {docsify-ignore}
 
 Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 
-### :triangular_ruler: Inline SVG slide <i>(Experimental)</i> {docsify-ignore}
+### [:triangular_ruler: Inline SVG slide <i>(Experimental)</i>](/inline-svg) {docsify-ignore}
 
-Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated HTML space made by `<foreignObject>` can provide [_Advanced backgrounds_](https://github.com/marp-team/marpit#advanced-backgrounds-with-inline-svg-mode) for the slide with keeping the original Markdown DOM structure.
+Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated layer made by `<foreignObject>` can provide [_advanced backgrounds_](/image-syntax#advanced-backgrounds) for the slide with keeping the original Markdown DOM structure.
 
 ?> We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
 
@@ -52,7 +50,7 @@ npm install @marp-team/marpit --save
 ### How to use
 
 ```javascript
-import { Marpit } from '@marp-team/marpit'
+import Marpit from '@marp-team/marpit'
 import fs from 'fs'
 
 // 1. Create instance (with options if you want)
@@ -110,11 +108,7 @@ fs.writeFileSync('example.html', htmlFile.trim())
 
 Outputted HTML is [here](/assets/how-to-use/example.html ':ignore'). It can convert into [PDF slide deck](/assets/how-to-use/example.pdf ':ignore') through printing by Chrome.
 
-## Need more helps?
-
-_The documentation on this site is now writing._ For more Marpit features, [please refer repository's README.](https://github.com/marp-team/marpit#readme)
-
-?> [The documentation of Marpit API](https://marpit-api.marp.app/) is hosted on another site.
+We are introducing the basic usage step-by-step in [Usage](usage.md) section.
 
 ## Author
 

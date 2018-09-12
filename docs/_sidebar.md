@@ -1,4 +1,10 @@
-- [Overview](/)
+- [Introduction](/)
+- [Usage](/usage)
+- <br>[Marpit Markdown](/markdown)
+  - [Directives](/directives)
+  - [Image syntax](/image-syntax)
+- [Theme CSS](/theme-css)
+- [Inline SVG slide](/inline-svg)
 
 ---
 
