@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Move documentation from README.md to [https://marpit.marp.app/](https://marpit.marp.app/) ([#67](https://github.com/marp-team/marpit/pull/67))
+
 ## v0.0.15 - 2018-09-06
 
 ### Fixed
