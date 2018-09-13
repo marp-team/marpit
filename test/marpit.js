@@ -185,8 +185,8 @@ describe('Marpit', () => {
       })
     })
 
-    context('with lazyYAML option', () => {
-      const instance = lazyYAML => new Marpit({ lazyYAML })
+    context('with looseYAML option', () => {
+      const instance = looseYAML => new Marpit({ looseYAML })
       const markdown = dedent`
         ---
         backgroundImage:  url('/image.jpg')
@@ -196,7 +196,7 @@ describe('Marpit', () => {
         ---
       `
 
-      it('allows lazy YAML parsing when lazyYaml is true', () => {
+      it('allows loose YAML parsing when looseYAML is true', () => {
         const rendered = instance(true).render(markdown)
         const $ = cheerio.load(rendered.html)
         const firstStyle = $('section:nth-of-type(1)').attr('style')
@@ -208,7 +208,7 @@ describe('Marpit', () => {
         expect(secondStyle).not.toContain('color:')
       })
 
-      it('disallows lazy YAML parsing when lazyYaml is false', () => {
+      it('disallows loose YAML parsing when looseYAML is false', () => {
         const rendered = instance(false).render(markdown)
         const $ = cheerio.load(rendered.html)
         const style = $('section:nth-of-type(1)').attr('style')

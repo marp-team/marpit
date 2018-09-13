@@ -6,7 +6,7 @@ Marpit Markdown has extended syntax called **"Directives"** to support writing a
 
 The wrote directives would parse as [YAML](http://yaml.org/).
 
-When the value includes YAML special chars, you should wrap with quotes to be recognized correctly. You may enable a loose parsing by [`lazyYAML` Marpit constructor option](https://marpit-api.marp.app/marpit) if you want.
+When the value includes YAML special chars, you should wrap with quotes to be recognized correctly. You may enable a loose parsing by [`looseYAML` Marpit constructor option](https://marpit-api.marp.app/marpit) if you want.
 
 ### HTML comment
 

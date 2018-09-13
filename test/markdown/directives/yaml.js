@@ -2,14 +2,14 @@ import dedent from 'dedent'
 import yaml from '../../../src/markdown/directives/yaml'
 
 describe('Marpit directives YAML parser', () => {
-  it("ignores directive's special char with false allowLazy option", () =>
+  it("ignores directive's special char with false allowLoose option", () =>
     expect(yaml('color: #f00', false).color).toBeNull())
 
-  context('with allowLazy option as true', () => {
+  context('with allowLoose option as true', () => {
     it("parses directive's special char as string", () =>
       expect(yaml('color: #f00', true).color).toBe('#f00'))
 
-    it('disallows lazy parsing in not defined directives', () => {
+    it('disallows loose parsing in not defined directives', () => {
       const body = dedent`
         backgroundColor: #f00
         header: _"HELLO!"_

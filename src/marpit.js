@@ -23,7 +23,7 @@ const defaultOptions = {
   filters: true,
   headingDivider: false,
   inlineStyle: true,
-  lazyYAML: false,
+  looseYAML: false,
   markdown: 'commonmark',
   printable: true,
   slideContainer: false,
@@ -54,7 +54,7 @@ class Marpit {
    * @param {boolean} [opts.inlineStyle=true] Recognize `<style>` elements to
    *     append additional styles to theme. When it is `true`, Marpit will parse
    *     style regardless markdown-it's `html` option.
-   * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
+   * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
@@ -110,12 +110,12 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    const { backgroundSyntax, filters, lazyYAML } = this.options
+    const { backgroundSyntax, filters, looseYAML } = this.options
 
-    md.use(marpitComment, { lazyYAML })
+    md.use(marpitComment, { looseYAML })
       .use(marpitStyleParse, this)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this, { lazyYAML })
+      .use(marpitParseDirectives, this, { looseYAML })
       .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider, this)

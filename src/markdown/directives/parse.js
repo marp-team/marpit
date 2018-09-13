@@ -16,7 +16,7 @@ import { globals, locals } from './directives'
  * @param {boolean} [opts.frontMatter=true] Switch feature to support YAML
  *     front-matter. If true, you can use Jekyll style directive setting to the
  *     first page.
- * @param {boolean} [opts.lazyYAML=false] Allow lazy YAML for directives.
+ * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
  */
 function parse(md, marpit, opts = {}) {
   // Front-matter support
@@ -31,7 +31,7 @@ function parse(md, marpit, opts = {}) {
     md.use(MarkdownItFrontMatter, fm => {
       frontMatterObject.text = fm
 
-      const parsed = yaml(fm, !!opts.lazyYAML)
+      const parsed = yaml(fm, !!opts.looseYAML)
       if (parsed !== false) frontMatterObject.yaml = parsed
     })
   }
