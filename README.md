@@ -46,11 +46,16 @@ See [the documentation of Marpit](https://marpit.marp.app/?id=getting-started) t
 
 ## Development
 
-Under construction.
+```bash
+git clone https://github.com/marp-team/marpit
 
-### Contributing
+yarn install
+yarn build
+```
 
-We are sorry but currently we are not ready to accept your contribute...
+## Contributing
+
+Are you interested in contributing? Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
 
 ## Author
 
@@ -60,4 +65,4 @@ Managed by [@marp-team](https://github.com/marp-team).
 
 ## License
 
-[MIT License](LICENSE)
+This framework releases under the [MIT License](LICENSE).
