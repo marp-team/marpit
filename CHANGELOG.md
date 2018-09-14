@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.1.0 - 2018-09-14
+
 ### Breaking
 
 - Rename `lazyYAML` constructor option into `looseYAML` ([#68](https://github.com/marp-team/marpit/pull/68))
