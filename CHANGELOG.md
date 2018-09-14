@@ -6,6 +6,10 @@
 
 - Rename `lazyYAML` constructor option into `looseYAML` ([#68](https://github.com/marp-team/marpit/pull/68))
 
+### Added
+
+- Add [CONTRIBUTING.md](.github/CONTRIBUTING.md) ([#69](https://github.com/marp-team/marpit/pull/69))
+
 ### Changed
 
 - Move documentation from README.md to [https://marpit.marp.app/](https://marpit.marp.app/) ([#67](https://github.com/marp-team/marpit/pull/67))
