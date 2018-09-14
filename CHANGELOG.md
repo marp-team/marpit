@@ -14,6 +14,10 @@
 
 - Move documentation from README.md to [https://marpit.marp.app/](https://marpit.marp.app/) ([#67](https://github.com/marp-team/marpit/pull/67))
 
+---
+
+<details><summary>History of pre-release versions</summary>
+
 ## v0.0.15 - 2018-09-06
 
 ### Fixed
@@ -195,3 +199,5 @@
 ## v0.0.0 - 2018-03-24
 
 - Initial release. It does not cover integration test and document fully.
+
+</details>
