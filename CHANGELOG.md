@@ -13,6 +13,7 @@
 ### Changed
 
 - Move documentation from README.md to [https://marpit.marp.app/](https://marpit.marp.app/) ([#67](https://github.com/marp-team/marpit/pull/67))
+- Upgrade Node LTS and depenent packages ([#70](https://github.com/marp-team/marpit/pull/70))
 
 ---
 
