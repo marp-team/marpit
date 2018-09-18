@@ -201,6 +201,7 @@ class ThemeSet {
       [
         before && (css => css.first.before(before)),
         after && (css => css.last.after(after)),
+        postcssImportRollup,
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
