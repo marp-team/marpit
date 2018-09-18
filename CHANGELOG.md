@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.1.1 - 2018-09-18
+
 ### Fixed
 
 - Fix that `before` option of `ThemeSet.pack` breaks importing another theme ([#71](https://github.com/marp-team/marpit/pull/71), [#72](https://github.com/marp-team/marpit/pull/72))
