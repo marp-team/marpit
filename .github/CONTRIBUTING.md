@@ -26,7 +26,7 @@ In a release process, you have to use `npm` command instead of `yarn`.
 
 1. Run `npm version [major|minor|patch]` at latest `master` branch. It adds tag and updates [CHANGELOG.md](../CHANGELOG.md).
 2. Push branch and tag by `git push && git push --tags`.
-3. Release package to npm by `npm release`.
+3. Release package to npm by `npm publish`.
 4. Update [GitHub release](https://github.com/marp-team/marpit/releases) if possible.
 
 > :information_source: In running important commands, code styling and tests are checked again through `preversion` and `prepack` scripts.
