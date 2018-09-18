@@ -255,15 +255,26 @@ describe('ThemeSet', () => {
 
   describe('#pack', () => {
     context('with before option', () => {
-      const before = 'b { font-weight: bold; }'
-
       it('rolls-up @import rule to top for importing another theme', () => {
         instance.add('/* @theme test1 */ strong { font-weight: bold; }')
         instance.add('/* @theme test2 */ @import "test1";')
 
-        const css = instance.pack('test2', { before })
+        const css = instance.pack('test2', {
+          before: 'b { font-weight: bold; }',
+        })
+
         expect(css).toContain('b { font-weight: bold; }')
         expect(css).toContain('strong { font-weight: bold; }')
+      })
+
+      it('ignores when passed invalid CSS', () => {
+        let css
+
+        expect(() => {
+          css = instance.pack(undefined, { before: 'INVALID */' })
+        }).not.toThrowError()
+
+        expect(css).not.toContain('INVALID')
       })
     })
   })
