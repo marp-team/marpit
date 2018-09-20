@@ -15,7 +15,7 @@ const plugin = postcss.plugin('marpit-postcss-meta', () => (css, ret) => {
     comment.text
       .slice(0)
       .replace(
-        /^[*\s]*@([a-z][a-z0-9]*)\s+(.+)$/gim,
+        /^[*!\s]*@([a-z][a-z0-9]*)\s+(.+)$/gim,
         (matched, metaName, value) => {
           ret.marpitMeta[metaName] = value
         }
