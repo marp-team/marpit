@@ -16,6 +16,16 @@ describe('Marpit PostCSS meta plugin', () => {
       expect(result.marpitMeta.meta).toBe('value')
     ))
 
+  it('parses meta comment with starting by double star', () =>
+    run('/** @meta double-star */').then(result =>
+      expect(result.marpitMeta.meta).toBe('double-star')
+    ))
+
+  it('parses meta comment with important comment', () =>
+    run('/*! @meta important-comment */').then(result =>
+      expect(result.marpitMeta.meta).toBe('important-comment')
+    ))
+
   context('with multiline metas', () => {
     const css = `
       /**
