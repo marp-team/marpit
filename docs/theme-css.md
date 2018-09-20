@@ -142,9 +142,7 @@ section {
 }
 ```
 
-`@import` must precede all other statements excepted `@charset`. It follows [the original specification][@import].
-
-In addition, an importing theme must add to theme set by using [`Marpit.themeSet.add(css)`](/usage#add-to-theme-set) in advance.
+An importing theme must add to theme set by using [`Marpit.themeSet.add(css)`](/usage#add-to-theme-set) in advance.
 
 ### `@import-theme` rule
 
@@ -164,7 +162,7 @@ section {
 }
 ```
 
-Unlike `@import`, `@import-theme` can place on anywhere of the root of CSS. The imported contents is inserted to the beginning of CSS in order.
+`@import` for theme and `@import-theme` can place on anywhere of the root of CSS. The imported contents is inserted to the beginning of CSS in order per rules. (`@import` is processed before `@import-theme`)
 
 ## Tweak style through Markdown
 
