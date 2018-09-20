@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix to parse metadata of theme within important comments ([#74](https://github.com/marp-team/marpit/pull/74), [#76](https://github.com/marp-team/marpit/pull/76))
+
 ## v0.1.1 - 2018-09-18
 
 ### Fixed
