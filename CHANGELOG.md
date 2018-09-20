@@ -5,6 +5,7 @@
 ### Fixed
 
 - Fix to parse metadata of theme within important comments ([#74](https://github.com/marp-team/marpit/pull/74), [#76](https://github.com/marp-team/marpit/pull/76))
+- Update [documentation of customized theme](https://marpit.marp.app/theme-css?id=customized-theme) to apply changed behavior on v0.1.1 ([#75](https://github.com/marp-team/marpit/pull/75), [#77](https://github.com/marp-team/marpit/pull/77))
 
 ## v0.1.1 - 2018-09-18
 
