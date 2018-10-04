@@ -32,12 +32,12 @@ class Element {
       tag: { enumerable: true, value: tag },
     })
 
-    Object.keys(attributes).forEach(attr => {
+    for (const attr of Object.keys(attributes)) {
       Object.defineProperty(this, attr, {
         enumerable: true,
         value: attributes[attr],
       })
-    })
+    }
 
     Object.freeze(this)
   }

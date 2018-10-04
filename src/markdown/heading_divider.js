@@ -34,24 +34,22 @@ function headingDivider(md, marpit) {
 
     const splitTag = target.map(i => `h${i}`)
     const splitFunc = t => t.type === 'heading_open' && splitTag.includes(t.tag)
+    const newTokens = []
 
-    state.tokens = split(state.tokens, splitFunc, true).reduce(
-      (arr, slideTokens) => {
-        const [firstToken] = slideTokens
+    for (const slideTokens of split(state.tokens, splitFunc, true)) {
+      const [token] = slideTokens
 
-        if (
-          !(firstToken && splitFunc(firstToken)) ||
-          arr.filter(t => !t.hidden).length === 0
-        )
-          return [...arr, ...slideTokens]
+      if (token && splitFunc(token) && newTokens.some(t => !t.hidden)) {
+        const hr = new Token('hr', '', 0)
+        hr.hidden = true
 
-        const token = new Token('hr', '', 0)
-        token.hidden = true
+        newTokens.push(hr)
+      }
 
-        return [...arr, token, ...slideTokens]
-      },
-      []
-    )
+      newTokens.push(...slideTokens)
+    }
+
+    state.tokens = newTokens
   })
 }
 

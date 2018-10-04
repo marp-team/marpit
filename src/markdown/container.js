@@ -16,9 +16,8 @@ function container(md, containers) {
   md.core.ruler.push('marpit_containers', state => {
     if (state.inlineMode) return
 
-    target.forEach(cont => {
+    for (const cont of target)
       state.tokens = wrapTokens('marpit_containers', cont, state.tokens)
-    })
   })
 }
 

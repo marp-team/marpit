@@ -14,7 +14,7 @@ function sweep(md) {
   md.core.ruler.after('inline', 'marpit_sweep', state => {
     if (state.inlineMode) return
 
-    state.tokens.forEach(token => {
+    for (const token of state.tokens) {
       if (
         (token.type === 'html_block' && token.content.match(/^\s*$/)) ||
         (token.type === 'inline' &&
@@ -23,14 +23,14 @@ function sweep(md) {
             .every(t => t.type === 'text' && t.content.match(/^\s*$/)))
       )
         token.hidden = true
-    })
+    }
   })
 
   md.core.ruler.push('marpit_sweep_paragraph', state => {
     if (state.inlineMode) return
     const current = { open: [], tokens: {} }
 
-    state.tokens.forEach(token => {
+    for (const token of state.tokens) {
       if (token.type === 'paragraph_open') {
         current.open.push(token)
         current.tokens[token] = []
@@ -45,7 +45,7 @@ function sweep(md) {
         const len = current.open.length
         if (len > 0) current.tokens[current.open[len - 1]].push(token)
       }
-    })
+    }
   })
 }
 

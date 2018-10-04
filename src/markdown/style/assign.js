@@ -17,9 +17,8 @@ function assign(md, marpit) {
     const directives = marpit.lastGlobalDirectives || {}
     marpit.lastStyles = directives.style ? [directives.style] : []
 
-    state.tokens.forEach(token => {
+    for (const token of state.tokens)
       if (token.type === 'marpit_style') marpit.lastStyles.push(token.content)
-    })
   })
 }
 

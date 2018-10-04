@@ -32,66 +32,66 @@ function apply(md, opts = {}) {
     state => {
       if (state.inlineMode) return
 
-      state.tokens.forEach(token => {
+      for (const token of state.tokens) {
         const { marpitDirectives, marpitSlide } = token.meta || {}
-        if (!marpitDirectives) return
 
-        const style = new InlineStyle(token.attrGet('style'))
+        if (marpitDirectives) {
+          const style = new InlineStyle(token.attrGet('style'))
 
-        Object.keys(marpitDirectives)
-          .filter(filterFunc)
-          .forEach(dir => {
+          for (const dir of Object.keys(marpitDirectives).filter(filterFunc)) {
             const value = marpitDirectives[dir]
-            if (!value) return
 
-            const kebabCaseDir = kebabCase(dir)
-            if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
-            if (css) style.set(`--${kebabCaseDir}`, value)
-          })
+            if (value) {
+              const kebabCaseDir = kebabCase(dir)
+              if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
+              if (css) style.set(`--${kebabCaseDir}`, value)
+            }
+          }
 
-        // Apply attribute to token
-        if (marpitDirectives.class)
-          token.attrJoin('class', marpitDirectives.class)
+          // Apply attribute to token
+          if (marpitDirectives.class)
+            token.attrJoin('class', marpitDirectives.class)
 
-        if (marpitDirectives.color) style.set('color', marpitDirectives.color)
+          if (marpitDirectives.color) style.set('color', marpitDirectives.color)
 
-        if (marpitDirectives.backgroundColor)
-          style
-            .set('background-color', marpitDirectives.backgroundColor)
-            .set('background-image', 'none')
+          if (marpitDirectives.backgroundColor)
+            style
+              .set('background-color', marpitDirectives.backgroundColor)
+              .set('background-image', 'none')
 
-        if (marpitDirectives.backgroundImage) {
-          style
-            .set('background-image', marpitDirectives.backgroundImage)
-            .set('background-position', 'center')
-            .set('background-repeat', 'no-repeat')
-            .set('background-size', 'cover')
+          if (marpitDirectives.backgroundImage) {
+            style
+              .set('background-image', marpitDirectives.backgroundImage)
+              .set('background-position', 'center')
+              .set('background-repeat', 'no-repeat')
+              .set('background-size', 'cover')
 
-          if (marpitDirectives.backgroundPosition)
-            style.set(
-              'background-position',
-              marpitDirectives.backgroundPosition
-            )
+            if (marpitDirectives.backgroundPosition)
+              style.set(
+                'background-position',
+                marpitDirectives.backgroundPosition
+              )
 
-          if (marpitDirectives.backgroundRepeat)
-            style.set('background-repeat', marpitDirectives.backgroundRepeat)
+            if (marpitDirectives.backgroundRepeat)
+              style.set('background-repeat', marpitDirectives.backgroundRepeat)
 
-          if (marpitDirectives.backgroundSize)
-            style.set('background-size', marpitDirectives.backgroundSize)
+            if (marpitDirectives.backgroundSize)
+              style.set('background-size', marpitDirectives.backgroundSize)
+          }
+
+          if (marpitDirectives.paginate)
+            token.attrSet('data-marpit-pagination', marpitSlide + 1)
+
+          if (marpitDirectives.header)
+            token.meta.marpitHeader = marpitDirectives.header
+
+          if (marpitDirectives.footer)
+            token.meta.marpitFooter = marpitDirectives.footer
+
+          const styleStr = style.toString()
+          if (styleStr !== '') token.attrSet('style', styleStr)
         }
-
-        if (marpitDirectives.paginate)
-          token.attrSet('data-marpit-pagination', marpitSlide + 1)
-
-        if (marpitDirectives.header)
-          token.meta.marpitHeader = marpitDirectives.header
-
-        if (marpitDirectives.footer)
-          token.meta.marpitFooter = marpitDirectives.footer
-
-        const styleStr = style.toString()
-        if (styleStr !== '') token.attrSet('style', styleStr)
-      })
+      }
     }
   )
 }

@@ -51,16 +51,19 @@ function parseImage(md, opts = {}) {
     optionMatchers.set(
       /^drop-shadow(?::(.+?),(.+?)(?:,(.+?))?(?:,(.+?))?)?$/,
       (matches, meta) => {
-        const args = matches
-          .slice(1)
-          .filter(v => v)
-          .map(arg => {
+        const args = []
+
+        for (const arg of matches.slice(1)) {
+          if (arg) {
             const colorFunc = arg.match(/^(rgba?|hsla?)\((.*)\)$/)
 
-            return colorFunc
-              ? `${colorFunc[1]}(${escape(colorFunc[2])})`
-              : escape(arg)
-          })
+            args.push(
+              colorFunc
+                ? `${colorFunc[1]}(${escape(colorFunc[2])})`
+                : escape(arg)
+            )
+          }
+        }
 
         return {
           filters: [
@@ -94,7 +97,7 @@ function parseImage(md, opts = {}) {
   }
 
   md.inline.ruler2.push('marpit_parse_image', ({ tokens }) => {
-    tokens.forEach(token => {
+    for (const token of tokens) {
       if (token.type === 'image') {
         const options = token.content.split(/\s+/).filter(s => s.length > 0)
 
@@ -105,8 +108,8 @@ function parseImage(md, opts = {}) {
           options,
         }
 
-        options.forEach(opt => {
-          optionMatchers.forEach((mergeFunc, regexp) => {
+        for (const opt of options)
+          for (const [regexp, mergeFunc] of optionMatchers) {
             const matched = opt.match(regexp)
 
             if (matched)
@@ -117,8 +120,7 @@ function parseImage(md, opts = {}) {
                   ...token.meta.marpitImage,
                 }),
               }
-          })
-        })
+          }
 
         // Build and apply styles
         const { filters, height, width } = token.meta.marpitImage
@@ -135,17 +137,19 @@ function parseImage(md, opts = {}) {
         if (height) assign('height', height)
 
         if (filters) {
-          token.meta.marpitImage.filter = filters
-            .reduce((arr, fltrs) => [...arr, `${fltrs[0]}(${fltrs[1]})`], [])
-            .join(' ')
+          const filterStyle = []
 
+          for (const fltrs of filters)
+            filterStyle.push(`${fltrs[0]}(${fltrs[1]})`)
+
+          token.meta.marpitImage.filter = filterStyle.join(' ')
           style.set('filter', token.meta.marpitImage.filter)
         }
 
         const stringified = style.toString()
         if (stringified) token.attrSet('style', stringified)
       }
-    })
+    }
   })
 }
 

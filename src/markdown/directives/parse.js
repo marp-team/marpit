@@ -45,7 +45,7 @@ function parse(md, marpit, opts = {}) {
 
     let globalDirectives = {}
     const applyDirectives = obj => {
-      Object.keys(obj).forEach(key => {
+      for (const key of Object.keys(obj)) {
         const globalKey = key.startsWith('$') ? key.slice(1) : key
 
         if (globals[globalKey])
@@ -53,20 +53,20 @@ function parse(md, marpit, opts = {}) {
             ...globalDirectives,
             ...globals[globalKey](obj[key], marpit),
           }
-      })
+      }
     }
 
     if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
-    state.tokens.forEach(token => {
+    for (const token of state.tokens) {
       if (isComment(token)) {
         applyDirectives(token.meta.marpitParsedDirectives)
       } else if (token.type === 'inline') {
-        token.children
-          .filter(isComment)
-          .forEach(t => applyDirectives(t.meta.marpitParsedDirectives))
+        for (const t of token.children) {
+          if (isComment(t)) applyDirectives(t.meta.marpitParsedDirectives)
+        }
       }
-    })
+    }
 
     marpit.lastGlobalDirectives = { ...globalDirectives }
   })
@@ -79,7 +79,7 @@ function parse(md, marpit, opts = {}) {
     const cursor = { slide: undefined, local: {}, spot: {} }
 
     const applyDirectives = obj => {
-      Object.keys(obj).forEach(key => {
+      for (const key of Object.keys(obj)) {
         if (locals[key])
           cursor.local = { ...cursor.local, ...locals[key](obj[key], marpit) }
 
@@ -94,12 +94,12 @@ function parse(md, marpit, opts = {}) {
               ...locals[spotKey](obj[key], marpit),
             }
         }
-      })
+      }
     }
 
     if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
-    state.tokens.forEach(token => {
+    for (const token of state.tokens) {
       if (token.meta && token.meta.marpitSlideElement === 1) {
         // Initialize Marpit directives meta
         token.meta.marpitDirectives = {}
@@ -118,19 +118,18 @@ function parse(md, marpit, opts = {}) {
       } else if (isComment(token)) {
         applyDirectives(token.meta.marpitParsedDirectives)
       } else if (token.type === 'inline') {
-        token.children
-          .filter(isComment)
-          .forEach(t => applyDirectives(t.meta.marpitParsedDirectives))
+        for (const t of token.children) {
+          if (isComment(t)) applyDirectives(t.meta.marpitParsedDirectives)
+        }
       }
-    })
+    }
 
     // Assign global directives to meta
-    slides.forEach(token => {
+    for (const token of slides)
       token.meta.marpitDirectives = {
         ...token.meta.marpitDirectives,
         ...marpit.lastGlobalDirectives,
       }
-    })
   })
 }
 
