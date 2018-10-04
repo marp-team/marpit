@@ -18,3 +18,9 @@ rules:
       ignoreTemplateLiterals: true
 
   no-param-reassign: off
+
+  no-restricted-syntax:
+    - error
+    - ForInStatement
+    - LabeledStatement
+    - WithStatement
