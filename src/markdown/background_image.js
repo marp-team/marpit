@@ -136,11 +136,9 @@ function backgroundImage(md) {
     'marpit_advanced_background',
     state => {
       let current
+      const newTokens = []
 
-      // TODO: Use for-of loop isntead of reduce
-      state.tokens = state.tokens.reduce((ret, t) => {
-        let tokens = [t]
-
+      for (const t of state.tokens) {
         if (
           t.type === 'marpit_inline_svg_content_open' &&
           t.meta &&
@@ -159,7 +157,7 @@ function backgroundImage(md) {
             if (splitSide === 'left') t.attrSet('x', '50%')
           }
 
-          tokens = [
+          newTokens.push(
             ...wrapTokens(
               'marpit_advanced_background_foreign_object',
               { tag: 'foreignObject', width, height },
@@ -177,27 +175,30 @@ function backgroundImage(md) {
                     tag: 'div',
                     'data-marpit-advanced-background-container': true,
                   },
-                  images.reduce(
-                    (imgArr, img) => [
-                      ...imgArr,
-                      ...wrapTokens('marpit_advanced_background_image', {
-                        tag: 'figure',
-                        style: [
-                          `background-image:url("${img.url}");`,
-                          img.size && `background-size:${img.size};`,
-                          img.filter && `filter:${img.filter};`,
-                        ]
-                          .filter(s => s)
-                          .join(''),
-                      }),
-                    ],
-                    []
-                  )
+                  (() => {
+                    const imageTokens = []
+
+                    for (const img of images)
+                      imageTokens.push(
+                        ...wrapTokens('marpit_advanced_background_image', {
+                          tag: 'figure',
+                          style: [
+                            `background-image:url("${img.url}");`,
+                            img.size && `background-size:${img.size};`,
+                            img.filter && `filter:${img.filter};`,
+                          ]
+                            .filter(s => s)
+                            .join(''),
+                        })
+                      )
+
+                    return imageTokens
+                  })()
                 )
               )
             ),
-            t,
-          ]
+            t
+          )
         } else if (current && t.type === 'marpit_inline_svg_content_close') {
           const { open, height, width } = current.meta.marpitBackground
 
@@ -211,7 +212,7 @@ function backgroundImage(md) {
           )
             style.set('color', open.meta.marpitDirectives.color)
 
-          tokens = [
+          newTokens.push(
             t,
             ...wrapTokens(
               'marpit_advanced_background_foreign_object',
@@ -230,14 +231,16 @@ function backgroundImage(md) {
                   'data-marpit-pagination'
                 ),
               })
-            ),
-          ]
+            )
+          )
 
           current = undefined
+        } else {
+          newTokens.push(t)
         }
+      }
 
-        return [...ret, ...tokens]
-      }, [])
+      state.tokens = newTokens
     }
   )
 }
