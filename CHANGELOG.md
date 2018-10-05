@@ -6,6 +6,10 @@
 
 - Improve conversion performance by using `for-of` loop (40-70% faster) ([#79](https://github.com/marp-team/marpit/pull/79))
 
+### Changed
+
+- Upgrade dependent packages to latest version ([#80](https://github.com/marp-team/marpit/pull/80))
+
 ## v0.1.2 - 2018-09-20
 
 ### Fixed
