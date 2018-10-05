@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.1.3 - 2018-10-05
+
 ### Fixed
 
 - Improve conversion performance by using `for-of` loop (40-70% faster) ([#79](https://github.com/marp-team/marpit/pull/79))
