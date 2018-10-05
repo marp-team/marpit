@@ -38,13 +38,15 @@ function apply(md, opts = {}) {
         if (marpitDirectives) {
           const style = new InlineStyle(token.attrGet('style'))
 
-          for (const dir of Object.keys(marpitDirectives).filter(filterFunc)) {
-            const value = marpitDirectives[dir]
+          for (const dir of Object.keys(marpitDirectives)) {
+            if (filterFunc(dir)) {
+              const value = marpitDirectives[dir]
 
-            if (value) {
-              const kebabCaseDir = kebabCase(dir)
-              if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
-              if (css) style.set(`--${kebabCaseDir}`, value)
+              if (value) {
+                const kebabCaseDir = kebabCase(dir)
+                if (dataset) token.attrSet(`data-${kebabCaseDir}`, value)
+                if (css) style.set(`--${kebabCaseDir}`, value)
+              }
             }
           }
 
