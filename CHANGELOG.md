@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- Improve conversion performance by using `for-of` loop (40-80% faster) ([#79](https://github.com/marp-team/marpit/pull/79))
+- Improve conversion performance by using `for-of` loop (40-70% faster) ([#79](https://github.com/marp-team/marpit/pull/79))
 
 ## v0.1.2 - 2018-09-20
 
