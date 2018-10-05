@@ -39,14 +39,13 @@ const plugin = postcss.plugin(
                 node.replaceWith(processed.root)
               } else {
                 node.remove()
-                prepends.push(processed.root)
+                prepends.unshift(processed.root)
               }
             }
           }
         })
 
-        if (prepends.length > 0)
-          [...prepends].reverse().forEach(root => css.first.before(root))
+        for (const root of prepends) css.first.before(root)
       },
     ])
 )

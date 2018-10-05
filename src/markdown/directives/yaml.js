@@ -28,24 +28,22 @@ function parse(text) {
 }
 
 function convertLoose(text) {
-  return text
-    .split(/\r?\n/)
-    .reduce(
-      (ret, line) =>
-        `${ret}${line.replace(looseMatcher, (original, prop, value) => {
-          const trimmed = value.trim()
+  let normalized = ''
 
-          if (trimmed.length === 0 || specialChars.includes(trimmed[0]))
-            return original
+  for (const line of text.split(/\r?\n/))
+    normalized += `${line.replace(looseMatcher, (original, prop, value) => {
+      const trimmed = value.trim()
 
-          const spaceLength = value.length - value.trimLeft().length
-          const spaces = value.substring(0, spaceLength)
+      if (trimmed.length === 0 || specialChars.includes(trimmed[0]))
+        return original
 
-          return `${prop}${spaces}"${trimmed.split('"').join('\\"')}"`
-        })}\n`,
-      ''
-    )
-    .trim()
+      const spaceLength = value.length - value.trimLeft().length
+      const spaces = value.substring(0, spaceLength)
+
+      return `${prop}${spaces}"${trimmed.split('"').join('\\"')}"`
+    })}\n`
+
+  return normalized.trim()
 }
 
 export default (text, allowLoose) =>

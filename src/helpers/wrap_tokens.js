@@ -18,9 +18,7 @@ function wrapTokens(type, container, tokens = []) {
   const { tag } = container
 
   // Update nesting level of wrapping tokens
-  tokens.forEach(t => {
-    t.level += 1
-  })
+  for (const t of tokens) t.level += 1
 
   // Create markdown-it tokens
   const open = new Token(`${type}_open`, tag, 1)
@@ -30,12 +28,10 @@ function wrapTokens(type, container, tokens = []) {
   Object.assign(close, { ...(container.close || {}) })
 
   // Assign attributes
-  Object.keys(container).forEach(attr => {
-    if (['open', 'close', 'tag'].includes(attr)) return
-    if (container[attr] == null) return
-
-    open.attrSet(attr, container[attr])
-  })
+  for (const attr of Object.keys(container)) {
+    if (!['open', 'close', 'tag'].includes(attr) && container[attr] != null)
+      open.attrSet(attr, container[attr])
+  }
 
   return [open, ...tokens, close]
 }

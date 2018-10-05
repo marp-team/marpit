@@ -64,7 +64,9 @@ export default class InlineStyle {
    * The unexpected declarations will strip to prevent a style injection.
    */
   toString() {
-    return Object.keys(this.decls).reduce((stt, prop) => {
+    let built = ''
+
+    for (const prop of Object.keys(this.decls)) {
       let parsed
 
       try {
@@ -73,14 +75,17 @@ export default class InlineStyle {
         })
       } catch (e) {
         // A declaration that have value it cannot parse will ignore.
-        return stt
       }
 
-      parsed.each(node => {
-        if (node.type !== 'decl' || node.prop !== prop) node.remove()
-      })
+      if (parsed) {
+        parsed.each(node => {
+          if (node.type !== 'decl' || node.prop !== prop) node.remove()
+        })
 
-      return `${stt}${parsed.toString()};`
-    }, '')
+        built += `${parsed.toString()};`
+      }
+    }
+
+    return built
   }
 }

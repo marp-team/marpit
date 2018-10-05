@@ -17,22 +17,24 @@ function slideContainer(md, containers) {
   md.core.ruler.push('marpit_slide_containers', state => {
     if (state.inlineMode) return
 
-    state.tokens = split(
+    const newTokens = []
+
+    for (const tokens of split(
       state.tokens,
       t => t.meta && t.meta.marpitSlideElement === 1,
       true
-    ).reduce((arr, tokens) => {
-      if (tokens.length === 0) return arr
+    )) {
+      if (tokens.length > 0)
+        newTokens.push(
+          ...target.reduce(
+            (slides, conts) =>
+              wrapTokens('marpit_slide_containers', conts, slides),
+            tokens
+          )
+        )
+    }
 
-      return [
-        ...arr,
-        ...target.reduce(
-          (slides, conts) =>
-            wrapTokens('marpit_slide_containers', conts, slides),
-          tokens
-        ),
-      ]
-    }, [])
+    state.tokens = newTokens
   })
 }
 

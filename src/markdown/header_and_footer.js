@@ -38,28 +38,30 @@ function headerAndFooter(md) {
         )
 
       let current
+      const newTokens = []
 
-      state.tokens = state.tokens.reduce((arr, token) => {
-        let concats = [token]
-
+      for (const token of state.tokens) {
         if (token.type === 'marpit_slide_open') {
           current = token
+          newTokens.push(token)
 
           if (current.meta && current.meta.marpitHeader)
-            concats = [
-              ...concats,
-              ...createMarginalTokens('header', current.meta.marpitHeader),
-            ]
+            newTokens.push(
+              ...createMarginalTokens('header', current.meta.marpitHeader)
+            )
         } else if (token.type === 'marpit_slide_close') {
           if (current.meta && current.meta.marpitFooter)
-            concats = [
-              ...createMarginalTokens('footer', current.meta.marpitFooter),
-              ...concats,
-            ]
-        }
+            newTokens.push(
+              ...createMarginalTokens('footer', current.meta.marpitFooter)
+            )
 
-        return [...arr, ...concats]
-      }, [])
+          newTokens.push(token)
+        } else {
+          newTokens.push(token)
+        }
+      }
+
+      state.tokens = newTokens
     }
   )
 }

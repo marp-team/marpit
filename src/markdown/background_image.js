@@ -30,22 +30,20 @@ function backgroundImage(md) {
     'marpit_parse_image',
     'marpit_background_image',
     ({ tokens }) => {
-      tokens.forEach(t => {
-        if (t.type !== 'image') return
-
-        if (t.meta.marpitImage.options.includes('bg')) {
+      for (const t of tokens) {
+        if (t.type === 'image' && t.meta.marpitImage.options.includes('bg')) {
           t.meta.marpitImage.background = true
           t.hidden = true
 
-          t.meta.marpitImage.options.forEach(opt => {
+          for (const opt of t.meta.marpitImage.options) {
             if (bgSizeKeywords[opt])
               t.meta.marpitImage.backgroundSize = bgSizeKeywords[opt]
 
             if (opt === 'left' || opt === 'right')
               t.meta.marpitImage.backgroundSplit = opt
-          })
+          }
         }
-      })
+      }
     }
   )
 
@@ -57,7 +55,7 @@ function backgroundImage(md) {
 
       let current = {}
 
-      tokens.forEach(tb => {
+      for (const tb of tokens) {
         if (tb.type === 'marpit_slide_open') current.open = tb
         if (tb.type === 'marpit_inline_svg_content_open')
           current.svgContent = tb
@@ -92,44 +90,44 @@ function backgroundImage(md) {
           current = {}
         }
 
-        if (!current.open || tb.type !== 'inline') return
-
-        tb.children.forEach(t => {
-          if (t.type !== 'image') return
-
-          const {
-            background,
-            backgroundSize,
-            backgroundSplit,
-            filter,
-            height,
-            size,
-            url,
-            width,
-          } = t.meta.marpitImage
-
-          if (background && !url.match(/^\s*$/)) {
-            current.images = [
-              ...(current.images || []),
-              {
+        if (current.open && tb.type === 'inline')
+          for (const t of tb.children) {
+            if (t.type === 'image') {
+              const {
+                background,
+                backgroundSize,
+                backgroundSplit,
                 filter,
                 height,
-                size: (() => {
-                  const s = size || backgroundSize || undefined
-
-                  return !['contain', 'cover'].includes(s) && (width || height)
-                    ? `${width || s || 'auto'} ${height || s || 'auto'}`
-                    : s
-                })(),
+                size,
                 url,
                 width,
-              },
-            ]
-          }
+              } = t.meta.marpitImage
 
-          if (backgroundSplit) current.split = backgroundSplit
-        })
-      })
+              if (background && !url.match(/^\s*$/)) {
+                current.images = [
+                  ...(current.images || []),
+                  {
+                    filter,
+                    height,
+                    size: (() => {
+                      const s = size || backgroundSize || undefined
+
+                      return !['contain', 'cover'].includes(s) &&
+                        (width || height)
+                        ? `${width || s || 'auto'} ${height || s || 'auto'}`
+                        : s
+                    })(),
+                    url,
+                    width,
+                  },
+                ]
+              }
+
+              if (backgroundSplit) current.split = backgroundSplit
+            }
+          }
+      }
     }
   )
 
@@ -138,10 +136,9 @@ function backgroundImage(md) {
     'marpit_advanced_background',
     state => {
       let current
+      const newTokens = []
 
-      state.tokens = state.tokens.reduce((ret, t) => {
-        let tokens = [t]
-
+      for (const t of state.tokens) {
         if (
           t.type === 'marpit_inline_svg_content_open' &&
           t.meta &&
@@ -160,7 +157,7 @@ function backgroundImage(md) {
             if (splitSide === 'left') t.attrSet('x', '50%')
           }
 
-          tokens = [
+          newTokens.push(
             ...wrapTokens(
               'marpit_advanced_background_foreign_object',
               { tag: 'foreignObject', width, height },
@@ -178,27 +175,30 @@ function backgroundImage(md) {
                     tag: 'div',
                     'data-marpit-advanced-background-container': true,
                   },
-                  images.reduce(
-                    (imgArr, img) => [
-                      ...imgArr,
-                      ...wrapTokens('marpit_advanced_background_image', {
-                        tag: 'figure',
-                        style: [
-                          `background-image:url("${img.url}");`,
-                          img.size && `background-size:${img.size};`,
-                          img.filter && `filter:${img.filter};`,
-                        ]
-                          .filter(s => s)
-                          .join(''),
-                      }),
-                    ],
-                    []
-                  )
+                  (() => {
+                    const imageTokens = []
+
+                    for (const img of images)
+                      imageTokens.push(
+                        ...wrapTokens('marpit_advanced_background_image', {
+                          tag: 'figure',
+                          style: [
+                            `background-image:url("${img.url}");`,
+                            img.size && `background-size:${img.size};`,
+                            img.filter && `filter:${img.filter};`,
+                          ]
+                            .filter(s => s)
+                            .join(''),
+                        })
+                      )
+
+                    return imageTokens
+                  })()
                 )
               )
             ),
-            t,
-          ]
+            t
+          )
         } else if (current && t.type === 'marpit_inline_svg_content_close') {
           const { open, height, width } = current.meta.marpitBackground
 
@@ -212,7 +212,7 @@ function backgroundImage(md) {
           )
             style.set('color', open.meta.marpitDirectives.color)
 
-          tokens = [
+          newTokens.push(
             t,
             ...wrapTokens(
               'marpit_advanced_background_foreign_object',
@@ -231,14 +231,16 @@ function backgroundImage(md) {
                   'data-marpit-pagination'
                 ),
               })
-            ),
-          ]
+            )
+          )
 
           current = undefined
+        } else {
+          newTokens.push(t)
         }
+      }
 
-        return [...ret, ...tokens]
-      }, [])
+      state.tokens = newTokens
     }
   )
 }

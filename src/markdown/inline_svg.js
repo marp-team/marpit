@@ -16,37 +16,38 @@ function inlineSVG(md, marpit) {
     const { themeSet, lastGlobalDirectives } = marpit
     const w = themeSet.getThemeProp(lastGlobalDirectives.theme, 'widthPixel')
     const h = themeSet.getThemeProp(lastGlobalDirectives.theme, 'heightPixel')
+    const newTokens = []
 
-    state.tokens = split(
+    for (const tokens of split(
       state.tokens,
       t => t.meta && t.meta.marpitSlideElement === 1,
       true
-    ).reduce((arr, tokens) => {
-      if (tokens.length === 0) return arr
+    )) {
+      if (tokens.length > 0) {
+        for (const t of tokens)
+          if (t.meta && t.meta.marpitSlideElement)
+            delete t.meta.marpitSlideElement
 
-      tokens.forEach(t => {
-        if (t.meta && t.meta.marpitSlideElement)
-          delete t.meta.marpitSlideElement
-      })
-
-      return [
-        ...arr,
-        ...wrapTokens(
-          'marpit_inline_svg',
-          {
-            tag: 'svg',
-            viewBox: `0 0 ${w} ${h}`,
-            open: { meta: { marpitSlideElement: 1 } },
-            close: { meta: { marpitSlideElement: -1 } },
-          },
-          wrapTokens(
-            'marpit_inline_svg_content',
-            { tag: 'foreignObject', width: w, height: h },
-            tokens
+        newTokens.push(
+          ...wrapTokens(
+            'marpit_inline_svg',
+            {
+              tag: 'svg',
+              viewBox: `0 0 ${w} ${h}`,
+              open: { meta: { marpitSlideElement: 1 } },
+              close: { meta: { marpitSlideElement: -1 } },
+            },
+            wrapTokens(
+              'marpit_inline_svg_content',
+              { tag: 'foreignObject', width: w, height: h },
+              tokens
+            )
           )
-        ),
-      ]
-    }, [])
+        )
+      }
+    }
+
+    state.tokens = newTokens
   })
 }
 

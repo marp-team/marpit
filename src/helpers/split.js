@@ -10,21 +10,23 @@
  * @returns {Array[]} Splited array.
  */
 function split(arr, func, keepSplitedValue = false) {
-  return arr.reduce(
-    (ret, value) => {
-      /**
-       * Return true at the split point.
-       *
-       * @callback splitCallback
-       * @param {*} value
-       */
-      if (func(value)) return [...ret, keepSplitedValue ? [value] : []]
+  const ret = [[]]
 
+  for (const value of arr) {
+    /**
+     * Return true at the split point.
+     *
+     * @callback splitCallback
+     * @param {*} value
+     */
+    if (func(value)) {
+      ret.push(keepSplitedValue ? [value] : [])
+    } else {
       ret[ret.length - 1].push(value)
-      return ret
-    },
-    [[]]
-  )
+    }
+  }
+
+  return ret
 }
 
 export default split
