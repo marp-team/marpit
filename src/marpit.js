@@ -135,6 +135,8 @@ class Marpit {
    * @typedef {Object} Marpit~RenderResult
    * @property {string} html Rendered HTML.
    * @property {string} css Rendered CSS.
+   * @property {string[][]} comments Parsed HTML comments per slide pages,
+   *     excepted YAML for directives. It would be useful for presenter notes.
    */
 
   /**
