@@ -36,6 +36,7 @@ declare module '@marp-team/marpit' {
     readonly options: MarpitOptions
     readonly markdownItPlugins: (md: any) => void
 
+    protected lastComments?: string[][]
     protected lastGlobalDirectives?: { [directive: string]: any }
     protected lastStyles?: string[]
 
