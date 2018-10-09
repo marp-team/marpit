@@ -39,31 +39,46 @@ function parse(md, marpit, opts = {}) {
   const isComment = token =>
     token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
 
+  const markAsParsed = token => {
+    token.meta = token.meta || {}
+    token.meta.marpitCommentParsed = 'directive'
+  }
+
   // Parse global directives
   md.core.ruler.after('inline', 'marpit_directives_global_parse', state => {
     if (state.inlineMode) return
 
     let globalDirectives = {}
     const applyDirectives = obj => {
+      let recognized = false
+
       for (const key of Object.keys(obj)) {
         const globalKey = key.startsWith('$') ? key.slice(1) : key
 
-        if (globals[globalKey])
+        if (globals[globalKey]) {
+          recognized = true
           globalDirectives = {
             ...globalDirectives,
             ...globals[globalKey](obj[key], marpit),
           }
+        }
       }
+
+      return recognized
     }
 
     if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
 
     for (const token of state.tokens) {
-      if (isComment(token)) {
+      if (
+        isComment(token) &&
         applyDirectives(token.meta.marpitParsedDirectives)
+      ) {
+        markAsParsed(token)
       } else if (token.type === 'inline') {
         for (const t of token.children) {
-          if (isComment(t)) applyDirectives(t.meta.marpitParsedDirectives)
+          if (isComment(t) && applyDirectives(t.meta.marpitParsedDirectives))
+            markAsParsed(t)
         }
       }
     }
@@ -79,22 +94,30 @@ function parse(md, marpit, opts = {}) {
     const cursor = { slide: undefined, local: {}, spot: {} }
 
     const applyDirectives = obj => {
+      let recognized = false
+
       for (const key of Object.keys(obj)) {
-        if (locals[key])
+        if (locals[key]) {
+          recognized = true
           cursor.local = { ...cursor.local, ...locals[key](obj[key], marpit) }
+        }
 
         // Spot directives
         // (Apply local directive to only current slide by prefix "_")
         if (key.startsWith('_')) {
           const spotKey = key.slice(1)
 
-          if (locals[spotKey])
+          if (locals[spotKey]) {
+            recognized = true
             cursor.spot = {
               ...cursor.spot,
               ...locals[spotKey](obj[key], marpit),
             }
+          }
         }
       }
+
+      return recognized
     }
 
     if (frontMatterObject.yaml) applyDirectives(frontMatterObject.yaml)
@@ -115,11 +138,15 @@ function parse(md, marpit, opts = {}) {
         }
 
         cursor.spot = {}
-      } else if (isComment(token)) {
+      } else if (
+        isComment(token) &&
         applyDirectives(token.meta.marpitParsedDirectives)
+      ) {
+        markAsParsed(token)
       } else if (token.type === 'inline') {
         for (const t of token.children) {
-          if (isComment(t)) applyDirectives(t.meta.marpitParsedDirectives)
+          if (isComment(t) && applyDirectives(t.meta.marpitParsedDirectives))
+            markAsParsed(t)
         }
       }
     }
