@@ -17,6 +17,8 @@ paginate: true
 -->
 ```
 
+?> The HTML comment is also used for [presenter notes](/usage?id=presenter-notes). When it is parsed as a directive, it would not be collected in the `comments` result of `Marpit.render()`.
+
 ### Front-matter
 
 Marpit also supports [YAML front-matter](https://jekyllrb.com/docs/frontmatter/), that is a syntax often used for keeping metadata of Markdown. It must be the first thing of Markdown, and between the dash rulers.

@@ -82,6 +82,19 @@ describe('Marpit directives parse plugin', () => {
         md().parse('<!-- $theme: test_theme -->')
         expect(marpitStub.lastGlobalDirectives).toStrictEqual(expected)
       })
+
+      it('marks directive comments as parsed', () => {
+        const findToken = tk => tk.find(t => t.type === 'marpit_comment')
+
+        const regularTheme = findToken(md().parse('<!-- theme: test_theme -->'))
+        expect(regularTheme.meta.marpitCommentParsed).toBe('directive')
+
+        const invalidTheme = findToken(md().parse('<!-- theme: test -->'))
+        expect(invalidTheme.meta.marpitCommentParsed).toBe('directive')
+
+        const regularComment = findToken(md().parse('<!-- regular comment -->'))
+        expect(regularComment.meta.marpitCommentParsed).toBeUndefined()
+      })
     })
   })
 
@@ -89,7 +102,7 @@ describe('Marpit directives parse plugin', () => {
     it('applies meta to the defined slide and followed slides', () => {
       const text = dedent`
         ***
-        <!-- class: test -->
+        Inline<!-- class: test -->comment
         ***
         <!-- notDefined: directive -->
         <!-- @invalid_yaml@ -->

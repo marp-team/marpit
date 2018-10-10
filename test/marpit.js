@@ -54,13 +54,14 @@ describe('Marpit', () => {
   })
 
   describe('#render', () => {
-    it('returns the object contains html and css member', () => {
+    it('returns the object contains html, css, and comments', () => {
       const markdown = '# Hello'
       const instance = new Marpit()
 
       instance.renderMarkdown = md => {
         expect(md).toBe(markdown)
         instance.lastGlobalDirectives = { theme: 'dummy-theme' }
+        instance.lastComments = [['A', 'B', 'C']]
         return 'HTML'
       }
 
@@ -74,8 +75,11 @@ describe('Marpit', () => {
         return 'CSS'
       }
 
-      const ret = instance.render(markdown)
-      expect(ret).toStrictEqual({ html: 'HTML', css: 'CSS' })
+      expect(instance.render(markdown)).toStrictEqual({
+        html: 'HTML',
+        css: 'CSS',
+        comments: [['A', 'B', 'C']],
+      })
     })
 
     context('with inlineSVG option', () => {

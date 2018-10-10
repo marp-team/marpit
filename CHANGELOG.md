@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Collect HTML comments per page to be usable as presenter note ([#82](https://github.com/marp-team/marpit/issues/82), [#83](https://github.com/marp-team/marpit/pull/83))
+
 ### Changed
 
 - Update license author to marp-team ([#81](https://github.com/marp-team/marpit/pull/81))

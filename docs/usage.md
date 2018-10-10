@@ -82,8 +82,8 @@ const marpit = new Marpit({
 Now, let's render Markdown. Just only pass a string of Markdown to [**`marpit.render(markdown)`**](https://marpit-api.marp.app/marpit#render).
 
 ```javascript
-// Output rendered HTML and CSS
-const { html, css } = marpit.render('# Hello, Marpit!')
+// Output rendered HTML, CSS, and collected HTML comments (See "Advanced")
+const { html, css, comments } = marpit.render('# Hello, Marpit!')
 ```
 
 The HTML output is like this. (Formatted)
@@ -138,6 +138,48 @@ marpit.themeSet.default = marpit.themeSet.add('...')
 ```
 
 [The applied example is here.](/assets/hello-marpit-theme.pdf ':ignore')
+
+## Advanced
+
+### Presenter notes
+
+Marpit can collect HTML comments written in Markdown while rendering, except [directives](/directives). The collected `comments` are returned in the result of [`marpit.render()`](https://marpit-api.marp.app/marpit#render).
+
+You may use it as the presenter notes in Marpit integrated apps.
+
+```javascript
+const { comments } = marpit.render(`
+<!-- theme: default -->
+
+# First page
+
+<!-- HTML comment recognizes as a presenter note per pages. -->
+<!-- You may place multiple comments in a single page. -->
+
+---
+
+## Second page
+
+<!--
+Also supports multiline.
+We bet these comments would help your presentation...
+-->
+`)
+```
+
+The returned value is a two-dimensional array composed by comments per slide pages.
+
+```json
+[
+  [
+    "HTML comment recognizes as a presenter note per pages.",
+    "You may place multiple comments in a single page."
+  ],
+  [
+    "Also supports multiline.\nWe bet these comments would help your presentation..."
+  ]
+]
+```
 
 ## Full API documentation
 
