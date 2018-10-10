@@ -17,7 +17,7 @@ paginate: true
 -->
 ```
 
-?> The HTML comment is also used for [presenter notes](http://localhost:3000/usage?id=presenter-notes). When it is parsed as a directive, it would not be collected in the `comments` result of `Marpit.render()`.
+?> The HTML comment is also used for [presenter notes](/usage?id=presenter-notes). When it is parsed as a directive, it would not be collected in the `comments` result of `Marpit.render()`.
 
 ### Front-matter
 
