@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Update license author to marp-team ([#81](https://github.com/marp-team/marpit/pull/81))
+
 ## v0.1.3 - 2018-10-05
 
 ### Fixed
