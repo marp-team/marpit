@@ -60,6 +60,13 @@ describe('Marpit collect comment plugin', () => {
     # Fourth <!-- inline comment --> page
   `
 
+  it('ignores in #renderInline', () => {
+    const marpit = marpitStub()
+    md(marpit).renderInline(text)
+
+    expect(marpit.lastComments).toBeUndefined()
+  })
+
   it("collects comments and store to Marpit's lastComments member", () => {
     const marpit = marpitStub()
     md(marpit).render(text)
