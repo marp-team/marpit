@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.2.0 - 2018-10-10
+
 ### Added
 
 - Collect HTML comments per page to be usable as presenter note ([#82](https://github.com/marp-team/marpit/issues/82), [#83](https://github.com/marp-team/marpit/pull/83))
