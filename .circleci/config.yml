@@ -41,6 +41,11 @@ references:
 
 version: 2
 jobs:
+  '10.12.0':
+    <<: *base
+    docker:
+      - image: circleci/node:10.12.0
+
   '8.12.0':
     <<: *base
     docker:
@@ -55,5 +60,6 @@ workflows:
   version: 2
   build:
     jobs:
+      - 10.12.0
       - 8.12.0
       - 6.14.2
