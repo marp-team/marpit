@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+- Remove `defer` attribute from `<inline>` script tag on docs ([#87](https://github.com/marp-team/marpit/pull/87))
+
 ### Changed
 
 - Support Node 10.x and use it for development ([#84](https://github.com/marp-team/marpit/pull/84))
