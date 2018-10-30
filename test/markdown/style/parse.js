@@ -60,6 +60,20 @@ describe('Marpit style parse plugin', () => {
         expect($('style')).toHaveLength(0)
       })
 
+      describe('The scoped attribute', () => {
+        it('parses scoped attribute with splitted by hardbreak', () => {
+          const [token] = pickStyles(markdown.parse('<style\nscoped></style>'))
+          expect(token.meta.marpitStyleScoped).toBe(true)
+        })
+
+        it('parses scoped attribute with another attribute', () => {
+          const [token] = pickStyles(
+            markdown.parse(`<style id="foobar" scoped type='text/css'></style>`)
+          )
+          expect(token.meta.marpitStyleScoped).toBe(true)
+        })
+      })
+
       Object.keys(ignoreCases).forEach(elementType => {
         context(`when ${elementType} has <style> HTML tag`, () => {
           it('keeps HTML', () => {
