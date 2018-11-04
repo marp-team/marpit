@@ -138,6 +138,6 @@ The space of a slide content will shrink to the right side.
 The space of a slide content will shrink to the left side.
 ```
 
-This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Images%20and%20Videos/01-background-images.html#split-slides-1).
+This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Media/01-background-images.html#split-slides).
 
 ?> Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple backgrounds.
