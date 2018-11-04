@@ -6,6 +6,10 @@
 
 - Support Node 10.x and use its LTS for development ([#84](https://github.com/marp-team/marpit/pull/84), [#88](https://github.com/marp-team/marpit/pull/88))
 
+### Fixed
+
+- Fix docs to work docsify scripts correctly ([#89](https://github.com/marp-team/marpit/pull/89))
+
 ### Removed
 
 - Remove `defer` attribute from `<inline>` script tag on docs ([#87](https://github.com/marp-team/marpit/pull/87))
