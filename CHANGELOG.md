@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.2.1 - 2018-11-05
+
 ### Changed
 
 - Support Node 10.x and use its LTS for development ([#84](https://github.com/marp-team/marpit/pull/84), [#88](https://github.com/marp-team/marpit/pull/88))
