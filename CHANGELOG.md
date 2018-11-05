@@ -5,6 +5,7 @@
 ### Changed
 
 - Support Node 10.x and use its LTS for development ([#84](https://github.com/marp-team/marpit/pull/84), [#88](https://github.com/marp-team/marpit/pull/88))
+- Upgrade dependent packages to latest version ([#90](https://github.com/marp-team/marpit/pull/90))
 
 ### Fixed
 
