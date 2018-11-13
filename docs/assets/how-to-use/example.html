@@ -1,77 +1,90 @@
 <!DOCTYPE html>
-<html><body>
-  <style>div.marpit > section {
-  width: 1280px;
-  height: 720px;
+<html>
+  <body>
+    <style>
+      div.marpit > section {
+        width: 1280px;
+        height: 720px;
 
-  box-sizing: border-box;
-  overflow: hidden;
-  position: relative;
+        box-sizing: border-box;
+        overflow: hidden;
+        position: relative;
 
-  scroll-snap-align: center center;
-}div.marpit > section::after {
-  bottom: 0;
-  content: attr(data-marpit-pagination);
-  padding: inherit;
-  pointer-events: none;
-  position: absolute;
-  right: 0;
-}div.marpit > section:not([data-marpit-pagination])::after {
-  display: none;
-}/* Normalization */div.marpit > section h1 {
-  font-size: 2em;
-  margin: 0.67em 0;
-}@page {
-  size: 1280px 720px;
-  margin: 0;
-}@media print {
-  html, body {
-    margin: 0;
-    page-break-inside: avoid;
-  }
+        scroll-snap-align: center center;
+      }
+      div.marpit > section::after {
+        bottom: 0;
+        content: attr(data-marpit-pagination);
+        padding: inherit;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+      }
+      div.marpit > section:not([data-marpit-pagination])::after {
+        display: none;
+      } /* Normalization */
+      div.marpit > section h1 {
+        font-size: 2em;
+        margin: 0.67em 0;
+      }
+      @page {
+        size: 1280px 720px;
+        margin: 0;
+      }
+      @media print {
+        html,
+        body {
+          margin: 0;
+          page-break-inside: avoid;
+        }
 
-  div.marpit > section {
-    page-break-before: always;
-  }
+        div.marpit > section {
+          page-break-before: always;
+        }
 
-  div.marpit > section, div.marpit > section * {
-    -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
-  }
+        div.marpit > section,
+        div.marpit > section * {
+          -webkit-print-color-adjust: exact !important;
+          color-adjust: exact !important;
+        }
 
-  div.marpit > svg {
-    display: block;
-    height: 100vh;
-    width: 100vw;
-  }
-}
+        div.marpit > svg {
+          display: block;
+          height: 100vh;
+          width: 100vw;
+        }
+      }
 
-/* @theme example */
+      /* @theme example */
 
-div.marpit > section {
-  background-color: #369;
-  color: #fff;
-  font-size: 30px;
-  padding: 40px;
-}
+      div.marpit > section {
+        background-color: #369;
+        color: #fff;
+        font-size: 30px;
+        padding: 40px;
+      }
 
-div.marpit > section h1,
-div.marpit > section h2 {
-  text-align: center;
-  margin: 0;
-}
+      div.marpit > section h1,
+      div.marpit > section h2 {
+        text-align: center;
+        margin: 0;
+      }
 
-div.marpit > section h1 {
-  color: #8cf;
-}
-</style>
-  <div class="marpit"><section id="1">
-<h1>Hello, Marpit!</h1>
-<p>Marpit is the skinny framework for creating slide deck from Markdown.</p>
-</section>
-<section id="2">
-<h2>Ready to convert into PDF!</h2>
-<p>You can convert into PDF slide deck through Chrome.</p>
-</section>
-</div>
-</body></html>
+      div.marpit > section h1 {
+        color: #8cf;
+      }
+    </style>
+    <div class="marpit">
+      <section id="1">
+        <h1>Hello, Marpit!</h1>
+        <p>
+          Marpit is the skinny framework for creating slide deck from Markdown.
+        </p>
+      </section>
+      <section id="2">
+        <h2>Ready to convert into PDF!</h2>
+        <p>You can convert into PDF slide deck through Chrome.</p>
+      </section>
+    </div>
+  </body>
+</html>
