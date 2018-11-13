@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add docsify style and its build script ([#91](https://github.com/marp-team/marpit/pull/91), [#93](https://github.com/marp-team/marpit/pull/93))
+
 ## v0.2.1 - 2018-11-05
 
 ### Changed
