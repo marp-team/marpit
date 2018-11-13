@@ -1,8 +1,9 @@
 .git/
-.nyc_output/
+.vscode/
 coverage/
 dist/
-lib/
-node_modules
 jsdoc/
+lib/
+/docs/style/
+node_modules
 package.json

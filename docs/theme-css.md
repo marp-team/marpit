@@ -5,12 +5,8 @@
 The basic idea of HTML structure is that `<section>` elements are corresponding to each slide pages. It is same as [reveal.js](https://github.com/hakimel/reveal.js/#markup).
 
 ```html
-<section>
-  <h1>First page</h1>
-</section>
-<section>
-  <h1>Second page</h1>
-</section>
+<section><h1>First page</h1></section>
+<section><h1>Second page</h1></section>
 ```
 
 ?> When conversion, Marpit would scope CSS selectors by wrapping with [container element(s)](/usage#package-customize-container-elements) automatically. However, the theme creator should not aware of this process.

@@ -2,13 +2,28 @@
 
 ## [Unreleased]
 
-### Removed
+### Breaking
 
-- Remove `defer` attribute from `<inline>` script tag on docs ([#87](https://github.com/marp-team/marpit/pull/87))
+- No longer work with Node v6.14.2 and v6.14.3 ([#93](https://github.com/marp-team/marpit/pull/93))
+
+### Added
+
+- Add docsify style and its build script ([#91](https://github.com/marp-team/marpit/issues/91), [#93](https://github.com/marp-team/marpit/pull/93))
+
+## v0.2.1 - 2018-11-05
 
 ### Changed
 
-- Support Node 10.x and use it for development ([#84](https://github.com/marp-team/marpit/pull/84))
+- Support Node 10.x and use its LTS for development ([#84](https://github.com/marp-team/marpit/pull/84), [#88](https://github.com/marp-team/marpit/pull/88))
+- Upgrade dependent packages to latest version ([#90](https://github.com/marp-team/marpit/pull/90))
+
+### Fixed
+
+- Fix docs to work docsify scripts correctly ([#89](https://github.com/marp-team/marpit/pull/89))
+
+### Removed
+
+- Remove `defer` attribute from `<inline>` script tag on docs ([#87](https://github.com/marp-team/marpit/pull/87))
 
 ## v0.2.0 - 2018-10-10
 

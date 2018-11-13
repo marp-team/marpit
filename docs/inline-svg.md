@@ -7,16 +7,12 @@ When you set [`inlineSVG: true` in Marpit constructor option](/usage#triangular_
 ```html
 <svg viewBox="0 0 1280 960">
   <foreignObject width="1280" height="960">
-    <section>
-      <h1>Page 1</h1>
-    </section>
+    <section><h1>Page 1</h1></section>
   </foreignObject>
 </svg>
 <svg viewBox="0 0 1280 960">
   <foreignObject width="1280" height="960">
-    <section>
-      <h1>Page 2</h1>
-    </section>
+    <section><h1>Page 2</h1></section>
   </foreignObject>
 </svg>
 ```
