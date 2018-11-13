@@ -2,9 +2,13 @@
 
 ## [Unreleased]
 
+### Breaking
+
+- No longer work with Node v6.14.2 and v6.14.3 ([#45](https://github.com/marp-team/marpit/pull/93))
+
 ### Added
 
-- Add docsify style and its build script ([#91](https://github.com/marp-team/marpit/pull/91), [#93](https://github.com/marp-team/marpit/pull/93))
+- Add docsify style and its build script ([#91](https://github.com/marp-team/marpit/issues/91), [#93](https://github.com/marp-team/marpit/pull/93))
 
 ## v0.2.1 - 2018-11-05
 
