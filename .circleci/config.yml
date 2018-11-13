@@ -22,7 +22,13 @@ references:
           name: Prettier formatting
           command: yarn format:check
 
-      - run: yarn lint:all
+      - run:
+          name: ESLint
+          command: yarn lint:js
+
+      - run:
+          name: stylelint
+          command: yarn lint:css
 
       - run:
           name: Jest
