@@ -4,7 +4,7 @@
 
 ### Breaking
 
-- No longer work with Node v6.14.2 and v6.14.3 ([#45](https://github.com/marp-team/marpit/pull/93))
+- No longer work with Node v6.14.2 and v6.14.3 ([#93](https://github.com/marp-team/marpit/pull/93))
 
 ### Added
 
