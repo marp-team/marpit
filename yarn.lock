@@ -1909,6 +1909,11 @@ docsify-server-renderer@>=4:
     node-fetch "^1.7.0"
     resolve-pathname "^2.1.0"
 
+docsify-themeable@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/docsify-themeable/-/docsify-themeable-0.5.1.tgz#f8d30a85ac2cb703b39476ac2a1fe8a35adf7dc0"
+  integrity sha512-QqQ2m2Cyf3kr/H8UUNS87T97ynNuOZwRujW/vnXwOUbftK4xbunc9KH6HUz/DTZYX4RlIBxqQB85tblJohcUHw==
+
 docsify@>=3, docsify@^4.8.0:
   version "4.8.5"
   resolved "https://registry.yarnpkg.com/docsify/-/docsify-4.8.5.tgz#d564b494c6cd82f35eb83b4bdca88fc09902b148"

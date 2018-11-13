@@ -4,5 +4,6 @@ coverage/
 dist/
 jsdoc/
 lib/
+/docs/style/
 node_modules
 package.json
