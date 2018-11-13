@@ -8,7 +8,7 @@ const sass = require('node-sass')
 
 const plugins = [
   autoprefixer,
-  cssnano({ preset: 'default', mergeLonghand: false }),
+  cssnano({ preset: ['default', { mergeLonghand: false }] }),
 ]
 
 const from = path.join(__dirname, '../docsify.scss')
