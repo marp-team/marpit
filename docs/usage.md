@@ -55,12 +55,8 @@ It would render elements like this:
 <article id="presentation">
   <div class="slides">
     <!-- Slide container elements -->
-    <div class="slide">
-      <section>Page 1</section>
-    </div>
-    <div class="slide">
-      <section>Page 2</section>
-    </div>
+    <div class="slide"><section>Page 1</section></div>
+    <div class="slide"><section>Page 2</section></div>
   </div>
 </article>
 ```
@@ -90,9 +86,7 @@ The HTML output is like this. (Formatted)
 
 ```html
 <div class="marpit">
-  <section id="1">
-    <h1>Hello, Marpit!</h1>
-  </section>
+  <section id="1"><h1>Hello, Marpit!</h1></section>
 </div>
 ```
 
