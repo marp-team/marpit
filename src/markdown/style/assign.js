@@ -72,14 +72,19 @@ function assign(md, marpit, opts = {}) {
             metaAttr = `data-marpit-scope-${generateUniqKey()}`
 
             current.meta.marpitScopeMeta = metaAttr
-            current.attrSet(metaAttr)
+            current.attrSet(metaAttr, '')
           }
 
           const processor = postcss([injectScopePostCSSplugin(metaAttr)])
-          content = processor.process(content).css
+
+          try {
+            content = processor.process(content).css
+          } catch (e) {
+            content = undefined
+          }
         }
 
-        marpit.lastStyles.push(content)
+        if (content) marpit.lastStyles.push(content)
       }
     }
   })
