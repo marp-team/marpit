@@ -57,7 +57,7 @@ function assign(md, marpit, opts = {}) {
     for (const token of state.tokens) {
       if (token.meta && token.meta.marpitSlideElement === 1) {
         current = token
-      } else if (token.meta && token.meta.marpitSlideElement === 1) {
+      } else if (token.meta && token.meta.marpitSlideElement === -1) {
         current = undefined
       } else if (token.type === 'marpit_style') {
         let { content } = token
