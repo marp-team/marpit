@@ -69,6 +69,20 @@ describe('Marpit style assign plugin', () => {
         })
       })
 
+      context('when multiple scoped styles are written in a same page', () => {
+        it('uses the same unique attribute selector', () => {
+          const marpit = marpitStub()
+          md(marpit).render(dedent`
+            <style scoped>b { color: red; }</style>
+            <style scoped>i { color: blue; }</style>
+          `)
+
+          const matcher = /^section\[(data-marpit-scope-.{8})\]/
+          const attrs = marpit.lastStyles.map(s => s.match(matcher)[1])
+          expect(attrs[0]).toBe(attrs[1])
+        })
+      })
+
       context('when the invalid CSS is passed', () => {
         it('ignores adding style to Marpit lastStyles property', () => {
           const marpit = marpitStub()
