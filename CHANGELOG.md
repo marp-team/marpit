@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.3.0 - 2018-11-14
+
 ### Breaking
 
 - No longer work with Node v6.14.2 and v6.14.3 ([#93](https://github.com/marp-team/marpit/pull/93))
@@ -10,6 +12,10 @@
 
 - Add docsify style and its build script ([#91](https://github.com/marp-team/marpit/issues/91), [#93](https://github.com/marp-team/marpit/pull/93))
 - Support the scoped inline style through `<style scoped>` ([#85](https://github.com/marp-team/marpit/issues/85), [#94](https://github.com/marp-team/marpit/pull/94))
+
+### Changed
+
+- Upgrade dependent packages to latest version ([#95](https://github.com/marp-team/marpit/pull/95))
 
 ## v0.2.1 - 2018-11-05
 
