@@ -8,6 +8,7 @@ declare module '@marp-team/marpit' {
     looseYAML?: boolean
     markdown?: string | object | [string, object]
     printable?: boolean
+    scopedStyle?: boolean
     slideContainer?: false | Element | Element[]
     inlineSVG?: boolean
   }
