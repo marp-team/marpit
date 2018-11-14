@@ -27,6 +27,7 @@ const defaultOptions = {
   looseYAML: false,
   markdown: 'commonmark',
   printable: true,
+  scopedStyle: true,
   slideContainer: false,
   inlineSVG: false,
 }
@@ -59,6 +60,9 @@ class Marpit {
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
+   * @param {boolean} [opts.scopedStyle=true] Support scoping inline style to
+   *     the current slide through `<style scoped>` when `inlineStyle` is
+   *     enabled.
    * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
    * @param {boolean} [opts.inlineSVG=false] Wrap each sections by inline SVG.
@@ -111,7 +115,7 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    const { backgroundSyntax, filters, looseYAML } = this.options
+    const { backgroundSyntax, filters, looseYAML, scopedStyle } = this.options
 
     md.use(marpitComment, { looseYAML })
       .use(marpitStyleParse, this)
@@ -125,7 +129,7 @@ class Marpit {
       .use(marpitParseImage, { filters })
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
-      .use(marpitStyleAssign, this)
+      .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
       .use(marpitCollectComment, this)
 
     if (backgroundSyntax) md.use(marpitBackgroundImage)

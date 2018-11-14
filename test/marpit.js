@@ -221,6 +221,32 @@ describe('Marpit', () => {
         expect(style).not.toContain('color:#123;')
       })
     })
+
+    context('with scopedStyle option', () => {
+      const markdown = '<style scoped>a { color: #00c; }</style>'
+      const instance = scopedStyle =>
+        new Marpit({ scopedStyle, inlineStyle: true })
+
+      it('allows scoping inline style through <style scoped> when scopedStyle is true', () => {
+        const { html, css } = instance(true).render(markdown)
+        const $ = cheerio.load(html)
+
+        expect(css).toContain('[data-marpit-scope-')
+        expect(Object.keys($('section').attr())).toContainEqual(
+          expect.stringMatching(/^data-marpit-scope-/)
+        )
+      })
+
+      it('disallows scoping inline style through <style scoped> when scopedStyle is false', () => {
+        const { html, css } = instance(false).render(markdown)
+        const $ = cheerio.load(html)
+
+        expect(css).not.toContain('[data-marpit-scope-')
+        expect(Object.keys($('section').attr())).not.toContainEqual(
+          expect.stringMatching(/^data-marpit-scope-/)
+        )
+      })
+    })
   })
 
   describe('#renderMarkdown', () => {
