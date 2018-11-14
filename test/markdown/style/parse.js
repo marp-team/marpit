@@ -27,6 +27,8 @@ describe('Marpit style parse plugin', () => {
       type="text/css">
       a { color: blue; }
     </style>
+
+    <style scoped>i { color: yellow; }</style>
   `
 
   const ignoreCases = {
@@ -35,27 +37,41 @@ describe('Marpit style parse plugin', () => {
     fence: '```\n<style>b { color: red; }</style>\n```',
   }
 
-  const htmls = [true, false]
-
-  htmls.forEach(html => {
+  for (const html of [true, false]) {
     context(`with html option as ${html}`, () => {
       const markdown = md(marpitStub, { html })
-      const pickStyles = tokens =>
-        tokens.reduce(
-          (arr, token) =>
-            token.type === 'marpit_style' ? [...arr, token.content] : arr,
-          []
-        )
+      const pickStyles = tokens => tokens.filter(t => t.type === 'marpit_style')
 
-      it('extracts style and stores to "marpit_style" token', () =>
-        expect(pickStyles(markdown.parse(text))).toStrictEqual([
-          'strong { color: red; }',
-          'a { color: blue; }',
-        ]))
+      it('extracts style with scoped attribute and stores to "marpit_style" token', () => {
+        const [strong, a, i] = pickStyles(markdown.parse(text))
+
+        expect(strong.content).toBe('strong { color: red; }')
+        expect(strong.meta.marpitStyleScoped).toBe(false)
+
+        expect(a.content).toBe('a { color: blue; }')
+        expect(a.meta.marpitStyleScoped).toBe(false)
+
+        expect(i.content).toBe('i { color: yellow; }')
+        expect(i.meta.marpitStyleScoped).toBe(true)
+      })
 
       it('strips style element in rendering', () => {
         const $ = cheerio.load(markdown.render(text))
         expect($('style')).toHaveLength(0)
+      })
+
+      describe('The scoped attribute', () => {
+        it('parses scoped attribute with splitted by hardbreak', () => {
+          const [token] = pickStyles(markdown.parse('<style\nscoped></style>'))
+          expect(token.meta.marpitStyleScoped).toBe(true)
+        })
+
+        it('parses scoped attribute with another attribute', () => {
+          const [token] = pickStyles(
+            markdown.parse(`<style id="foobar" scoped type='text/css'></style>`)
+          )
+          expect(token.meta.marpitStyleScoped).toBe(true)
+        })
       })
 
       Object.keys(ignoreCases).forEach(elementType => {
@@ -74,5 +90,5 @@ describe('Marpit style parse plugin', () => {
         })
       })
     })
-  })
+  }
 })

@@ -1,3 +1,4 @@
+import cheerio from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../../src/markdown/directives/apply'
@@ -15,10 +16,11 @@ describe('Marpit style assign plugin', () => {
   })
 
   context('with inline style elements', () => {
-    const md = marpit =>
+    const md = (marpit, opts = {}) =>
       new MarkdownIt('commonmark')
+        .use(slide)
         .use(styleParse, marpit)
-        .use(styleAssign, marpit)
+        .use(styleAssign, marpit, opts)
 
     it('assigns parsed styles to Marpit lastStyles property', () => {
       const marpit = marpitStub()
@@ -33,6 +35,71 @@ describe('Marpit style assign plugin', () => {
 
       expect(md(marpit).renderInline(text)).toBe(text)
       expect(marpit.lastStyles).toBeUndefined()
+    })
+
+    context('with scoped attribute', () => {
+      it('assigns parsed styles to Marpit lastStyles property with scoped', () => {
+        const marpit = marpitStub()
+        const $ = cheerio.load(
+          md(marpit).render('<style scoped>b { color: red; }</style>')
+        )
+
+        const [style] = marpit.lastStyles
+        expect(style).toEqual(expect.stringContaining('b { color: red; }'))
+
+        const scopeMatcher = style.match(/^section\[(data-marpit-scope-.{8})\]/)
+        expect(scopeMatcher).toBeTruthy()
+        expect($('section#1').is(`[${scopeMatcher[1]}]`)).toBe(true)
+      })
+
+      context('when style has selectors for section elements', () => {
+        it('keeps original selectors and adds attribute selector for scoping', () => {
+          const marpit = marpitStub()
+          md(marpit).render(dedent`
+            <style scoped>
+              section.class, section#id, section[attr], section::before { color: red; }
+            </style>
+          `)
+
+          const [style] = marpit.lastStyles
+          expect(style).toMatch(/section\[(data-marpit-scope-.{8})\].class/)
+          expect(style).toMatch(/section\[(data-marpit-scope-.{8})\]#id/)
+          expect(style).toMatch(/section\[(data-marpit-scope-.{8})\]\[attr\]/)
+          expect(style).toMatch(/section\[(data-marpit-scope-.{8})\]::before/)
+        })
+      })
+
+      context('when multiple scoped styles are written in a same page', () => {
+        it('uses the same unique attribute selector', () => {
+          const marpit = marpitStub()
+          md(marpit).render(dedent`
+            <style scoped>b { color: red; }</style>
+            <style scoped>i { color: blue; }</style>
+          `)
+
+          const matcher = /^section\[(data-marpit-scope-.{8})\]/
+          const attrs = marpit.lastStyles.map(s => s.match(matcher)[1])
+          expect(attrs[0]).toBe(attrs[1])
+        })
+      })
+
+      context('when the invalid CSS is passed', () => {
+        it('ignores adding style to Marpit lastStyles property', () => {
+          const marpit = marpitStub()
+          md(marpit).render('<style scoped>b { invalid }</style>')
+
+          expect(marpit.lastStyles).toHaveLength(0)
+        })
+      })
+
+      context('when supportScoped option is setting as false', () => {
+        const marpit = marpitStub()
+        const opts = { supportScoped: false }
+        md(marpit, opts).render('<style scoped>b { color: red; }</style>')
+
+        const [style] = marpit.lastStyles
+        expect(style).not.toContain('data-marpit-scope')
+      })
     })
   })
 

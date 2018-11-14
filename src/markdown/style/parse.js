@@ -1,7 +1,8 @@
 /** @module */
-const styleMatcher = /<style[\s\S]*?>([\s\S]*?)<\/style>/i
+const styleMatcher = /<style([\s\S]*?)>([\s\S]*?)<\/style>/i
 const styleMatcherOpening = /^<style(?=(\s|>|$))/i
 const styleMatcherClosing = /<\/style>/i
+const styleMatcherScoped = /\bscoped\b/i
 
 /**
  * Marpit style parse plugin.
@@ -59,10 +60,17 @@ function parse(md, marpit) {
       const token = state.push('marpit_style', '', 0)
       token.map = [startLine, nextLine]
       token.markup = state.getLines(startLine, nextLine, state.blkIndent, true)
+      token.meta = {}
       token.hidden = true
 
       const matchedContent = styleMatcher.exec(token.markup)
-      token.content = matchedContent ? matchedContent[1].trim() : ''
+
+      if (matchedContent) {
+        const [, attrStr, contentStr] = matchedContent
+
+        token.content = contentStr.trim()
+        token.meta.marpitStyleScoped = styleMatcherScoped.test(attrStr.trim())
+      }
 
       return true
     }
