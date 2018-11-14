@@ -69,6 +69,15 @@ describe('Marpit style assign plugin', () => {
         })
       })
 
+      context('when the invalid CSS is passed', () => {
+        it('ignores adding style to Marpit lastStyles property', () => {
+          const marpit = marpitStub()
+          md(marpit).render('<style scoped>b { invalid }</style>')
+
+          expect(marpit.lastStyles).toHaveLength(0)
+        })
+      })
+
       context('when supportScoped option is setting as false', () => {
         const marpit = marpitStub()
         const opts = { supportScoped: false }
