@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.3.1 - 2018-11-24
+
 ### Security
 
 - Upgrade dependent packages to prevent the malicious attack in dependencies ([#96](https://github.com/marp-team/marpit/pull/96))
