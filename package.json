@@ -79,11 +79,11 @@
     "minami": "^1.2.3",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.10.0",
-    "nodemon": "^1.18.6",
+    "nodemon": "^1.18.7",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.2",
     "rimraf": "^2.6.2",
-    "stylelint": "^9.8.0",
+    "stylelint": "^9.9.0",
     "stylelint-config-prettier": "^4.0.0",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-scss": "^3.4.0"
