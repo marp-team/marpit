@@ -97,5 +97,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "resolutions": {
+    "ajv": "~6.5"
   }
 }
