@@ -20,8 +20,7 @@ const plugin = postcss.plugin(
         if (/^section(?![\w-])/.test(selector))
           return `:marpit-container > :marpit-slide${selector.slice(7)}`
 
-        if (/^(:marpit-container|html|body)(?![\w-])/.test(selector))
-          return selector
+        if (selector.startsWith(':marpit-container')) return selector
 
         return `:marpit-container > :marpit-slide ${selector}`
       })
