@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.3.2 - 2018-11-29
+
 ### Fixed
 
 - Disable CSS scoping into declarations within `@keyframes` at-rule ([#97](https://github.com/marp-team/marpit/issues/97), [#99](https://github.com/marp-team/marpit/pull/99))
