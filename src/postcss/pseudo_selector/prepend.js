@@ -13,6 +13,9 @@ const plugin = postcss.plugin(
   'marpit-postcss-pseudo-selector-prepend',
   () => css =>
     css.walkRules(rule => {
+      const { type, name } = rule.parent || {}
+      if (type === 'atrule' && name === 'keyframes') return
+
       rule.selectors = rule.selectors.map(selector => {
         if (/^section(?![\w-])/.test(selector))
           return `:marpit-container > :marpit-slide${selector.slice(7)}`
