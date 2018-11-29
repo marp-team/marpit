@@ -9,6 +9,7 @@
 ### Changed
 
 - Disable styling `html` and `body` elements through theme CSS ([#98](https://github.com/marp-team/marpit/issues/98), [#100](https://github.com/marp-team/marpit/pull/100))
+- Upgrade dependent packages to latest version ([#101](https://github.com/marp-team/marpit/pull/101))
 
 ## v0.3.1 - 2018-11-24
 
