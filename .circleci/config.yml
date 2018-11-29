@@ -11,6 +11,7 @@ references:
             - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-
 
       - run: yarn install
+      - run: yarn audit
 
       - save_cache:
           key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
