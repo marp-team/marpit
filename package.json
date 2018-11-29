@@ -36,8 +36,8 @@
     "index.d.ts"
   ],
   "scripts": {
-    "audit": "yarn --mutex file audit",
     "build": "yarn --mutex file run clean && babel src --out-dir lib",
+    "check-audit": "yarn --mutex file audit",
     "clean": "rimraf lib",
     "docs": "npm-run-all --npm-path yarn --parallel docsify docsify:style:watch",
     "docsify": "docsify serve ./docs",
@@ -48,8 +48,8 @@
     "jsdoc": "rimraf jsdoc && jsdoc src -c .jsdoc.json",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"./**/*.{css,scss}\"",
-    "prepack": "npm-run-all --npm-path yarn --parallel audit format:check lint:* test:coverage --sequential build",
-    "preversion": "npm-run-all --npm-path yarn --parallel audit format:check lint:* test:coverage",
+    "prepack": "npm-run-all --npm-path yarn --parallel check-audit format:check lint:* test:coverage --sequential build",
+    "preversion": "npm-run-all --npm-path yarn --parallel check-audit format:check lint:* test:coverage",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "version": "node version.js && git add -A CHANGELOG.md",
