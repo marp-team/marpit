@@ -6,6 +6,10 @@
 
 - Disable CSS scoping into declarations within `@keyframes` at-rule ([#97](https://github.com/marp-team/marpit/issues/97), [#99](https://github.com/marp-team/marpit/pull/99))
 
+### Changed
+
+- Disable styling `html` and `body` elements through theme CSS ([#98](https://github.com/marp-team/marpit/issues/98), [#100](https://github.com/marp-team/marpit/pull/100))
+
 ## v0.3.1 - 2018-11-24
 
 ### Security
