@@ -51,14 +51,32 @@ describe('Marpit PostCSS pseudo selector prepending plugin', () => {
       :marpit-container > div { background: #fff; }
     `
 
-    return run(css).then(result => {
-      result.root.walkRules(rule => {
-        rule.selectors.forEach(selector => {
-          expect(selector.startsWith(':marpit-container > :marpit-slide')).toBe(
-            false
-          )
-        })
-      })
+    return run(css).then(({ root }) => {
+      const collected = []
+      root.walkRules(({ selectors }) => collected.push(...selectors))
+
+      expect(collected).toStrictEqual([
+        'html',
+        'body',
+        ':marpit-container > div',
+      ])
+    })
+  })
+
+  it('does not prepend pseudo selectors within @keyframes', () => {
+    const css = dedent`
+      @keyframes spin {
+        from { transform: rotate(0deg); }
+        80% { transform: rotate(390deg); }
+        to { transform: rotate(360deg); }
+      }
+    `
+
+    return run(css).then(({ root }) => {
+      const collected = []
+      root.walkRules(({ selector }) => collected.push(selector))
+
+      expect(collected).toStrictEqual(['from', '80%', 'to'])
     })
   })
 })
