@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.3.3 - 2018-11-30
+
 ### Fixed
 
 - Revert resolutions for `ajv` ([#102](https://github.com/marp-team/marpit/pull/102))
