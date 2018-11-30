@@ -43,6 +43,11 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css => {
   )
 })
 
+/**
+ * The post-process PostCSS plugin of Marpit printable plugin.
+ *
+ * @alias module:postcss/printable.postprocess
+ */
 export const postprocess = postcss.plugin(
   'marpit-postcss-printable-postprocess',
   () => css =>
