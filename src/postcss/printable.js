@@ -11,7 +11,11 @@ import postcss from 'postcss'
  * @param {string} opts.height
  * @alias module:postcss/printable
  */
-const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
+const plugin = postcss.plugin('marpit-postcss-printable', opts => css => {
+  css.walkAtRules('media', rule => {
+    if (rule.params === 'marpit-print') rule.remove()
+  })
+
   css.first.before(
     `
 @page {
@@ -19,12 +23,7 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
   margin: 0;
 }
 
-@media print {
-  html, body {
-    margin: 0;
-    page-break-inside: avoid;
-  }
-
+@media marpit-print {
   section {
     page-break-before: always;
   }
@@ -42,6 +41,17 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css =>
 }
 `.trim()
   )
+})
+
+export const postprocess = postcss.plugin(
+  'marpit-postcss-printable-postprocess',
+  () => css =>
+    css.walkAtRules('media', rule => {
+      if (rule.params !== 'marpit-print') return
+
+      rule.params = 'print'
+      rule.first.before('html, body { margin: 0; page-break-inside: avoid; }')
+    })
 )
 
 export default plugin

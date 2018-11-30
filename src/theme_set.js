@@ -4,7 +4,9 @@ import postcssImportReplace from './postcss/import/replace'
 import postcssImportRollup from './postcss/import/rollup'
 import postcssImportSuppress from './postcss/import/suppress'
 import postcssPagination from './postcss/pagination'
-import postcssPrintable from './postcss/printable'
+import postcssPrintable, {
+  postprocess as postcssPrintablePostProcess,
+} from './postcss/printable'
 import postcssPseudoPrepend from './postcss/pseudo_selector/prepend'
 import postcssPseudoReplace from './postcss/pseudo_selector/replace'
 import Theme from './theme'
@@ -213,6 +215,7 @@ class ThemeSet {
         postcssPagination,
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
+        opts.printable && postcssPrintablePostProcess,
         postcssImportRollup,
       ].filter(p => p)
     )
