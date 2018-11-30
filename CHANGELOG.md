@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Revert resolutions for `ajv` ([#102](https://github.com/marp-team/marpit/pull/102))
+
+### Added
+
+- Run `yarn audit` while running CI / publish processes ([#103](https://github.com/marp-team/marpit/pull/103))
+
 ## v0.3.2 - 2018-11-29
 
 ### Fixed
