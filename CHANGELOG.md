@@ -5,6 +5,7 @@
 ### Fixed
 
 - Revert resolutions for `ajv` ([#102](https://github.com/marp-team/marpit/pull/102))
+- Fix over-scoped selectors injected by printable plugin ([#104](https://github.com/marp-team/marpit/pull/104))
 
 ### Added
 

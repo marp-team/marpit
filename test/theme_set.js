@@ -276,6 +276,27 @@ describe('ThemeSet', () => {
 
         expect(css).not.toContain('INVALID')
       })
+
+      it('cannot apply unscoped rules by using @media print', () => {
+        const pack = before =>
+          instance.pack(undefined, { before, printable: true })
+
+        // `@media print` will apply scope to defined rules.
+        const print = '@media print { body { background: red; } }'
+        const printCSS = pack(print)
+
+        expect(printCSS.split('@media print').length - 1).toBe(2)
+        expect(printCSS).toContain(
+          '@media print { section body { background: red; } }'
+        )
+
+        // `@media marpit-print` internal at-rule will remove.
+        const marpitPrint = '@media marpit-print { body { background: red; } }'
+        const marpitPrintCSS = pack(marpitPrint)
+
+        expect(marpitPrintCSS.split('@media print').length - 1).toBe(1)
+        expect(marpitPrintCSS).not.toContain('background: red;')
+      })
     })
   })
 })
