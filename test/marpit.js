@@ -272,4 +272,18 @@ describe('Marpit', () => {
       expect(instance.renderStyle('test-theme')).toBe('style of test-theme')
     })
   })
+
+  describe('#use', () => {
+    it('extends markdown-it parser by passed plugin', () => {
+      const instance = new Marpit()
+      const plugin = jest.fn((md, param) => {
+        md.extended = param
+      })
+
+      expect(instance.use(plugin, 'parameter')).toBe(instance)
+      expect(plugin).toBeCalledTimes(1)
+      expect(plugin).toBeCalledWith(instance.markdown, 'parameter')
+      expect(instance.markdown.extended).toBe('parameter')
+    })
+  })
 })
