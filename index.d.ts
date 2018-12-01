@@ -43,6 +43,14 @@ declare module '@marp-team/marpit' {
     protected lastStyles?: string[]
 
     render(markdown: string): MarpitRenderResult
+    use<P extends any[]>(
+      plugin: (
+        this: Marpit['markdown'],
+        md: Marpit['markdown'],
+        ...params: P
+      ) => void,
+      ...params: P
+    ): this
 
     protected applyMarkdownItPlugins(md: any): void
     protected renderMarkdown(markdown: string): string

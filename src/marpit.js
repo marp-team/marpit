@@ -193,6 +193,18 @@ class Marpit {
       printable: this.options.printable,
     }
   }
+
+  /**
+   * Load the specified markdown-it plugin with given parameters.
+   *
+   * @param {Function} plugin markdown-it plugin.
+   * @param {...*} params Params to pass into plugin.
+   * @returns {Marpit} The called {@link Marpit} instance for chainable.
+   */
+  use(plugin, ...params) {
+    plugin.call(this.markdown, this.markdown, ...params)
+    return this
+  }
 }
 
 export default Marpit
