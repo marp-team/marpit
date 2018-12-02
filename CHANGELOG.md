@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add `use` method to extend markdown-it parser by plugin ([#105](https://github.com/marp-team/marpit/pull/105))
+
 ## v0.3.3 - 2018-11-30
 
 ### Fixed
