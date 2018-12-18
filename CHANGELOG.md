@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.4.1 - 2018-12-18
+
 ### Fixed
 
 - Prevent leaking header and footer when printing by added normalization of HTML background ([#108](https://github.com/marp-team/marpit/pull/108), [#109](https://github.com/marp-team/marpit/pull/109))
