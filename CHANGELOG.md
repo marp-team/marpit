@@ -7,6 +7,10 @@
 - Prevent leaking header and footer when printing by added normalization of HTML background ([#108](https://github.com/marp-team/marpit/pull/108), [#109](https://github.com/marp-team/marpit/pull/109))
 - Fix the version badge in docs sidebar ([#110](https://github.com/marp-team/marpit/pull/108))
 
+### Changed
+
+- Upgrade Node and dependent packages to latest version ([#111](https://github.com/marp-team/marpit/pull/111))
+
 ## v0.4.0 - 2018-12-02
 
 ### Added
