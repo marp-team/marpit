@@ -1,6 +1,14 @@
 /** @module */
 import postcss from 'postcss'
 
+const marpitPrintContainerStyle = `
+html, body {
+  background-color: #fff;
+  margin: 0;
+  page-break-inside: avoid;
+}
+`.trim()
+
 /**
  * Marpit PostCSS printable plugin.
  *
@@ -55,7 +63,7 @@ export const postprocess = postcss.plugin(
       if (rule.params !== 'marpit-print') return
 
       rule.params = 'print'
-      rule.first.before('html, body { margin: 0; page-break-inside: avoid; }')
+      rule.first.before(marpitPrintContainerStyle)
     })
 )
 
