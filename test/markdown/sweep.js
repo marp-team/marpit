@@ -22,7 +22,7 @@ describe('Marpit sweep plugin', () => {
       options: { inlineSVG: false },
     }
 
-    const markdown = md()
+    const markdown = md({ breaks: true })
       .use(slide)
       .use(parseDirectives, marpitStub)
       .use(applyDirectives)
@@ -46,6 +46,7 @@ describe('Marpit sweep plugin', () => {
     )
 
     expect($('p')).toHaveLength(2)
+    expect($('br')).toHaveLength(0)
   })
 
   const htmlOptions = [true, false]
