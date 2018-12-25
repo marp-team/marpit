@@ -7,6 +7,9 @@
  * directives through HTML comment, Marpit will sweep paragraphs included only
  * whitespace by setting `hidden: true`.
  *
+ * It also sweep the inline token marked as hidden forcely. Please notice that
+ * plugins executed after this cannot handle hidden inline tokens.
+ *
  * @alias module:markdown/sweep
  * @param {MarkdownIt} md markdown-it instance.
  */
@@ -31,7 +34,11 @@ function sweep(md) {
     const current = { open: [], tokens: {} }
 
     for (const token of state.tokens) {
-      if (token.type === 'paragraph_open') {
+      if (token.type === 'inline' && token.hidden) {
+        // markdown-it's "inline" type is not following a `hidden` flag. Marpit
+        // changes the token type to unique name to hide token forcely.
+        token.type = 'marpit_hidden_inline'
+      } else if (token.type === 'paragraph_open') {
         current.open.push(token)
         current.tokens[token] = []
       } else if (token.type === 'paragraph_close') {
