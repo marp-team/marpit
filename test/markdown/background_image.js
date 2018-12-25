@@ -72,8 +72,16 @@ describe('Marpit background image plugin', () => {
 
   context('with color keyword', () => {
     it('assigns backgroundColor directive', () => {
-      const [firstSlide] = md().parse('![bg](#123abc)')
-      expect(firstSlide.meta.marpitDirectives.backgroundColor).toBe('#123abc')
+      const bgColorDirective = src => {
+        const [firstSlide] = md().parse(`![bg](${src})`)
+        return firstSlide.meta.marpitDirectives.backgroundColor
+      }
+
+      expect(bgColorDirective('#123abc')).toBe('#123abc')
+      expect(bgColorDirective('#def')).toBe('#def')
+      expect(bgColorDirective('transparent')).toBe('transparent')
+      expect(bgColorDirective('rgb(255,128,0)')).toBe('rgb(255,128,0)')
+      expect(bgColorDirective('rgba(16,32,64,0.5)')).toBe('rgba(16,32,64,0.5)')
     })
   })
 

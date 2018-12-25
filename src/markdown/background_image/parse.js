@@ -31,8 +31,11 @@ function backgroundImageParse(md) {
             t.hidden = true
 
             // Background color
-            const color = colorString.get(marpitImage.url)
-            if (color) marpitImage.backgroundColor = marpitImage.url
+            const isColor =
+              !!colorString.get(marpitImage.url) ||
+              marpitImage.url.toLowerCase() === 'currentcolor'
+
+            if (isColor) marpitImage.backgroundColor = marpitImage.url
 
             for (const opt of marpitImage.options) {
               // Background size keyword
