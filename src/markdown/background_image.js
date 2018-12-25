@@ -1,13 +1,7 @@
 /** @module */
+import parse from './background_image/parse'
 import InlineStyle from '../helpers/inline_style'
 import wrapTokens from '../helpers/wrap_tokens'
-
-const bgSizeKeywords = {
-  auto: 'auto',
-  contain: 'contain',
-  cover: 'cover',
-  fit: 'contain',
-}
 
 /**
  * Marpit background image plugin.
@@ -26,26 +20,7 @@ const bgSizeKeywords = {
  * @param {MarkdownIt} md markdown-it instance.
  */
 function backgroundImage(md) {
-  md.inline.ruler2.after(
-    'marpit_parse_image',
-    'marpit_background_image',
-    ({ tokens }) => {
-      for (const t of tokens) {
-        if (t.type === 'image' && t.meta.marpitImage.options.includes('bg')) {
-          t.meta.marpitImage.background = true
-          t.hidden = true
-
-          for (const opt of t.meta.marpitImage.options) {
-            if (bgSizeKeywords[opt])
-              t.meta.marpitImage.backgroundSize = bgSizeKeywords[opt]
-
-            if (opt === 'left' || opt === 'right')
-              t.meta.marpitImage.backgroundSplit = opt
-          }
-        }
-      }
-    }
-  )
+  parse(md)
 
   md.core.ruler.after(
     'marpit_inline_svg',
@@ -95,6 +70,7 @@ function backgroundImage(md) {
             if (t.type === 'image') {
               const {
                 background,
+                backgroundColor,
                 backgroundSize,
                 backgroundSplit,
                 filter,
@@ -105,23 +81,31 @@ function backgroundImage(md) {
               } = t.meta.marpitImage
 
               if (background && !url.match(/^\s*$/)) {
-                current.images = [
-                  ...(current.images || []),
-                  {
-                    filter,
-                    height,
-                    size: (() => {
-                      const s = size || backgroundSize || undefined
+                if (backgroundColor) {
+                  // Background color
+                  current.open.meta.marpitDirectives = {
+                    ...(current.open.meta.marpitDirectives || {}),
+                    backgroundColor,
+                  }
+                } else {
+                  current.images = [
+                    ...(current.images || []),
+                    {
+                      filter,
+                      height,
+                      size: (() => {
+                        const s = size || backgroundSize || undefined
 
-                      return !['contain', 'cover'].includes(s) &&
-                        (width || height)
-                        ? `${width || s || 'auto'} ${height || s || 'auto'}`
-                        : s
-                    })(),
-                    url,
-                    width,
-                  },
-                ]
+                        return !['contain', 'cover'].includes(s) &&
+                          (width || height)
+                          ? `${width || s || 'auto'} ${height || s || 'auto'}`
+                          : s
+                      })(),
+                      url,
+                      width,
+                    },
+                  ]
+                }
               }
 
               if (backgroundSplit) current.split = backgroundSplit

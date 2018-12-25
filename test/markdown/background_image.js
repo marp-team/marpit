@@ -70,6 +70,13 @@ describe('Marpit background image plugin', () => {
     })
   })
 
+  context('with color keyword', () => {
+    it('assigns backgroundColor directive', () => {
+      const [firstSlide] = md().parse('![bg](#123abc)')
+      expect(firstSlide.meta.marpitDirectives.backgroundColor).toBe('#123abc')
+    })
+  })
+
   context('with resizing keyword / scale', () => {
     const directives = markdown => {
       const [parsed] = md().parse(markdown)
@@ -223,7 +230,6 @@ describe('Marpit background image plugin', () => {
 
       expect(foreignObject.attr('x')).toBe('50%')
     })
-
     context(
       'when multiple keyword for split background defined in a same slide',
       () => {
