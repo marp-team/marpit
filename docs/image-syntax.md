@@ -8,11 +8,13 @@ Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creatin
 | [Resizing by percentage][resizing] | :heavy_multiplication_x: |    :heavy_check_mark:    | :heavy_check_mark: |
 |   [Resizing by length][resizing]   |    :heavy_check_mark:    |    :heavy_check_mark:    | :heavy_check_mark: |
 |      [Image filters][filters]      |    :heavy_check_mark:    | :heavy_multiplication_x: | :heavy_check_mark: |
+|    [Background color][bgcolor]     |            -             |    :heavy_check_mark:    | :heavy_check_mark: |
 |  [Multiple backgrounds][multiple]  |            -             | :heavy_multiplication_x: | :heavy_check_mark: |
 |     [Split backgrounds][split]     |            -             | :heavy_multiplication_x: | :heavy_check_mark: |
 
 [resizing]: #resizing-image
 [filters]: #image-filters
+[bgcolor]: #background-color
 [advanced-bg]: #advanced-backgrounds
 [multiple]: #multiple-backgrounds
 [split]: #split-backgrounds
@@ -98,6 +100,26 @@ You can resize the background image by keywords. The keyword value basically fol
 |    _`x%`_ | Specify the scaling factor by percentage value. | `![bg 150%](image.jpg)`    |
 
 You also can continue to use [`width` (`w`) and `height` (`h`) option keywords][resizing] to specify size by length.
+
+### Background color
+
+Through Markdown image syntax, Marpit allows the definition of the background [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) instead of the image URL.
+
+```markdown
+![bg](#fff) <!-- Hex color -->
+
+---
+
+![bg](rebeccapurple) <!-- Named color -->
+
+---
+
+![bg](<rgb(255,128,0)>) <!-- RGB values -->
+```
+
+It is same as defining [`<!-- _backgroundColor: "#fff" -->` spot directive](/directives#backgrounds).
+
+?> In this example, `rgb` function is [formed by angle brackets](https://spec.commonmark.org/0.28/#example-470). Normally `![bg](rgb(255,128,0))` may have [no problems](https://spec.commonmark.org/0.28/#example-468). But it does not allow including spaces.
 
 ## Advanced backgrounds
 

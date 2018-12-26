@@ -319,4 +319,4 @@ In addition, we have supported customize for these declarations:
 - `backgroundSize` (`cover` by default)
 - `color`
 
-?> It also can use [extended image syntax](/image-syntax#slide-backgrounds) if you want to set an image as background.
+?> It also can use [extended image syntax](/image-syntax#slide-backgrounds) if you want to set image or color as background to single page.
