@@ -70,6 +70,22 @@ describe('Marpit background image plugin', () => {
     })
   })
 
+  context('with color keyword', () => {
+    it('assigns backgroundColor directive', () => {
+      const bgColorDirective = src => {
+        const [firstSlide] = md().parse(`![bg](${src})`)
+        return firstSlide.meta.marpitDirectives.backgroundColor
+      }
+
+      expect(bgColorDirective('#123abc')).toBe('#123abc')
+      expect(bgColorDirective('#def')).toBe('#def')
+      expect(bgColorDirective('transparent')).toBe('transparent')
+      expect(bgColorDirective('currentColor')).toBe('currentColor')
+      expect(bgColorDirective('rgb(255,128,0)')).toBe('rgb(255,128,0)')
+      expect(bgColorDirective('rgba(16,32,64,0.5)')).toBe('rgba(16,32,64,0.5)')
+    })
+  })
+
   context('with resizing keyword / scale', () => {
     const directives = markdown => {
       const [parsed] = md().parse(markdown)
@@ -223,7 +239,6 @@ describe('Marpit background image plugin', () => {
 
       expect(foreignObject.attr('x')).toBe('50%')
     })
-
     context(
       'when multiple keyword for split background defined in a same slide',
       () => {
@@ -351,6 +366,19 @@ describe('Marpit background image plugin', () => {
         const pseudoSection = $('svg > foreignObject > section').eq(2)
         expect(pseudoSection.attr('style')).toContain('color:white;')
       })
+    })
+
+    context('with background color definition', () => {
+      const $ = $load(mdSVG().render('![bg](red) ![bg](test)'))
+      const bgSection = $(
+        'section[data-marpit-advanced-background="background"]'
+      )
+
+      it('assigns backgroundColor style to background layer', () =>
+        expect(bgSection.attr('style')).toContain('background-color:red;'))
+
+      it('renders only one figure image', () =>
+        expect(bgSection.find('figure')).toHaveLength(1))
     })
   })
 })

@@ -90,6 +90,7 @@
     "stylelint-scss": "^3.4.1"
   },
   "dependencies": {
+    "color-string": "^1.5.3",
     "js-yaml": "^3.12.0",
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^8.4.2",
