@@ -80,6 +80,7 @@ describe('Marpit background image plugin', () => {
       expect(bgColorDirective('#123abc')).toBe('#123abc')
       expect(bgColorDirective('#def')).toBe('#def')
       expect(bgColorDirective('transparent')).toBe('transparent')
+      expect(bgColorDirective('currentColor')).toBe('currentColor')
       expect(bgColorDirective('rgb(255,128,0)')).toBe('rgb(255,128,0)')
       expect(bgColorDirective('rgba(16,32,64,0.5)')).toBe('rgba(16,32,64,0.5)')
     })
