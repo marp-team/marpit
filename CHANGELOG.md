@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Support setting background color by Markdown image syntax ([#92](https://github.com/marp-team/marpit/issues/92), [#113](https://github.com/marp-team/marpit/pull/113))
+
 ### Fixed
 
 - Fix remaining orphan break by sweeping hidden inline token forcibly ([#114](https://github.com/marp-team/marpit/pull/114))
