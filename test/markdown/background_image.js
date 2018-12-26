@@ -366,5 +366,18 @@ describe('Marpit background image plugin', () => {
         expect(pseudoSection.attr('style')).toContain('color:white;')
       })
     })
+
+    context('with background color definition', () => {
+      const $ = $load(mdSVG().render('![bg](red) ![bg](test)'))
+      const bgSection = $(
+        'section[data-marpit-advanced-background="background"]'
+      )
+
+      it('assigns backgroundColor style to background layer', () =>
+        expect(bgSection.attr('style')).toContain('background-color:red;'))
+
+      it('renders only one figure image', () =>
+        expect(bgSection.find('figure')).toHaveLength(1))
+    })
   })
 })
