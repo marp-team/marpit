@@ -14,6 +14,8 @@ const bgSizeKeywords = {
  * Parse Marpit's image token and mark as background image when the alternate
  * text includes `bg`. The marked images will not show as the regular image.
  *
+ * Furthermore, it parses additional keywords needed for background image.
+ *
  * @alias module:markdown/background_image/parse
  * @param {MarkdownIt} md markdown-it instance.
  */
