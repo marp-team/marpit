@@ -33,6 +33,7 @@ function inlineSVG(md, marpit) {
             'marpit_inline_svg',
             {
               tag: 'svg',
+              'data-marpit-svg': '',
               viewBox: `0 0 ${w} ${h}`,
               open: { meta: { marpitSlideElement: 1 } },
               close: { meta: { marpitSlideElement: -1 } },

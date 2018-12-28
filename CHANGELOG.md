@@ -5,6 +5,7 @@
 ### Added
 
 - Support setting background color by Markdown image syntax ([#92](https://github.com/marp-team/marpit/issues/92), [#113](https://github.com/marp-team/marpit/pull/113))
+- Add `data-marpit-svg` attribute to SVG element outputted by inline SVG mode ([#115](https://github.com/marp-team/marpit/pull/115))
 
 ### Fixed
 

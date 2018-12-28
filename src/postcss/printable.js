@@ -41,7 +41,7 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css => {
     color-adjust: exact !important;
   }
 
-  :marpit-container > svg {
+  :marpit-container > svg[data-marpit-svg] {
     display: block;
     height: 100vh;
     width: 100vw;
