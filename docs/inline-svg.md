@@ -5,12 +5,12 @@
 When you set [`inlineSVG: true` in Marpit constructor option](/usage#triangular_ruler-inline-svg-slide), each `<section>` elements are wrapped with inline SVG.
 
 ```html
-<svg viewBox="0 0 1280 960">
+<svg data-marpit-svg="" viewBox="0 0 1280 960">
   <foreignObject width="1280" height="960">
     <section><h1>Page 1</h1></section>
   </foreignObject>
 </svg>
-<svg viewBox="0 0 1280 960">
+<svg data-marpit-svg="" viewBox="0 0 1280 960">
   <foreignObject width="1280" height="960">
     <section><h1>Page 2</h1></section>
   </foreignObject>
@@ -27,7 +27,7 @@ You may delegate a logic of pixel-perfect scaling for slide page to SVG. You hav
 
 ```css
 /* Fit slide page to viewport */
-svg {
+svg[data-marpit-svg] {
   display: block;
   width: 100vw;
   height: 100vh;

@@ -56,7 +56,7 @@ section[data-marpit-advanced-background="pseudo"] {
 }
 
 section[data-marpit-advanced-background="pseudo"],
-:marpit-container > svg > foreignObject[data-marpit-advanced-background="pseudo"] {
+:marpit-container > svg[data-marpit-svg] > foreignObject[data-marpit-advanced-background="pseudo"] {
   pointer-events: none !important;
 }
 
