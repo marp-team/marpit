@@ -34,7 +34,9 @@ describe('Marpit inline SVG plugin', () => {
     const $ = render(md(), '# test\n\n---\n\n# test')
 
     expect(
-      $('svg[viewBox] > foreignObject[width][height] > section')
+      $(
+        'svg[viewBox][data-marpit-svg] > foreignObject[width][height] > section'
+      )
     ).toHaveLength(2)
   })
 
