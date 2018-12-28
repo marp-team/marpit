@@ -70,7 +70,7 @@ jobs:
     docker:
       - image: circleci/node:8.15.0
 
-  '6.16.0' :
+  '6.16.0':
     <<: *base
     docker:
       - image: circleci/node:6.16.0
