@@ -11,6 +11,10 @@
 
 - Fix remaining orphan break by sweeping hidden inline token forcibly ([#114](https://github.com/marp-team/marpit/pull/114))
 
+### Changed
+
+- Upgrade Node and dependent packages to latest version ([#116](https://github.com/marp-team/marpit/pull/116))
+
 ## v0.4.1 - 2018-12-18
 
 ### Fixed
