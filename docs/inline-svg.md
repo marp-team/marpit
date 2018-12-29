@@ -61,7 +61,7 @@ Marpit's [advanced backgrounds](/image-syntax#advanced-backgrounds) would work w
 
 ## Polyfill
 
-We provide a [polyfill](#polyfill) for WebKit based browsers in [@marp-team/marpit-svg-polyfill](https://github.com/marp-team/marpit-svg-polyfill).
+We provide a polyfill for WebKit based browsers in [@marp-team/marpit-svg-polyfill](https://github.com/marp-team/marpit-svg-polyfill).
 
 ```html
 <svg data-marpit-svg viewBox="0 0 1280 960">
