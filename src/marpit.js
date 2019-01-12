@@ -147,11 +147,12 @@ class Marpit {
    * Render Markdown into HTML and CSS string.
    *
    * @param {string} markdown A Markdown string.
+   * @param {Object} [env] Environment object for passing to markdown-it.
    * @returns {Marpit~RenderResult} An object of rendering result.
    */
-  render(markdown) {
+  render(markdown, env = {}) {
     return {
-      html: this.renderMarkdown(markdown),
+      html: this.renderMarkdown(markdown, env),
       css: this.renderStyle(this.lastGlobalDirectives.theme),
       comments: this.lastComments,
     }
@@ -165,10 +166,11 @@ class Marpit {
    *
    * @private
    * @param {string} markdown A Markdown string.
+   * @param {Object} [env] Environment object for passing to markdown-it.
    * @returns {string} The result string of rendering Markdown.
    */
-  renderMarkdown(markdown) {
-    return this.markdown.render(markdown)
+  renderMarkdown(markdown, env = {}) {
+    return this.markdown.render(markdown, env)
   }
 
   /**
