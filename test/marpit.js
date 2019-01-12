@@ -82,6 +82,16 @@ describe('Marpit', () => {
       })
     })
 
+    context('with env argument', () => {
+      it('passes env option to markdown#render', () => {
+        const instance = new Marpit()
+        const render = jest.spyOn(instance.markdown, 'render')
+
+        instance.render('Markdown', { env: 'env' })
+        expect(render).toBeCalledWith('Markdown', { env: 'env' })
+      })
+    })
+
     context('with inlineSVG option', () => {
       const instance = inlineSVG => {
         const marpit = new Marpit({ inlineSVG })
@@ -252,9 +262,10 @@ describe('Marpit', () => {
   describe('#renderMarkdown', () => {
     it('returns the result of markdown#render', () => {
       const instance = new Marpit()
-      instance.markdown.render = md => `test of ${md}`
+      const spy = jest.spyOn(instance.markdown, 'render').mockImplementation()
 
-      expect(instance.renderMarkdown('render')).toBe('test of render')
+      instance.renderMarkdown('render', { env: 'env' })
+      expect(spy).toBeCalledWith('render', { env: 'env' })
     })
   })
 
