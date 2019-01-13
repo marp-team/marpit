@@ -42,7 +42,7 @@ declare module '@marp-team/marpit' {
     protected lastGlobalDirectives?: { [directive: string]: any }
     protected lastStyles?: string[]
 
-    render(markdown: string): MarpitRenderResult
+    render(markdown: string, env?: any): MarpitRenderResult
     use<P extends any[]>(
       plugin: (
         this: Marpit['markdown'],
@@ -53,7 +53,7 @@ declare module '@marp-team/marpit' {
     ): this
 
     protected applyMarkdownItPlugins(md: any): void
-    protected renderMarkdown(markdown: string): string
+    protected renderMarkdown(markdown: string, env?: any): string
     protected renderStyle(theme?: string): string
     protected themeSetPackOptions(): ThemeSetPackOptions
   }
