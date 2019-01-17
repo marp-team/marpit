@@ -1,12 +1,12 @@
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
-import collectComment from '../../src/markdown/collect_comment'
+import collect from '../../src/markdown/collect'
 import comment from '../../src/markdown/comment'
 import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
 
-describe('Marpit collect comment plugin', () => {
+describe('Marpit collect plugin', () => {
   const themeSet = new Map()
   themeSet.set('default', true)
 
@@ -21,11 +21,11 @@ describe('Marpit collect comment plugin', () => {
       .use(slide)
       .use(parseDirectives, { themeSet: marpitInstance.themeSet })
       .use(applyDirectives)
-      .use(collectComment, marpitInstance)
+      .use(collect, marpitInstance)
 
   const text = dedent`
     ---
-    frontMatter: would not correct
+    frontMatter: would not collect
     ---
 
     # First page
@@ -53,7 +53,7 @@ describe('Marpit collect comment plugin', () => {
 
     # Third page
 
-    <!-- theme: is-invalid-theme-but-not-collect-because-theme-iss-correct-directive -->
+    <!-- theme: is-invalid-theme-but-not-collect-because-theme-is-correct-directive -->
 
     ---
 
