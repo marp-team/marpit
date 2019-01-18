@@ -5,6 +5,7 @@
 ### Added
 
 - Add `env` argument to [`Marpit.render()`](https://marpit-api.marp.app/marpit#render) ([#118](https://github.com/marp-team/marpit/pull/118))
+- Output HTML per slide page as array by passing `htmlAsArray` env ([#119](https://github.com/marp-team/marpit/pull/119))
 - Update docs to explain SVG slide polyfill ([#117](https://github.com/marp-team/marpit/pull/117))
 
 ## v0.5.0 - 2018-12-28

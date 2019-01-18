@@ -15,8 +15,8 @@ declare module '@marp-team/marpit' {
 
   type MarpitHeadingDivider = 1 | 2 | 3 | 4 | 5 | 6
 
-  type MarpitRenderResult = {
-    html: string
+  type MarpitRenderResult<T = string> = {
+    html: T
     css: string
     comments: string[][]
   }
@@ -27,6 +27,13 @@ declare module '@marp-team/marpit' {
     containers?: Element[]
     printable?: boolean
     inlineSVG?: boolean
+  }
+
+  namespace MarpitEnv {
+    export interface HTMLAsArray {
+      htmlAsArray: true
+      [key: string]: any
+    }
   }
 
   export class Marpit {
@@ -40,9 +47,15 @@ declare module '@marp-team/marpit' {
 
     protected lastComments?: MarpitRenderResult['comments']
     protected lastGlobalDirectives?: { [directive: string]: any }
+    protected lastSlideTokens?: any[]
     protected lastStyles?: string[]
 
+    render(
+      markdown: string,
+      env: MarpitEnv.HTMLAsArray
+    ): MarpitRenderResult<string[]>
     render(markdown: string, env?: any): MarpitRenderResult
+
     use<P extends any[]>(
       plugin: (
         this: Marpit['markdown'],

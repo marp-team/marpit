@@ -4,7 +4,7 @@ import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
 import marpitApplyDirectives from './markdown/directives/apply'
 import marpitBackgroundImage from './markdown/background_image'
-import marpitCollectComment from './markdown/collect_comment'
+import marpitCollect from './markdown/collect'
 import marpitComment from './markdown/comment'
 import marpitContainerPlugin from './markdown/container'
 import marpitHeaderAndFooter from './markdown/header_and_footer'
@@ -130,14 +130,14 @@ class Marpit {
       .use(marpitSweep)
       .use(marpitInlineSVG, this)
       .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
-      .use(marpitCollectComment, this)
+      .use(marpitCollect, this)
 
     if (backgroundSyntax) md.use(marpitBackgroundImage)
   }
 
   /**
    * @typedef {Object} Marpit~RenderResult
-   * @property {string} html Rendered HTML.
+   * @property {string|string[]} html Rendered HTML.
    * @property {string} css Rendered CSS.
    * @property {string[][]} comments Parsed HTML comments per slide pages,
    *     excepted YAML for directives. It would be useful for presenter notes.
@@ -148,6 +148,8 @@ class Marpit {
    *
    * @param {string} markdown A Markdown string.
    * @param {Object} [env] Environment object for passing to markdown-it.
+   * @param {boolean} [env.htmlAsArray=false] Output rendered HTML as array per
+   *     slide.
    * @returns {Marpit~RenderResult} An object of rendering result.
    */
   render(markdown, env = {}) {
@@ -167,9 +169,19 @@ class Marpit {
    * @private
    * @param {string} markdown A Markdown string.
    * @param {Object} [env] Environment object for passing to markdown-it.
-   * @returns {string} The result string of rendering Markdown.
+   * @param {boolean} [env.htmlAsArray=false] Output rendered HTML as array per
+   *     slide.
+   * @returns {string|string[]} The result string(s) of rendering Markdown.
    */
   renderMarkdown(markdown, env = {}) {
+    if (env.htmlAsArray) {
+      this.markdown.parse(markdown, env)
+
+      return this.lastSlideTokens.map(slide =>
+        this.markdown.renderer.render(slide, this.markdown.options, env)
+      )
+    }
+
     return this.markdown.render(markdown, env)
   }
 
