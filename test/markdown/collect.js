@@ -64,7 +64,21 @@ describe('Marpit collect plugin', () => {
     const marpit = marpitStub()
     md(marpit).renderInline(text)
 
+    expect(marpit.lastSlideTokens).toBeUndefined()
     expect(marpit.lastComments).toBeUndefined()
+  })
+
+  it("collects parsed tokens and store to Marpit's lastSlideTokens member", () => {
+    const marpit = marpitStub()
+    const markdownIt = md(marpit)
+    const original = markdownIt.render(text)
+
+    expect(marpit.lastSlideTokens).toHaveLength(4)
+    expect(original).toBe(
+      marpit.lastSlideTokens
+        .map(tokens => markdownIt.renderer.render(tokens, markdownIt.options))
+        .join('')
+    )
   })
 
   it("collects comments and store to Marpit's lastComments member", () => {

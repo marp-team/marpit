@@ -90,6 +90,18 @@ describe('Marpit', () => {
         instance.render('Markdown', { env: 'env' })
         expect(render).toBeCalledWith('Markdown', { env: 'env' })
       })
+
+      context('when passed htmlAsArray prop as true', () => {
+        it('outputs HTML as array per slide', () => {
+          const { html } = new Marpit().render('# Page1\n***\n## Page2', {
+            htmlAsArray: true,
+          })
+
+          expect(html).toHaveLength(2)
+          expect(cheerio.load(html[0])('section#1 > h1')).toHaveLength(1)
+          expect(cheerio.load(html[1])('section#2 > h2')).toHaveLength(1)
+        })
+      })
     })
 
     context('with inlineSVG option', () => {
