@@ -135,6 +135,30 @@ marpit.themeSet.default = marpit.themeSet.add('...')
 
 ## Advanced
 
+### Output HTML as array
+
+[`marpit.render()`](https://marpit-api.marp.app/marpit#render) has an optional second argument `env`, to pass data object into [markdown-it](https://markdown-it.github.io/markdown-it/#MarkdownIt.render).
+
+When you passed `htmlAsArray: true`, the renderer will output HTML as array, that has consisted HTML per slide pages.
+
+```javascript
+const markdown = `
+# Page 1
+
+---
+
+# Page 2
+`
+
+const { html } = marpit.render(markdown, { htmlAsArray: true })
+/*
+[ '<section id="1">\n<h1>Page 1</h1>\n</section>\n',
+  '<section id="2">\n<h1>Page 2</h1>\n</section>\n' ]
+*/
+```
+
+!> Marpit initializer's `container` option is still enabled to scope CSS, so you have to render these HTMLs within `<div class="marpit">` or [customized element(s)](#package-customize-container-elements).
+
 ### Presenter notes
 
 Marpit can collect HTML comments written in Markdown while rendering, except [directives](/directives). The collected `comments` are returned in the result of [`marpit.render()`](https://marpit-api.marp.app/marpit#render).
