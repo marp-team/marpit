@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.6.0 - 2019-01-19
+
 ### Added
 
 - Add `env` argument to [`Marpit.render()`](https://marpit-api.marp.app/marpit#render) ([#118](https://github.com/marp-team/marpit/pull/118))
