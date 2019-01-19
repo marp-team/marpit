@@ -235,7 +235,7 @@ You're ready to use multi-column through custom container! The rendered slide is
 
 <p align="center">
 
-[<img src="/assets/plugin-custom-container.png" alt="Rendered custom container" style="box-shadow:0 5px 15px #ccc;max-height:720px;" />](/assets/plugin-custom-container.png)
+[<img src="/assets/plugin-custom-container.png" alt="Rendered custom container" style="box-shadow:0 5px 15px #ccc;" />](/assets/plugin-custom-container.png ':ignore')
 
 </p>
 
