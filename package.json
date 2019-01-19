@@ -60,7 +60,7 @@
     "@babel/core": "^7.2.2",
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.2.3",
-    "autoprefixer": "^9.4.3",
+    "autoprefixer": "^9.4.5",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "cheerio": "^1.0.0-rc.2",
@@ -69,13 +69,13 @@
     "cssnano": "^4.1.8",
     "dedent": "^0.7.0",
     "docsify-cli": "^4.3.0",
-    "docsify-themeable": "^0.6.0",
-    "eslint": "^5.11.1",
+    "docsify-themeable": "^0.6.1",
+    "eslint": "^5.12.1",
     "eslint-config-airbnb-base": "13.1.0",
-    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-prettier": "^3.5.0",
     "eslint-plugin-import": "^2.14.0",
     "jest": "^23.6.0",
-    "jest-junit": "^5.2.0",
+    "jest-junit": "^6.0.1",
     "jsdoc": "^3.5.5",
     "minami": "^1.2.3",
     "mkdirp": "^0.5.1",
@@ -83,19 +83,19 @@
     "nodemon": "^1.18.9",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.3",
-    "rimraf": "^2.6.2",
-    "stylelint": "^9.9.0",
+    "rimraf": "^2.6.3",
+    "stylelint": "^9.10.1",
     "stylelint-config-prettier": "^4.0.0",
     "stylelint-config-standard": "^18.2.0",
-    "stylelint-scss": "^3.4.4"
+    "stylelint-scss": "^3.5.1"
   },
   "dependencies": {
     "color-string": "^1.5.3",
-    "js-yaml": "^3.12.0",
+    "js-yaml": "^3.12.1",
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^8.4.2",
     "markdown-it-front-matter": "^0.1.2",
-    "postcss": "^7.0.7"
+    "postcss": "^7.0.13"
   },
   "publishConfig": {
     "access": "public"
