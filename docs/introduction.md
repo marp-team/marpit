@@ -1,3 +1,4 @@
+[marp]: https://github.com/marp-team/marp/
 [marp-core]: https://github.com/marp-team/marp-core
 
 <p style="text-align:center;">
@@ -13,7 +14,7 @@
 
 Marpit is designed to _output minimum assets for the slide deck_. You can use the bare assets as a logicless slide deck, but mainly we expect to integrate output with other tools and applications.
 
-This framework is actually created for use as [a core][marp-core] of the next version of [Marp](https://github.com/yhatt/marp/).
+In fact, this framework is created for using as the base of [a core converter][marp-core] in [the next version of Marp][marp].
 
 ## Features
 

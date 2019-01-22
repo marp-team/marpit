@@ -5,9 +5,9 @@
   <strong>Marpit</strong>: Markdown slide deck framework
 </p>
 <p align="center">
-  <a href="https://circleci.com/gh/marp-team/marpit/"><img src="https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square" alt="CircleCI" /></a>
-  <a href="https://codecov.io/gh/marp-team/marpit"><img src="https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square" alt="Codecov" /></a>
-  <a href="https://www.npmjs.com/package/@marp-team/marpit"><img src="https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square" alt="npm" /></a>
+  <a href="https://circleci.com/gh/marp-team/marpit/"><img src="https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square&logo=circleci" alt="CircleCI" /></a>
+  <a href="https://codecov.io/gh/marp-team/marpit"><img src="https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square&logo=codecov" alt="Codecov" /></a>
+  <a href="https://www.npmjs.com/package/@marp-team/marpit"><img src="https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square&logo=npm" alt="npm" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square" alt="LICENSE" /></a>
 </p>
 
@@ -17,8 +17,9 @@
 
 Marpit is designed to _output minimum assets for the slide deck_. You can use the bare assets as a logicless slide deck, but mainly we expect to integrate output with other tools and applications.
 
-This framework is actually created for use as [a core][marp-core] of the next version of [Marp](https://github.com/yhatt/marp/).
+In fact, this framework is created for using as the base of [a core converter][marp-core] in [the next version of Marp][marp].
 
+[marp]: https://github.com/marp-team/marp/
 [marp-core]: https://github.com/marp-team/marp-core/
 
 ## Features
@@ -56,6 +57,10 @@ yarn build
 ## Contributing
 
 Are you interested in contributing? Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md).
+
+## Sub-projects
+
+- **[@marp-team/marpit-svg-polyfill](https://github.com/marp-team/marpit-svg-polyfill)** - A polyfill of the inline SVG slide in Safari based browsers.
 
 ## Author
 

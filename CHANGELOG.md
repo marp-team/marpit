@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Small update for README and docs ([#122](https://github.com/marp-team/marpit/pull/122))
+
 ## v0.6.0 - 2019-01-19
 
 ### Added
