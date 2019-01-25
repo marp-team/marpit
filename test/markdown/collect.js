@@ -3,16 +3,18 @@ import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
 import collect from '../../src/markdown/collect'
 import comment from '../../src/markdown/comment'
+import inlineSVG from '../../src/markdown/inline_svg'
 import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
+import { ThemeSet } from '../../src/index'
 
 describe('Marpit collect plugin', () => {
-  const themeSet = new Map()
-  themeSet.set('default', true)
+  const themeSet = new ThemeSet()
 
-  const marpitStub = () => ({
+  const marpitStub = (svg = false) => ({
     themeSet,
     lastGlobalDirectives: {},
+    options: { inlineSVG: svg },
   })
 
   const md = marpitInstance =>
@@ -22,6 +24,7 @@ describe('Marpit collect plugin', () => {
       .use(parseDirectives, { themeSet: marpitInstance.themeSet })
       .use(applyDirectives)
       .use(collect, marpitInstance)
+      .use(inlineSVG, marpitInstance)
 
   const text = dedent`
     ---
@@ -141,4 +144,25 @@ describe('Marpit collect plugin', () => {
       })
     }
   )
+
+  context('with inline SVG mode', () => {
+    it('includes inline SVG tokens in collected result', () => {
+      const marpit = marpitStub()
+      const marpitSVG = marpitStub(true)
+
+      md(marpit).render(text)
+      md(marpitSVG).render(text)
+
+      expect(marpitSVG.lastComments).toStrictEqual(marpit.lastComments)
+      expect(marpitSVG.lastSlideTokens).toHaveLength(4)
+
+      for (const tokens of marpitSVG.lastSlideTokens) {
+        const [open] = tokens
+        const [close] = tokens.slice(-1)
+
+        expect(open.type).toBe('marpit_inline_svg_open')
+        expect(close.type).toBe('marpit_inline_svg_close')
+      }
+    })
+  })
 })

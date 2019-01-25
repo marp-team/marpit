@@ -141,6 +141,16 @@ describe('Marpit', () => {
             expect(countDecl(ret.root, '--theme-defined')).toBe(1)
           })
       })
+
+      context('when passed htmlAsArray env', () => {
+        it('outputs HTML including inline SVG as array', () => {
+          const { html } = instance(true).render('# Hi', { htmlAsArray: true })
+          expect(html).toHaveLength(1)
+
+          const $ = cheerio.load(html[0], { lowerCaseTags: false })
+          expect($('svg > foreignObject')).toHaveLength(1)
+        })
+      })
     })
 
     context('with backgroundSyntax option', () => {

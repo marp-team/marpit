@@ -20,6 +20,7 @@ function collect(md, marpit) {
     marpit.lastSlideTokens = []
 
     let currentPage
+    let pageIdx = -1
 
     const collectComment = token => {
       if (
@@ -33,21 +34,15 @@ function collect(md, marpit) {
       currentPage >= 0 && marpit.lastSlideTokens[currentPage] !== undefined
 
     for (const token of state.tokens) {
-      if (
-        token.type === 'marpit_slide_open' &&
-        token.meta &&
-        token.meta.marpitSlide !== undefined
-      ) {
-        currentPage = token.meta.marpitSlide
+      if (token.meta && token.meta.marpitSlideElement === 1) {
+        pageIdx += 1
+        currentPage = pageIdx
 
-        if (
-          currentPage >= 0 &&
-          marpit.lastSlideTokens[currentPage] === undefined
-        ) {
+        if (marpit.lastSlideTokens[currentPage] === undefined) {
           marpit.lastSlideTokens[currentPage] = [token]
           marpit.lastComments[currentPage] = []
         }
-      } else if (token.type === 'marpit_slide_close') {
+      } else if (token.meta && token.meta.marpitSlideElement === -1) {
         if (collectable()) marpit.lastSlideTokens[currentPage].push(token)
         currentPage = undefined
       } else {
