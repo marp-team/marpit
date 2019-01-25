@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.6.1 - 2019-01-25
+
 ### Fixed
 
 - Include inline SVG elements when rendered with `htmlAsArray` env ([#123](https://github.com/marp-team/marpit/pull/123))
