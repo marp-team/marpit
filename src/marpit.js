@@ -21,7 +21,6 @@ import marpitSweep from './markdown/sweep'
 const defaultOptions = {
   backgroundSyntax: true,
   container: marpitContainer,
-  directives: {},
   filters: true,
   headingDivider: false,
   inlineStyle: true,
@@ -45,10 +44,6 @@ class Marpit {
    *     with the alternate text including `bg`. Normally it converts into spot
    *     directives about background image. If `inlineSVG` is enabled, it
    *     supports the advanced backgrounds.
-   * @param {Object} [opts.directives] Define custom directives to parser. The
-   *     parsed result can access through markdown-it's parsed token meta.
-   * @param {Object} [opts.directives.global]
-   * @param {Object} [opts.directives.local]
    * @param {false|Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
@@ -81,7 +76,7 @@ class Marpit {
      * value of options after creating instance.
      *
      * @member {Object} options
-     * @memberOf Marpit#
+     * @memberOf Marpit
      * @readonly
      */
     Object.defineProperty(this, 'options', {
@@ -89,6 +84,23 @@ class Marpit {
       value: Object.freeze({ ...defaultOptions, ...opts }),
     })
 
+    /**
+     * Definitions of the custom directive.
+     *
+     * It has the assignable `global` and `local` object. They have consisted of
+     * the directive name as a key, and parser function as a value. The parser
+     * should return the validated object for updating meta of markdown-it
+     * token.
+     *
+     * @member {Object} customDirectives
+     * @memberOf Marpit
+     * @readonly
+     */
+    Object.defineProperty(this, 'customDirectives', {
+      value: Object.seal({ global: {}, local: {} }),
+    })
+
+    // Internal members
     Object.defineProperties(this, {
       containers: { value: [...wrapArray(this.options.container)] },
       slideContainers: { value: [...wrapArray(this.options.slideContainer)] },
@@ -120,28 +132,14 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    const {
-      backgroundSyntax,
-      directives,
-      filters,
-      looseYAML,
-      scopedStyle,
-    } = this.options
-
-    const customDirectives = {
-      global: (directives && directives.global) || {},
-      local: (directives && directives.local) || {},
-    }
-
-    const customDirectiveList = [
-      ...Object.keys(customDirectives.global),
-      ...Object.keys(customDirectives.local),
-    ]
+    const { backgroundSyntax, filters, looseYAML, scopedStyle } = this.options
+    const { global, local } = this.customDirectives
+    const customDirectiveList = [...Object.keys(global), ...Object.keys(local)]
 
     md.use(marpitComment, { looseYAML })
       .use(marpitStyleParse, this)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this, { ...customDirectives, looseYAML })
+      .use(marpitParseDirectives, this, { ...this.customDirectives, looseYAML })
       .use(marpitApplyDirectives, { directives: customDirectiveList })
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider, this)
