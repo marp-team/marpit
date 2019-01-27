@@ -18,6 +18,7 @@ describe('Marpit sweep plugin', () => {
 
   it('sweeps blank paragraph made by background image plugin', () => {
     const marpitStub = {
+      customDirectives: { global: {}, local: {} },
       themeSet: new Map(),
       options: { inlineSVG: false },
     }
@@ -25,7 +26,7 @@ describe('Marpit sweep plugin', () => {
     const markdown = md({ breaks: true })
       .use(slide)
       .use(parseDirectives, marpitStub)
-      .use(applyDirectives)
+      .use(applyDirectives, marpitStub)
       .use(inlineSVG, marpitStub)
       .use(parseImage)
       .use(backgroundImage)

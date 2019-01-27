@@ -10,12 +10,15 @@ describe('Marpit directives apply plugin', () => {
   const themeSetStub = new Map()
   themeSetStub.set('test_theme', true)
 
-  const md = (...args) =>
-    new MarkdownIt('commonmark')
+  const md = (...args) => {
+    const customDirectives = { global: {}, local: {} }
+
+    return new MarkdownIt('commonmark')
       .use(comment)
       .use(slide)
-      .use(parseDirectives, { themeSet: themeSetStub })
-      .use(applyDirectives, ...args)
+      .use(parseDirectives, { customDirectives, themeSet: themeSetStub })
+      .use(applyDirectives, { customDirectives }, ...args)
+  }
 
   const mdForTest = (...args) =>
     md(...args).use(mdInstance => {

@@ -8,6 +8,7 @@ import { Theme, ThemeSet } from '../../src/index'
 
 describe('Marpit inline SVG plugin', () => {
   const marpitStub = (props = {}) => ({
+    customDirectives: { global: {}, local: {} },
     themeSet: new ThemeSet(),
     lastGlobalDirectives: {},
     options: { inlineSVG: true },
@@ -17,8 +18,11 @@ describe('Marpit inline SVG plugin', () => {
   const md = (marpitInstance = marpitStub()) =>
     new MarkdownIt('commonmark')
       .use(slide)
-      .use(parseDirectives, { themeSet: marpitInstance.themeSet })
-      .use(applyDirectives)
+      .use(parseDirectives, {
+        customDirectives: marpitInstance.customDirectives,
+        themeSet: marpitInstance.themeSet,
+      })
+      .use(applyDirectives, marpitInstance)
       .use(inlineSVG, marpitInstance)
 
   const render = (markdownIt, text, inline = false) => {

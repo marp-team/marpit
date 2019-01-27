@@ -12,6 +12,7 @@ const splitBackgroundKeywords = ['left', 'right']
 
 describe('Marpit background image plugin', () => {
   const marpitStub = svg => ({
+    customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     themeSet: { getThemeProp: () => 100 },
     options: { inlineSVG: svg },
@@ -22,7 +23,7 @@ describe('Marpit background image plugin', () => {
       .use(comment)
       .use(slide)
       .use(parseDirectives, marpitStub(svg))
-      .use(applyDirectives)
+      .use(applyDirectives, marpitStub(svg))
       .use(inlineSVG, marpitStub(svg))
       .use(parseImage, { filters })
       .use(backgroundImage)

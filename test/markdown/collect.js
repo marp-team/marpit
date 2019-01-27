@@ -13,6 +13,7 @@ describe('Marpit collect plugin', () => {
 
   const marpitStub = (svg = false) => ({
     themeSet,
+    customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     options: { inlineSVG: svg },
   })
@@ -21,8 +22,11 @@ describe('Marpit collect plugin', () => {
     new MarkdownIt('commonmark')
       .use(comment)
       .use(slide)
-      .use(parseDirectives, { themeSet: marpitInstance.themeSet })
-      .use(applyDirectives)
+      .use(parseDirectives, {
+        customDirectives: marpitInstance.customDirectives,
+        themeSet: marpitInstance.themeSet,
+      })
+      .use(applyDirectives, marpitInstance)
       .use(collect, marpitInstance)
       .use(inlineSVG, marpitInstance)
 

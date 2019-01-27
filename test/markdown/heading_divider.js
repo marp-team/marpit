@@ -7,6 +7,7 @@ import slide from '../../src/markdown/slide'
 
 describe('Marpit heading divider plugin', () => {
   const marpitStub = headingDividerOption => ({
+    customDirectives: { global: {}, local: {} },
     options: { headingDivider: headingDividerOption },
   })
 
@@ -106,7 +107,12 @@ describe('Marpit heading divider plugin', () => {
   })
 
   describe('Global directive', () => {
-    const md = (marpitInstance = { options: {} }) =>
+    const md = (
+      marpitInstance = {
+        customDirectives: { global: {}, local: {} },
+        options: {},
+      }
+    ) =>
       new MarkdownIt('commonmark')
         .use(comment)
         .use(pluginMd => pluginMd.core.ruler.push('marpit_slide', () => {}))

@@ -133,14 +133,12 @@ class Marpit {
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
     const { backgroundSyntax, filters, looseYAML, scopedStyle } = this.options
-    const { global, local } = this.customDirectives
-    const customDirectiveList = [...Object.keys(global), ...Object.keys(local)]
 
     md.use(marpitComment, { looseYAML })
       .use(marpitStyleParse, this)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this, { ...this.customDirectives, looseYAML })
-      .use(marpitApplyDirectives, { directives: customDirectiveList })
+      .use(marpitParseDirectives, this, { looseYAML })
+      .use(marpitApplyDirectives, this)
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider, this)
       .use(marpitSlideContainer, this.slideContainers)
