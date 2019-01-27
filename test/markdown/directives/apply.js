@@ -86,19 +86,6 @@ describe('Marpit directives apply plugin', () => {
     })
   })
 
-  context('with includeInternal option as true', () => {
-    const opts = { includeInternal: true }
-
-    it('applies together with unknown (internal) directive', () => {
-      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
-      const section = $('section').first()
-      const style = toObjStyle(section.attr('style'))
-
-      expect(section.attr('data-unknown-dir')).toBe('directive')
-      expect(style['--unknown-dir']).toBe('directive')
-    })
-  })
-
   describe('Local directives', () => {
     describe('Background image', () => {
       const bgDirs = dedent`

@@ -21,6 +21,7 @@ import marpitSweep from './markdown/sweep'
 const defaultOptions = {
   backgroundSyntax: true,
   container: marpitContainer,
+  directives: {},
   filters: true,
   headingDivider: false,
   inlineStyle: true,
@@ -44,6 +45,10 @@ class Marpit {
    *     with the alternate text including `bg`. Normally it converts into spot
    *     directives about background image. If `inlineSVG` is enabled, it
    *     supports the advanced backgrounds.
+   * @param {Object} [opts.directives] Define custom directives to parser. The
+   *     parsed result can access through markdown-it's parsed token meta.
+   * @param {Object} [opts.directives.global]
+   * @param {Object} [opts.directives.local]
    * @param {false|Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
@@ -115,13 +120,29 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    const { backgroundSyntax, filters, looseYAML, scopedStyle } = this.options
+    const {
+      backgroundSyntax,
+      directives,
+      filters,
+      looseYAML,
+      scopedStyle,
+    } = this.options
+
+    const customDirectives = {
+      global: (directives && directives.global) || {},
+      local: (directives && directives.local) || {},
+    }
+
+    const customDirectiveList = [
+      ...Object.keys(customDirectives.global),
+      ...Object.keys(customDirectives.local),
+    ]
 
     md.use(marpitComment, { looseYAML })
       .use(marpitStyleParse, this)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this, { looseYAML })
-      .use(marpitApplyDirectives)
+      .use(marpitParseDirectives, this, { ...customDirectives, looseYAML })
+      .use(marpitApplyDirectives, { directives: customDirectiveList })
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider, this)
       .use(marpitSlideContainer, this.slideContainers)

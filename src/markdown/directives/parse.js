@@ -1,7 +1,7 @@
 /** @module */
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
 import yaml from './yaml'
-import { globals, locals } from './directives'
+import * as directives from './directives'
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -16,9 +16,14 @@ import { globals, locals } from './directives'
  * @param {boolean} [opts.frontMatter=true] Switch feature to support YAML
  *     front-matter. If true, you can use Jekyll style directive setting to the
  *     first page.
+ * @param {Object} [opts.global] Define custom global directives.
+ * @param {Object} [opts.local] Define custom local directives.
  * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
  */
 function parse(md, marpit, opts = {}) {
+  const globals = { ...(opts.global || {}), ...directives.globals }
+  const locals = { ...(opts.local || {}), ...directives.locals }
+
   // Front-matter support
   const frontMatter = opts.frontMatter === undefined ? true : !!opts.frontMatter
   let frontMatterObject = {}
