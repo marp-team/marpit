@@ -24,7 +24,7 @@
  * @prop {Directive} theme Specify theme of the slide deck.
  */
 export const globals = {
-  headingDivider(value) {
+  headingDivider: value => {
     const headings = [1, 2, 3, 4, 5, 6]
     const toInt = v =>
       Array.isArray(v) || Number.isNaN(v) ? v : Number.parseInt(v, 10)
@@ -42,13 +42,8 @@ export const globals = {
 
     return {}
   },
-  style(value) {
-    return { style: value }
-  },
-  theme(value, marpit) {
-    if (!marpit.themeSet.has(value)) return {}
-    return { theme: value }
-  },
+  style: v => ({ style: v }),
+  theme: (v, marpit) => (marpit.themeSet.has(v) ? { theme: v } : {}),
 }
 
 /**
@@ -77,38 +72,16 @@ export const globals = {
  * @prop {Directive} paginate Show page number on the slide if you set `true`.
  */
 export const locals = {
-  backgroundColor(value) {
-    return { backgroundColor: value }
-  },
-  backgroundImage(value) {
-    return { backgroundImage: value }
-  },
-  backgroundPosition(value) {
-    return { backgroundPosition: value }
-  },
-  backgroundRepeat(value) {
-    return { backgroundRepeat: value }
-  },
-  backgroundSize(value) {
-    return { backgroundSize: value }
-  },
-  class(value) {
-    return { class: Array.isArray(value) ? value.join(' ') : value }
-  },
-  color(value) {
-    return { color: value }
-  },
-  footer(value) {
-    return typeof value === 'string' ? { footer: value } : {}
-  },
-  header(value) {
-    return typeof value === 'string' ? { header: value } : {}
-  },
-  paginate(value) {
-    return { paginate: (value || '').toLowerCase() === 'true' }
-  },
+  backgroundColor: v => ({ backgroundColor: v }),
+  backgroundImage: v => ({ backgroundImage: v }),
+  backgroundPosition: v => ({ backgroundPosition: v }),
+  backgroundRepeat: v => ({ backgroundRepeat: v }),
+  backgroundSize: v => ({ backgroundSize: v }),
+  class: v => ({ class: Array.isArray(v) ? v.join(' ') : v }),
+  color: v => ({ color: v }),
+  footer: v => (typeof v === 'string' ? { footer: v } : {}),
+  header: v => (typeof v === 'string' ? { header: v } : {}),
+  paginate: v => ({ paginate: (v || '').toLowerCase() === 'true' }),
 }
 
-const directiveNames = [...Object.keys(globals), ...Object.keys(locals)]
-
-export default directiveNames
+export default [...Object.keys(globals), ...Object.keys(locals)]

@@ -10,12 +10,15 @@ describe('Marpit directives apply plugin', () => {
   const themeSetStub = new Map()
   themeSetStub.set('test_theme', true)
 
-  const md = (...args) =>
-    new MarkdownIt('commonmark')
+  const md = (...args) => {
+    const customDirectives = { global: {}, local: {} }
+
+    return new MarkdownIt('commonmark')
       .use(comment)
       .use(slide)
-      .use(parseDirectives, { themeSet: themeSetStub })
-      .use(applyDirectives, ...args)
+      .use(parseDirectives, { customDirectives, themeSet: themeSetStub })
+      .use(applyDirectives, { customDirectives }, ...args)
+  }
 
   const mdForTest = (...args) =>
     md(...args).use(mdInstance => {
@@ -83,19 +86,6 @@ describe('Marpit directives apply plugin', () => {
       const section = $('section').first()
 
       expect(section.attr('style')).toBeUndefined()
-    })
-  })
-
-  context('with includeInternal option as true', () => {
-    const opts = { includeInternal: true }
-
-    it('applies together with unknown (internal) directive', () => {
-      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
-      const section = $('section').first()
-      const style = toObjStyle(section.attr('style'))
-
-      expect(section.attr('data-unknown-dir')).toBe('directive')
-      expect(style['--unknown-dir']).toBe('directive')
     })
   })
 

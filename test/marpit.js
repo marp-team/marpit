@@ -11,24 +11,70 @@ describe('Marpit', () => {
   describe('#constructor', () => {
     const instance = new Marpit()
 
-    it('has default options', () => {
-      expect(instance.options.container.tag).toBe('div')
-      expect(instance.options.container.class).toBe('marpit')
-      expect(instance.options.backgroundSyntax).toBe(true)
-      expect(instance.options.markdown).toBe('commonmark')
-      expect(instance.options.printable).toBe(true)
-      expect(instance.options.slideContainer).toBe(false)
-      expect(instance.options.inlineSVG).toBe(false)
+    describe('options member', () => {
+      it('has default options', () => {
+        expect(instance.options.container.tag).toBe('div')
+        expect(instance.options.container.class).toBe('marpit')
+        expect(instance.options.backgroundSyntax).toBe(true)
+        expect(instance.options.markdown).toBe('commonmark')
+        expect(instance.options.printable).toBe(true)
+        expect(instance.options.slideContainer).toBe(false)
+        expect(instance.options.inlineSVG).toBe(false)
+      })
+
+      it('marks as immutable', () => {
+        expect(() => {
+          instance.options = { updated: true }
+        }).toThrow(TypeError)
+
+        expect(() => {
+          instance.options.printable = false
+        }).toThrow(TypeError)
+      })
     })
 
-    it('marks options property as immutable', () => {
-      expect(() => {
-        instance.options = { updated: true }
-      }).toThrow(TypeError)
+    describe('customDirectives member', () => {
+      it('has sealed', () => {
+        expect(Object.isSealed(instance.customDirectives)).toBe(true)
 
-      expect(() => {
-        instance.options.printable = false
-      }).toThrow(TypeError)
+        expect(() => {
+          delete instance.customDirectives.global
+        }).toThrow(TypeError)
+
+        expect(() => {
+          instance.customDirectives.spot = {}
+        }).toThrow(TypeError)
+      })
+
+      it('is assignable parser function and apply to rendered token', () => {
+        const marpit = new Marpit({ container: undefined })
+
+        expect(() => {
+          marpit.customDirectives.global.marp = v => ({ marp: `test ${v}` })
+        }).not.toThrowError()
+
+        const [token] = marpit.markdown.parse('<!-- marp: ok -->')
+        expect(token.meta.marpitDirectives).toStrictEqual({ marp: 'test ok' })
+      })
+
+      it('does not overload built-in directive parser', () => {
+        const marpit = new Marpit({ container: undefined })
+        marpit.customDirectives.local.class = () => ({ class: '!' })
+
+        const [token] = marpit.markdown.parse('<!-- class: ok -->')
+        expect(token.meta.marpitDirectives).toStrictEqual({ class: 'ok' })
+      })
+
+      it('cannot assign built-in directive as meta', () => {
+        const marpit = new Marpit({ container: undefined })
+        marpit.customDirectives.local.test = v => ({ test: v, class: v })
+
+        const [first, , , second] = marpit.markdown.parse(
+          '<!-- test: local -->\n***\n<!-- _test: spot -->'
+        )
+        expect(first.meta.marpitDirectives).toStrictEqual({ test: 'local' })
+        expect(second.meta.marpitDirectives).toStrictEqual({ test: 'spot' })
+      })
     })
 
     it('has themeSet property', () => {

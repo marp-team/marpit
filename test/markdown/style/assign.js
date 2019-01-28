@@ -10,6 +10,7 @@ import styleParse from '../../../src/markdown/style/parse'
 
 describe('Marpit style assign plugin', () => {
   const marpitStub = (...opts) => ({
+    customDirectives: { global: {}, local: {} },
     options: { inlineStyle: true },
     themeSet: new Map(),
     ...opts,
@@ -109,7 +110,7 @@ describe('Marpit style assign plugin', () => {
         .use(comment)
         .use(slide)
         .use(parseDirectives, marpit)
-        .use(applyDirectives)
+        .use(applyDirectives, marpit)
         .use(styleAssign, marpit)
 
     it('assigns parsed style global directive to Marpit lastStyles property', () => {
@@ -131,7 +132,7 @@ describe('Marpit style assign plugin', () => {
         .use(styleParse, marpit)
         .use(slide)
         .use(parseDirectives, marpit)
-        .use(applyDirectives)
+        .use(applyDirectives, marpit)
         .use(styleAssign, marpit)
 
     it('assigns inline styles prior to directive style', () => {

@@ -6,7 +6,10 @@ import slide from '../../../src/markdown/slide'
 
 describe('Marpit directives parse plugin', () => {
   const themeSetStub = new Map()
-  const marpitStub = { themeSet: themeSetStub }
+  const marpitStub = {
+    customDirectives: { global: {}, local: {} },
+    themeSet: themeSetStub,
+  }
   themeSetStub.set('test_theme', true)
 
   const md = (...args) =>

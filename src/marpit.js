@@ -76,7 +76,7 @@ class Marpit {
      * value of options after creating instance.
      *
      * @member {Object} options
-     * @memberOf Marpit#
+     * @memberOf Marpit
      * @readonly
      */
     Object.defineProperty(this, 'options', {
@@ -84,6 +84,23 @@ class Marpit {
       value: Object.freeze({ ...defaultOptions, ...opts }),
     })
 
+    /**
+     * Definitions of the custom directive.
+     *
+     * It has the assignable `global` and `local` object. They have consisted of
+     * the directive name as a key, and parser function as a value. The parser
+     * should return the validated object for updating meta of markdown-it
+     * token.
+     *
+     * @member {Object} customDirectives
+     * @memberOf Marpit
+     * @readonly
+     */
+    Object.defineProperty(this, 'customDirectives', {
+      value: Object.seal({ global: {}, local: {} }),
+    })
+
+    // Internal members
     Object.defineProperties(this, {
       containers: { value: [...wrapArray(this.options.container)] },
       slideContainers: { value: [...wrapArray(this.options.slideContainer)] },
@@ -121,7 +138,7 @@ class Marpit {
       .use(marpitStyleParse, this)
       .use(marpitSlide)
       .use(marpitParseDirectives, this, { looseYAML })
-      .use(marpitApplyDirectives)
+      .use(marpitApplyDirectives, this)
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider, this)
       .use(marpitSlideContainer, this.slideContainers)

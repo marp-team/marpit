@@ -1,7 +1,7 @@
 /** @module */
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
 import yaml from './yaml'
-import { globals, locals } from './directives'
+import * as directives from './directives'
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -44,6 +44,17 @@ function parse(md, marpit, opts = {}) {
     token.meta.marpitCommentParsed = 'directive'
   }
 
+  const filterBuiltinDirective = newProps => {
+    const ret = {}
+
+    for (const prop of Object.keys(newProps).filter(
+      p => !directives.default.includes(p)
+    ))
+      ret[prop] = newProps[prop]
+
+    return ret
+  }
+
   // Parse global directives
   md.core.ruler.after('inline', 'marpit_directives_global_parse', state => {
     if (state.inlineMode) return
@@ -55,11 +66,19 @@ function parse(md, marpit, opts = {}) {
       for (const key of Object.keys(obj)) {
         const globalKey = key.startsWith('$') ? key.slice(1) : key
 
-        if (globals[globalKey]) {
+        if (directives.globals[globalKey]) {
           recognized = true
           globalDirectives = {
             ...globalDirectives,
-            ...globals[globalKey](obj[key], marpit),
+            ...directives.globals[globalKey](obj[key], marpit),
+          }
+        } else if (marpit.customDirectives.global[globalKey]) {
+          recognized = true
+          globalDirectives = {
+            ...globalDirectives,
+            ...filterBuiltinDirective(
+              marpit.customDirectives.global[globalKey](obj[key], marpit)
+            ),
           }
         }
       }
@@ -97,9 +116,20 @@ function parse(md, marpit, opts = {}) {
       let recognized = false
 
       for (const key of Object.keys(obj)) {
-        if (locals[key]) {
+        if (directives.locals[key]) {
           recognized = true
-          cursor.local = { ...cursor.local, ...locals[key](obj[key], marpit) }
+          cursor.local = {
+            ...cursor.local,
+            ...directives.locals[key](obj[key], marpit),
+          }
+        } else if (marpit.customDirectives.local[key]) {
+          recognized = true
+          cursor.local = {
+            ...cursor.local,
+            ...filterBuiltinDirective(
+              marpit.customDirectives.local[key](obj[key], marpit)
+            ),
+          }
         }
 
         // Spot directives
@@ -107,11 +137,19 @@ function parse(md, marpit, opts = {}) {
         if (key.startsWith('_')) {
           const spotKey = key.slice(1)
 
-          if (locals[spotKey]) {
+          if (directives.locals[spotKey]) {
             recognized = true
             cursor.spot = {
               ...cursor.spot,
-              ...locals[spotKey](obj[key], marpit),
+              ...directives.locals[spotKey](obj[key], marpit),
+            }
+          } else if (marpit.customDirectives.local[spotKey]) {
+            recognized = true
+            cursor.spot = {
+              ...cursor.spot,
+              ...filterBuiltinDirective(
+                marpit.customDirectives.local[spotKey](obj[key], marpit)
+              ),
             }
           }
         }

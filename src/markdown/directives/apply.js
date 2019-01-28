@@ -1,30 +1,30 @@
 /** @module */
 import kebabCase from 'lodash.kebabcase'
-import { globals, locals } from './directives'
+import builtInDirectives from './directives'
 import InlineStyle from '../../helpers/inline_style'
-
-const publicDirectives = [...Object.keys(globals), ...Object.keys(locals)]
 
 /**
  * Apply parsed Marpit directives to markdown-it tokens.
  *
  * @alias module:markdown/directives/apply
  * @param {MarkdownIt} md markdown-it instance.
+ * @param {Marpit} marpit Marpit instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.dataset=true] Assigns directives as HTML data
  *     attributes of each section tag.
  * @param {boolean} [opts.css=true] Assigns directives as CSS Custom Properties
  *     of each section tag.
- * @param {boolean} [opts.includeInternal=false] Whether include internal
- *     directives (Undefined in {@link module:markdown/directives/directives}.)
- *     In default, internal directives are not applied to HTML/CSS.
  */
-function apply(md, opts = {}) {
+function apply(md, marpit, opts = {}) {
   const dataset = opts.dataset === undefined ? true : !!opts.dataset
   const css = opts.css === undefined ? true : !!opts.css
 
-  const filterFunc = key =>
-    !!opts.includeInternal || publicDirectives.includes(key)
+  const { global, local } = marpit.customDirectives
+  const directives = [
+    ...Object.keys(global),
+    ...Object.keys(local),
+    ...builtInDirectives,
+  ]
 
   md.core.ruler.after(
     'marpit_directives_parse',
@@ -39,7 +39,7 @@ function apply(md, opts = {}) {
           const style = new InlineStyle(token.attrGet('style'))
 
           for (const dir of Object.keys(marpitDirectives)) {
-            if (filterFunc(dir)) {
+            if (directives.includes(dir)) {
               const value = marpitDirectives[dir]
 
               if (value) {

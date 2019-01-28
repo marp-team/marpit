@@ -12,6 +12,7 @@ describe('Marpit header and footer plugin', () => {
 
   const marpitStub = (props = {}) => ({
     themeSet,
+    customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     ...props,
   })
@@ -20,8 +21,11 @@ describe('Marpit header and footer plugin', () => {
     new MarkdownIt('commonmark')
       .use(comment)
       .use(slide)
-      .use(parseDirectives, { themeSet: marpitInstance.themeSet })
-      .use(applyDirectives)
+      .use(parseDirectives, {
+        customDirectives: marpitInstance.customDirectives,
+        themeSet: marpitInstance.themeSet,
+      })
+      .use(applyDirectives, marpitInstance)
       .use(headerAndFooter)
 
   describe('Header local directive', () => {
