@@ -21,6 +21,13 @@ declare module '@marp-team/marpit' {
     comments: string[][]
   }
 
+  type MarpitDirectiveDefinitions = {
+    [directive: string]: (
+      value: string,
+      marpit?: Marpit
+    ) => { [meta: string]: any }
+  }
+
   type ThemeSetPackOptions = {
     after?: string
     before?: string
@@ -42,6 +49,10 @@ declare module '@marp-team/marpit' {
     markdown: any
     themeSet: ThemeSet
 
+    readonly customDirectives: {
+      global: MarpitDirectiveDefinitions
+      local: MarpitDirectiveDefinitions
+    }
     readonly options: MarpitOptions
     readonly markdownItPlugins: (md: any) => void
 
