@@ -4,7 +4,7 @@
 
 ### Added
 
-- Make custom directives definable via `customDirectives` property ([#124](https://github.com/marp-team/marpit/issues/124), [#125](https://github.com/marp-team/marpit/pull/125), [#128](https://github.com/marp-team/marpit/pull/128))
+- Make custom directives definable via `customDirectives` member ([#124](https://github.com/marp-team/marpit/issues/124), [#125](https://github.com/marp-team/marpit/pull/125), [#128](https://github.com/marp-team/marpit/pull/128))
 
 ### Changed
 
