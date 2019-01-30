@@ -1,6 +1,4 @@
-/**
- * @module
- */
+/** @module */
 
 export const MarpitSymbol = Symbol('Marpit')
 
@@ -26,7 +24,8 @@ function ruleWrapper(basePlugin) {
  * @alias module:helpers/plugin
  * @param {MarkdownIt} md markdown-it instance.
  * @param {Function} callback Callback function. markdown-it rules extended
- *     within the callback will check the disabled state of Marpit.
+ *     within the callback will check the state of Marpit features toggled by
+ *     `StateCore#marpit`.
  */
 function useMarpitPlugin(md, callback) {
   if (!Object.prototype.hasOwnProperty.call(md, MarpitSymbol)) {
