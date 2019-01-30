@@ -6,6 +6,10 @@
 
 - Make custom directives definable via `customDirectives` property ([#124](https://github.com/marp-team/marpit/issues/124), [#125](https://github.com/marp-team/marpit/pull/125))
 
+### Changed
+
+- Update printable plugin to use [CSS Fragmentation](https://drafts.csswg.org/css-break-3/) to control page break ([#126](https://github.com/marp-team/marpit/pull/126))
+
 ## v0.6.1 - 2019-01-25
 
 ### Fixed
