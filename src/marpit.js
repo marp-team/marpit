@@ -1,5 +1,5 @@
 import MarkdownIt from 'markdown-it'
-import useMarpitPlugin, { disabledMarpitSymbol } from './helpers/plugin'
+import useMarpitPlugin, { MarpitSymbol } from './helpers/plugin'
 import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
@@ -173,9 +173,7 @@ class Marpit {
    */
   render(markdown, env = {}) {
     const html = this.renderMarkdown(markdown, env)
-
-    if (this.markdown[disabledMarpitSymbol])
-      return { html, css: '', comments: [] }
+    if (!this.markdown[MarpitSymbol]) return { html, css: '', comments: [] }
 
     return {
       html,
@@ -200,7 +198,7 @@ class Marpit {
   renderMarkdown(markdown, env = {}) {
     const tokens = this.markdown.parse(markdown, env)
 
-    if (env.htmlAsArray && !this.markdown[disabledMarpitSymbol]) {
+    if (env.htmlAsArray && this.markdown[MarpitSymbol]) {
       return this.lastSlideTokens.map(slideTokens =>
         this.markdown.renderer.render(slideTokens, this.markdown.options, env)
       )

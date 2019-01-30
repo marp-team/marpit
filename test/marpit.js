@@ -376,18 +376,18 @@ describe('Marpit', () => {
     })
 
     describe('Enhancement of markdown-it plugin system', () => {
-      describe('StateCore#disableMarpit', () => {
-        const disableMarpitPlugin = md =>
-          md.core.ruler.before('normalize', 'disable_marpit', state => {
-            if (state.env.marpit === false) state.disableMarpit()
-          })
+      describe('StateCore#marpit', () => {
+        const controlMarpitPlugin = md =>
+          md.core.ruler.before('normalize', 'disable_marpit', state =>
+            state.marpit(state.env.marpit)
+          )
 
-        it('disables Marpit core rules', () => {
+        it('toggles enable or disable Marpit core rules', () => {
           const marpitRule = jest.fn()
           const mdRule = jest.fn()
 
           const marpit = new Marpit()
-            .use(disableMarpitPlugin)
+            .use(controlMarpitPlugin)
             .use(md => md.core.ruler.after('normalize', 'test', marpitRule))
 
           marpit.markdown.use(md =>
@@ -411,10 +411,10 @@ describe('Marpit', () => {
           expect(retEnabled.comments).toStrictEqual([[]])
         })
 
-        it('allows disabling also in the instance of markdown-it', () => {
+        it('allows control also in the instance of markdown-it', () => {
           const md = new MarkdownIt()
             .use(new Marpit().markdownItPlugins)
-            .use(disableMarpitPlugin)
+            .use(controlMarpitPlugin)
 
           expect(md.render('', { marpit: false })).not.toContain('section')
           expect(md.render('', { marpit: true })).toContain('section')

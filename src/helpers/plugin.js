@@ -2,20 +2,19 @@
  * @module
  */
 
-const usingMarpit = Symbol('usingMarpit')
-export const disabledMarpitSymbol = Symbol('disabledMarpit')
+export const MarpitSymbol = Symbol('Marpit')
 
 function onInitializeStateCore(state) {
-  state.md[disabledMarpitSymbol] = false
+  state.md[MarpitSymbol] = true
 
-  state.disableMarpit = function disableMarpit(value = true) {
-    state.md[disabledMarpitSymbol] = value
+  state.marpit = function marpit(value) {
+    state.md[MarpitSymbol] = value
   }
 }
 
 function ruleWrapper(basePlugin) {
   return function wrappedRule(state, ...args) {
-    if (state.md[disabledMarpitSymbol]) return false
+    if (!state.md[MarpitSymbol]) return false
 
     return basePlugin(state, ...args)
   }
@@ -30,8 +29,8 @@ function ruleWrapper(basePlugin) {
  *     within the callback will check the disabled state of Marpit.
  */
 function useMarpitPlugin(md, callback) {
-  if (!md[usingMarpit]) {
-    md[usingMarpit] = true
+  if (!Object.prototype.hasOwnProperty.call(md, MarpitSymbol)) {
+    md[MarpitSymbol] = true
 
     const { State } = md.core
 
