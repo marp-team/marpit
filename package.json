@@ -44,7 +44,7 @@
     "docsify:style": "node ./docsify/build.js",
     "docsify:style:watch": "nodemon -q -e .scss,.js -w ./docsify ./docsify/build.js",
     "format": "prettier \"**/*.{css,html,js,json,md,scss,ts,yaml,yml}\"",
-    "format:check": "yarn --silent --mutex file run format -l",
+    "format:check": "yarn --silent --mutex file run format -c",
     "jsdoc": "rimraf jsdoc && jsdoc src -c .jsdoc.json",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"./**/*.{css,scss}\"",
