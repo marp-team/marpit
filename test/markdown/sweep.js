@@ -20,7 +20,7 @@ describe('Marpit sweep plugin', () => {
     const marpitStub = {
       customDirectives: { global: {}, local: {} },
       themeSet: new Map(),
-      options: { inlineSVG: false },
+      options: { backgroundSyntax: true, inlineSVG: false },
     }
 
     const markdown = md({ breaks: true })
@@ -29,7 +29,7 @@ describe('Marpit sweep plugin', () => {
       .use(applyDirectives, marpitStub)
       .use(inlineSVG, marpitStub)
       .use(parseImage)
-      .use(backgroundImage)
+      .use(backgroundImage, marpitStub)
 
     const $ = cheerio.load(
       markdown.render(dedent`

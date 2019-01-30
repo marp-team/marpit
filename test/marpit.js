@@ -131,10 +131,15 @@ describe('Marpit', () => {
     context('with env argument', () => {
       it('passes env option to markdown#render', () => {
         const instance = new Marpit()
-        const render = jest.spyOn(instance.markdown, 'render')
+        const render = jest.spyOn(instance.markdown.renderer, 'render')
 
         instance.render('Markdown', { env: 'env' })
-        expect(render).toBeCalledWith('Markdown', { env: 'env' })
+
+        expect(render).toBeCalledWith(
+          expect.any(Array),
+          instance.markdown.options,
+          { env: 'env' }
+        )
       })
 
       context('when passed htmlAsArray prop as true', () => {
@@ -328,12 +333,17 @@ describe('Marpit', () => {
   })
 
   describe('#renderMarkdown', () => {
-    it('returns the result of markdown#render', () => {
+    it('returns the result of rendering', () => {
       const instance = new Marpit()
-      const spy = jest.spyOn(instance.markdown, 'render').mockImplementation()
+      const spy = jest
+        .spyOn(instance.markdown.renderer, 'render')
+        .mockImplementation()
 
       instance.renderMarkdown('render', { env: 'env' })
-      expect(spy).toBeCalledWith('render', { env: 'env' })
+
+      expect(spy).toBeCalledWith(expect.any(Array), instance.markdown.options, {
+        env: 'env',
+      })
     })
   })
 
@@ -363,6 +373,53 @@ describe('Marpit', () => {
       expect(plugin).toBeCalledTimes(1)
       expect(plugin).toBeCalledWith(instance.markdown, 'parameter')
       expect(instance.markdown.extended).toBe('parameter')
+    })
+
+    describe('Enhancement of markdown-it plugin system', () => {
+      describe('StateCore#marpit', () => {
+        const controlMarpitPlugin = md =>
+          md.core.ruler.before('normalize', 'disable_marpit', state =>
+            state.marpit(state.env.marpit)
+          )
+
+        it('toggles enable or disable Marpit core rules', () => {
+          const marpitRule = jest.fn()
+          const mdRule = jest.fn()
+
+          const marpit = new Marpit()
+            .use(controlMarpitPlugin)
+            .use(md => md.core.ruler.after('normalize', 'test', marpitRule))
+
+          marpit.markdown.use(md =>
+            md.core.ruler.after('normalize', 'test', mdRule)
+          )
+
+          const retDisabled = marpit.render('', { marpit: false })
+          expect(marpitRule).not.toBeCalled()
+          expect(mdRule).toBeCalled()
+
+          expect(retDisabled.html).not.toContain('section')
+          expect(retDisabled.css).toBe('')
+          expect(retDisabled.comments).toStrictEqual([])
+
+          const retEnabled = marpit.render('', { marpit: true })
+          expect(marpitRule).toBeCalled()
+          expect(mdRule).toBeCalledTimes(2)
+
+          expect(retEnabled.html).toContain('section')
+          expect(retEnabled.css).not.toBe('')
+          expect(retEnabled.comments).toStrictEqual([[]])
+        })
+
+        it('allows control also in the instance of markdown-it', () => {
+          const md = new MarkdownIt()
+            .use(new Marpit().markdownItPlugins)
+            .use(controlMarpitPlugin)
+
+          expect(md.render('', { marpit: false })).not.toContain('section')
+          expect(md.render('', { marpit: true })).toContain('section')
+        })
+      })
     })
   })
 })

@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+import useMarpitPlugin, { MarpitSymbol } from './helpers/plugin'
 import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
@@ -132,24 +133,25 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    const { backgroundSyntax, filters, looseYAML, scopedStyle } = this.options
+    const { filters, looseYAML, scopedStyle } = this.options
 
-    md.use(marpitComment, { looseYAML })
-      .use(marpitStyleParse, this)
-      .use(marpitSlide)
-      .use(marpitParseDirectives, this, { looseYAML })
-      .use(marpitApplyDirectives, this)
-      .use(marpitHeaderAndFooter)
-      .use(marpitHeadingDivider, this)
-      .use(marpitSlideContainer, this.slideContainers)
-      .use(marpitContainerPlugin, this.containers)
-      .use(marpitParseImage, { filters })
-      .use(marpitSweep)
-      .use(marpitInlineSVG, this)
-      .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
-      .use(marpitCollect, this)
-
-    if (backgroundSyntax) md.use(marpitBackgroundImage)
+    useMarpitPlugin(md, () => {
+      md.use(marpitComment, { looseYAML })
+        .use(marpitStyleParse, this)
+        .use(marpitSlide)
+        .use(marpitParseDirectives, this, { looseYAML })
+        .use(marpitApplyDirectives, this)
+        .use(marpitHeaderAndFooter)
+        .use(marpitHeadingDivider, this)
+        .use(marpitSlideContainer, this.slideContainers)
+        .use(marpitContainerPlugin, this.containers)
+        .use(marpitParseImage, { filters })
+        .use(marpitSweep)
+        .use(marpitInlineSVG, this)
+        .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
+        .use(marpitCollect, this)
+        .use(marpitBackgroundImage, this)
+    })
   }
 
   /**
@@ -164,14 +166,17 @@ class Marpit {
    * Render Markdown into HTML and CSS string.
    *
    * @param {string} markdown A Markdown string.
-   * @param {Object} [env] Environment object for passing to markdown-it.
+   * @param {Object} [env={}] Environment object for passing to markdown-it.
    * @param {boolean} [env.htmlAsArray=false] Output rendered HTML as array per
    *     slide.
    * @returns {Marpit~RenderResult} An object of rendering result.
    */
   render(markdown, env = {}) {
+    const html = this.renderMarkdown(markdown, env)
+    if (!this.markdown[MarpitSymbol]) return { html, css: '', comments: [] }
+
     return {
-      html: this.renderMarkdown(markdown, env),
+      html,
       css: this.renderStyle(this.lastGlobalDirectives.theme),
       comments: this.lastComments,
     }
@@ -191,15 +196,15 @@ class Marpit {
    * @returns {string|string[]} The result string(s) of rendering Markdown.
    */
   renderMarkdown(markdown, env = {}) {
-    if (env.htmlAsArray) {
-      this.markdown.parse(markdown, env)
+    const tokens = this.markdown.parse(markdown, env)
 
-      return this.lastSlideTokens.map(slide =>
-        this.markdown.renderer.render(slide, this.markdown.options, env)
+    if (env.htmlAsArray && this.markdown[MarpitSymbol]) {
+      return this.lastSlideTokens.map(slideTokens =>
+        this.markdown.renderer.render(slideTokens, this.markdown.options, env)
       )
     }
 
-    return this.markdown.render(markdown, env)
+    return this.markdown.renderer.render(tokens, this.markdown.options, env)
   }
 
   /**
@@ -233,7 +238,10 @@ class Marpit {
    * @returns {Marpit} The called {@link Marpit} instance for chainable.
    */
   use(plugin, ...params) {
-    plugin.call(this.markdown, this.markdown, ...params)
+    useMarpitPlugin(this.markdown, () =>
+      plugin.call(this.markdown, this.markdown, ...params)
+    )
+
     return this
   }
 }
