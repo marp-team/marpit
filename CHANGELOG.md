@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.7.0 - 2019-01-30
+
 ### Added
 
 - Make custom directives definable via `customDirectives` member ([#124](https://github.com/marp-team/marpit/issues/124), [#125](https://github.com/marp-team/marpit/pull/125), [#128](https://github.com/marp-team/marpit/pull/128))
