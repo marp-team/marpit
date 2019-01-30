@@ -6,6 +6,7 @@ html, body {
   background-color: #fff;
   margin: 0;
   page-break-inside: avoid;
+  break-inside: avoid-page;
 }
 `.trim()
 
@@ -34,6 +35,7 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css => {
 @media marpit-print {
   section {
     page-break-before: always;
+    break-before: page;
   }
 
   section, section * {
