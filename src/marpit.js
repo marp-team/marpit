@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it'
+import useMarpitPlugin, { disabledMarpitSymbol } from './helpers/plugin'
 import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
@@ -30,49 +31,6 @@ const defaultOptions = {
   scopedStyle: true,
   slideContainer: false,
   inlineSVG: false,
-}
-
-const shouldUseMarpit = env =>
-  !(typeof env === 'object' && env.marpit === false)
-
-const useMarpitRuler = (md, process) => {
-  const ruler = Object.getPrototypeOf(md.core.ruler)
-  const { after, at, before, push } = ruler
-
-  const wrappedRule = fn => (state, ...args) =>
-    shouldUseMarpit(state.env) && fn(state, ...args)
-
-  const reset = () => {
-    ruler.after = after
-    ruler.at = at
-    ruler.before = before
-    ruler.push = push
-  }
-
-  try {
-    ruler.after = function marpitAfter(afterName, ruleName, fn, options) {
-      return after.call(this, afterName, ruleName, wrappedRule(fn), options)
-    }
-
-    ruler.at = function marpitAt(name, fn, options) {
-      return at.call(this, name, wrappedRule(fn), options)
-    }
-
-    ruler.before = function marpitBefore(beforeName, ruleName, fn, options) {
-      return before.call(this, beforeName, ruleName, wrappedRule(fn), options)
-    }
-
-    ruler.push = function marpitPush(ruleName, fn, options) {
-      return push.call(this, ruleName, wrappedRule(fn), options)
-    }
-
-    process()
-  } catch (e) {
-    reset()
-    throw e
-  }
-
-  reset()
 }
 
 /**
@@ -177,7 +135,7 @@ class Marpit {
   applyMarkdownItPlugins(md = this.markdown) {
     const { filters, looseYAML, scopedStyle } = this.options
 
-    useMarpitRuler(md, () => {
+    useMarpitPlugin(md, () => {
       md.use(marpitComment, { looseYAML })
         .use(marpitStyleParse, this)
         .use(marpitSlide)
@@ -208,7 +166,7 @@ class Marpit {
    * Render Markdown into HTML and CSS string.
    *
    * @param {string} markdown A Markdown string.
-   * @param {Object} [env] Environment object for passing to markdown-it.
+   * @param {Object} [env={}] Environment object for passing to markdown-it.
    * @param {boolean} [env.htmlAsArray=false] Output rendered HTML as array per
    *     slide.
    * @returns {Marpit~RenderResult} An object of rendering result.
@@ -216,15 +174,14 @@ class Marpit {
   render(markdown, env = {}) {
     const html = this.renderMarkdown(markdown, env)
 
-    if (shouldUseMarpit(env)) {
-      return {
-        html,
-        css: this.renderStyle(this.lastGlobalDirectives.theme),
-        comments: this.lastComments,
-      }
-    }
+    if (this.markdown[disabledMarpitSymbol])
+      return { html, css: '', comments: [] }
 
-    return { html, css: '', comments: [] }
+    return {
+      html,
+      css: this.renderStyle(this.lastGlobalDirectives.theme),
+      comments: this.lastComments,
+    }
   }
 
   /**
@@ -241,15 +198,15 @@ class Marpit {
    * @returns {string|string[]} The result string(s) of rendering Markdown.
    */
   renderMarkdown(markdown, env = {}) {
-    if (env.htmlAsArray) {
-      this.markdown.parse(markdown, env)
+    const tokens = this.markdown.parse(markdown, env)
 
-      return this.lastSlideTokens.map(slide =>
-        this.markdown.renderer.render(slide, this.markdown.options, env)
+    if (env.htmlAsArray && !this.markdown[disabledMarpitSymbol]) {
+      return this.lastSlideTokens.map(slideTokens =>
+        this.markdown.renderer.render(slideTokens, this.markdown.options, env)
       )
     }
 
-    return this.markdown.render(markdown, env)
+    return this.markdown.renderer.render(tokens, this.markdown.options, env)
   }
 
   /**
@@ -278,15 +235,12 @@ class Marpit {
   /**
    * Load the specified markdown-it plugin with given parameters.
    *
-   * Please notice the extended rule may disable by `marpit` env. Consider to
-   * use `marpit.markdown.use()` if any problem was occurred.
-   *
    * @param {Function} plugin markdown-it plugin.
    * @param {...*} params Params to pass into plugin.
    * @returns {Marpit} The called {@link Marpit} instance for chainable.
    */
   use(plugin, ...params) {
-    useMarpitRuler(this.markdown, () =>
+    useMarpitPlugin(this.markdown, () =>
       plugin.call(this.markdown, this.markdown, ...params)
     )
 
