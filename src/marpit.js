@@ -42,22 +42,6 @@ const useMarpitRuler = (md, process) => {
   const wrappedRule = fn => (state, ...args) =>
     shouldUseMarpit(state.env) && fn(state, ...args)
 
-  ruler.after = function marpitAfter(afterName, ruleName, fn, options) {
-    return after.call(this, afterName, ruleName, wrappedRule(fn), options)
-  }
-
-  ruler.at = function marpitAt(name, fn, options) {
-    return at.call(this, name, wrappedRule(fn), options)
-  }
-
-  ruler.before = function marpitBefore(beforeName, ruleName, fn, options) {
-    return before.call(this, beforeName, ruleName, wrappedRule(fn), options)
-  }
-
-  ruler.push = function marpitPush(ruleName, fn, options) {
-    return push.call(this, ruleName, wrappedRule(fn), options)
-  }
-
   const reset = () => {
     ruler.after = after
     ruler.at = at
@@ -66,6 +50,22 @@ const useMarpitRuler = (md, process) => {
   }
 
   try {
+    ruler.after = function marpitAfter(afterName, ruleName, fn, options) {
+      return after.call(this, afterName, ruleName, wrappedRule(fn), options)
+    }
+
+    ruler.at = function marpitAt(name, fn, options) {
+      return at.call(this, name, wrappedRule(fn), options)
+    }
+
+    ruler.before = function marpitBefore(beforeName, ruleName, fn, options) {
+      return before.call(this, beforeName, ruleName, wrappedRule(fn), options)
+    }
+
+    ruler.push = function marpitPush(ruleName, fn, options) {
+      return push.call(this, ruleName, wrappedRule(fn), options)
+    }
+
     process()
   } catch (e) {
     reset()
@@ -277,6 +277,9 @@ class Marpit {
 
   /**
    * Load the specified markdown-it plugin with given parameters.
+   *
+   * Please notice the extended rule may disable by `marpit` env. Consider to
+   * use `marpit.markdown.use()` if any problem was occurred.
    *
    * @param {Function} plugin markdown-it plugin.
    * @param {...*} params Params to pass into plugin.
