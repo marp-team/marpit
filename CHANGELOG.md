@@ -10,6 +10,7 @@
 ### Changed
 
 - Update printable plugin to use [CSS Fragmentation](https://drafts.csswg.org/css-break-3/) to control page break ([#126](https://github.com/marp-team/marpit/pull/126))
+- Upgrade dependent packages to latest version ([#129](https://github.com/marp-team/marpit/pull/129))
 
 ## v0.6.1 - 2019-01-25
 
