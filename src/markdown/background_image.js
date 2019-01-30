@@ -18,8 +18,11 @@ import parse from './background_image/parse'
  *
  * @alias module:markdown/background_image
  * @param {MarkdownIt} md markdown-it instance.
+ * @param {Marpit} marpit Marpit instance.
  */
-function backgroundImage(md) {
+function backgroundImage(md, marpit) {
+  if (!marpit.options.backgroundSyntax) return
+
   parse(md)
   apply(md)
   advanced(md)

@@ -148,6 +148,18 @@ describe('Marpit', () => {
           expect(cheerio.load(html[1])('section#2 > h2')).toHaveLength(1)
         })
       })
+
+      context('when passed marpit prop as false', () => {
+        it('disables extended rules by Marpit', () => {
+          const markdown = '# Page1\n***\n## Page2'
+          const { html } = new Marpit().render(markdown, { marpit: false })
+          const $ = cheerio.load(html)
+
+          expect(html).toBe(new MarkdownIt('commonmark').render(markdown))
+          expect($('section')).toHaveLength(0)
+          expect($('hr')).toHaveLength(1)
+        })
+      })
     })
 
     context('with inlineSVG option', () => {

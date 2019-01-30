@@ -32,6 +32,49 @@ const defaultOptions = {
   inlineSVG: false,
 }
 
+const shouldUseMarpit = env =>
+  !(typeof env === 'object' && env.marpit === false)
+
+const useMarpitRuler = (md, process) => {
+  const ruler = Object.getPrototypeOf(md.core.ruler)
+  const { after, at, before, push } = ruler
+
+  const wrappedRule = fn => (state, ...args) =>
+    shouldUseMarpit(state.env) && fn(state, ...args)
+
+  ruler.after = function marpitAfter(afterName, ruleName, fn, options) {
+    return after.call(this, afterName, ruleName, wrappedRule(fn), options)
+  }
+
+  ruler.at = function marpitAt(name, fn, options) {
+    return at.call(this, name, wrappedRule(fn), options)
+  }
+
+  ruler.before = function marpitBefore(beforeName, ruleName, fn, options) {
+    return before.call(this, beforeName, ruleName, wrappedRule(fn), options)
+  }
+
+  ruler.push = function marpitPush(ruleName, fn, options) {
+    return push.call(this, ruleName, wrappedRule(fn), options)
+  }
+
+  const reset = () => {
+    ruler.after = after
+    ruler.at = at
+    ruler.before = before
+    ruler.push = push
+  }
+
+  try {
+    process()
+  } catch (e) {
+    reset()
+    throw e
+  }
+
+  reset()
+}
+
 /**
  * Parse Marpit Markdown and render to the slide HTML/CSS.
  */
@@ -132,24 +175,25 @@ class Marpit {
 
   /** @private */
   applyMarkdownItPlugins(md = this.markdown) {
-    const { backgroundSyntax, filters, looseYAML, scopedStyle } = this.options
+    const { filters, looseYAML, scopedStyle } = this.options
 
-    md.use(marpitComment, { looseYAML })
-      .use(marpitStyleParse, this)
-      .use(marpitSlide)
-      .use(marpitParseDirectives, this, { looseYAML })
-      .use(marpitApplyDirectives, this)
-      .use(marpitHeaderAndFooter)
-      .use(marpitHeadingDivider, this)
-      .use(marpitSlideContainer, this.slideContainers)
-      .use(marpitContainerPlugin, this.containers)
-      .use(marpitParseImage, { filters })
-      .use(marpitSweep)
-      .use(marpitInlineSVG, this)
-      .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
-      .use(marpitCollect, this)
-
-    if (backgroundSyntax) md.use(marpitBackgroundImage)
+    useMarpitRuler(md, () => {
+      md.use(marpitComment, { looseYAML })
+        .use(marpitStyleParse, this)
+        .use(marpitSlide)
+        .use(marpitParseDirectives, this, { looseYAML })
+        .use(marpitApplyDirectives, this)
+        .use(marpitHeaderAndFooter)
+        .use(marpitHeadingDivider, this)
+        .use(marpitSlideContainer, this.slideContainers)
+        .use(marpitContainerPlugin, this.containers)
+        .use(marpitParseImage, { filters })
+        .use(marpitSweep)
+        .use(marpitInlineSVG, this)
+        .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
+        .use(marpitCollect, this)
+        .use(marpitBackgroundImage, this)
+    })
   }
 
   /**
@@ -170,11 +214,17 @@ class Marpit {
    * @returns {Marpit~RenderResult} An object of rendering result.
    */
   render(markdown, env = {}) {
-    return {
-      html: this.renderMarkdown(markdown, env),
-      css: this.renderStyle(this.lastGlobalDirectives.theme),
-      comments: this.lastComments,
+    const html = this.renderMarkdown(markdown, env)
+
+    if (shouldUseMarpit(env)) {
+      return {
+        html,
+        css: this.renderStyle(this.lastGlobalDirectives.theme),
+        comments: this.lastComments,
+      }
     }
+
+    return { html, css: '', comments: [] }
   }
 
   /**
@@ -233,7 +283,10 @@ class Marpit {
    * @returns {Marpit} The called {@link Marpit} instance for chainable.
    */
   use(plugin, ...params) {
-    plugin.call(this.markdown, this.markdown, ...params)
+    useMarpitRuler(this.markdown, () =>
+      plugin.call(this.markdown, this.markdown, ...params)
+    )
+
     return this
   }
 }

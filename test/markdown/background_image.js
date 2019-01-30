@@ -15,18 +15,21 @@ describe('Marpit background image plugin', () => {
     customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     themeSet: { getThemeProp: () => 100 },
-    options: { inlineSVG: svg },
+    options: { backgroundSyntax: true, inlineSVG: svg },
   })
 
-  const md = (svg = false, filters = false) =>
-    new MarkdownIt()
+  const md = (svg = false, filters = false) => {
+    const stub = marpitStub(svg)
+
+    return new MarkdownIt()
       .use(comment)
       .use(slide)
-      .use(parseDirectives, marpitStub(svg))
-      .use(applyDirectives, marpitStub(svg))
-      .use(inlineSVG, marpitStub(svg))
+      .use(parseDirectives, stub)
+      .use(applyDirectives, stub)
+      .use(inlineSVG, stub)
       .use(parseImage, { filters })
-      .use(backgroundImage)
+      .use(backgroundImage, stub)
+  }
 
   const bgDirective = (url, mdInstance) => {
     const [first, second] = mdInstance.parse(`![bg](${url})\n\n---`)
