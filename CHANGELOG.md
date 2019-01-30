@@ -5,6 +5,7 @@
 ### Added
 
 - Make custom directives definable via `customDirectives` member ([#124](https://github.com/marp-team/marpit/issues/124), [#125](https://github.com/marp-team/marpit/pull/125), [#128](https://github.com/marp-team/marpit/pull/128))
+- Enhance plugin system to control Marpit features ([#127](https://github.com/marp-team/marpit/pull/127))
 
 ### Changed
 
