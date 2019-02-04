@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix type definition of custom directive parser to allow array and object ([#130](https://github.com/marp-team/marpit/pull/130))
+
 ## v0.7.0 - 2019-01-30
 
 ### Added
