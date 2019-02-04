@@ -6,6 +6,10 @@
 
 - Fix type definition of custom directive parser to allow array and object ([#130](https://github.com/marp-team/marpit/pull/130))
 
+### Changed
+
+- Upgrade Node and dependent packages to the latest version ([#131](https://github.com/marp-team/marpit/pull/131))
+
 ## v0.7.0 - 2019-01-30
 
 ### Added

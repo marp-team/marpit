@@ -11,6 +11,8 @@ references:
                            && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
                            && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
                            && rm yarn-v$YARN_VERSION.tar.gz'
+
+            [ -n "$YARN_IGNORE_ENGINES" ] && echo '--install.ignore-engines true' >> ~/.yarnrc || true
           environment:
             YARN_VERSION: 1.13.0
 
@@ -60,10 +62,10 @@ references:
 
 version: 2
 jobs:
-  '10.15.0':
+  '10.15.1':
     <<: *base
     docker:
-      - image: circleci/node:10.15.0
+      - image: circleci/node:10.15.1
 
   '8.15.0':
     <<: *base
@@ -74,17 +76,21 @@ jobs:
     <<: *base
     docker:
       - image: circleci/node:6.16.0
+    environment:
+      YARN_IGNORE_ENGINES: 1
 
   least-version:
     <<: *base
     docker:
       - image: circleci/node:6.14.4
+    environment:
+      YARN_IGNORE_ENGINES: 1
 
 workflows:
   version: 2
   build:
     jobs:
-      - 10.15.0
+      - 10.15.1
       - 8.15.0
       - 6.16.0
       - least-version
