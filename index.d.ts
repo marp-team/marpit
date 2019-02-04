@@ -23,7 +23,7 @@ declare module '@marp-team/marpit' {
 
   type MarpitDirectiveDefinitions = {
     [directive: string]: (
-      value: string,
+      value: string | object | (string | object)[],
       marpit?: Marpit
     ) => { [meta: string]: any }
   }
