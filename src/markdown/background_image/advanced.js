@@ -43,9 +43,11 @@ function advancedBackground(md) {
           // Add the isolated layer for background image
           newTokens.push(
             ...wrapTokens(
+              state.Token,
               'marpit_advanced_background_foreign_object',
               { tag: 'foreignObject', width, height },
               wrapTokens(
+                state.Token,
                 'marpit_advanced_background_section',
                 {
                   ...open.attrs.reduce((o, [k, v]) => ({ ...o, [k]: v }), {}),
@@ -54,6 +56,7 @@ function advancedBackground(md) {
                   'data-marpit-advanced-background': 'background',
                 },
                 wrapTokens(
+                  state.Token,
                   'marpit_advanced_background_image_container',
                   {
                     tag: 'div',
@@ -75,10 +78,14 @@ function advancedBackground(md) {
                       if (img.filter) style.set('filter', img.filter)
 
                       imageTokens.push(
-                        ...wrapTokens('marpit_advanced_background_image', {
-                          tag: 'figure',
-                          style: style.toString(),
-                        })
+                        ...wrapTokens(
+                          state.Token,
+                          'marpit_advanced_background_image',
+                          {
+                            tag: 'figure',
+                            style: style.toString(),
+                          }
+                        )
                       )
                     }
 
@@ -106,6 +113,7 @@ function advancedBackground(md) {
           newTokens.push(
             t,
             ...wrapTokens(
+              state.Token,
               'marpit_advanced_background_foreign_object',
               {
                 tag: 'foreignObject',
@@ -113,7 +121,7 @@ function advancedBackground(md) {
                 height,
                 'data-marpit-advanced-background': 'pseudo',
               },
-              wrapTokens('marpit_advanced_pseudo_section', {
+              wrapTokens(state.Token, 'marpit_advanced_pseudo_section', {
                 tag: 'section',
                 class: open.attrGet('class'),
                 style: style.toString(),

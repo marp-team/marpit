@@ -32,6 +32,7 @@ function headerAndFooter(md) {
 
       const createMarginalTokens = (tag, markdown) =>
         wrapTokens(
+          state.Token,
           `marpit_${tag}`,
           { tag, close: { block: true } },
           getParsed(markdown)

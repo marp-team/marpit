@@ -1,10 +1,10 @@
 /** @module */
-import Token from 'markdown-it/lib/token'
 
 /**
  * Wrap array of tokens by specified container object.
  *
  * @alias module:helpers/wrap_tokens
+ * @param {Token} Token markdown-it's Token class.
  * @param {String} type Token type. It will be suffixed by `_open` / `_close`.
  * @param {Object} container A container object to wrap tokens, includes tag
  *     name and attributes.
@@ -14,7 +14,7 @@ import Token from 'markdown-it/lib/token'
  * @param {Token[]} [tokens=[]] Wrapping tokens.
  * @returns {Token[]} Wrapped tokens.
  */
-function wrapTokens(type, container, tokens = []) {
+function wrapTokens(Token, type, container, tokens = []) {
   const { tag } = container
 
   // Update nesting level of wrapping tokens

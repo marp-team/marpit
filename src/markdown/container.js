@@ -17,7 +17,12 @@ function container(md, containers) {
     if (state.inlineMode) return
 
     for (const cont of target)
-      state.tokens = wrapTokens('marpit_containers', cont, state.tokens)
+      state.tokens = wrapTokens(
+        state.Token,
+        'marpit_containers',
+        cont,
+        state.tokens
+      )
   })
 }
 

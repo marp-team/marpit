@@ -28,7 +28,7 @@ function slideContainer(md, containers) {
         newTokens.push(
           ...target.reduce(
             (slides, conts) =>
-              wrapTokens('marpit_slide_containers', conts, slides),
+              wrapTokens(state.Token, 'marpit_slide_containers', conts, slides),
             tokens
           )
         )
