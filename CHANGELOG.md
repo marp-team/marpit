@@ -5,6 +5,7 @@
 ### Fixed
 
 - Use re-exported markdown-it Token from state ([#132](https://github.com/marp-team/marpit/pull/132))
+- Fix broken emoji on docs ([#134](https://github.com/marp-team/marpit/pull/134))
 
 ### Changed
 

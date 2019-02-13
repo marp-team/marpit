@@ -1,6 +1,6 @@
 # Inline SVG slide _(experimental)_
 
-!> :triangular_ruler: This feature is experimental because of a strange rendering in some browsers.
+!> 📐 This feature is experimental because of a strange rendering in some browsers.
 
 When you set [`inlineSVG: true` in Marpit constructor option](/usage#triangular_ruler-inline-svg-slide), each `<section>` elements are wrapped with inline SVG.
 
