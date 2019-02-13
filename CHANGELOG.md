@@ -6,6 +6,10 @@
 
 - Use re-exported markdown-it Token from state ([#132](https://github.com/marp-team/marpit/pull/132))
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#133](https://github.com/marp-team/marpit/pull/133))
+
 ## v0.7.1 - 2019-02-04
 
 ### Fixed
