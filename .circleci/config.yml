@@ -2,6 +2,8 @@ references:
   base: &base
     working_directory: ~/marp-core
     steps:
+      - run: node --version
+
       # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#upgradingdowngrading-yarn
       - run:
           name: Upgrade yarn
@@ -67,15 +69,15 @@ jobs:
     docker:
       - image: circleci/node:10.15.1
 
-  '8.15.0':
+  carbon:
     <<: *base
     docker:
-      - image: circleci/node:8.15.0
+      - image: circleci/node:carbon
 
-  '6.16.0':
+  boron:
     <<: *base
     docker:
-      - image: circleci/node:6.16.0
+      - image: circleci/node:boron
     environment:
       YARN_IGNORE_ENGINES: 1
 
@@ -91,6 +93,6 @@ workflows:
   build:
     jobs:
       - 10.15.1
-      - 8.15.0
-      - 6.16.0
+      - carbon
+      - boron
       - least-version
