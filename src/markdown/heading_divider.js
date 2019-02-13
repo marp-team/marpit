@@ -1,5 +1,4 @@
 /** @module */
-import Token from 'markdown-it/lib/token'
 import split from '../helpers/split'
 
 /**
@@ -40,7 +39,7 @@ function headingDivider(md, marpit) {
       const [token] = slideTokens
 
       if (token && splitFunc(token) && newTokens.some(t => !t.hidden)) {
-        const hr = new Token('hr', '', 0)
+        const hr = new state.Token('hr', '', 0)
         hr.hidden = true
 
         newTokens.push(hr)

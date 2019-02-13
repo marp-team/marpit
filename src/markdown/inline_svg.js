@@ -30,6 +30,7 @@ function inlineSVG(md, marpit) {
 
         newTokens.push(
           ...wrapTokens(
+            state.Token,
             'marpit_inline_svg',
             {
               tag: 'svg',
@@ -39,6 +40,7 @@ function inlineSVG(md, marpit) {
               close: { meta: { marpitSlideElement: -1 } },
             },
             wrapTokens(
+              state.Token,
               'marpit_inline_svg_content',
               { tag: 'foreignObject', width: w, height: h },
               tokens

@@ -42,6 +42,7 @@ function slide(md, opts = {}) {
         return [
           ...arr,
           ...wrapTokens(
+            state.Token,
             'marpit_slide',
             {
               ...(opts.attributes || {}),
