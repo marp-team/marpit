@@ -18,15 +18,15 @@ In fact, this framework is created for using as the base of [a core converter][m
 
 ## Features
 
-### [:pencil: Marpit Markdown](/markdown) {docsify-ignore}
+### [📝 Marpit Markdown](/markdown) {docsify-ignore}
 
 We have extended several features into [markdown-it](https://github.com/markdown-it/markdown-it) parser to support writing awesome slides, such as [_Directives_](/directives) and [_Slide backgrounds_](/image-syntax#slide-backgrounds). Additional syntaxes place importance on a compatibility with general Markdown documents.
 
-### [:art: Theme CSS by clean markup](/theme-css) {docsify-ignore}
+### [🎨 Theme CSS by clean markup](/theme-css) {docsify-ignore}
 
 Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 
-### [:triangular_ruler: Inline SVG slide <i>(Experimental)</i>](/inline-svg) {docsify-ignore}
+### [📐 Inline SVG slide <i>(Experimental)</i>](/inline-svg) {docsify-ignore}
 
 Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated layer made by `<foreignObject>` can provide [_advanced backgrounds_](/image-syntax#advanced-backgrounds) for the slide with keeping the original Markdown DOM structure.
 

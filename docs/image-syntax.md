@@ -2,15 +2,15 @@
 
 Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creating beautiful slides.
 
-|              Features              |       Inline image       |         Slide BG         |    Advanced BG     |
-| :--------------------------------: | :----------------------: | :----------------------: | :----------------: |
-|  [Resizing by keywords][resizing]  |       `auto` only        |    :heavy_check_mark:    | :heavy_check_mark: |
-| [Resizing by percentage][resizing] | :heavy_multiplication_x: |    :heavy_check_mark:    | :heavy_check_mark: |
-|   [Resizing by length][resizing]   |    :heavy_check_mark:    |    :heavy_check_mark:    | :heavy_check_mark: |
-|      [Image filters][filters]      |    :heavy_check_mark:    | :heavy_multiplication_x: | :heavy_check_mark: |
-|    [Background color][bgcolor]     |            -             |    :heavy_check_mark:    | :heavy_check_mark: |
-|  [Multiple backgrounds][multiple]  |            -             | :heavy_multiplication_x: | :heavy_check_mark: |
-|     [Split backgrounds][split]     |            -             | :heavy_multiplication_x: | :heavy_check_mark: |
+|              Features              | Inline image | Slide BG | Advanced BG |
+| :--------------------------------: | :----------: | :------: | :---------: |
+|  [Resizing by keywords][resizing]  | `auto` only  |    ✅    |     ✅      |
+| [Resizing by percentage][resizing] |      ❌      |    ✅    |     ✅      |
+|   [Resizing by length][resizing]   |      ✅      |    ✅    |     ✅      |
+|      [Image filters][filters]      |      ✅      |    ❌    |     ✅      |
+|    [Background color][bgcolor]     |      -       |    ✅    |     ✅      |
+|  [Multiple backgrounds][multiple]  |      -       |    ❌    |     ✅      |
+|     [Split backgrounds][split]     |      -       |    ❌    |     ✅      |
 
 [resizing]: #resizing-image
 [filters]: #image-filters
@@ -123,7 +123,7 @@ It is same as defining [`<!-- _backgroundColor: "#fff" -->` spot directive](/dir
 
 ## Advanced backgrounds
 
-!> :triangular_ruler: It will work only in experimental [inline SVG slide](/inline-svg).
+!> 📐 It will work only in experimental [inline SVG slide](/inline-svg).
 
 The advanced backgrounds support [multiple backgrounds][multiple], [split backgrounds][split], and [image filters for background][filters].
 
