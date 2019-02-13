@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.7.2 - 2019-02-13
+
 ### Fixed
 
 - Use re-exported markdown-it Token from state ([#132](https://github.com/marp-team/marpit/pull/132))
