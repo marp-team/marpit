@@ -52,7 +52,7 @@
     "preversion": "npm-run-all --npm-path yarn --parallel check-audit format:check lint:* test:coverage",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "version": "node version.js && git add -A CHANGELOG.md",
+    "version": "curl https://raw.githubusercontent.com/marp-team/marp/master/version.js | node && git add -A CHANGELOG.md",
     "watch": "babel src --out-dir lib -w --verbose"
   },
   "devDependencies": {
