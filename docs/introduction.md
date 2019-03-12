@@ -1,12 +1,16 @@
 [marp]: https://github.com/marp-team/marp/
 [marp-core]: https://github.com/marp-team/marp-core
 
-<p style="text-align:center;">
-  [![Marpit](./marpit.png ':size=500')](/)
-</p>
-<p style="text-align:center;">
-  **Marpit**: Markdown slide deck framework
-</p>
+<div style="text-align:center;">
+
+[![Marpit](./marpit.png ':size=500')](/)
+
+</div>
+<div style="text-align:center;">
+
+**Marpit**: Markdown slide deck framework
+
+</div>
 
 ---
 
