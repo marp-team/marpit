@@ -33,6 +33,10 @@ section[data-marpit-advanced-background="background"] > div[data-marpit-advanced
   width: 100%;
 }
 
+section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container][data-marpit-advanced-background-direction="vertical"] {
+  flex-direction: column;
+}
+
 section[data-marpit-advanced-background="background"][data-marpit-advanced-background-split] > div[data-marpit-advanced-background-container] {
   width: 50%;
 }
