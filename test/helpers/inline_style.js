@@ -15,19 +15,19 @@ describe('InlineStyle helper class', () => {
   })
 
   describe('constructor()', () => {
-    context('with decls argument in string', () =>
+    context('with decls argument in string', () => {
       it('assigns parsed declarations', () =>
         expect(new InlineStyle('font-size: 20px;').toString()).toBe(
           'font-size:20px;'
         ))
-    )
+    })
 
-    context('with decls argument in object', () =>
+    context('with decls argument in object', () => {
       it('assigns the pair of declaration and value', () =>
         expect(new InlineStyle({ border: '1px solid #000' }).toString()).toBe(
           'border:1px solid #000;'
         ))
-    )
+    })
 
     context('with decls argument in InlineStyle', () => {
       it('assigns sanitized declarations', () => {
