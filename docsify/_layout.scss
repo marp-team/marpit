@@ -154,6 +154,7 @@ $important-color: complement($brand-primary);
     background-color: var(--mono-tint2);
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   > h1 img {
     max-height: 100px;
   }
