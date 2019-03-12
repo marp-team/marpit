@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Node and dependent packages to the latest version ([#140](https://github.com/marp-team/marpit/pull/140))
+
 ## v0.7.2 - 2019-02-13
 
 ### Fixed
