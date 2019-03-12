@@ -243,6 +243,7 @@ describe('Marpit background image plugin', () => {
 
       expect(foreignObject.attr('x')).toBe('50%')
     })
+
     context(
       'when multiple keyword for split background defined in a same slide',
       () => {
@@ -258,6 +259,39 @@ describe('Marpit background image plugin', () => {
         })
       }
     )
+
+    describe('Direction keyword', () => {
+      it('assigns data attribute of the keyword for direction as horizontal by default', () => {
+        const $ = $load(mdSVG().render('![bg](img1) ![bg](img2)'))
+        const container = $('div[data-marpit-advanced-background-container]')
+
+        expect(
+          container.attr('data-marpit-advanced-background-direction')
+        ).toBe('horizontal')
+      })
+
+      context('with vertical keyword', () => {
+        it('assigns data attribute of the keyword for direction as vertical', () => {
+          const $ = $load(mdSVG().render('![bg vertical](img1) ![bg](img2)'))
+          const container = $('div[data-marpit-advanced-background-container]')
+
+          expect(
+            container.attr('data-marpit-advanced-background-direction')
+          ).toBe('vertical')
+        })
+      })
+
+      it('uses the last defined direction when defined multiple directions', () => {
+        const $ = $load(
+          mdSVG().render('![bg vertical](img1) ![bg horizontal](img2)')
+        )
+        const container = $('div[data-marpit-advanced-background-container]')
+
+        expect(
+          container.attr('data-marpit-advanced-background-direction')
+        ).toBe('horizontal')
+      })
+    })
 
     context('when filters option of parse image plugin is enabled', () => {
       it('assigns filter style with the function of filter', () => {

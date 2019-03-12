@@ -47,6 +47,10 @@ function backgroundImageParse(md) {
               // Split background keyword
               if (opt === 'left' || opt === 'right')
                 marpitImage.backgroundSplit = opt
+
+              // Background aligned direction
+              if (opt === 'vertical' || opt === 'horizontal')
+                marpitImage.backgroundDirection = opt
             }
           }
         }
