@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.8.0 - 2019-03-13
+
 ### Added
 
 - Direction keyword for advanced background ([#138](https://github.com/marp-team/marpit/pull/138))
