@@ -32,6 +32,7 @@ function backgroundImageApply(md) {
               current.svgContent.meta = {
                 ...(current.svgContent.meta || {}),
                 marpitBackground: {
+                  direction: current.direction,
                   height: current.svgContent.attrGet('height'),
                   images: current.images,
                   open: current.open,
@@ -61,6 +62,7 @@ function backgroundImageApply(md) {
             if (t.type === 'image') {
               const {
                 background,
+                backgroundDirection,
                 backgroundColor,
                 backgroundSize,
                 backgroundSplit,
@@ -100,6 +102,7 @@ function backgroundImageApply(md) {
                 }
               }
 
+              if (backgroundDirection) current.direction = backgroundDirection
               if (backgroundSplit) current.split = backgroundSplit
             }
           }

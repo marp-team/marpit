@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Direction keyword for advanced background ([#138](https://github.com/marp-team/marpit/pull/138))
+
 ### Changed
 
 - Upgrade Node and dependent packages to the latest version ([#140](https://github.com/marp-team/marpit/pull/140))

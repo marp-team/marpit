@@ -31,6 +31,9 @@ function advancedBackground(md) {
           const { height, images, open, width } = t.meta.marpitBackground
           open.attrSet('data-marpit-advanced-background', 'content')
 
+          // Aligned direction
+          const direction = t.meta.marpitBackground.direction || 'horizontal'
+
           // Split backgrounds
           const splitSide = t.meta.marpitBackground.split
           if (splitSide) {
@@ -61,6 +64,7 @@ function advancedBackground(md) {
                   {
                     tag: 'div',
                     'data-marpit-advanced-background-container': true,
+                    'data-marpit-advanced-background-direction': direction,
                   },
                   (() => {
                     const imageTokens = []

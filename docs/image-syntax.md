@@ -129,13 +129,41 @@ The advanced backgrounds support [multiple backgrounds][multiple], [split backgr
 
 ### Multiple backgrounds
 
+<div class="example">
+
 ```markdown
-![bg](https://example.com/backgroundA.jpg)
-![bg](https://example.com/backgroundB.jpg)
-![bg](https://example.com/backgroundC.jpg)
+![bg](https://fakeimg.pl/800x600/0288d1/fff/?text=A)
+![bg](https://fakeimg.pl/800x600/02669d/fff/?text=B)
+![bg](https://fakeimg.pl/800x600/67b8e3/fff/?text=C)
 ```
 
-These images will arrange in a row.
+<span class="image">
+
+[<img src="/assets/image-syntax/multiple-bg.png" alt="Multiple backgrounds" />](/assets/image-syntax/multiple-bg.png ':ignore')
+
+</span>
+</div>
+
+These images will arrange in a horizontal row.
+
+#### Direction keyword
+
+You may change alignment direction from horizontal to vertical, by using `vertical` direction keyword.
+
+<div class="example">
+
+```markdown
+![bg vertical](https://fakeimg.pl/800x600/0288d1/fff/?text=A)
+![bg](https://fakeimg.pl/800x600/02669d/fff/?text=B)
+![bg](https://fakeimg.pl/800x600/67b8e3/fff/?text=C)
+```
+
+<span class="image">
+
+[<img src="/assets/image-syntax/multiple-bg-vertical.png" alt="Multiple backgrounds with vertical direction" />](/assets/image-syntax/multiple-bg-vertical.png ':ignore')
+
+</span>
+</div>
 
 ### Split backgrounds
 
