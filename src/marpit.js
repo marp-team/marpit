@@ -20,17 +20,34 @@ import marpitStyleParse from './markdown/style/parse'
 import marpitSweep from './markdown/sweep'
 
 const defaultOptions = {
-  backgroundSyntax: true,
   container: marpitContainer,
-  filters: true,
   headingDivider: false,
-  inlineStyle: true,
   looseYAML: false,
   markdown: 'commonmark',
   printable: true,
-  scopedStyle: true,
   slideContainer: false,
   inlineSVG: false,
+
+  // Depreacted options
+  backgroundSyntax: true,
+  filters: true,
+  inlineStyle: true,
+  scopedStyle: true,
+}
+
+const warnDeprecatedOpts = opts => {
+  for (const opt of [
+    'backgroundSyntax',
+    'filters',
+    'inlineStyle',
+    'scopedStyle',
+  ]) {
+    if (Object.prototype.hasOwnProperty.call(opts, opt)) {
+      console.warn(
+        `Deprecation warning: ${opt} option has been deprecated and would not be able to disable in v1.x.x.`
+      )
+    }
+  }
 }
 
 /**
@@ -41,35 +58,40 @@ class Marpit {
    * Create a Marpit instance.
    *
    * @param {Object} [opts]
-   * @param {boolean} [opts.backgroundSyntax=true] Support markdown image syntax
-   *     with the alternate text including `bg`. Normally it converts into spot
-   *     directives about background image. If `inlineSVG` is enabled, it
-   *     supports the advanced backgrounds.
    * @param {false|Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
-   * @param {boolean} [opts.filters=true] Support filter syntax for markdown
-   *     image. It can apply to inline image and the advanced backgrounds.
    * @param {false|number|number[]} [opts.headingDivider=false] Start a new
    *     slide page at before of headings. it would apply to headings whose
    *     larger than or equal to the specified level if a number is given, or
    *     ONLY specified levels if a number array.
-   * @param {boolean} [opts.inlineStyle=true] Recognize `<style>` elements to
-   *     append additional styles to theme. When it is `true`, Marpit will parse
-   *     style regardless markdown-it's `html` option.
    * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
    * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
    *     initialize option(s).
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
-   * @param {boolean} [opts.scopedStyle=true] Support scoping inline style to
-   *     the current slide through `<style scoped>` when `inlineStyle` is
-   *     enabled.
    * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
    * @param {boolean} [opts.inlineSVG=false] Wrap each sections by inline SVG.
    *     _(Experimental)_
+   *
+   * @param {boolean} [opts.backgroundSyntax=true] *[DEPREACTED]* Support
+   *     markdown image syntax with the alternate text including `bg`. Normally
+   *     it converts into spot directives about background image. If `inlineSVG`
+   *     is enabled, it supports the advanced backgrounds.
+   * @param {boolean} [opts.filters=true] *[DEPREACTED]*  Support filter syntax
+   *     for markdown image. It can apply to inline image and the advanced
+   *     backgrounds.
+   * @param {boolean} [opts.inlineStyle=true] *[DEPREACTED]* Recognize `<style>`
+   *     elements to append additional styles to theme. When it is `true`,
+   *     Marpit will parse style regardless markdown-it's `html` option.
+   * @param {boolean} [opts.scopedStyle=true] *[DEPREACTED]*  Support scoping
+   *     inline style to the current slide through `<style scoped>` when
+   *     `inlineStyle` is enabled.
    */
   constructor(opts = {}) {
+    // Output warning of deprecated option
+    warnDeprecatedOpts(opts)
+
     /**
      * The current options for this instance.
      *
