@@ -4,13 +4,13 @@ Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creatin
 
 |              Features              | Inline image | Slide BG | Advanced BG |
 | :--------------------------------: | :----------: | :------: | :---------: |
-|  [Resizing by keywords][resizing]  | `auto` only  |    ✅     |      ✅      |
-| [Resizing by percentage][resizing] |      ❌       |    ✅     |      ✅      |
-|   [Resizing by length][resizing]   |      ✅       |    ✅     |      ✅      |
-|      [Image filters][filters]      |      ✅       |    ❌     |      ✅      |
-|    [Background color][bgcolor]     |      -       |    ✅     |      ✅      |
-|  [Multiple backgrounds][multiple]  |      -       |    ❌     |      ✅      |
-|     [Split backgrounds][split]     |      -       |    ❌     |      ✅      |
+|  [Resizing by keywords][resizing]  | `auto` only  |    ✅    |     ✅      |
+| [Resizing by percentage][resizing] |      ❌      |    ✅    |     ✅      |
+|   [Resizing by length][resizing]   |      ✅      |    ✅    |     ✅      |
+|      [Image filters][filters]      |      ✅      |    ❌    |     ✅      |
+|    [Background color][bgcolor]     |      -       |    ✅    |     ✅      |
+|  [Multiple backgrounds][multiple]  |      -       |    ❌    |     ✅      |
+|     [Split backgrounds][split]     |      -       |    ❌    |     ✅      |
 
 [resizing]: #resizing-image
 [filters]: #image-filters
