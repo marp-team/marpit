@@ -69,8 +69,6 @@ Naturally multiple filters can apply to a image.
 ![brightness:.8 sepia:50%](https://example.com/image.jpg)
 ```
 
-?> You can disable this feature with [`filters: false` in Marpit constructor option][constructor] if you not want.
-
 ## Slide backgrounds
 
 We provide a background image syntax to specify slide's background through Markdown. It only have to include `bg` keyword to the alternate text.
@@ -80,8 +78,6 @@ We provide a background image syntax to specify slide's background through Markd
 ```
 
 When you defined two or more background images in a slide, Marpit will show the last defined image only. If you want to show multiple images, try [the advanced backgrounds][advanced-bg] by enabling [inline SVG slide](/inline-svg).
-
-?> You can disable by [`backgroundSyntax: false` in Marpit constructor option][constructor] if you not want. However, you can still style background image through [directives](/directives#backgrounds).
 
 ### Background size
 
