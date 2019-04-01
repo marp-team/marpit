@@ -1,5 +1,4 @@
 import MarkdownIt from 'markdown-it'
-import useMarpitPlugin, { MarpitSymbol } from './helpers/plugin'
 import wrapArray from './helpers/wrap_array'
 import ThemeSet from './theme_set'
 import { marpitContainer } from './element'
@@ -157,23 +156,21 @@ class Marpit {
   applyMarkdownItPlugins(md = this.markdown) {
     const { filters, looseYAML, scopedStyle } = this.options
 
-    useMarpitPlugin(md, () => {
-      md.use(marpitComment, { looseYAML })
-        .use(marpitStyleParse, this)
-        .use(marpitSlide)
-        .use(marpitParseDirectives, this, { looseYAML })
-        .use(marpitApplyDirectives, this)
-        .use(marpitHeaderAndFooter)
-        .use(marpitHeadingDivider, this)
-        .use(marpitSlideContainer, this.slideContainers)
-        .use(marpitContainerPlugin, this.containers)
-        .use(marpitParseImage, { filters })
-        .use(marpitSweep)
-        .use(marpitInlineSVG, this)
-        .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
-        .use(marpitCollect, this)
-        .use(marpitBackgroundImage, this)
-    })
+    md.use(marpitComment, { looseYAML })
+      .use(marpitStyleParse, this)
+      .use(marpitSlide)
+      .use(marpitParseDirectives, this, { looseYAML })
+      .use(marpitApplyDirectives, this)
+      .use(marpitHeaderAndFooter)
+      .use(marpitHeadingDivider, this)
+      .use(marpitSlideContainer, this.slideContainers)
+      .use(marpitContainerPlugin, this.containers)
+      .use(marpitParseImage, { filters })
+      .use(marpitSweep)
+      .use(marpitInlineSVG, this)
+      .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
+      .use(marpitCollect, this)
+      .use(marpitBackgroundImage, this)
   }
 
   /**
@@ -194,11 +191,8 @@ class Marpit {
    * @returns {Marpit~RenderResult} An object of rendering result.
    */
   render(markdown, env = {}) {
-    const html = this.renderMarkdown(markdown, env)
-    if (!this.markdown[MarpitSymbol]) return { html, css: '', comments: [] }
-
     return {
-      html,
+      html: this.renderMarkdown(markdown, env),
       css: this.renderStyle(this.lastGlobalDirectives.theme),
       comments: this.lastComments,
     }
@@ -220,7 +214,7 @@ class Marpit {
   renderMarkdown(markdown, env = {}) {
     const tokens = this.markdown.parse(markdown, env)
 
-    if (env.htmlAsArray && this.markdown[MarpitSymbol]) {
+    if (env.htmlAsArray) {
       return this.lastSlideTokens.map(slideTokens =>
         this.markdown.renderer.render(slideTokens, this.markdown.options, env)
       )
@@ -260,10 +254,7 @@ class Marpit {
    * @returns {Marpit} The called {@link Marpit} instance for chainable.
    */
   use(plugin, ...params) {
-    useMarpitPlugin(this.markdown, () =>
-      plugin.call(this.markdown, this.markdown, ...params)
-    )
-
+    plugin.call(this.markdown, this.markdown, ...params)
     return this
   }
 }

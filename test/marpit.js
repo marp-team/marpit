@@ -374,52 +374,5 @@ describe('Marpit', () => {
       expect(plugin).toBeCalledWith(instance.markdown, 'parameter')
       expect(instance.markdown.extended).toBe('parameter')
     })
-
-    describe('Enhancement of markdown-it plugin system', () => {
-      describe('StateCore#marpit', () => {
-        const controlMarpitPlugin = md =>
-          md.core.ruler.before('normalize', 'disable_marpit', state =>
-            state.marpit(state.env.marpit)
-          )
-
-        it('toggles enable or disable Marpit core rules', () => {
-          const marpitRule = jest.fn()
-          const mdRule = jest.fn()
-
-          const marpit = new Marpit()
-            .use(controlMarpitPlugin)
-            .use(md => md.core.ruler.after('normalize', 'test', marpitRule))
-
-          marpit.markdown.use(md =>
-            md.core.ruler.after('normalize', 'test', mdRule)
-          )
-
-          const retDisabled = marpit.render('', { marpit: false })
-          expect(marpitRule).not.toBeCalled()
-          expect(mdRule).toBeCalled()
-
-          expect(retDisabled.html).not.toContain('section')
-          expect(retDisabled.css).toBe('')
-          expect(retDisabled.comments).toStrictEqual([])
-
-          const retEnabled = marpit.render('', { marpit: true })
-          expect(marpitRule).toBeCalled()
-          expect(mdRule).toBeCalledTimes(2)
-
-          expect(retEnabled.html).toContain('section')
-          expect(retEnabled.css).not.toBe('')
-          expect(retEnabled.comments).toStrictEqual([[]])
-        })
-
-        it('allows control also in the instance of markdown-it', () => {
-          const md = new MarkdownIt()
-            .use(new Marpit().markdownItPlugins)
-            .use(controlMarpitPlugin)
-
-          expect(md.render('', { marpit: false })).not.toContain('section')
-          expect(md.render('', { marpit: true })).toContain('section')
-        })
-      })
-    })
   })
 })
