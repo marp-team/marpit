@@ -182,9 +182,9 @@ section {
 You would see a yellow slide.
 ```
 
-`<style>` elements would not find in rendered HTML, and would merge into CSS. [`style` global directive](/directives#tweak-theme-style) also can use as same purpose.
+`<style>` elements would not find in rendered HTML, and would merge into CSS.
 
-?> You may disable to bundle by setting [`inlineStyle: false` in Marpit constructor option](https://marpit-api.marp.app/marpit). In this case, whether to render `<style>` in HTML would follow `html` flag in `markdown` option. Any post-processing would never be applied to inline styles rendered by HTML. (e.g. scoping, import theme, etc...)
+[`style` global directive](/directives#tweak-theme-style) also can use as same purpose.
 
 ### Scoped style
 
@@ -217,5 +217,3 @@ h1 {
 ```
 
 It is useful when you want to fine-tune styles per slide page.
-
-?> This feature is available only when enabled inline style, and you may disable to support scoped style by setting [`scopedStyle: false` in Marpit constructor option](https://marpit-api.marp.app/marpit).
