@@ -53,6 +53,8 @@ const warnDeprecatedOpts = opts => {
  * Parse Marpit Markdown and render to the slide HTML/CSS.
  */
 class Marpit {
+  #markdown = undefined
+
   /**
    * Create a Marpit instance.
    *
@@ -133,11 +135,25 @@ class Marpit {
      */
     this.themeSet = new ThemeSet()
 
-    /**
-     * @type {MarkdownIt}
-     */
-    this.markdown = new MarkdownIt(...wrapArray(this.options.markdown))
-    this.applyMarkdownItPlugins()
+    this.applyMarkdownItPlugins(
+      new MarkdownIt(...wrapArray(this.options.markdown))
+    )
+  }
+
+  /**
+   * @type {MarkdownIt}
+   */
+  get markdown() {
+    return this.#markdown
+  }
+
+  set markdown(md) {
+    if (this.#markdown && this.#markdown.marpit) delete this.#markdown.marpit
+    this.#markdown = md
+
+    if (md) {
+      Object.defineProperty(md, 'marpit', { configurable: true, value: this })
+    }
   }
 
   /**
@@ -153,7 +169,9 @@ class Marpit {
   }
 
   /** @private */
-  applyMarkdownItPlugins(md = this.markdown) {
+  applyMarkdownItPlugins(md) {
+    this.markdown = md
+
     const { filters, looseYAML, scopedStyle } = this.options
 
     md.use(marpitComment, { looseYAML })
