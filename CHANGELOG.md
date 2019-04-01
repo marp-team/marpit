@@ -6,6 +6,10 @@
 
 - Upgrade dependent packages to the latest version ([#143](https://github.com/marp-team/marpit/pull/143))
 
+### Deprecated
+
+- Mark unused constructor options as deprecated: `backgroundSyntax`, `filters`, `inlineStyle`, and `scopedStyle` ([#144](https://github.com/marp-team/marpit/pull/144))
+
 ## v0.8.0 - 2019-03-13
 
 ### Added
