@@ -1,5 +1,6 @@
 /** @module */
 import postcss from 'postcss'
+import marpitPlugin from '../marpit_plugin'
 
 const uniqKeyChars =
   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -37,14 +38,11 @@ const injectScopePostCSSplugin = postcss.plugin(
  *
  * @alias module:markdown/style/assign
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
- * @param {Object} [opts]
- * @param {boolean} [opts.supportScoped=true] Setting whether support scoped
- *     style.
  */
-function assign(md, marpit, opts = {}) {
+function assign(md) {
+  const { marpit } = md
   const shouldSupportScoped =
-    'supportScoped' in opts ? !!opts.supportScoped : true
+    marpit.options.scopedStyle !== undefined ? marpit.options.scopedStyle : true
 
   md.core.ruler.after('marpit_slide', 'marpit_style_assign', state => {
     if (state.inlineMode) return
@@ -90,4 +88,4 @@ function assign(md, marpit, opts = {}) {
   })
 }
 
-export default assign
+export default marpitPlugin(assign)

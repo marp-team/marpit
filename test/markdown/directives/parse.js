@@ -8,15 +8,20 @@ describe('Marpit directives parse plugin', () => {
   const themeSetStub = new Map()
   const marpitStub = {
     customDirectives: { global: {}, local: {} },
+    options: { looseYAML: false },
     themeSet: themeSetStub,
   }
   themeSetStub.set('test_theme', true)
 
-  const md = (...args) =>
-    new MarkdownIt('commonmark')
+  const md = (...args) => {
+    const instance = MarkdownIt('commonmark')
+    instance.marpit = marpitStub
+
+    return instance
       .use(comment)
       .use(slide)
-      .use(parseDirectives, marpitStub, ...args)
+      .use(parseDirectives, ...args)
+  }
 
   context('with frontMatter option', () => {
     const text = dedent`

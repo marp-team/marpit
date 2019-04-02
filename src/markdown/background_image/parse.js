@@ -1,5 +1,6 @@
 /** @module */
 import colorString from 'color-string'
+import marpitPlugin from '../marpit_plugin'
 
 const bgSizeKeywords = {
   auto: 'auto',
@@ -59,4 +60,4 @@ function backgroundImageParse(md) {
   )
 }
 
-export default backgroundImageParse
+export default marpitPlugin(backgroundImageParse)

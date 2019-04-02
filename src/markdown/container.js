@@ -1,4 +1,6 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
+import wrapArray from '../helpers/wrap_array'
 import wrapTokens from '../helpers/wrap_tokens'
 
 /**
@@ -6,9 +8,9 @@ import wrapTokens from '../helpers/wrap_tokens'
  *
  * @alias module:markdown/container
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Element[]} containers Array of container elements.
  */
-function container(md, containers) {
+function container(md) {
+  const containers = wrapArray(md.marpit.options.container)
   if (!containers) return
 
   const target = [...containers].reverse()
@@ -26,4 +28,4 @@ function container(md, containers) {
   })
 }
 
-export default container
+export default marpitPlugin(container)

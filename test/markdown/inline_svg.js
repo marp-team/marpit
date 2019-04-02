@@ -1,7 +1,5 @@
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import applyDirectives from '../../src/markdown/directives/apply'
-import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
 import inlineSVG from '../../src/markdown/inline_svg'
 import { Theme, ThemeSet } from '../../src/index'
@@ -15,15 +13,17 @@ describe('Marpit inline SVG plugin', () => {
     ...props,
   })
 
-  const md = (marpitInstance = marpitStub()) =>
-    new MarkdownIt('commonmark')
+  const md = (marpitInstance = marpitStub()) => {
+    const instance = new MarkdownIt('commonmark')
+    instance.marpit = marpitInstance
+
+    return instance
       .use(slide)
-      .use(parseDirectives, {
-        customDirectives: marpitInstance.customDirectives,
-        themeSet: marpitInstance.themeSet,
-      })
-      .use(applyDirectives, marpitInstance)
-      .use(inlineSVG, marpitInstance)
+      .use(pluginMd =>
+        pluginMd.core.ruler.push('marpit_directives_parse', () => {})
+      )
+      .use(inlineSVG)
+  }
 
   const render = (markdownIt, text, inline = false) => {
     const method = inline ? markdownIt.renderInline : markdownIt.render

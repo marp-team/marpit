@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from '../marpit_plugin'
 
 /**
  * Marpit background image apply plugin.
@@ -111,4 +112,4 @@ function backgroundImageApply(md) {
   )
 }
 
-export default backgroundImageApply
+export default marpitPlugin(backgroundImageApply)

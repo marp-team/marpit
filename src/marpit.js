@@ -53,6 +53,8 @@ const warnDeprecatedOpts = opts => {
  * Parse Marpit Markdown and render to the slide HTML/CSS.
  */
 class Marpit {
+  #markdown = undefined
+
   /**
    * Create a Marpit instance.
    *
@@ -122,22 +124,30 @@ class Marpit {
       value: Object.seal({ global: {}, local: {} }),
     })
 
-    // Internal members
-    Object.defineProperties(this, {
-      containers: { value: [...wrapArray(this.options.container)] },
-      slideContainers: { value: [...wrapArray(this.options.slideContainer)] },
-    })
-
     /**
      * @type {ThemeSet}
      */
     this.themeSet = new ThemeSet()
 
-    /**
-     * @type {MarkdownIt}
-     */
-    this.markdown = new MarkdownIt(...wrapArray(this.options.markdown))
-    this.applyMarkdownItPlugins()
+    this.applyMarkdownItPlugins(
+      new MarkdownIt(...wrapArray(this.options.markdown))
+    )
+  }
+
+  /**
+   * @type {MarkdownIt}
+   */
+  get markdown() {
+    return this.#markdown
+  }
+
+  set markdown(md) {
+    if (this.#markdown && this.#markdown.marpit) delete this.#markdown.marpit
+    this.#markdown = md
+
+    if (md) {
+      Object.defineProperty(md, 'marpit', { configurable: true, value: this })
+    }
   }
 
   /**
@@ -153,24 +163,24 @@ class Marpit {
   }
 
   /** @private */
-  applyMarkdownItPlugins(md = this.markdown) {
-    const { filters, looseYAML, scopedStyle } = this.options
+  applyMarkdownItPlugins(md) {
+    this.markdown = md
 
-    md.use(marpitComment, { looseYAML })
-      .use(marpitStyleParse, this)
+    md.use(marpitComment)
+      .use(marpitStyleParse)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this, { looseYAML })
-      .use(marpitApplyDirectives, this)
+      .use(marpitParseDirectives)
+      .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)
-      .use(marpitHeadingDivider, this)
-      .use(marpitSlideContainer, this.slideContainers)
-      .use(marpitContainerPlugin, this.containers)
-      .use(marpitParseImage, { filters })
+      .use(marpitHeadingDivider)
+      .use(marpitSlideContainer)
+      .use(marpitContainerPlugin)
+      .use(marpitParseImage)
       .use(marpitSweep)
-      .use(marpitInlineSVG, this)
-      .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
-      .use(marpitCollect, this)
-      .use(marpitBackgroundImage, this)
+      .use(marpitInlineSVG)
+      .use(marpitStyleAssign)
+      .use(marpitCollect)
+      .use(marpitBackgroundImage)
   }
 
   /**
@@ -240,7 +250,10 @@ class Marpit {
   themeSetPackOptions() {
     return {
       after: this.lastStyles ? this.lastStyles.join('\n') : undefined,
-      containers: [...this.containers, ...this.slideContainers],
+      containers: [
+        ...wrapArray(this.options.container),
+        ...wrapArray(this.options.slideContainer),
+      ],
       inlineSVG: this.options.inlineSVG,
       printable: this.options.printable,
     }

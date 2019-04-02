@@ -2,6 +2,7 @@
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
 import yaml from './yaml'
 import * as directives from './directives'
+import marpitPlugin from '../marpit_plugin'
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -11,14 +12,14 @@ import * as directives from './directives'
  *
  * @alias module:markdown/directives/parse
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.frontMatter=true] Switch feature to support YAML
  *     front-matter. If true, you can use Jekyll style directive setting to the
  *     first page.
- * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
  */
-function parse(md, marpit, opts = {}) {
+function parse(md, opts = {}) {
+  const { marpit } = md
+
   // Front-matter support
   const frontMatter = opts.frontMatter === undefined ? true : !!opts.frontMatter
   let frontMatterObject = {}
@@ -31,7 +32,7 @@ function parse(md, marpit, opts = {}) {
     md.use(MarkdownItFrontMatter, fm => {
       frontMatterObject.text = fm
 
-      const parsed = yaml(fm, !!opts.looseYAML)
+      const parsed = yaml(fm, !!md.marpit.options.looseYAML)
       if (parsed !== false) frontMatterObject.yaml = parsed
     })
   }
@@ -198,4 +199,4 @@ function parse(md, marpit, opts = {}) {
   })
 }
 
-export default parse
+export default marpitPlugin(parse)

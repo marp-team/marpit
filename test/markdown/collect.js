@@ -18,17 +18,18 @@ describe('Marpit collect plugin', () => {
     options: { inlineSVG: svg },
   })
 
-  const md = marpitInstance =>
-    new MarkdownIt('commonmark')
+  const md = marpitInstance => {
+    const instance = new MarkdownIt('commonmark')
+    instance.marpit = marpitInstance
+
+    return instance
       .use(comment)
       .use(slide)
-      .use(parseDirectives, {
-        customDirectives: marpitInstance.customDirectives,
-        themeSet: marpitInstance.themeSet,
-      })
-      .use(applyDirectives, marpitInstance)
-      .use(collect, marpitInstance)
-      .use(inlineSVG, marpitInstance)
+      .use(parseDirectives)
+      .use(applyDirectives)
+      .use(collect)
+      .use(inlineSVG)
+  }
 
   const text = dedent`
     ---

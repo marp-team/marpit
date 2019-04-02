@@ -1,4 +1,6 @@
 /** @module */
+import marpitPlugin from '../marpit_plugin'
+
 const styleMatcher = /<style([\s\S]*?)>([\s\S]*?)<\/style>/i
 const styleMatcherOpening = /^<style(?=(\s|>|$))/i
 const styleMatcherClosing = /<\/style>/i
@@ -15,9 +17,10 @@ const styleMatcherScoped = /\bscoped\b/i
  *
  * @alias module:markdown/style/parse
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  */
-function parse(md, marpit) {
+function parse(md) {
+  const { marpit } = md
+
   /**
    * Based on markdown-it html_block rule
    * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
@@ -26,7 +29,7 @@ function parse(md, marpit) {
     'html_block',
     'marpit_style_parse',
     (state, startLine, endLine, silent) => {
-      if (!marpit.options.inlineStyle) return false
+      if (marpit.options.inlineStyle === false) return false
 
       // Fast fail
       let pos = state.bMarks[startLine] + state.tShift[startLine]
@@ -77,4 +80,4 @@ function parse(md, marpit) {
   )
 }
 
-export default parse
+export default marpitPlugin(parse)

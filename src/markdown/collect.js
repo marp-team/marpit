@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 
 /**
  * Marpit collect plugin.
@@ -10,9 +11,10 @@
  *
  * @alias module:markdown/collect
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  */
-function collect(md, marpit) {
+function collect(md) {
+  const { marpit } = md
+
   md.core.ruler.push('marpit_collect', state => {
     if (state.inlineMode) return
 
@@ -59,4 +61,4 @@ function collect(md, marpit) {
   })
 }
 
-export default collect
+export default marpitPlugin(collect)

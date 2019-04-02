@@ -11,7 +11,12 @@ import slide from '../../src/markdown/slide'
 import sweep from '../../src/markdown/sweep'
 
 describe('Marpit sweep plugin', () => {
-  const md = (opts = {}) => new MarkdownIt('commonmark', opts).use(sweep)
+  const md = (mdOpts = {}, marpitInstance = { options: {} }) => {
+    const instance = new MarkdownIt('commonmark', mdOpts)
+    instance.marpit = marpitInstance
+
+    return instance.use(sweep)
+  }
 
   it('does not sweep whitespace in #renderInline', () =>
     expect(md().renderInline(' ')).toBe(' '))
@@ -23,13 +28,13 @@ describe('Marpit sweep plugin', () => {
       options: { backgroundSyntax: true, inlineSVG: false },
     }
 
-    const markdown = md({ breaks: true })
+    const markdown = md({ breaks: true }, marpitStub)
       .use(slide)
-      .use(parseDirectives, marpitStub)
-      .use(applyDirectives, marpitStub)
-      .use(inlineSVG, marpitStub)
+      .use(parseDirectives)
+      .use(applyDirectives)
+      .use(inlineSVG)
       .use(parseImage)
-      .use(backgroundImage, marpitStub)
+      .use(backgroundImage)
 
     const $ = cheerio.load(
       markdown.render(dedent`

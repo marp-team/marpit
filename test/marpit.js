@@ -93,8 +93,10 @@ describe('Marpit', () => {
       marpit.themeSet.add('/* @theme foobar */')
 
       const md = new MarkdownIt().use(marpit.markdownItPlugins)
-      md.render('<!-- theme: foobar -->')
+      expect(marpit.markdown).toBe(md)
+      expect(md.marpit).toBe(marpit)
 
+      md.render('<!-- theme: foobar -->')
       expect(marpit.lastGlobalDirectives.theme).toBe('foobar')
     })
   })

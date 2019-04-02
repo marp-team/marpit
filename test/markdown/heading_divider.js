@@ -19,10 +19,14 @@ describe('Marpit heading divider plugin', () => {
     )
 
   describe('Constructor option', () => {
-    const md = marpitInstance =>
-      new MarkdownIt('commonmark')
+    const md = marpitInstance => {
+      const instance = new MarkdownIt('commonmark')
+      instance.marpit = marpitInstance
+
+      return instance
         .use(pluginMd => pluginMd.core.ruler.push('marpit_slide', () => {}))
-        .use(headingDivider, marpitInstance)
+        .use(headingDivider)
+    }
 
     context('with headingDivider option as false', () => {
       const markdown = md(marpitStub(false))
@@ -87,8 +91,12 @@ describe('Marpit heading divider plugin', () => {
     })
 
     context('with headingDivider option as 4 and slide plugin', () => {
-      const mdWithSlide = instance =>
-        new MarkdownIt('commonmark').use(slide).use(headingDivider, instance)
+      const mdWithSlide = marpitInstance => {
+        const instance = new MarkdownIt('commonmark')
+        instance.marpit = marpitInstance
+
+        return instance.use(slide).use(headingDivider)
+      }
 
       it('renders four <section> elements', () => {
         const $ = cheerio.load(mdWithSlide(marpitStub(4)).render(markdownText))
@@ -112,12 +120,16 @@ describe('Marpit heading divider plugin', () => {
         customDirectives: { global: {}, local: {} },
         options: {},
       }
-    ) =>
-      new MarkdownIt('commonmark')
+    ) => {
+      const instance = new MarkdownIt('commonmark')
+      instance.marpit = marpitInstance
+
+      return instance
         .use(comment)
         .use(pluginMd => pluginMd.core.ruler.push('marpit_slide', () => {}))
-        .use(parseDirectives, marpitInstance)
-        .use(headingDivider, marpitInstance)
+        .use(parseDirectives)
+        .use(headingDivider)
+    }
 
     const markdownTextWithDirective = level =>
       `---\nheadingDivider: ${level}\n---\n\n${markdownText}`

@@ -3,7 +3,12 @@ import MarkdownIt from 'markdown-it'
 import slide from '../../src/markdown/slide'
 
 describe('Marpit slide plugin', () => {
-  const md = (...args) => new MarkdownIt('commonmark').use(slide, ...args)
+  const md = (...args) => {
+    const instance = new MarkdownIt('commonmark')
+    instance.marpit = {}
+
+    return instance.use(slide, ...args)
+  }
 
   context('with default options', () => {
     const markdown = md()

@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import wrapTokens from '../helpers/wrap_tokens'
 
 /**
@@ -67,4 +68,4 @@ function headerAndFooter(md) {
   )
 }
 
-export default headerAndFooter
+export default marpitPlugin(headerAndFooter)
