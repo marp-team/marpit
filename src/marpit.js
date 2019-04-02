@@ -7,6 +7,7 @@ import marpitBackgroundImage from './markdown/background_image'
 import marpitCollect from './markdown/collect'
 import marpitComment from './markdown/comment'
 import marpitContainerPlugin from './markdown/container'
+import marpitFragment from './markdown/fragment'
 import marpitHeaderAndFooter from './markdown/header_and_footer'
 import marpitHeadingDivider from './markdown/heading_divider'
 import marpitInlineSVG from './markdown/inline_svg'
@@ -179,8 +180,9 @@ class Marpit {
       .use(marpitSweep)
       .use(marpitInlineSVG)
       .use(marpitStyleAssign)
-      .use(marpitCollect)
       .use(marpitBackgroundImage)
+      .use(marpitFragment)
+      .use(marpitCollect)
   }
 
   /**
