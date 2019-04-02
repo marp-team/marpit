@@ -7,6 +7,7 @@
  * require that markdown-it instance has `marpit` member.
  *
  * @alias module:markdown/marpit_plugin
+ * @param {Function} plugin Base plugin for markdown-it.
  * @returns {Function} markdown-it plugin for Marpit.
  */
 function marpitPlugin(plugin) {
