@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import split from '../helpers/split'
 import wrapTokens from '../helpers/wrap_tokens'
 
@@ -38,4 +39,4 @@ function slideContainer(md, containers) {
   })
 }
 
-export default slideContainer
+export default marpitPlugin(slideContainer)

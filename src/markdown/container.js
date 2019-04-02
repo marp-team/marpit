@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import wrapTokens from '../helpers/wrap_tokens'
 
 /**
@@ -26,4 +27,4 @@ function container(md, containers) {
   })
 }
 
-export default container
+export default marpitPlugin(container)

@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 
 /**
  * Marpit sweep plugin.
@@ -56,4 +57,4 @@ function sweep(md) {
   })
 }
 
-export default sweep
+export default marpitPlugin(sweep)

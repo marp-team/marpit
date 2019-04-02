@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import advanced from './background_image/advanced'
 import apply from './background_image/apply'
 import parse from './background_image/parse'
@@ -28,4 +29,4 @@ function backgroundImage(md, marpit) {
   advanced(md)
 }
 
-export default backgroundImage
+export default marpitPlugin(backgroundImage)

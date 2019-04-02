@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import split from '../helpers/split'
 import wrapTokens from '../helpers/wrap_tokens'
 
@@ -54,4 +55,4 @@ function inlineSVG(md, marpit) {
   })
 }
 
-export default inlineSVG
+export default marpitPlugin(inlineSVG)

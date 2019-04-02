@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import InlineStyle from '../helpers/inline_style'
 
 const escape = target =>
@@ -153,4 +154,4 @@ function parseImage(md, opts = {}) {
   })
 }
 
-export default parseImage
+export default marpitPlugin(parseImage)

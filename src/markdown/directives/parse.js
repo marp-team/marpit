@@ -2,6 +2,7 @@
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
 import yaml from './yaml'
 import * as directives from './directives'
+import marpitPlugin from '../marpit_plugin'
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -198,4 +199,4 @@ function parse(md, marpit, opts = {}) {
   })
 }
 
-export default parse
+export default marpitPlugin(parse)

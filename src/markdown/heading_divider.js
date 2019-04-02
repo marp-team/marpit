@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 import split from '../helpers/split'
 
 /**
@@ -52,4 +53,4 @@ function headingDivider(md, marpit) {
   })
 }
 
-export default headingDivider
+export default marpitPlugin(headingDivider)

@@ -1,5 +1,6 @@
 /** @module */
 import yaml from './directives/yaml'
+import marpitPlugin from './marpit_plugin'
 
 const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/
@@ -105,4 +106,4 @@ function comment(md, opts = {}) {
   )
 }
 
-export default comment
+export default marpitPlugin(comment)

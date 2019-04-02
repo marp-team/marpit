@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from '../marpit_plugin'
 import InlineStyle from '../../helpers/inline_style'
 import wrapTokens from '../../helpers/wrap_tokens'
 
@@ -148,4 +149,4 @@ function advancedBackground(md) {
   )
 }
 
-export default advancedBackground
+export default marpitPlugin(advancedBackground)

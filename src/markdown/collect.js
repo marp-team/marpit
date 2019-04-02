@@ -1,4 +1,5 @@
 /** @module */
+import marpitPlugin from './marpit_plugin'
 
 /**
  * Marpit collect plugin.
@@ -59,4 +60,4 @@ function collect(md, marpit) {
   })
 }
 
-export default collect
+export default marpitPlugin(collect)

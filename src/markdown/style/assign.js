@@ -1,5 +1,6 @@
 /** @module */
 import postcss from 'postcss'
+import marpitPlugin from '../marpit_plugin'
 
 const uniqKeyChars =
   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -90,4 +91,4 @@ function assign(md, marpit, opts = {}) {
   })
 }
 
-export default assign
+export default marpitPlugin(assign)

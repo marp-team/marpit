@@ -1,4 +1,6 @@
 /** @module */
+import marpitPlugin from '../marpit_plugin'
+
 const styleMatcher = /<style([\s\S]*?)>([\s\S]*?)<\/style>/i
 const styleMatcherOpening = /^<style(?=(\s|>|$))/i
 const styleMatcherClosing = /<\/style>/i
@@ -77,4 +79,4 @@ function parse(md, marpit) {
   )
 }
 
-export default parse
+export default marpitPlugin(parse)
