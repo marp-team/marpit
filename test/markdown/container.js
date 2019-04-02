@@ -4,7 +4,12 @@ import { Element } from '../../src/index'
 import container from '../../src/markdown/container'
 
 describe('Marpit container plugin', () => {
-  const md = (...args) => new MarkdownIt('commonmark').use(container, ...args)
+  const md = containers => {
+    const instance = new MarkdownIt('commonmark')
+    instance.marpit = { options: { container: containers } }
+
+    return instance.use(container)
+  }
 
   context('with empty', () => {
     it('has no effect on rendered HTML', () => {

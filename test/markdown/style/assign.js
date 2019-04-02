@@ -9,19 +9,22 @@ import styleAssign from '../../../src/markdown/style/assign'
 import styleParse from '../../../src/markdown/style/parse'
 
 describe('Marpit style assign plugin', () => {
-  const marpitStub = (...opts) => ({
+  const marpitStub = () => ({
     customDirectives: { global: {}, local: {} },
-    options: { inlineStyle: true },
+    options: {},
     themeSet: new Map(),
-    ...opts,
   })
 
   context('with inline style elements', () => {
-    const md = (marpit, opts = {}) =>
-      new MarkdownIt('commonmark')
+    const md = marpit => {
+      const instance = new MarkdownIt('commonmark')
+      instance.marpit = marpit
+
+      return instance
         .use(slide)
-        .use(styleParse, marpit)
-        .use(styleAssign, marpit, opts)
+        .use(styleParse)
+        .use(styleAssign)
+    }
 
     it('assigns parsed styles to Marpit lastStyles property', () => {
       const marpit = marpitStub()
@@ -92,26 +95,21 @@ describe('Marpit style assign plugin', () => {
           expect(marpit.lastStyles).toHaveLength(0)
         })
       })
-
-      context('when supportScoped option is setting as false', () => {
-        const marpit = marpitStub()
-        const opts = { supportScoped: false }
-        md(marpit, opts).render('<style scoped>b { color: red; }</style>')
-
-        const [style] = marpit.lastStyles
-        expect(style).not.toContain('data-marpit-scope')
-      })
     })
   })
 
   context('with style global directive', () => {
-    const md = marpit =>
-      new MarkdownIt('commonmark')
+    const md = marpit => {
+      const instance = new MarkdownIt('commonmark')
+      instance.marpit = marpit
+
+      return instance
         .use(comment)
         .use(slide)
-        .use(parseDirectives, marpit)
-        .use(applyDirectives, marpit)
-        .use(styleAssign, marpit)
+        .use(parseDirectives)
+        .use(applyDirectives)
+        .use(styleAssign)
+    }
 
     it('assigns parsed style global directive to Marpit lastStyles property', () => {
       const marpit = marpitStub()
@@ -126,14 +124,18 @@ describe('Marpit style assign plugin', () => {
   })
 
   context('with muiltiple style elements and a style directive', () => {
-    const md = marpit =>
-      new MarkdownIt('commonmark')
+    const md = marpit => {
+      const instance = new MarkdownIt('commonmark')
+      instance.marpit = marpit
+
+      return instance
         .use(comment)
-        .use(styleParse, marpit)
+        .use(styleParse)
         .use(slide)
-        .use(parseDirectives, marpit)
-        .use(applyDirectives, marpit)
-        .use(styleAssign, marpit)
+        .use(parseDirectives)
+        .use(applyDirectives)
+        .use(styleAssign)
+    }
 
     it('assigns inline styles prior to directive style', () => {
       const marpit = marpitStub()

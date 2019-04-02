@@ -29,7 +29,7 @@ function parse(md) {
     'html_block',
     'marpit_style_parse',
     (state, startLine, endLine, silent) => {
-      if (!marpit.options.inlineStyle) return false
+      if (marpit.options.inlineStyle === false) return false
 
       // Fast fail
       let pos = state.bMarks[startLine] + state.tShift[startLine]

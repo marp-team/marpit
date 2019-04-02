@@ -15,20 +15,21 @@ describe('Marpit background image plugin', () => {
     customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     themeSet: { getThemeProp: () => 100 },
-    options: { backgroundSyntax: true, inlineSVG: svg },
+    options: { backgroundSyntax: true, filters: true, inlineSVG: svg },
   })
 
-  const md = (svg = false, filters = false) => {
-    const stub = marpitStub(svg)
+  const md = (svg = false) => {
+    const instance = new MarkdownIt()
+    instance.marpit = marpitStub(svg)
 
-    return new MarkdownIt()
+    return instance
       .use(comment)
       .use(slide)
-      .use(parseDirectives, stub)
-      .use(applyDirectives, stub)
-      .use(inlineSVG, stub)
-      .use(parseImage, { filters })
-      .use(backgroundImage, stub)
+      .use(parseDirectives)
+      .use(applyDirectives)
+      .use(inlineSVG)
+      .use(parseImage)
+      .use(backgroundImage)
   }
 
   const bgDirective = (url, mdInstance) => {
@@ -132,7 +133,7 @@ describe('Marpit background image plugin', () => {
   })
 
   context('with inline SVG (Advanced background mode)', () => {
-    const mdSVG = (filters = false) => md(true, filters)
+    const mdSVG = () => md(true)
     const $load = html =>
       cheerio.load(html, {
         lowerCaseAttributeNames: false,
@@ -293,7 +294,7 @@ describe('Marpit background image plugin', () => {
       })
     })
 
-    context('when filters option of parse image plugin is enabled', () => {
+    describe('CSS Filters', () => {
       it('assigns filter style with the function of filter', () => {
         const filters = {
           // with default attributes
@@ -329,9 +330,7 @@ describe('Marpit background image plugin', () => {
         }
 
         Object.keys(filters).forEach(filter => {
-          const $ = $load(
-            mdSVG(true).render(`![${filter}](a)\n![bg ${filter}](b)`)
-          )
+          const $ = $load(mdSVG().render(`![${filter}](a)\n![bg ${filter}](b)`))
           const inlineImageStyle = $('img').attr('style')
           const bgImageStyle = $('img').attr('style')
 
@@ -365,7 +364,7 @@ describe('Marpit background image plugin', () => {
         )
 
         Object.keys(injections).forEach(filter => {
-          const $ = $load(mdSVG(true).render(`![${filter}](a)`))
+          const $ = $load(mdSVG().render(`![${filter}](a)`))
           const style = $('img').attr('style')
 
           expect(style).toBe(injections[filter])

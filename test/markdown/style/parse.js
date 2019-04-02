@@ -4,9 +4,13 @@ import MarkdownIt from 'markdown-it'
 import styleParse from '../../../src/markdown/style/parse'
 
 describe('Marpit style parse plugin', () => {
-  const marpitStub = { options: { inlineStyle: true } }
-  const md = (marpit = marpitStub, mdOption = {}) =>
-    new MarkdownIt('commonmark', mdOption).use(styleParse, marpit)
+  const marpitStub = { options: {} }
+  const md = (marpit = marpitStub, mdOption = {}) => {
+    const instance = new MarkdownIt('commonmark', mdOption)
+    instance.marpit = marpit
+
+    return instance.use(styleParse)
+  }
 
   it("ignores parse when Marpit's inlineStyle option is false", () => {
     const types = md({ options: { inlineStyle: false } })

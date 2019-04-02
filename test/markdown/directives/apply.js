@@ -12,12 +12,19 @@ describe('Marpit directives apply plugin', () => {
 
   const md = (...args) => {
     const customDirectives = { global: {}, local: {} }
+    const instance = new MarkdownIt('commonmark')
 
-    return new MarkdownIt('commonmark')
+    instance.marpit = {
+      customDirectives,
+      options: { looseYAML: false },
+      themeSet: themeSetStub,
+    }
+
+    return instance
       .use(comment)
       .use(slide)
-      .use(parseDirectives, { customDirectives, themeSet: themeSetStub })
-      .use(applyDirectives, { customDirectives }, ...args)
+      .use(parseDirectives)
+      .use(applyDirectives, ...args)
   }
 
   const mdForTest = (...args) =>
