@@ -12,14 +12,15 @@ import marpitPlugin from '../marpit_plugin'
  *
  * @alias module:markdown/directives/parse
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.frontMatter=true] Switch feature to support YAML
  *     front-matter. If true, you can use Jekyll style directive setting to the
  *     first page.
  * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
  */
-function parse(md, marpit, opts = {}) {
+function parse(md, opts = {}) {
+  const { marpit } = md
+
   // Front-matter support
   const frontMatter = opts.frontMatter === undefined ? true : !!opts.frontMatter
   let frontMatterObject = {}

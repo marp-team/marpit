@@ -175,20 +175,20 @@ class Marpit {
     const { filters, looseYAML, scopedStyle } = this.options
 
     md.use(marpitComment, { looseYAML })
-      .use(marpitStyleParse, this)
+      .use(marpitStyleParse)
       .use(marpitSlide)
-      .use(marpitParseDirectives, this, { looseYAML })
-      .use(marpitApplyDirectives, this)
+      .use(marpitParseDirectives, { looseYAML })
+      .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)
-      .use(marpitHeadingDivider, this)
+      .use(marpitHeadingDivider)
       .use(marpitSlideContainer, this.slideContainers)
       .use(marpitContainerPlugin, this.containers)
       .use(marpitParseImage, { filters })
       .use(marpitSweep)
-      .use(marpitInlineSVG, this)
-      .use(marpitStyleAssign, this, { supportScoped: scopedStyle })
-      .use(marpitCollect, this)
-      .use(marpitBackgroundImage, this)
+      .use(marpitInlineSVG)
+      .use(marpitStyleAssign, { supportScoped: scopedStyle })
+      .use(marpitCollect)
+      .use(marpitBackgroundImage)
   }
 
   /**

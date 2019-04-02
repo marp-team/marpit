@@ -9,14 +9,15 @@ import InlineStyle from '../../helpers/inline_style'
  *
  * @alias module:markdown/directives/apply
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.dataset=true] Assigns directives as HTML data
  *     attributes of each section tag.
  * @param {boolean} [opts.css=true] Assigns directives as CSS Custom Properties
  *     of each section tag.
  */
-function apply(md, marpit, opts = {}) {
+function apply(md, opts = {}) {
+  const { marpit } = md
+
   const dataset = opts.dataset === undefined ? true : !!opts.dataset
   const css = opts.css === undefined ? true : !!opts.css
 

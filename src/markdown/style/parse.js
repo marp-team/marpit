@@ -17,9 +17,10 @@ const styleMatcherScoped = /\bscoped\b/i
  *
  * @alias module:markdown/style/parse
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  */
-function parse(md, marpit) {
+function parse(md) {
+  const { marpit } = md
+
   /**
    * Based on markdown-it html_block rule
    * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js

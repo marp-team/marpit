@@ -8,9 +8,10 @@ import wrapTokens from '../helpers/wrap_tokens'
  *
  * @alias module:markdown/inline_svg
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  */
-function inlineSVG(md, marpit) {
+function inlineSVG(md) {
+  const { marpit } = md
+
   md.core.ruler.after('marpit_directives_parse', 'marpit_inline_svg', state => {
     if (!marpit.options.inlineSVG || state.inlineMode) return
 

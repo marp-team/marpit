@@ -38,12 +38,12 @@ const injectScopePostCSSplugin = postcss.plugin(
  *
  * @alias module:markdown/style/assign
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Marpit} marpit Marpit instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.supportScoped=true] Setting whether support scoped
  *     style.
  */
-function assign(md, marpit, opts = {}) {
+function assign(md, opts = {}) {
+  const { marpit } = md
   const shouldSupportScoped =
     'supportScoped' in opts ? !!opts.supportScoped : true
 
