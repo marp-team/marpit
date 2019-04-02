@@ -124,12 +124,6 @@ class Marpit {
       value: Object.seal({ global: {}, local: {} }),
     })
 
-    // Internal members
-    Object.defineProperties(this, {
-      containers: { value: [...wrapArray(this.options.container)] },
-      slideContainers: { value: [...wrapArray(this.options.slideContainer)] },
-    })
-
     /**
      * @type {ThemeSet}
      */
@@ -172,21 +166,19 @@ class Marpit {
   applyMarkdownItPlugins(md) {
     this.markdown = md
 
-    const { filters, looseYAML, scopedStyle } = this.options
-
-    md.use(marpitComment, { looseYAML })
+    md.use(marpitComment)
       .use(marpitStyleParse)
       .use(marpitSlide)
-      .use(marpitParseDirectives, { looseYAML })
+      .use(marpitParseDirectives)
       .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)
       .use(marpitHeadingDivider)
-      .use(marpitSlideContainer, this.slideContainers)
-      .use(marpitContainerPlugin, this.containers)
-      .use(marpitParseImage, { filters })
+      .use(marpitSlideContainer)
+      .use(marpitContainerPlugin)
+      .use(marpitParseImage)
       .use(marpitSweep)
       .use(marpitInlineSVG)
-      .use(marpitStyleAssign, { supportScoped: scopedStyle })
+      .use(marpitStyleAssign)
       .use(marpitCollect)
       .use(marpitBackgroundImage)
   }
@@ -258,7 +250,10 @@ class Marpit {
   themeSetPackOptions() {
     return {
       after: this.lastStyles ? this.lastStyles.join('\n') : undefined,
-      containers: [...this.containers, ...this.slideContainers],
+      containers: [
+        ...wrapArray(this.options.container),
+        ...wrapArray(this.options.slideContainer),
+      ],
       inlineSVG: this.options.inlineSVG,
       printable: this.options.printable,
     }

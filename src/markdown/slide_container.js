@@ -1,6 +1,7 @@
 /** @module */
 import marpitPlugin from './marpit_plugin'
 import split from '../helpers/split'
+import wrapArray from '../helpers/wrap_array'
 import wrapTokens from '../helpers/wrap_tokens'
 
 /**
@@ -8,9 +9,9 @@ import wrapTokens from '../helpers/wrap_tokens'
  *
  * @alias module:markdown/slide_container
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Element[]} containers Array of container elements.
  */
-function slideContainer(md, containers) {
+function slideContainer(md) {
+  const containers = wrapArray(md.marpit.options.slideContainer)
   if (!containers) return
 
   const target = [...containers].reverse()

@@ -17,11 +17,11 @@ const escape = target =>
  *
  * @alias module:markdown/parse_image
  * @param {MarkdownIt} md markdown-it instance.
- * @param {Object} [opts]
- * @param {boolean} [opts.filters=true] Switch feature to support CSS filters.
  */
-function parseImage(md, opts = {}) {
-  const pluginOptions = { filters: true, ...opts }
+function parseImage(md) {
+  const isEnabledFilters =
+    md.marpit.options.filters !== undefined ? md.marpit.options.filters : true
+
   const optionMatchers = new Map()
 
   // The scale percentage for resize background
@@ -38,7 +38,7 @@ function parseImage(md, opts = {}) {
     matches => ({ height: matches[1] })
   )
 
-  if (pluginOptions.filters) {
+  if (isEnabledFilters) {
     // CSS filters
     optionMatchers.set(/^blur(?::(.+))?$/, (matches, meta) => ({
       filters: [...meta.filters, ['blur', escape(matches[1] || '10px')]],
