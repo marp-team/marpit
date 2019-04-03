@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.9.0 - 2019-04-03
+
 ### Added
 
 - Parse lists in `*` and `1)` marker as fragmented list ([#145](https://github.com/marp-team/marpit/issues/145), [#148](https://github.com/marp-team/marpit/pull/148))
