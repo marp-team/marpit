@@ -8,7 +8,7 @@
 
 ### Changed
 
-- Upgrade dependent packages to the latest version ([#143](https://github.com/marp-team/marpit/pull/143))
+- Upgrade dependent packages to the latest version ([#143](https://github.com/marp-team/marpit/pull/143), [#149](https://github.com/marp-team/marpit/pull/149))
 - Simplify Marpit plugins by using injected instance into markdown-it instance ([#147](https://github.com/marp-team/marpit/pull/147))
 
 ### Deprecated
