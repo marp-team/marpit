@@ -1,3 +1,4 @@
+import get from 'lodash.get'
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
@@ -114,9 +115,9 @@ class ThemeSet {
    * scaffold theme when the specified theme is undefined.
    *
    * @param {string|Theme} theme The theme name or instance.
-   * @param {string} prop The property name to get.
+   * @param {string} propPath The property name or path to get.
    */
-  getThemeProp(theme, prop, importedThemes = []) {
+  getThemeProp(theme, propPath, importedThemes = []) {
     let importedProps = []
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
 
@@ -132,7 +133,7 @@ class ThemeSet {
           return importTheme
             ? this.getThemeProp(
                 importTheme,
-                prop,
+                propPath,
                 [...importedThemes, name].filter(n => n)
               )
             : undefined
@@ -142,10 +143,10 @@ class ThemeSet {
     }
 
     return [
-      themeInstance && themeInstance[prop],
+      get(themeInstance, propPath),
       ...importedProps,
-      this.default && this.default[prop],
-      scaffold[prop],
+      get(this.default, propPath),
+      get(scaffold, propPath),
     ].find(t => t)
   }
 
