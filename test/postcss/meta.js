@@ -4,27 +4,29 @@ import meta from '../../src/postcss/meta'
 describe('Marpit PostCSS meta plugin', () => {
   const run = input => postcss([meta()]).process(input, { from: undefined })
 
-  it('adds marpitMeta object to result', () => {
-    run('').then(result => {
-      expect(result.marpitMeta).toBeInstanceOf(Object)
-      expect(result.marpitMeta).toStrictEqual({})
-    })
+  it('adds marpitMeta object to result', async () => {
+    const result = await run('')
+    expect(result.marpitMeta).toBeInstanceOf(Object)
+    expect(result.marpitMeta).toStrictEqual({})
   })
 
-  it('parses meta comment and store to marpitMeta', () =>
-    run('/* @meta value */').then(result =>
-      expect(result.marpitMeta.meta).toBe('value')
-    ))
+  it('parses meta comment and store to marpitMeta', async () => {
+    expect((await run('/* @meta value */')).marpitMeta.meta).toBe('value')
 
-  it('parses meta comment with starting by double star', () =>
-    run('/** @meta double-star */').then(result =>
-      expect(result.marpitMeta.meta).toBe('double-star')
-    ))
+    // Number, hyphen and underscore
+    expect((await run('/* @123 456 */')).marpitMeta['123']).toBe('456')
+    expect((await run('/* @-_- _-_ */')).marpitMeta['-_-']).toBe('_-_')
+  })
 
-  it('parses meta comment with important comment', () =>
-    run('/*! @meta important-comment */').then(result =>
-      expect(result.marpitMeta.meta).toBe('important-comment')
-    ))
+  it('parses meta comment with starting by double star', async () => {
+    const result = await run('/** @meta double-star */')
+    expect(result.marpitMeta.meta).toBe('double-star')
+  })
+
+  it('parses meta comment with important comment', async () => {
+    const result = await run('/*! @meta important-comment */')
+    expect(result.marpitMeta.meta).toBe('important-comment')
+  })
 
   context('with multiline metas', () => {
     const css = `
@@ -35,12 +37,10 @@ describe('Marpit PostCSS meta plugin', () => {
        */
     `
 
-    it('parses multiline metas correctly', () =>
-      run(css).then(result =>
-        expect(result.marpitMeta).toStrictEqual({
-          meta: 'value',
-          multiline: 'is supported.',
-        })
-      ))
+    it('parses multiline metas correctly', async () =>
+      expect((await run(css)).marpitMeta).toStrictEqual({
+        meta: 'value',
+        multiline: 'is supported.',
+      }))
   })
 })
