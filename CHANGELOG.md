@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- Allow parsing hyphen and underscore in theme meta ([#150](https://github.com/marp-team/marpit/pull/150))
+- Support getting nested prop by `ThemeSet#getThemeProp` ([#150](https://github.com/marp-team/marpit/pull/150))
+
 ## v0.9.0 - 2019-04-03
 
 ### Added
