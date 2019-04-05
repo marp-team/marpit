@@ -154,6 +154,13 @@ describe('ThemeSet', () => {
 
       // Import undefined theme
       instance.add('/* @theme undefined-theme */\n@import "ignore"')
+
+      // Meta value
+      instance.add('/* @theme meta */\n/* @meta-value A */')
+      instance.add('/* @theme meta-imported */\n@import "meta";')
+      instance.add(
+        '/* @theme meta-overrode */\n/* @meta-value B */\n@import "meta";'
+      )
     })
 
     const { width, height } = scaffoldTheme
@@ -228,6 +235,19 @@ describe('ThemeSet', () => {
 
       it('ignores importing undefined theme and fallbacks to scaffold value', () =>
         expect(instance.getThemeProp('undefined-theme', 'width')).toBe(width))
+    })
+
+    context('with path to nested meta property', () => {
+      it('returns the value of property', () => {
+        expect(instance.getThemeProp('meta', 'meta.meta-value')).toBe('A')
+        expect(instance.getThemeProp('meta', 'meta.unknown')).toBeUndefined()
+        expect(instance.getThemeProp('meta-imported', 'meta.meta-value')).toBe(
+          'A'
+        )
+        expect(instance.getThemeProp('meta-overrode', 'meta.meta-value')).toBe(
+          'B'
+        )
+      })
     })
   })
 
