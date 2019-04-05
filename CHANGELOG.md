@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v0.9.1 - 2019-04-05
+
 ### Added
 
 - Allow parsing hyphen and underscore in theme meta ([#150](https://github.com/marp-team/marpit/pull/150))
