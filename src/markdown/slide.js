@@ -57,7 +57,7 @@ function slide(md, opts = {}) {
               open: {
                 block: true,
                 meta: { marpitSlide: idx, marpitSlideElement: 1 },
-                map: mapTarget ? mapTarget.map : undefined,
+                map: mapTarget ? mapTarget.map : [0, 1],
               },
               close: {
                 block: true,
