@@ -9,6 +9,7 @@ describe('Marpit slide plugin', () => {
 
     return instance.use(slide, ...args)
   }
+  const multiMd = '# foo\n\n---\n\n## bar'
 
   context('with default options', () => {
     const markdown = md()
@@ -19,10 +20,22 @@ describe('Marpit slide plugin', () => {
       expect($('section#1')).toHaveLength(1)
 
       // Multi page
-      const $multi = cheerio.load(markdown.render('# foo\n\n---\n\n## bar'))
+      const $multi = cheerio.load(markdown.render(multiMd))
       expect($multi('section')).toHaveLength(2)
       expect($multi('section#1 > h1').text()).toBe('foo')
       expect($multi('section#2 > h2').text()).toBe('bar')
+    })
+
+    it('maps corresponded line of slide', () => {
+      const [open] = markdown.parse('')
+      expect(open.map).toStrictEqual([0, 1])
+
+      const [first, second] = markdown
+        .parse(multiMd)
+        .filter(t => t.type === 'marpit_slide_open')
+
+      expect(first.map).toStrictEqual([0, 1])
+      expect(second.map).toStrictEqual([2, 3])
     })
 
     it('ignores in #renderInline', () => {
@@ -38,7 +51,7 @@ describe('Marpit slide plugin', () => {
       const $ = cheerio.load(markdown.render(''))
       expect($('section.page#1[tabindex=-1]')).toHaveLength(1)
 
-      const $multi = cheerio.load(markdown.render('# foo\n\n---\n\n## bar'))
+      const $multi = cheerio.load(markdown.render(multiMd))
       expect($multi('section.page#1[tabindex=-1] > h1').text()).toBe('foo')
       expect($multi('section.page#2[tabindex=-1] > h2').text()).toBe('bar')
     })
@@ -61,9 +74,7 @@ describe('Marpit slide plugin', () => {
         const $ = cheerio.load(markdown(i => `page${i + 1}`).render(''))
         expect($('section#page1')).toHaveLength(1)
 
-        const $multi = cheerio.load(
-          markdown(i => (i + 1) * 2).render('# foo\n\n---\n\n## bar')
-        )
+        const $multi = cheerio.load(markdown(i => (i + 1) * 2).render(multiMd))
         expect($multi('section#2 > h1').text()).toBe('foo')
         expect($multi('section#4 > h2').text()).toBe('bar')
       })
