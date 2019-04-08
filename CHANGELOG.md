@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Update slide plugin and heading divider plugin to apply the correct mapped line of slides ([#151](https://github.com/marp-team/marpit/pull/151))
+
 ## v0.9.1 - 2019-04-05
 
 ### Added

@@ -102,6 +102,18 @@ describe('Marpit heading divider plugin', () => {
         const $ = cheerio.load(mdWithSlide(marpitStub(4)).render(markdownText))
         expect($('section')).toHaveLength(4)
       })
+
+      it('maps corresponded line of slide to heading', () => {
+        const tokens = mdWithSlide(marpitStub(4)).parse(markdownText)
+        const [first, second, third, fourth] = tokens.filter(
+          t => t.type === 'marpit_slide_open'
+        )
+
+        expect(first.map).toStrictEqual([0, 1])
+        expect(second.map).toStrictEqual([1, 2])
+        expect(third.map).toStrictEqual([2, 3])
+        expect(fourth.map).toStrictEqual([3, 4])
+      })
     })
 
     context('with invalid headingDivider option', () => {
