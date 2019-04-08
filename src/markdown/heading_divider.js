@@ -43,6 +43,7 @@ function headingDivider(md) {
       if (token && splitFunc(token) && newTokens.some(t => !t.hidden)) {
         const hr = new state.Token('hr', '', 0)
         hr.hidden = true
+        hr.map = token.map
 
         newTokens.push(hr)
       }
