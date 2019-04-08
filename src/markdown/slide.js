@@ -38,7 +38,12 @@ function slide(md, opts = {}) {
 
     state.tokens = split(state.tokens, t => t.type === 'hr', true).reduce(
       (arr, slideTokens, idx) => {
-        const hrFirst = slideTokens[0] && slideTokens[0].type === 'hr'
+        const firstHr =
+          slideTokens[0] && slideTokens[0].type === 'hr'
+            ? slideTokens[0]
+            : undefined
+
+        const mapTarget = firstHr || slideTokens.find(t => t.map)
 
         return [
           ...arr,
@@ -52,14 +57,14 @@ function slide(md, opts = {}) {
               open: {
                 block: true,
                 meta: { marpitSlide: idx, marpitSlideElement: 1 },
-                map: hrFirst ? slideTokens[0].map : undefined,
+                map: mapTarget ? mapTarget.map : undefined,
               },
               close: {
                 block: true,
                 meta: { marpitSlide: idx, marpitSlideElement: -1 },
               },
             },
-            slideTokens.slice(hrFirst ? 1 : 0)
+            slideTokens.slice(firstHr ? 1 : 0)
           ),
         ]
       },
