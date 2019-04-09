@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add [documentation of fragmented list](https://marpit.marp.app/fragmented-list) ([#152](https://github.com/marp-team/marpit/pull/152))
+
 ## v0.9.2 - 2019-04-08
 
 ### Fixed
