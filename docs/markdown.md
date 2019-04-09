@@ -22,5 +22,14 @@ bar
 
 ## Extended features
 
-- [Directives](/directives)
-- [Image syntax](/image-syntax)
+### [Directives](/directives)
+
+Marpit Markdown has extended syntax called **"Directives"** to support writing awesome slides. It can control your slide-deck theme, page number, header, footer, style, and so on.
+
+### [Image syntax](/image-syntax)
+
+Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creating beautiful slides.
+
+### [Fragmented list](/fragmented-list)
+
+Since v0.9.0, Marpit will parse lists with specific markers as the **fragmented list** for appearing contents one by one.

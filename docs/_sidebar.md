@@ -3,6 +3,7 @@
 - <br>[Marpit Markdown](/markdown)
   - [Directives](/directives)
   - [Image syntax](/image-syntax)
+  - [Fragmented list](/fragmented-list)
 - [Theme CSS](/theme-css)
 - [Inline SVG slide](/inline-svg)
 
