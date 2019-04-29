@@ -75,7 +75,7 @@ jobs:
   erbium:
     <<: *base
     docker:
-      - image: circleci/node:erbium
+      - image: circleci/node:12
 
 workflows:
   version: 2
