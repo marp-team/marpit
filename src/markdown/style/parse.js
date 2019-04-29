@@ -19,8 +19,6 @@ const styleMatcherScoped = /\bscoped\b/i
  * @param {MarkdownIt} md markdown-it instance.
  */
 function parse(md) {
-  const { marpit } = md
-
   /**
    * Based on markdown-it html_block rule
    * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
@@ -29,8 +27,6 @@ function parse(md) {
     'html_block',
     'marpit_style_parse',
     (state, startLine, endLine, silent) => {
-      if (marpit.options.inlineStyle === false) return false
-
       // Fast fail
       let pos = state.bMarks[startLine] + state.tShift[startLine]
       if (state.src.charCodeAt(pos) !== 0x3c) return false

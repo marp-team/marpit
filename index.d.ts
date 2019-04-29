@@ -1,14 +1,10 @@
 declare module '@marp-team/marpit' {
   interface MarpitOptions {
-    backgroundSyntax?: boolean
     container?: false | Element | Element[]
-    filters?: boolean
     headingDivider?: false | MarpitHeadingDivider | MarpitHeadingDivider[]
-    inlineStyle?: boolean
     looseYAML?: boolean
     markdown?: string | object | [string, object]
     printable?: boolean
-    scopedStyle?: boolean
     slideContainer?: false | Element | Element[]
     inlineSVG?: boolean
   }

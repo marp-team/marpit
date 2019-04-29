@@ -41,8 +41,6 @@ const injectScopePostCSSplugin = postcss.plugin(
  */
 function assign(md) {
   const { marpit } = md
-  const shouldSupportScoped =
-    marpit.options.scopedStyle !== undefined ? marpit.options.scopedStyle : true
 
   md.core.ruler.after('marpit_slide', 'marpit_style_assign', state => {
     if (state.inlineMode) return
@@ -63,7 +61,7 @@ function assign(md) {
         // Scoped style into current page
         const { marpitStyleScoped } = token.meta || {}
 
-        if (shouldSupportScoped && current && marpitStyleScoped) {
+        if (current && marpitStyleScoped) {
           let metaAttr = current.meta.marpitScopeMeta
 
           if (!metaAttr) {
