@@ -13,6 +13,7 @@
 ### Removed
 
 - Drop support for Node 6.x ([#139](https://github.com/marp-team/marpit/issues/139), [#155](https://github.com/marp-team/marpit/pull/155))
+- Remove deprecated constructor options: `backgroundSyntax`, `filters`, `inlineStyle`, and `scopedStyle` ([#156](https://github.com/marp-team/marpit/pull/156))
 
 ## v0.9.2 - 2019-04-08
 
