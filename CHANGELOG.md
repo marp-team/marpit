@@ -10,6 +10,10 @@
 
 - Add [documentation of fragmented list](https://marpit.marp.app/fragmented-list) ([#152](https://github.com/marp-team/marpit/pull/152))
 
+### Changed
+
+- Use browser-sync instead of docsify-cli to serve docs on local ([#157](https://github.com/marp-team/marpit/pull/157))
+
 ### Removed
 
 - Drop support for Node 6.x ([#139](https://github.com/marp-team/marpit/issues/139), [#155](https://github.com/marp-team/marpit/pull/155))
