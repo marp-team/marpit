@@ -27,27 +27,6 @@ const defaultOptions = {
   printable: true,
   slideContainer: false,
   inlineSVG: false,
-
-  // Depreacted options
-  backgroundSyntax: true,
-  filters: true,
-  inlineStyle: true,
-  scopedStyle: true,
-}
-
-const warnDeprecatedOpts = opts => {
-  for (const opt of [
-    'backgroundSyntax',
-    'filters',
-    'inlineStyle',
-    'scopedStyle',
-  ]) {
-    if (Object.prototype.hasOwnProperty.call(opts, opt)) {
-      console.warn(
-        `Deprecation warning: ${opt} option has been deprecated and would not be able to disable in v1.x.x.`
-      )
-    }
-  }
 }
 
 /**
@@ -75,25 +54,8 @@ class Marpit {
    *     wrapping each slide sections.
    * @param {boolean} [opts.inlineSVG=false] Wrap each sections by inline SVG.
    *     _(Experimental)_
-   *
-   * @param {boolean} [opts.backgroundSyntax=true] *[DEPREACTED]* Support
-   *     markdown image syntax with the alternate text including `bg`. Normally
-   *     it converts into spot directives about background image. If `inlineSVG`
-   *     is enabled, it supports the advanced backgrounds.
-   * @param {boolean} [opts.filters=true] *[DEPREACTED]*  Support filter syntax
-   *     for markdown image. It can apply to inline image and the advanced
-   *     backgrounds.
-   * @param {boolean} [opts.inlineStyle=true] *[DEPREACTED]* Recognize `<style>`
-   *     elements to append additional styles to theme. When it is `true`,
-   *     Marpit will parse style regardless markdown-it's `html` option.
-   * @param {boolean} [opts.scopedStyle=true] *[DEPREACTED]*  Support scoping
-   *     inline style to the current slide through `<style scoped>` when
-   *     `inlineStyle` is enabled.
    */
   constructor(opts = {}) {
-    // Output warning of deprecated option
-    warnDeprecatedOpts(opts)
-
     /**
      * The current options for this instance.
      *

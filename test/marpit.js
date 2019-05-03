@@ -15,7 +15,6 @@ describe('Marpit', () => {
       it('has default options', () => {
         expect(instance.options.container.tag).toBe('div')
         expect(instance.options.container.class).toBe('marpit')
-        expect(instance.options.backgroundSyntax).toBe(true)
         expect(instance.options.markdown).toBe('commonmark')
         expect(instance.options.printable).toBe(true)
         expect(instance.options.slideContainer).toBe(false)
@@ -206,16 +205,9 @@ describe('Marpit', () => {
       })
     })
 
-    context('with backgroundSyntax option', () => {
-      const instance = backgroundSyntax => new Marpit({ backgroundSyntax })
-
-      it('renders img tag when backgroundSyntax is false', () => {
-        const $ = cheerio.load(instance(false).render('![bg](test)').html)
-        expect($('img')).toHaveLength(1)
-      })
-
-      it('has background-image style on section tag when backgroundSyntax is true', () => {
-        const $ = cheerio.load(instance(true).render('![bg](test)').html)
+    describe('Background image', () => {
+      it('has background-image style on section tag', () => {
+        const $ = cheerio.load(new Marpit().render('![bg](test)').html)
 
         return postcssInstance
           .process($('section').attr('style'), { from: undefined })
@@ -227,27 +219,18 @@ describe('Marpit', () => {
       })
     })
 
-    context('with filters option', () => {
-      const instance = filters => new Marpit({ filters })
-
-      it('does not apply filter style when filters is false', () => {
-        const $ = cheerio.load(instance(false).render('![blur](test)').html)
-        const style = $('img').attr('style') || ''
-
-        expect(style).not.toContain('filter:blur')
-      })
-
-      it('applies filter style when filters is true', () => {
-        const $ = cheerio.load(instance(true).render('![blur](test)').html)
+    describe('CSS Filters', () => {
+      it('applies filter style', () => {
+        const $ = cheerio.load(new Marpit().render('![blur](test)').html)
         const style = $('img').attr('style') || ''
 
         expect(style).toContain('filter:blur')
       })
     })
 
-    context('with inlineStyle option', () => {
-      const instance = inlineStyle => {
-        const marpit = new Marpit({ inlineStyle })
+    describe('Inline style', () => {
+      const instance = () => {
+        const marpit = new Marpit()
 
         marpit.themeSet.add('/* @theme valid-theme */')
         return marpit
@@ -256,21 +239,27 @@ describe('Marpit', () => {
       const markdown =
         '<style>@import "valid-theme";\nsection { --style: appended; }</style>'
 
-      it('keeps inline style in HTML when inlineStyle is false', () => {
-        const rendered = instance(false).render(markdown)
-        const $ = cheerio.load(rendered.html)
-
-        expect($('style')).toHaveLength(1)
-        expect(rendered.css).not.toContain('--style: appended;')
-      })
-
-      it('appends style to css with processing when inlineStyle is true', () => {
-        const rendered = instance(true).render(markdown)
+      it('appends style to css with processing', () => {
+        const rendered = instance().render(markdown)
         const $ = cheerio.load(rendered.html)
 
         expect($('style')).toHaveLength(0)
         expect(rendered.css).toContain('--style: appended;')
         expect(rendered.css).toContain('/* @import "valid-theme"; */')
+      })
+
+      describe('Scoped style', () => {
+        const scopedMarkdown = '<style scoped>a { color: #00c; }</style>'
+
+        it('allows scoping inline style through <style scoped>', () => {
+          const { html, css } = instance().render(scopedMarkdown)
+          const $ = cheerio.load(html)
+
+          expect(css).toContain('[data-marpit-scope-')
+          expect(Object.keys($('section').attr())).toContainEqual(
+            expect.stringMatching(/^data-marpit-scope-/)
+          )
+        })
       })
     })
 
@@ -304,32 +293,6 @@ describe('Marpit', () => {
 
         expect(style).toContain("background-image:url('/image.jpg')")
         expect(style).not.toContain('color:#123;')
-      })
-    })
-
-    context('with scopedStyle option', () => {
-      const markdown = '<style scoped>a { color: #00c; }</style>'
-      const instance = scopedStyle =>
-        new Marpit({ scopedStyle, inlineStyle: true })
-
-      it('allows scoping inline style through <style scoped> when scopedStyle is true', () => {
-        const { html, css } = instance(true).render(markdown)
-        const $ = cheerio.load(html)
-
-        expect(css).toContain('[data-marpit-scope-')
-        expect(Object.keys($('section').attr())).toContainEqual(
-          expect.stringMatching(/^data-marpit-scope-/)
-        )
-      })
-
-      it('disallows scoping inline style through <style scoped> when scopedStyle is false', () => {
-        const { html, css } = instance(false).render(markdown)
-        const $ = cheerio.load(html)
-
-        expect(css).not.toContain('[data-marpit-scope-')
-        expect(Object.keys($('section').attr())).not.toContainEqual(
-          expect.stringMatching(/^data-marpit-scope-/)
-        )
       })
     })
   })

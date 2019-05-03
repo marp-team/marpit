@@ -19,9 +19,6 @@ const escape = target =>
  * @param {MarkdownIt} md markdown-it instance.
  */
 function parseImage(md) {
-  const isEnabledFilters =
-    md.marpit.options.filters !== undefined ? md.marpit.options.filters : true
-
   const optionMatchers = new Map()
 
   // The scale percentage for resize background
@@ -38,64 +35,57 @@ function parseImage(md) {
     matches => ({ height: matches[1] })
   )
 
-  if (isEnabledFilters) {
-    // CSS filters
-    optionMatchers.set(/^blur(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['blur', escape(matches[1] || '10px')]],
-    }))
-    optionMatchers.set(/^brightness(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['brightness', escape(matches[1] || '1.5')]],
-    }))
-    optionMatchers.set(/^contrast(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['contrast', escape(matches[1] || '2')]],
-    }))
-    optionMatchers.set(
-      /^drop-shadow(?::(.+?),(.+?)(?:,(.+?))?(?:,(.+?))?)?$/,
-      (matches, meta) => {
-        const args = []
+  // CSS filters
+  optionMatchers.set(/^blur(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['blur', escape(matches[1] || '10px')]],
+  }))
+  optionMatchers.set(/^brightness(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['brightness', escape(matches[1] || '1.5')]],
+  }))
+  optionMatchers.set(/^contrast(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['contrast', escape(matches[1] || '2')]],
+  }))
+  optionMatchers.set(
+    /^drop-shadow(?::(.+?),(.+?)(?:,(.+?))?(?:,(.+?))?)?$/,
+    (matches, meta) => {
+      const args = []
 
-        for (const arg of matches.slice(1)) {
-          if (arg) {
-            const colorFunc = arg.match(/^(rgba?|hsla?)\((.*)\)$/)
+      for (const arg of matches.slice(1)) {
+        if (arg) {
+          const colorFunc = arg.match(/^(rgba?|hsla?)\((.*)\)$/)
 
-            args.push(
-              colorFunc
-                ? `${colorFunc[1]}(${escape(colorFunc[2])})`
-                : escape(arg)
-            )
-          }
-        }
-
-        return {
-          filters: [
-            ...meta.filters,
-            ['drop-shadow', args.join(' ') || '0 5px 10px rgba(0,0,0,.4)'],
-          ],
+          args.push(
+            colorFunc ? `${colorFunc[1]}(${escape(colorFunc[2])})` : escape(arg)
+          )
         }
       }
-    )
-    optionMatchers.set(/^grayscale(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['grayscale', escape(matches[1] || '1')]],
-    }))
-    optionMatchers.set(/^hue-rotate(?::(.+))?$/, (matches, meta) => ({
-      filters: [
-        ...meta.filters,
-        ['hue-rotate', escape(matches[1] || '180deg')],
-      ],
-    }))
-    optionMatchers.set(/^invert(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['invert', escape(matches[1] || '1')]],
-    }))
-    optionMatchers.set(/^opacity(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['opacity', escape(matches[1] || '.5')]],
-    }))
-    optionMatchers.set(/^saturate(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['saturate', escape(matches[1] || '2')]],
-    }))
-    optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
-      filters: [...meta.filters, ['sepia', escape(matches[1] || '1')]],
-    }))
-  }
+
+      return {
+        filters: [
+          ...meta.filters,
+          ['drop-shadow', args.join(' ') || '0 5px 10px rgba(0,0,0,.4)'],
+        ],
+      }
+    }
+  )
+  optionMatchers.set(/^grayscale(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['grayscale', escape(matches[1] || '1')]],
+  }))
+  optionMatchers.set(/^hue-rotate(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['hue-rotate', escape(matches[1] || '180deg')]],
+  }))
+  optionMatchers.set(/^invert(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['invert', escape(matches[1] || '1')]],
+  }))
+  optionMatchers.set(/^opacity(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['opacity', escape(matches[1] || '.5')]],
+  }))
+  optionMatchers.set(/^saturate(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['saturate', escape(matches[1] || '2')]],
+  }))
+  optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
+    filters: [...meta.filters, ['sepia', escape(matches[1] || '1')]],
+  }))
 
   md.inline.ruler2.push('marpit_parse_image', ({ tokens }) => {
     for (const token of tokens) {
