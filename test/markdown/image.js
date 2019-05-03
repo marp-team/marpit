@@ -1,14 +1,14 @@
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import parseImage from '../../src/markdown/parse_image'
+import image from '../../src/markdown/image'
 
-describe('Marpit parse image plugin', () => {
-  const md = () => {
-    const instance = new MarkdownIt('commonmark')
-    instance.marpit = { options: {} }
-
-    return instance.use(parseImage)
-  }
+describe('Marpit image plugin', () => {
+  const md = () =>
+    new MarkdownIt('commonmark')
+      .use(instance => {
+        instance.marpit = {}
+      })
+      .use(image)
 
   const style = opts => {
     const $ = cheerio.load(

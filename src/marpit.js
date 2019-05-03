@@ -12,7 +12,7 @@ import marpitHeaderAndFooter from './markdown/header_and_footer'
 import marpitHeadingDivider from './markdown/heading_divider'
 import marpitInlineSVG from './markdown/inline_svg'
 import marpitParseDirectives from './markdown/directives/parse'
-import marpitParseImage from './markdown/parse_image'
+import marpitImage from './markdown/image'
 import marpitSlide from './markdown/slide'
 import marpitSlideContainer from './markdown/slide_container'
 import marpitStyleAssign from './markdown/style/assign'
@@ -138,7 +138,7 @@ class Marpit {
       .use(marpitHeadingDivider)
       .use(marpitSlideContainer)
       .use(marpitContainerPlugin)
-      .use(marpitParseImage)
+      .use(marpitImage)
       .use(marpitSweep)
       .use(marpitInlineSVG)
       .use(marpitStyleAssign)

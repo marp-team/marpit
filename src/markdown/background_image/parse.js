@@ -1,5 +1,4 @@
 /** @module */
-import colorString from 'color-string'
 import marpitPlugin from '../marpit_plugin'
 
 const bgSizeKeywords = {
@@ -32,13 +31,6 @@ function backgroundImageParse(md) {
           if (t.meta.marpitImage.options.includes('bg')) {
             marpitImage.background = true
             t.hidden = true
-
-            // Background color
-            const isColor =
-              !!colorString.get(marpitImage.url) ||
-              marpitImage.url.toLowerCase() === 'currentcolor'
-
-            if (isColor) marpitImage.backgroundColor = marpitImage.url
 
             for (const opt of marpitImage.options) {
               // Background size keyword
