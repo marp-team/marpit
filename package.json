@@ -102,7 +102,9 @@
     "postcss": "^7.0.14"
   },
   "resolutions": {
-    "braces": "^2.3.2"
+    "braces": "^2.3.2",
+    "tar": "^4.4.8",
+    "marked": "^0.6.2"
   },
   "publishConfig": {
     "access": "public"
