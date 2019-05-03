@@ -25,7 +25,7 @@ describe('Marpit sweep plugin', () => {
     const marpitStub = {
       customDirectives: { global: {}, local: {} },
       themeSet: new Map(),
-      options: { backgroundSyntax: true, inlineSVG: false },
+      options: { inlineSVG: false },
     }
 
     const markdown = md({ breaks: true }, marpitStub)

@@ -12,14 +12,6 @@ describe('Marpit style parse plugin', () => {
     return instance.use(styleParse)
   }
 
-  it("ignores parse when Marpit's inlineStyle option is false", () => {
-    const types = md({ options: { inlineStyle: false } })
-      .parse('<style>b { color: #000; }</style>')
-      .map(t => t.type)
-
-    expect(types).toStrictEqual(expect.not.arrayContaining(['marpit_style']))
-  })
-
   const text = dedent`
     <style>strong { color: red; }</style>
 
