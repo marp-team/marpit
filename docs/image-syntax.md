@@ -2,19 +2,22 @@
 
 Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creating beautiful slides.
 
-|              Features              | Inline image | Slide BG | Advanced BG |
-| :--------------------------------: | :----------: | :------: | :---------: |
-|  [Resizing by keywords][resizing]  | `auto` only  |    ✅    |     ✅      |
-| [Resizing by percentage][resizing] |      ❌      |    ✅    |     ✅      |
-|   [Resizing by length][resizing]   |      ✅      |    ✅    |     ✅      |
-|      [Image filters][filters]      |      ✅      |    ❌    |     ✅      |
-|    [Background color][bgcolor]     |      -       |    ✅    |     ✅      |
-|  [Multiple backgrounds][multiple]  |      -       |    ❌    |     ✅      |
-|     [Split backgrounds][split]     |      -       |    ❌    |     ✅      |
+|              Features               |    Inline image    | [Slide BG][slide-bg] | [Advanced BG][advanced-bg] |
+| :---------------------------------: | :----------------: | :------------------: | :------------------------: |
+|  [Resizing by keywords][resizing]   |    `auto` only     |  :heavy_check_mark:  |     :heavy_check_mark:     |
+| [Resizing by percentage][resizing]  |        :x:         |  :heavy_check_mark:  |     :heavy_check_mark:     |
+|   [Resizing by length][resizing]    | :heavy_check_mark: |  :heavy_check_mark:  |     :heavy_check_mark:     |
+|      [Image filters][filters]       | :heavy_check_mark: |         :x:          |     :heavy_check_mark:     |
+|  [Multiple backgrounds][multiple]   |         -          |         :x:          |     :heavy_check_mark:     |
+|     [Split backgrounds][split]      |         -          |         :x:          |     :heavy_check_mark:     |
+|   [Setting text color][textcolor]   | :heavy_check_mark: |          -           |             -              |
+| [Setting background color][bgcolor] |         -          |  :heavy_check_mark:  |     :heavy_check_mark:     |
 
 [resizing]: #resizing-image
 [filters]: #image-filters
-[bgcolor]: #background-color
+[textcolor]: #shorthand-for-setting-colors
+[bgcolor]: #shorthand-for-setting-colors
+[slide-bg]: #slide-backgrounds
 [advanced-bg]: #advanced-backgrounds
 [multiple]: #multiple-backgrounds
 [split]: #split-backgrounds
@@ -97,29 +100,9 @@ You can resize the background image by keywords. The keyword value basically fol
 
 You also can continue to use [`width` (`w`) and `height` (`h`) option keywords][resizing] to specify size by length.
 
-### Background color
-
-Through Markdown image syntax, Marpit allows the definition of the background [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) instead of the image URL.
-
-```markdown
-![bg](#fff) <!-- Hex color -->
-
----
-
-![bg](rebeccapurple) <!-- Named color -->
-
----
-
-![bg](<rgb(255,128,0)>) <!-- RGB values -->
-```
-
-It is same as defining [`<!-- _backgroundColor: "#fff" -->` spot directive](/directives#backgrounds).
-
-?> In this example, `rgb` function is [formed by angle brackets](https://spec.commonmark.org/0.28/#example-470). Normally `![bg](rgb(255,128,0))` may have [no problems](https://spec.commonmark.org/0.28/#example-468). But it does not allow including spaces.
-
 ## Advanced backgrounds
 
-!> 📐 It will work only in experimental [inline SVG slide](/inline-svg).
+!> :triangular_ruler: It will work only in experimental [inline SVG slide](/inline-svg).
 
 The advanced backgrounds support [multiple backgrounds][multiple], [split backgrounds][split], and [image filters for background][filters].
 
@@ -187,3 +170,36 @@ The space of a slide content will shrink to the left side.
 This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Media/01-background-images.html#split-slides).
 
 ?> Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple backgrounds.
+
+## Shorthand for setting colors
+
+Through Markdown image syntax, Marpit allows the definition of [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) instead of the image URL.
+
+<!-- prettier-ignore-start -->
+
+```markdown
+# Hex color (White BG + Black text)
+
+![bg](#fff)
+![](#000)
+
+---
+
+# Named color (rebeccapurple BG + White text)
+
+![bg](rebeccapurple)
+![](white)
+
+---
+
+# RGB values (Orange BG + White text)
+
+![bg](rgb(255,128,0))
+![](rgb(255,255,255))
+```
+
+<!-- prettier-ignore-end -->
+
+It is same as defining [`color` and `backgroundColor` spot directive](/directives?id=local-directives-1).
+
+!> By the spec of CommonMark, it should not allow including spaces without escape if you want using color function like `rgb()`.
