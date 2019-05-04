@@ -102,9 +102,11 @@ function parseImage(md) {
           options,
         }
 
-        // Detect color
-        if (!!colorString.get(url) || url.toLowerCase() === 'currentcolor')
+        // Detect shorthand for setting color
+        if (!!colorString.get(url) || url.toLowerCase() === 'currentcolor') {
           token.meta.marpitImage.color = url
+          token.hidden = true
+        }
 
         // Parse keyword through matchers
         for (const opt of options) {
