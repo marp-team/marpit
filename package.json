@@ -77,16 +77,17 @@
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-import": "^2.17.2",
+    "fibers": "^4.0.1",
     "jest": "^24.8.0",
     "jest-junit": "^6.4.0",
     "jsdoc": "^3.6.0",
     "minami": "^1.2.3",
     "mkdirp": "^0.5.1",
-    "node-sass": "^4.12.0",
     "nodemon": "^1.19.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
+    "sass": "^1.20.1",
     "stylelint": "^10.0.1",
     "stylelint-config-prettier": "^5.1.0",
     "stylelint-config-standard": "^18.3.0",
@@ -100,9 +101,6 @@
     "markdown-it": "^8.4.2",
     "markdown-it-front-matter": "^0.1.2",
     "postcss": "^7.0.16"
-  },
-  "resolutions": {
-    "tar": "^4.4.8"
   },
   "publishConfig": {
     "access": "public"

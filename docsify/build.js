@@ -4,13 +4,14 @@ const fs = require('fs')
 const mkdirp = require('mkdirp')
 const postcss = require('postcss')
 const path = require('path')
-const sass = require('node-sass')
+const sass = require('sass')
+const fiber = require('fibers')
 
 const from = path.join(__dirname, './docsify.scss')
 const to = path.join(__dirname, '../docs/style/docsify.css')
 
 sass.render(
-  { file: from, outFile: to, sourceMap: true, sourceMapEmbed: true },
+  { fiber, file: from, outFile: to, sourceMap: true, sourceMapEmbed: true },
   (err, { css }) => {
     if (err) throw err
 
