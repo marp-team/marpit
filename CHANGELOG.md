@@ -13,6 +13,8 @@
 ### Changed
 
 - Use browser-sync instead of docsify-cli to serve docs on local ([#157](https://github.com/marp-team/marpit/pull/157))
+- Upgrade dependent packages to the latest version ([#158](https://github.com/marp-team/marpit/pull/158))
+- Swap Sass compiler for document from node-sass to Dart Sass ([#158](https://github.com/marp-team/marpit/pull/158))
 
 ### Removed
 
