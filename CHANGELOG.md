@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.0.0 - 2019-05-05
+
 ### Breaking
 
 - Marpit requires Node >= 8.
