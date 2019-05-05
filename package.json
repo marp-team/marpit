@@ -77,7 +77,6 @@
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-config-prettier": "^4.2.0",
     "eslint-plugin-import": "^2.17.2",
-    "fibers": "^4.0.1",
     "jest": "^24.8.0",
     "jest-junit": "^6.4.0",
     "jsdoc": "^3.6.0",
