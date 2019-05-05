@@ -83,4 +83,4 @@ workflows:
     jobs:
       - 10.15.3
       - carbon
-      # - erbium
+      - erbium
