@@ -102,7 +102,7 @@ You also can continue to use [`width` (`w`) and `height` (`h`) option keywords][
 
 ## Advanced backgrounds
 
-!> :triangular_ruler: It will work only in experimental [inline SVG slide](/inline-svg).
+!> 📐 It will work only in experimental [inline SVG slide](/inline-svg).
 
 The advanced backgrounds support [multiple backgrounds][multiple], [split backgrounds][split], and [image filters for background][filters].
 
