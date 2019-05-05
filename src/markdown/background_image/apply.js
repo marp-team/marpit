@@ -64,9 +64,9 @@ function backgroundImageApply(md) {
               const {
                 background,
                 backgroundDirection,
-                backgroundColor,
                 backgroundSize,
                 backgroundSplit,
+                color,
                 filter,
                 height,
                 size,
@@ -75,11 +75,11 @@ function backgroundImageApply(md) {
               } = t.meta.marpitImage
 
               if (background && !url.match(/^\s*$/)) {
-                if (backgroundColor) {
+                if (color) {
                   // Background color
                   current.open.meta.marpitDirectives = {
                     ...(current.open.meta.marpitDirectives || {}),
-                    backgroundColor,
+                    backgroundColor: color,
                   }
                 } else {
                   // Background image

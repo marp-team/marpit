@@ -5,7 +5,7 @@ import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
 import inlineSVG from '../../src/markdown/inline_svg'
 import parseDirectives from '../../src/markdown/directives/parse'
-import parseImage from '../../src/markdown/parse_image'
+import image from '../../src/markdown/image'
 import slide from '../../src/markdown/slide'
 
 const splitBackgroundKeywords = ['left', 'right']
@@ -28,7 +28,7 @@ describe('Marpit background image plugin', () => {
       .use(parseDirectives)
       .use(applyDirectives)
       .use(inlineSVG)
-      .use(parseImage)
+      .use(image)
       .use(backgroundImage)
   }
 

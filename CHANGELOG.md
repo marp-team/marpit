@@ -8,6 +8,7 @@
 
 ### Added
 
+- Add [shorthand for setting text color via image syntax](https://marpit.marp.app/image-syntax?id=shorthand-for-setting-colors) ([#159](https://github.com/marp-team/marpit/pull/159))
 - Add [documentation of fragmented list](https://marpit.marp.app/fragmented-list) ([#152](https://github.com/marp-team/marpit/pull/152))
 - Test with Node 12 (Erbium) ([#160](https://github.com/marp-team/marpit/pull/160))
 

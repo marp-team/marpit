@@ -228,6 +228,17 @@ describe('Marpit', () => {
       })
     })
 
+    describe('Color shorthand', () => {
+      it('applies color to the current slide', () => {
+        const $ = cheerio.load(new Marpit().render('![](red)![bg](blue)').html)
+        expect($('section').html()).toBe('')
+
+        const style = $('section').attr('style')
+        expect(style).toContain('color:red;')
+        expect(style).toContain('background-color:blue;')
+      })
+    })
+
     describe('Inline style', () => {
       const instance = () => {
         const marpit = new Marpit()
