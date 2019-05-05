@@ -17,6 +17,9 @@ import scaffold from './theme/scaffold'
  * Marpit theme set class.
  */
 class ThemeSet {
+  /**
+   * Create a ThemeSet instance.
+   */
   constructor() {
     /**
      * An instance of default theme.
