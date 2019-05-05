@@ -83,7 +83,7 @@ jobs:
       - checkout
       - run:
           name: Create release on GitHub
-          command: curl https://raw.githubusercontent.com/marp-team/marp/automate-github-release/github-release.js | node
+          command: curl https://raw.githubusercontent.com/marp-team/marp/master/github-release.js | node
 
 workflows:
   version: 2
