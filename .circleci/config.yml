@@ -77,7 +77,7 @@ jobs:
     docker:
       - image: circleci/node:12
 
-  release:
+  github-release:
     <<: *base
     steps:
       - checkout
@@ -92,7 +92,8 @@ workflows:
       - current
       - carbon
       - erbium
-      - release:
+      - github-release:
+          context: github-release
           filters:
             branches:
               ignore: /.*/
