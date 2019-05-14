@@ -26,7 +26,7 @@ describe('Marpit', () => {
         expect(mdSpy).toBeCalledWith(mdText, expect.anything())
       })
 
-      it('wraps markdown-it instance created by passed arguments [DEPRECATED]', () => {
+      it('wraps markdown-it instance created by passed arguments', () => {
         const marpitWithArg = new Marpit({ markdown: { breaks: true } })
         expect(marpitWithArg.render(mdText).html).toContain('<br')
         expect(marpitWithArg.render(mdText).html).not.toContain('<b>')

@@ -48,9 +48,8 @@ class Marpit {
    *     ONLY specified levels if a number array.
    * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
    * @param {MarkdownIt|string|Object|Array} [opts.markdown] An instance of
-   *     markdown-it for wrapping. Marpit will create its instance based on
-   *     CommonMark when omitted. (NOTICE: Passing its initialize option(s) is
-   *     deprecated and won't support in next major version)
+   *     markdown-it or its constructor option(s) for wrapping. Marpit will
+   *     create its instance based on CommonMark when omitted.
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
    * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
@@ -107,10 +106,7 @@ class Marpit {
         )
           return this.options.markdown
 
-        // DEPRECATED: Create instance with passed argument(s)
-        console.warn(
-          "Deprecation warning: Passing markdown-it arguments to Marpit's `markdown` contructor option is deprecated. Instead, please pass an instance of markdown-it."
-        )
+        // Create instance with passed argument(s)
         return new MarkdownIt(...wrapArray(this.options.markdown))
       })()
     )
