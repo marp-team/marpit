@@ -50,6 +50,8 @@ declare module '@marp-team/marpit' {
       local: MarpitDirectiveDefinitions
     }
     readonly options: MarpitOptions
+
+    /** @deprecated A plugin interface for markdown-it is deprecated and will remove in next major version. Instead, wrap markdown-it instance when creating Marpit by `new Marpit({ markdown: markdownItInstance })`. */
     readonly markdownItPlugins: (md: any) => void
 
     protected lastComments?: MarpitRenderResult['comments']
