@@ -11,11 +11,39 @@ describe('Marpit', () => {
   describe('#constructor', () => {
     const instance = new Marpit()
 
+    describe('markdown option', () => {
+      const mdText = 'Hello,\n<b>world!</b>'
+
+      it('wraps CommonMark based instance by default', () =>
+        expect(instance.render(mdText).html).toContain('<b>'))
+
+      it('wraps specified markdown-it instance', () => {
+        const markdown = new MarkdownIt()
+        const mdSpy = jest.spyOn(markdown, 'parse')
+        const { html } = new Marpit({ markdown }).render(mdText)
+
+        expect(html).not.toContain('<b>')
+        expect(mdSpy).toBeCalledWith(mdText, expect.anything())
+      })
+
+      it('wraps markdown-it instance created by passed arguments [DEPRECATED]', () => {
+        const marpitWithArg = new Marpit({ markdown: { breaks: true } })
+        expect(marpitWithArg.render(mdText).html).toContain('<br')
+        expect(marpitWithArg.render(mdText).html).not.toContain('<b>')
+
+        const marpitWithArgs = new Marpit({
+          markdown: ['commonmark', { breaks: true }],
+        })
+        expect(marpitWithArgs.render(mdText).html).toContain('<br')
+        expect(marpitWithArgs.render(mdText).html).toContain('<b>')
+      })
+    })
+
     describe('options member', () => {
       it('has default options', () => {
         expect(instance.options.container.tag).toBe('div')
         expect(instance.options.container.class).toBe('marpit')
-        expect(instance.options.markdown).toBe('commonmark')
+        expect(instance.options.markdown).toBe(undefined)
         expect(instance.options.printable).toBe(true)
         expect(instance.options.slideContainer).toBe(false)
         expect(instance.options.inlineSVG).toBe(false)
@@ -86,7 +114,7 @@ describe('Marpit', () => {
     })
   })
 
-  describe('get #markdownItPlugins', () => {
+  describe('[DEPRECATED] get #markdownItPlugins', () => {
     it('provides markdown-it plugins with its compatible interface', () => {
       const marpit = new Marpit()
       marpit.themeSet.add('/* @theme foobar */')

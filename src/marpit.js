@@ -23,7 +23,7 @@ const defaultOptions = {
   container: marpitContainer,
   headingDivider: false,
   looseYAML: false,
-  markdown: 'commonmark',
+  markdown: undefined,
   printable: true,
   slideContainer: false,
   inlineSVG: false,
@@ -47,8 +47,10 @@ class Marpit {
    *     larger than or equal to the specified level if a number is given, or
    *     ONLY specified levels if a number array.
    * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
-   * @param {string|Object|Array} [opts.markdown='commonmark'] markdown-it
-   *     initialize option(s).
+   * @param {MarkdownIt|string|Object|Array} [opts.markdown] An instance of
+   *     markdown-it for wrapping. Marpit will create its instance based on
+   *     CommonMark when omitted. (NOTICE: Passing its initialize option(s) is
+   *     deprecated and won't support in next major version)
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
    * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
@@ -93,7 +95,24 @@ class Marpit {
     this.themeSet = new ThemeSet()
 
     this.applyMarkdownItPlugins(
-      new MarkdownIt(...wrapArray(this.options.markdown))
+      (() => {
+        // Use CommonMark based instance by default
+        if (!this.options.markdown) return new MarkdownIt('commonmark')
+
+        // Detect markdown-it features
+        if (
+          typeof this.options.markdown === 'object' &&
+          typeof this.options.markdown.parse === 'function' &&
+          typeof this.options.markdown.renderer === 'object'
+        )
+          return this.options.markdown
+
+        // DEPRECATED: Create instance with passed argument(s)
+        console.warn(
+          "Deprecation warning: Passing markdown-it arguments to Marpit's `markdown` contructor option is deprecated. Instead, please pass an instance of markdown-it."
+        )
+        return new MarkdownIt(...wrapArray(this.options.markdown))
+      })()
     )
   }
 
@@ -118,10 +137,16 @@ class Marpit {
    *
    * This is useful to integrate Marpit with the other markdown-it based parser.
    *
+   * @deprecated A plugin interface for markdown-it is deprecated and will
+   *     remove in next major version. Instead, wrap markdown-it instance when
+   *     creating Marpit by `new Marpit({ markdown: markdownItInstance })`.
    * @type {Function}
    * @readonly
    */
   get markdownItPlugins() {
+    console.warn(
+      'Deprecation warning: A plugin interface for markdown-it provided by `markdownItPlugins` is deprecated and will remove in next major version. Instead, wrap markdown-it instance when creating Marpit by `new Marpit({ markdown: markdownItInstance })`.'
+    )
     return this.applyMarkdownItPlugins.bind(this)
   }
 

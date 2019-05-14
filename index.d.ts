@@ -3,7 +3,7 @@ declare module '@marp-team/marpit' {
     container?: false | Element | Element[]
     headingDivider?: false | MarpitHeadingDivider | MarpitHeadingDivider[]
     looseYAML?: boolean
-    markdown?: string | object | [string, object]
+    markdown?: any
     printable?: boolean
     slideContainer?: false | Element | Element[]
     inlineSVG?: boolean
