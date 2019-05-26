@@ -134,7 +134,7 @@ class Marpit {
    * This is useful to integrate Marpit with the other markdown-it based parser.
    *
    * @deprecated A plugin interface for markdown-it is deprecated and will
-   *     remove in next major version. Instead, wrap markdown-it instance when
+   *     remove in future version. Instead, wrap markdown-it instance when
    *     creating Marpit by `new Marpit({ markdown: markdownItInstance })`.
    * @type {Function}
    * @readonly
