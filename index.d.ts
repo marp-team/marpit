@@ -3,7 +3,7 @@ declare module '@marp-team/marpit' {
     container?: false | Element | Element[]
     headingDivider?: false | MarpitHeadingDivider | MarpitHeadingDivider[]
     looseYAML?: boolean
-    markdown?: string | object | [string, object]
+    markdown?: any
     printable?: boolean
     slideContainer?: false | Element | Element[]
     inlineSVG?: boolean
@@ -50,6 +50,8 @@ declare module '@marp-team/marpit' {
       local: MarpitDirectiveDefinitions
     }
     readonly options: MarpitOptions
+
+    /** @deprecated A plugin interface for markdown-it is deprecated and will remove in future version. Instead, wrap markdown-it instance when creating Marpit by `new Marpit({ markdown: markdownItInstance })`. */
     readonly markdownItPlugins: (md: any) => void
 
     protected lastComments?: MarpitRenderResult['comments']
