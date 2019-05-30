@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- Allow passing markdown-it instance as `markdown` constructor option ([#164](https://github.com/marp-team/marpit/pull/164))
+
+### Deprecated
+
+- A plugin interface for markdown-it (`markdownItPlugins`) is deprecated ([#164](https://github.com/marp-team/marpit/pull/164))
+
 ## v1.0.0 - 2019-05-05
 
 ### Breaking
