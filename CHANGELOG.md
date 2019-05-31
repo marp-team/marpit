@@ -6,6 +6,10 @@
 
 - Allow passing markdown-it instance as `markdown` constructor option ([#164](https://github.com/marp-team/marpit/pull/164))
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#167](https://github.com/marp-team/marpit/pull/167))
+
 ### Deprecated
 
 - A plugin interface for markdown-it (`markdownItPlugins`) is deprecated ([#164](https://github.com/marp-team/marpit/pull/164))
