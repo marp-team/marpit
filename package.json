@@ -101,6 +101,9 @@
     "markdown-it-front-matter": "^0.1.2",
     "postcss": "^7.0.16"
   },
+  "resolutions": {
+    "axios": "^0.19.0"
+  },
   "publishConfig": {
     "access": "public"
   }
