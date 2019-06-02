@@ -10,6 +10,10 @@
 
 - Fix color shorthand detection to use the value before of validation ([#165](https://github.com/marp-team/marpit/pull/165))
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#167](https://github.com/marp-team/marpit/pull/167))
+
 ### Deprecated
 
 - A plugin interface for markdown-it (`markdownItPlugins`) is deprecated ([#164](https://github.com/marp-team/marpit/pull/164))
