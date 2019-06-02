@@ -257,13 +257,35 @@ describe('Marpit', () => {
     })
 
     describe('Color shorthand', () => {
+      const md = '![](red)![bg](blue)'
+
       it('applies color to the current slide', () => {
-        const $ = cheerio.load(new Marpit().render('![](red)![bg](blue)').html)
+        const $ = cheerio.load(new Marpit().render(md).html)
         expect($('section').html()).toBe('')
 
         const style = $('section').attr('style')
         expect(style).toContain('color:red;')
         expect(style).toContain('background-color:blue;')
+      })
+
+      context('when markdown-it has customized normalization', () => {
+        it('uses original link to detect color', () => {
+          const base = new MarkdownIt()
+          base.normalizeLink = url => `test:${url}`
+
+          // Original markdown-it uses customized normalization
+          const baseHTML = base.render(md)
+          expect(baseHTML).toContain('test:red')
+          expect(baseHTML).toContain('test:blue')
+
+          // Wrapped Marp instance uses original link
+          const instance = new Marpit({ markdown: base })
+          const $ = cheerio.load(instance.render(md).html)
+          const style = $('section').attr('style')
+
+          expect(style).toContain('color:red;')
+          expect(style).toContain('background-color:blue;')
+        })
       })
     })
 

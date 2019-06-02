@@ -89,22 +89,58 @@ optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
  * @param {MarkdownIt} md markdown-it instance.
  */
 function parseImage(md) {
+  const { process } = md.core
+
+  // Store original URL, for the color shorthand.
+  // (Avoid a side effect from link normalization)
+  let originalURLMap
+  let refCount = 0
+
+  md.core.process = state => {
+    const { normalizeLink } = md
+
+    // Prevent reset of WeakMap caused by calling core process internally
+    if (refCount === 0) originalURLMap = new WeakMap()
+
+    try {
+      md.normalizeLink = url => {
+        // eslint-disable-next-line no-new-wrappers
+        const imprimitiveUrl = new String(normalizeLink.call(md, url))
+        originalURLMap.set(imprimitiveUrl, url)
+
+        return imprimitiveUrl
+      }
+
+      refCount += 1
+      return process.call(md.core, state)
+    } finally {
+      refCount -= 1
+      md.normalizeLink = normalizeLink
+    }
+  }
+
   md.inline.ruler2.push('marpit_parse_image', ({ tokens }) => {
     for (const token of tokens) {
       if (token.type === 'image') {
         const options = token.content.split(/\s+/).filter(s => s.length > 0)
         const url = token.attrGet('src')
+        const originalUrl = originalURLMap.has(url)
+          ? originalURLMap.get(url)
+          : url
 
         token.meta = token.meta || {}
         token.meta.marpitImage = {
           ...(token.meta.marpitImage || {}),
-          url,
+          url: url.toString(),
           options,
         }
 
-        // Detect shorthand for setting color
-        if (!!colorString.get(url) || url.toLowerCase() === 'currentcolor') {
-          token.meta.marpitImage.color = url
+        // Detect shorthand for setting color (Use value before normalization)
+        if (
+          !!colorString.get(originalUrl) ||
+          originalUrl.toLowerCase() === 'currentcolor'
+        ) {
+          token.meta.marpitImage.color = originalUrl
           token.hidden = true
         }
 

@@ -6,6 +6,10 @@
 
 - Allow passing markdown-it instance as `markdown` constructor option ([#164](https://github.com/marp-team/marpit/pull/164))
 
+### Fixed
+
+- Fix color shorthand detection to use the value before of validation ([#165](https://github.com/marp-team/marpit/pull/165))
+
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#167](https://github.com/marp-team/marpit/pull/167))
