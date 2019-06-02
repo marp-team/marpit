@@ -38,11 +38,11 @@ section[data-marpit-advanced-background="background"] > div[data-marpit-advanced
 }
 
 section[data-marpit-advanced-background="background"][data-marpit-advanced-background-split] > div[data-marpit-advanced-background-container] {
-  width: 50%;
+  width: var(--marpit-advanced-background-split, 50%);
 }
 
 section[data-marpit-advanced-background="background"][data-marpit-advanced-background-split="right"] > div[data-marpit-advanced-background-container] {
-  margin-left: 50%;
+  margin-left: calc(100% - var(--marpit-advanced-background-split, 50%));
 }
 
 section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container] > figure {

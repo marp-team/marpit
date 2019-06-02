@@ -8,6 +8,8 @@ const bgSizeKeywords = {
   fit: 'contain',
 }
 
+const splitSizeMatcher = /^(left|right)(?::((?:\d*\.)?\d+%))?$/
+
 /**
  * Marpit background image parse plugin.
  *
@@ -38,8 +40,13 @@ function backgroundImageParse(md) {
                 marpitImage.backgroundSize = bgSizeKeywords[opt]
 
               // Split background keyword
-              if (opt === 'left' || opt === 'right')
-                marpitImage.backgroundSplit = opt
+              const matched = opt.match(splitSizeMatcher)
+              if (matched) {
+                const [, splitSide, splitSize] = matched
+
+                marpitImage.backgroundSplit = splitSide
+                marpitImage.backgroundSplitSize = splitSize
+              }
 
               // Background aligned direction
               if (opt === 'vertical' || opt === 'horizontal')

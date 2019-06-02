@@ -38,6 +38,7 @@ function backgroundImageApply(md) {
                   images: current.images,
                   open: current.open,
                   split: current.split,
+                  splitSize: current.splitSize,
                   width: current.svgContent.attrGet('width'),
                 },
               }
@@ -66,6 +67,7 @@ function backgroundImageApply(md) {
                 backgroundDirection,
                 backgroundSize,
                 backgroundSplit,
+                backgroundSplitSize,
                 color,
                 filter,
                 height,
@@ -105,6 +107,7 @@ function backgroundImageApply(md) {
 
               if (backgroundDirection) current.direction = backgroundDirection
               if (backgroundSplit) current.split = backgroundSplit
+              if (backgroundSplitSize) current.splitSize = backgroundSplitSize
             }
           }
       }
