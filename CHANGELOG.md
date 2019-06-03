@@ -5,6 +5,7 @@
 ### Added
 
 - Allow passing markdown-it instance as `markdown` constructor option ([#164](https://github.com/marp-team/marpit/pull/164))
+- Add size argument for split background ([#166](https://github.com/marp-team/marpit/issues/166), [#168](https://github.com/marp-team/marpit/pull/168))
 
 ### Fixed
 
