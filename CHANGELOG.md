@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.1.0 - 2019-06-03
+
 ### Added
 
 - Allow passing markdown-it instance as `markdown` constructor option ([#164](https://github.com/marp-team/marpit/pull/164))
