@@ -219,8 +219,14 @@ describe('Marpit background image plugin', () => {
 
     splitBackgroundKeywords.forEach(keyword => {
       context(`with the ${keyword} keyword for split background`, () => {
-        const $ = $load(mdSVG().render(`![bg ${keyword}](image)`))
-        const section = $(
+        const $ = attr =>
+          $load(
+            mdSVG().render(
+              `![bg ${[keyword, attr].filter(v => v).join(':')}](image)`
+            )
+          )
+
+        const section = $()(
           'svg > foreignObject > section[data-marpit-advanced-background="content"]'
         )
         const foreignObject = section.parent()
@@ -228,10 +234,30 @@ describe('Marpit background image plugin', () => {
         it('assigns the width attribute of foreignObject for content as 50%', () =>
           expect(foreignObject.attr('width')).toBe('50%'))
 
+        it('assigns CSS variable to style attribute for split background', () =>
+          expect(section.attr('style')).toContain(
+            '--marpit-advanced-background-split:50%'
+          ))
+
         it('assigns data attribute of the keyword for split background', () =>
           expect(section.attr('data-marpit-advanced-background-split')).toBe(
             keyword
           ))
+
+        context('when passed split size for background', () => {
+          const ssSection = $('33%')(
+            'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+          )
+          const ssforeignObject = ssSection.parent()
+
+          it('assigns the width attribute of foreignObject for content as remaining size', () =>
+            expect(ssforeignObject.attr('width')).toBe('67%'))
+
+          it('assigns CSS variable to style attribute for split background', () =>
+            expect(ssSection.attr('style')).toContain(
+              '--marpit-advanced-background-split:33%'
+            ))
+        })
       })
     })
 

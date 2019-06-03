@@ -148,28 +148,65 @@ You may change alignment direction from horizontal to vertical, by using `vertic
 
 The `left` or `right` keyword with `bg` keyword make a space for the background to the specified side. It has a half of slide size, and the space of a slide content will shrink too.
 
+<div class="example">
+
 ```markdown
-![bg left](https://example.com/backgroundA.jpg)
+![bg left](https://picsum.photos/720?image=29)
 
 # Split backgrounds
 
 The space of a slide content will shrink to the right side.
+```
 
----
+<span class="image">
 
-<!-- Multiple backgrounds will work well in the specified background side. -->
+[<img src="/assets/image-syntax/split-background.jpg" alt="Split backgrounds" />](/assets/image-syntax/split-background.jpg ':ignore')
 
-![bg right](https://example.com/backgroundB.jpg)
-![bg](https://example.com/backgroundC.jpg)
+</span>
+</div>
+
+Multiple backgrounds will work well in the specified background side.
+
+<div class="example">
+
+```markdown
+![bg right](https://picsum.photos/720?image=3)
+![bg](https://picsum.photos/720?image=20)
 
 # Split + Multiple BGs
 
 The space of a slide content will shrink to the left side.
 ```
 
+<span class="image">
+
+[<img src="/assets/image-syntax/split-multiple-bg.jpg" alt="Split + Multiple BGs" />](/assets/image-syntax/split-multiple-bg.jpg ':ignore')
+
+</span>
+</div>
+
 This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/English.lproj/Media/01-background-images.html#split-slides).
 
 ?> Marpit uses a last defined keyword in a slide when `left` and `right` keyword is mixed in the same slide by using multiple backgrounds.
+
+#### Split size
+
+Since v1.1.0, Marpit can specify split size for background by percentage like `left:33%`.
+
+<div class="example">
+
+```markdown
+![bg left:33%](https://picsum.photos/720?image=27)
+
+# Split backgrounds with specified size
+```
+
+<span class="image">
+
+[<img src="/assets/image-syntax/split-bg-with-size.jpg" alt="Split backgrounds with specified size" />](/assets/image-syntax/split-bg-with-size.jpg ':ignore')
+
+</span>
+</div>
 
 ## Shorthand for setting colors
 

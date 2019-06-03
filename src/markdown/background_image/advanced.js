@@ -39,9 +39,19 @@ function advancedBackground(md) {
           const splitSide = t.meta.marpitBackground.split
           if (splitSide) {
             open.attrSet('data-marpit-advanced-background-split', splitSide)
-            t.attrSet('width', '50%')
 
-            if (splitSide === 'left') t.attrSet('x', '50%')
+            const splitBgSize = t.meta.marpitBackground.splitSize || '50%'
+
+            t.attrSet(
+              'width',
+              `${100 - Number.parseFloat(splitBgSize.slice(0, -1))}%`
+            )
+
+            if (splitSide === 'left') t.attrSet('x', splitBgSize)
+
+            const style = new InlineStyle(open.attrGet('style'))
+            style.set('--marpit-advanced-background-split', splitBgSize)
+            open.attrSet('style', style.toString())
           }
 
           // Add the isolated layer for background image
