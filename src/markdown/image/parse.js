@@ -96,6 +96,17 @@ function parseImage(md) {
   let originalURLMap
   let refCount = 0
 
+  const finalizeTokenAttr = token => {
+    // Convert imprimitive attribute value into primitive string
+    if (token.attrs && Array.isArray(token.attrs))
+      token.attrs = token.attrs.map(([name, value]) => [name, value.toString()])
+
+    if (token.type === 'inline') {
+      // Apply finalization recursively to inline tokens
+      for (const t of token.children) finalizeTokenAttr(t)
+    }
+  }
+
   md.core.process = state => {
     const { normalizeLink } = md
 
@@ -116,6 +127,11 @@ function parseImage(md) {
     } finally {
       refCount -= 1
       md.normalizeLink = normalizeLink
+
+      if (refCount === 0) {
+        // Apply finalization for every tokens
+        for (const token of state.tokens) finalizeTokenAttr(token)
+      }
     }
   }
 
