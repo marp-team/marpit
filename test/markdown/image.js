@@ -5,6 +5,7 @@ import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
 import inlineSVG from '../../src/markdown/inline_svg'
 import parseDirectives from '../../src/markdown/directives/parse'
+import headerAndFooter from '../../src/markdown/header_and_footer'
 import image from '../../src/markdown/image'
 import slide from '../../src/markdown/slide'
 
@@ -24,6 +25,28 @@ describe('Marpit image plugin', () => {
       .use(inlineSVG)
       .use(image)
       .use(backgroundImage)
+      .use(headerAndFooter)
+
+  describe('Regular image', () => {
+    const [token] = md().parseInline('![](https://example.com/image.jpg)')
+    const [imageToken] = token.children
+
+    it('uses primitive string as src attribute', () =>
+      expect(typeof imageToken.attrGet('src')).toBe('string'))
+
+    context('with header image via directive', () => {
+      const tokens = md().parse(
+        '<!-- header: "![](header.png)" -->\n\n![](content.png)'
+      )
+
+      it('uses primitive string as src attribute for all images', () => {
+        for (const { children } of tokens.filter(t => t.type === 'inline')) {
+          const [t] = children
+          expect(typeof t.attrGet('src')).toBe('string')
+        }
+      })
+    })
+  })
 
   describe('Style for inline image', () => {
     const style = opts => {
