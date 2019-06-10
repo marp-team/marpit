@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Finalize token to replace imprimitive attribute string ([#169](https://github.com/marp-team/marpit/pull/169))
+
 ## v1.1.0 - 2019-06-03
 
 ### Added
