@@ -1,5 +1,6 @@
 /** @module */
 import Theme from '../theme'
+import skipThemeValidationSymbol from './symbol'
 
 const css = `
 section {
@@ -43,6 +44,6 @@ h1 {
  * @alias module:theme/scaffold
  * @type {Theme}
  */
-const scaffoldTheme = Theme.fromCSS(css, false)
+const scaffoldTheme = Theme.fromCSS(css, { [skipThemeValidationSymbol]: true })
 
 export default scaffoldTheme

@@ -34,6 +34,17 @@ class ThemeSet {
      */
     this.default = undefined
 
+    /**
+     * Type settings for theme metadata.
+     *
+     * A key of object is the name of metadata and a value is type which of
+     * `String` and `Array`. Setting `Array` is useful if theme allowed multiple
+     * definitions in same meta key.
+     *
+     * @type {Object}
+     */
+    this.metaType = {}
+
     Object.defineProperty(this, 'themeMap', { value: new Map() })
   }
 
@@ -55,7 +66,7 @@ class ThemeSet {
    * @throws Will throw an error if the theme name is not specified by `@theme`.
    */
   add(css) {
-    const theme = Theme.fromCSS(css)
+    const theme = Theme.fromCSS(css, { metaType: this.metaType })
 
     this.addTheme(theme)
     return theme
@@ -64,7 +75,7 @@ class ThemeSet {
   /**
    * Add theme instance.
    *
-   * @param {Theme} theme The theme instnace.
+   * @param {Theme} theme The theme instance.
    * @throws Will throw an error if the theme name is not specified.
    */
   addTheme(theme) {
