@@ -35,11 +35,40 @@ class ThemeSet {
     this.default = undefined
 
     /**
-     * Type settings for theme metadata.
+     * The default type settings for theme metadata added by
+     * {@link ThemeSet#add}.
      *
      * A key of object is the name of metadata and a value is type which of
      * `String` and `Array`. Setting `Array` is useful if theme allowed multiple
      * definitions in same meta key.
+     *
+     * ```css
+     * /**
+     *  * @theme example
+     *  * @foo Single value
+     *  * @foo allows only one string
+     *  * @bar Multiple value 1
+     *  * @bar Multiple value 2
+     *  * @bar Multiple value 3
+     *  * ...
+     * ```
+     *
+     * ```js
+     * const themeSet = new ThemeSet()
+     *
+     * themeSet.metaType = {
+     *   foo: String,
+     *   bar: Array,
+     * }
+     *
+     * themeSet.add(css)
+     *
+     * console.log(themeSet.getThemeProp('example', 'meta.foo'))
+     * // => 'allows only one string'
+     *
+     * console.log(themeSet.getThemeProp('example', 'meta.bar'))
+     * // => ['Multiple value 1', 'Multiple value 2', 'Multiple value 3']
+     * ```
      *
      * @type {Object}
      */
@@ -62,11 +91,16 @@ class ThemeSet {
    * Add theme CSS from string.
    *
    * @param {string} css The theme CSS string.
+   * @param {Object} [opts]
+   * @param {Object} [opts.metaType] An object for defined types for theme
+   *     metadata. By default, ThemeSet uses the value of
+   *     [metaType member in ThemeSet instance]{@link ThemeSet#metaType}.
    * @returns {Theme} A created {@link Theme} instance.
-   * @throws Will throw an error if the theme name is not specified by `@theme`.
+   * @throws Will throw an error if the theme name is not specified by `@theme`
+   *     metadata.
    */
-  add(css) {
-    const theme = Theme.fromCSS(css, { metaType: this.metaType })
+  add(css, opts = {}) {
+    const theme = Theme.fromCSS(css, { metaType: this.metaType, ...opts })
 
     this.addTheme(theme)
     return theme
