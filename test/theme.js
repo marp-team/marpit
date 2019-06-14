@@ -14,6 +14,7 @@ describe('Theme', () => {
       expect(instance.name).toBe('test-theme')
       expect(instance.css).toBe(css)
       expect(instance.meta).toStrictEqual({ theme: 'test-theme' })
+      expect(Object.isFrozen(instance.meta)).toBe(true)
       expect(instance.importRules).toStrictEqual([])
       expect(instance.width).toBeUndefined()
       expect(instance.height).toBeUndefined()
@@ -66,6 +67,43 @@ describe('Theme', () => {
           'yet-another', // @import-theme prepends to the beginning
           'another-theme',
         ]))
+    })
+
+    context('with metaType option argument', () => {
+      it('parses custom metadata with specified type', () => {
+        const instance = Theme.fromCSS(
+          dedent`
+            /**
+             * @theme test
+             * @string A
+             * @string B
+             * @array A
+             * @array B
+             * @unknown A
+             * @unknown B
+             */
+          `,
+          { metaType: { string: String, array: Array } }
+        )
+
+        expect(instance.meta.string).toBe('B')
+        expect(instance.meta.array).toStrictEqual(['A', 'B'])
+        expect(instance.meta.unknown).toBe('B')
+      })
+
+      it('cannot override the type for restricted metadata', () => {
+        const instance = Theme.fromCSS(
+          dedent`
+            /**
+             * @theme A
+             * @theme B
+             */
+          `,
+          { metaType: { theme: Array } }
+        )
+
+        expect(instance.meta.theme).toStrictEqual('B')
+      })
     })
   })
 

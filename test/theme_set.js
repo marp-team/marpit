@@ -3,22 +3,22 @@ import scaffoldTheme from '../src/theme/scaffold'
 import { ThemeSet, Theme } from '../src/index'
 
 describe('ThemeSet', () => {
-  const instance = new ThemeSet()
+  let instance
 
   beforeEach(() => {
-    instance.default = undefined
-    instance.clear()
+    instance = new ThemeSet()
   })
 
   describe('#constructor', () => {
-    const bareInstance = new ThemeSet()
+    it('has default theme property as undefined', () =>
+      expect(instance.default).toBeUndefined())
 
-    it('has default property as undefined', () =>
-      expect(bareInstance.default).toBeUndefined())
+    it('has default metaType property as an empty object', () =>
+      expect(instance.metaType).toStrictEqual({}))
 
     it('has unenumerable themeMap property', () => {
-      expect(bareInstance.themeMap).toBeInstanceOf(Map)
-      expect({}.propertyIsEnumerable.call(bareInstance, 'themeMap')).toBe(false)
+      expect(instance.themeMap).toBeInstanceOf(Map)
+      expect({}.propertyIsEnumerable.call(instance, 'themeMap')).toBe(false)
     })
   })
 
@@ -33,6 +33,12 @@ describe('ThemeSet', () => {
   })
 
   describe('#add', () => {
+    let spy
+
+    beforeEach(() => {
+      spy = jest.spyOn(Theme, 'fromCSS')
+    })
+
     it('adds theme and returns parsed Theme instance', () => {
       expect(instance.add('/* @theme test-theme */')).toBeInstanceOf(Theme)
       expect(instance.has('test-theme')).toBe(true)
@@ -43,6 +49,31 @@ describe('ThemeSet', () => {
 
     it('throws error when CSS has not @theme meta', () =>
       expect(() => instance.add('h1 { color: #f00; }')).toThrow())
+
+    it('passes an empty metaType option to Theme.fromCSS', () => {
+      instance.add('/* @theme a */')
+      expect(spy).toBeCalledWith('/* @theme a */', { metaType: {} })
+    })
+
+    context('with metaType option argument', () => {
+      const metaType = { array: Array }
+
+      it('passes custom metaType option to Theme.fromCSS', () => {
+        instance.add('/* @theme b */', { metaType })
+        expect(spy).toBeCalledWith('/* @theme b */', { metaType })
+      })
+    })
+
+    context("when ThemeSet's metaType property has changed", () => {
+      const metaType = { array: Array }
+
+      it('passes changed metaType option to Theme.fromCSS by default', () => {
+        instance.metaType = metaType
+        instance.add('/* @theme c */')
+
+        expect(spy).toBeCalledWith('/* @theme c */', { metaType })
+      })
+    })
   })
 
   describe('#addTheme', () => {
