@@ -2,6 +2,7 @@ import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import slide from '../../src/markdown/slide'
 import inlineSVG from '../../src/markdown/inline_svg'
+import skipThemeValidationSymbol from '../../src/theme/symbol'
 import { Theme, ThemeSet } from '../../src/index'
 
 describe('Marpit inline SVG plugin', () => {
@@ -85,7 +86,7 @@ describe('Marpit inline SVG plugin', () => {
       context('with specified default theme', () => {
         const defaultTheme = Theme.fromCSS(
           'section { width: 160px; height: 90px; }',
-          false
+          { [skipThemeValidationSymbol]: true }
         )
 
         const defaultThemeSelector = [

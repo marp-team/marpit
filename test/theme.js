@@ -1,4 +1,5 @@
 import dedent from 'dedent'
+import skipThemeValidationSymbol from '../src/theme/symbol'
 import { Theme } from '../src/index'
 
 describe('Theme', () => {
@@ -26,11 +27,11 @@ describe('Theme', () => {
           'Marpit theme CSS requires @theme meta.'
         ))
 
-      context('with validate option as false (for internal)', () => {
+      context('with specified internal symbol for skipping validation', () => {
         it('returns theme instance without name', () => {
           let instance
           expect(() => {
-            instance = Theme.fromCSS(css, false)
+            instance = Theme.fromCSS(css, { [skipThemeValidationSymbol]: true })
           }).not.toThrow()
 
           expect(instance.name).toBeUndefined()
@@ -70,7 +71,9 @@ describe('Theme', () => {
 
   describe('widthPixel property', () => {
     const instance = width =>
-      Theme.fromCSS(`section { width: ${width}; }`, false)
+      Theme.fromCSS(`section { width: ${width}; }`, {
+        [skipThemeValidationSymbol]: true,
+      })
 
     it('returns a width pixel as number', () =>
       expect(instance('1280px').widthPixel).toBe(1280))
@@ -103,7 +106,9 @@ describe('Theme', () => {
 
   describe('heightPixel property', () => {
     const instance = height =>
-      Theme.fromCSS(`section { height: ${height}; }`, false)
+      Theme.fromCSS(`section { height: ${height}; }`, {
+        [skipThemeValidationSymbol]: true,
+      })
 
     it('returns a width pixel as number', () =>
       expect(instance('960px').heightPixel).toBe(960))
