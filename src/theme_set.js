@@ -93,8 +93,9 @@ class ThemeSet {
    * @param {string} css The theme CSS string.
    * @param {Object} [opts]
    * @param {Object} [opts.metaType] An object for defined types for theme
-   *     metadata. By default, ThemeSet uses the value of
-   *     [metaType member in ThemeSet instance]{@link ThemeSet#metaType}.
+   *     metadata. To avoid type mismatch between theme instances, we are NOT
+   *     recommended to specify this option manually. Instead you should use
+   *     [metaType property in ThemeSet instance]{@link ThemeSet#metaType}.
    * @returns {Theme} A created {@link Theme} instance.
    * @throws Will throw an error if the theme name is not specified by `@theme`
    *     metadata.
