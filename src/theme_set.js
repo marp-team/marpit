@@ -38,9 +38,9 @@ class ThemeSet {
      * The default type settings for theme metadata added by
      * {@link ThemeSet#add}.
      *
-     * A key of object is the name of metadata and a value is type which of
-     * `String` and `Array`. Setting `Array` is useful if theme allowed multiple
-     * definitions in same meta key.
+     * A key of object is the name of metadata and a value is the type which of
+     * `String` and `Array`. You have to set `Array` if the theme allows
+     * multi-time definitions in same meta key.
      *
      * ```css
      * /**
