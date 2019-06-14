@@ -202,6 +202,10 @@ describe('ThemeSet', () => {
         { metaType: { array: Array } }
       )
       instance.add(
+        '/* @theme array-meta-double-imported */\n/* @array D */\n@import "array-meta-imported";',
+        { metaType: { array: Array } }
+      )
+      instance.add(
         '/* @theme array-meta-override-by-string */\n/* @array str */\n@import "array-meta";'
       )
       instance.add(
@@ -303,6 +307,9 @@ describe('ThemeSet', () => {
         expect(getThemeProp('array-meta-imported', 'meta.array')).toStrictEqual(
           ['A', 'B', 'C']
         )
+        expect(
+          getThemeProp('array-meta-double-imported', 'meta.array')
+        ).toStrictEqual(['A', 'B', 'C', 'D'])
       })
 
       it('returns meta value in a primary theme when have mixed meta types', () => {
