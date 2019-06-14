@@ -28,6 +28,7 @@ const convertToPixel = value => {
 }
 
 const memoizeProp = name => `${name}Memoized`
+const reservedMetaType = { theme: String }
 
 /**
  * Marpit theme class.
@@ -94,8 +95,10 @@ class Theme {
    * @param {Object} [opts.metaType] An object for defined types for metadata.
    */
   static fromCSS(cssString, opts = {}) {
+    const metaType = { ...(opts.metaType || {}), ...reservedMetaType }
+
     const { css, result } = postcss([
-      postcssMeta(opts),
+      postcssMeta({ metaType }),
       postcssSectionSize,
       postcssImportParse,
     ]).process(cssString)
