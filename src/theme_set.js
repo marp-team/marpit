@@ -157,14 +157,19 @@ class ThemeSet {
   }
 
   /**
-   * Returns the value of property from a specified theme. It considers
-   * `@import` rules in getting property value.
+   * Returns the value of specified property name or dot notation path from a
+   * theme. It considers `@import` rules in getting value.
    *
    * It will fallback the reference object into the instance's default theme or
-   * scaffold theme when the specified theme is undefined.
+   * scaffold theme when the specified theme is `undefined`.
+   *
+   * It will merge into a flatten array when the all of got valid values are
+   * array. It's useful for metadata with array type.
    *
    * @param {string|Theme} theme The theme name or instance.
-   * @param {string} propPath The property name or path to get.
+   * @param {string} propPath The property name or path to get. It can get the
+   *     value from nested object via dot notation path like `foo.bar`.
+   * @returns {*}
    */
   getThemeProp(theme, propPath, importedThemes = []) {
     let importedProps = []
@@ -191,12 +196,23 @@ class ThemeSet {
         .reverse()
     }
 
-    return [
+    const props = [
       get(themeInstance, propPath),
       ...importedProps,
       get(this.default, propPath),
       get(scaffold, propPath),
-    ].find(t => t)
+    ]
+
+    // Merge array props
+    const filtered = props.filter(p => p)
+
+    if (filtered.length > 0 && filtered.every(p => Array.isArray(p))) {
+      const mergedProps = []
+      for (const prop of filtered.reverse()) mergedProps.push(...prop)
+      return mergedProps
+    }
+
+    return props.find(t => t)
   }
 
   /**
