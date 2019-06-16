@@ -274,19 +274,14 @@ describe('ThemeSet', () => {
           instance.default = arrayMetaTheme
         })
 
-        it('fallbacks array to default theme when specified theme is not contained', () => {
-          expect(getThemeProp('not-contained', 'meta.array')).toStrictEqual([
-            'A',
-            'B',
-          ])
-        })
+        it('does not fallback array value to default theme', () =>
+          expect(getThemeProp('not-contained', 'meta.array')).toStrictEqual([]))
 
-        it('returns correct array even if specified default theme', () => {
+        it('returns correct array when specified default theme', () =>
           expect(getThemeProp('array-meta', 'meta.array')).toStrictEqual([
             'A',
             'B',
-          ])
-        })
+          ]))
       })
     })
 
