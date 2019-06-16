@@ -24,6 +24,18 @@ declare module '@marp-team/marpit' {
     ) => { [meta: string]: any }
   }
 
+  type ThemeReservedMeta = {
+    theme: string
+  }
+
+  type ThemeMetaType = {
+    [key: string]: StringConstructor | ArrayConstructor
+  }
+
+  type ThemeOptions = {
+    metaType?: ThemeMetaType
+  }
+
   type ThemeSetPackOptions = {
     after?: string
     before?: string
@@ -54,10 +66,10 @@ declare module '@marp-team/marpit' {
     /** @deprecated A plugin interface for markdown-it is deprecated and will remove in future version. Instead, wrap markdown-it instance when creating Marpit by `new Marpit({ markdown: markdownItInstance })`. */
     readonly markdownItPlugins: (md: any) => void
 
-    protected lastComments?: MarpitRenderResult['comments']
-    protected lastGlobalDirectives?: { [directive: string]: any }
-    protected lastSlideTokens?: any[]
-    protected lastStyles?: string[]
+    protected lastComments: MarpitRenderResult['comments'] | undefined
+    protected lastGlobalDirectives: { [directive: string]: any } | undefined
+    protected lastSlideTokens: any[] | undefined
+    protected lastStyles: string[] | undefined
 
     render(
       markdown: string,
@@ -90,7 +102,7 @@ declare module '@marp-team/marpit' {
   export class Theme {
     protected constructor(name: string, css: string)
 
-    static fromCSS(cssString: string): Theme
+    static fromCSS(cssString: string, opts?: ThemeOptions): Readonly<Theme>
 
     css: string
     height: string
@@ -98,21 +110,19 @@ declare module '@marp-team/marpit' {
       node: any
       value: string
     }[]
-    meta: {
-      theme: string
-      [key: string]: string
-    }
+    meta: Readonly<ThemeReservedMeta & Record<string, string | string[]>>
     name: string
     width: string
 
-    readonly heightPixel?: number
-    readonly widthPixel?: number
+    readonly heightPixel: number | undefined
+    readonly widthPixel: number | undefined
   }
 
   export class ThemeSet {
     constructor()
 
-    default?: Theme
+    default: Theme | undefined
+    metaType: ThemeMetaType
 
     readonly size: number
     private readonly themeMap: Map<string, Theme>
