@@ -55,15 +55,6 @@ describe('ThemeSet', () => {
       expect(spy).toBeCalledWith('/* @theme a */', { metaType: {} })
     })
 
-    context('with metaType option argument', () => {
-      const metaType = { array: Array }
-
-      it('passes custom metaType option to Theme.fromCSS', () => {
-        instance.add('/* @theme b */', { metaType })
-        expect(spy).toBeCalledWith('/* @theme b */', { metaType })
-      })
-    })
-
     context("when ThemeSet's metaType property has changed", () => {
       const metaType = { array: Array }
 
@@ -194,23 +185,32 @@ describe('ThemeSet', () => {
       )
 
       // Array meta
-      instance.add('/* @theme array-meta */\n/* @array A */\n/* @array B */', {
-        metaType: { array: Array },
-      })
-      instance.add(
-        '/* @theme array-meta-imported */\n/* @array C */\n@import "array-meta";',
-        { metaType: { array: Array } }
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme array-meta */\n/* @array A */\n/* @array B */',
+          { metaType: { array: Array } }
+        )
       )
-      instance.add(
-        '/* @theme array-meta-double-imported */\n/* @array D */\n@import "array-meta-imported";',
-        { metaType: { array: Array } }
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme array-meta-imported */\n/* @array C */\n@import "array-meta";',
+          { metaType: { array: Array } }
+        )
+      )
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme array-meta-double-imported */\n/* @array D */\n@import "array-meta-imported";',
+          { metaType: { array: Array } }
+        )
       )
       instance.add(
         '/* @theme array-meta-override-by-string */\n/* @array str */\n@import "array-meta";'
       )
-      instance.add(
-        '/* @theme string-meta-override-by-array */\n/* @meta-value B */\n/* @meta-value C */\n@import "meta";',
-        { metaType: { 'meta-value': Array } }
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme string-meta-override-by-array */\n/* @meta-value B */\n/* @meta-value C */\n@import "meta";',
+          { metaType: { 'meta-value': Array } }
+        )
       )
     })
 
