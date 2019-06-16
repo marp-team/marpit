@@ -150,10 +150,15 @@ describe('ThemeSet', () => {
   })
 
   describe('#getThemeProp', () => {
+    let arrayMetaTheme
     let fallbackTheme
     let sizeSpecifiedTheme
 
     beforeEach(() => {
+      arrayMetaTheme = Theme.fromCSS(
+        '/* @theme array-meta */\n/* @array A */\n/* @array B */',
+        { metaType: { array: Array } }
+      )
       fallbackTheme = instance.add('/* @theme fallback */')
       sizeSpecifiedTheme = instance.add(dedent`
         /* @theme size-specified */
@@ -185,12 +190,7 @@ describe('ThemeSet', () => {
       )
 
       // Array meta
-      instance.addTheme(
-        Theme.fromCSS(
-          '/* @theme array-meta */\n/* @array A */\n/* @array B */',
-          { metaType: { array: Array } }
-        )
-      )
+      instance.addTheme(arrayMetaTheme)
       instance.addTheme(
         Theme.fromCSS(
           '/* @theme array-meta-imported */\n/* @array C */\n@import "array-meta";',
@@ -268,6 +268,26 @@ describe('ThemeSet', () => {
 
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
         expect(getThemeProp('not-contained', 'height')).toBe(height))
+
+      context('with array meta', () => {
+        beforeEach(() => {
+          instance.default = arrayMetaTheme
+        })
+
+        it('fallbacks array to default theme when specified theme is not contained', () => {
+          expect(getThemeProp('not-contained', 'meta.array')).toStrictEqual([
+            'A',
+            'B',
+          ])
+        })
+
+        it('returns correct array even if specified default theme', () => {
+          expect(getThemeProp('array-meta', 'meta.array')).toStrictEqual([
+            'A',
+            'B',
+          ])
+        })
+      })
     })
 
     context('with @import rules', () => {
