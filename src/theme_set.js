@@ -1,4 +1,3 @@
-import get from 'lodash.get'
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
@@ -152,62 +151,64 @@ class ThemeSet {
   }
 
   /**
-   * Returns the value of specified property name or dot notation path from a
-   * theme. It considers `@import` rules in getting value.
+   * Returns value(s) of specified metadata from a theme. It considers `@import`
+   * and `@import-theme` rules in getting meta value. On the other hand, the
+   * default theme specified by the instance is not considered.
+   *
+   * To support metadata with array type, it will merge into a flatten array
+   * when the all of got valid values are array.
+   *
+   * @param {string|Theme} theme The theme name or instance.
+   * @param {string} meta The meta name to get.
+   * @returns {string|string[]|undefined}
+   */
+  getThemeMeta(theme, meta) {
+    const themeInstance = theme instanceof Theme ? theme : this.get(theme)
+    const metas = themeInstance
+      ? this.resolveImport(themeInstance)
+          .map(t => t.meta[meta])
+          .filter(m => m)
+      : []
+
+    // Flatten in order of definitions when the all of valid values are array
+    if (metas.length > 0 && metas.every(m => Array.isArray(m))) {
+      const mergedArray = []
+
+      for (const m of metas) mergedArray.unshift(...m)
+      return mergedArray
+    }
+
+    return metas[0]
+  }
+
+  /**
+   * Returns the value of specified property name from a theme. It considers
+   * `@import` and `@import-theme` rules in getting value.
    *
    * It will fallback the reference object into the instance's default theme or
    * scaffold theme when the specified theme is `undefined`.
    *
-   * It will merge into a flatten array when the all of got valid values are
-   * array. It's useful for metadata with array type.
-   *
    * @param {string|Theme} theme The theme name or instance.
-   * @param {string} propPath The property name or path to get. It can get the
-   *     value from nested object via dot notation path like `foo.bar`.
+   * @param {string} prop The property name to get.
    * @returns {*}
    */
-  getThemeProp(theme, propPath, importedThemes = []) {
-    let importedProps = []
+  getThemeProp(theme, prop) {
+    // TODO: Remove deprecated dot notation support for meta
+    if (prop.startsWith('meta.')) {
+      console.warn(
+        'Deprecation warning: Dot notation path in getThemeProp to get meta value has no longer supported. We still have a special fallback into getThemeMeta method, but it would remove soon.'
+      )
+      return this.getThemeMeta(theme, prop.slice(5))
+    }
+
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
+    const props = themeInstance
+      ? this.resolveImport(themeInstance).map(t => t[prop])
+      : []
 
-    if (themeInstance) {
-      const { name } = themeInstance
-
-      if (importedThemes.includes(name))
-        throw new Error(`Circular "${name}" theme import is detected.`)
-
-      importedProps = themeInstance.importRules
-        .map(r => {
-          const importTheme = this.get(r.value)
-          return importTheme
-            ? this.getThemeProp(
-                importTheme,
-                propPath,
-                [...importedThemes, name].filter(n => n)
-              )
-            : undefined
-        })
-        .filter(r => r)
-        .reverse()
-    }
-
-    const props = [
-      get(themeInstance, propPath),
-      ...importedProps,
-      get(this.default, propPath),
-      get(scaffold, propPath),
-    ]
-
-    // Merge array props
-    const filtered = props.filter(p => p)
-
-    if (filtered.length > 0 && filtered.every(p => Array.isArray(p))) {
-      const mergedProps = []
-      for (const prop of filtered.reverse()) mergedProps.push(...prop)
-      return mergedProps
-    }
-
-    return props.find(t => t)
+    return [...props, this.default && this.default[prop], scaffold[prop]].find(
+      t => t
+    )
   }
 
   /**
@@ -292,6 +293,37 @@ class ThemeSet {
    */
   themes() {
     return this.themeMap.values()
+  }
+
+  /**
+   * Resolves `@import` and `@import-theme` and returns an array of using theme
+   * instances.
+   *
+   * @private
+   * @param {Theme} theme Theme instance
+   * @returns {Theme[]}
+   */
+  resolveImport(theme, importedThemes = []) {
+    const { name } = theme
+
+    if (importedThemes.includes(name))
+      throw new Error(`Circular "${name}" theme import is detected.`)
+
+    const resolvedThemes = [theme]
+
+    theme.importRules.forEach(m => {
+      const importTheme = this.get(m.value)
+
+      if (importTheme)
+        resolvedThemes.push(
+          ...this.resolveImport(
+            importTheme,
+            [...importedThemes, name].filter(n => n)
+          )
+        )
+    })
+
+    return resolvedThemes.filter(v => v)
   }
 }
 

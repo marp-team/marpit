@@ -269,13 +269,13 @@ describe('ThemeSet', () => {
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
         expect(getThemeProp('not-contained', 'height')).toBe(height))
 
-      context('with array meta', () => {
+      context('[Deprecated fallback] with array meta', () => {
         beforeEach(() => {
           instance.default = arrayMetaTheme
         })
 
         it('does not fallback array value to default theme', () =>
-          expect(getThemeProp('not-contained', 'meta.array')).toStrictEqual([]))
+          expect(getThemeProp('not-contained', 'meta.array')).toBeUndefined())
 
         it('returns correct array when specified default theme', () =>
           expect(getThemeProp('array-meta', 'meta.array')).toStrictEqual([
@@ -304,7 +304,7 @@ describe('ThemeSet', () => {
         expect(getThemeProp('undefined-theme', 'width')).toBe(width))
     })
 
-    context('with path to nested meta property', () => {
+    context('[Deprecated fallback] with path to nested meta property', () => {
       it('returns the value of property', () => {
         expect(getThemeProp('meta', 'meta.meta-value')).toBe('A')
         expect(getThemeProp('meta', 'meta.unknown')).toBeUndefined()
@@ -317,25 +317,28 @@ describe('ThemeSet', () => {
       })
     })
 
-    context('with path to array meta and @import rules', () => {
-      it('returns merged array defined in all themes', () => {
-        expect(getThemeProp('array-meta-imported', 'meta.array')).toStrictEqual(
-          ['A', 'B', 'C']
-        )
-        expect(
-          getThemeProp('array-meta-double-imported', 'meta.array')
-        ).toStrictEqual(['A', 'B', 'C', 'D'])
-      })
+    context(
+      '[Deprecated fallback] with path to array meta and @import rules',
+      () => {
+        it('returns merged array defined in all themes', () => {
+          expect(
+            getThemeProp('array-meta-imported', 'meta.array')
+          ).toStrictEqual(['A', 'B', 'C'])
+          expect(
+            getThemeProp('array-meta-double-imported', 'meta.array')
+          ).toStrictEqual(['A', 'B', 'C', 'D'])
+        })
 
-      it('returns meta value in a primary theme when have mixed meta types', () => {
-        expect(
-          getThemeProp('array-meta-override-by-string', 'meta.array')
-        ).toBe('str')
-        expect(
-          getThemeProp('string-meta-override-by-array', 'meta.meta-value')
-        ).toStrictEqual(['B', 'C'])
-      })
-    })
+        it('returns meta value in a primary theme when have mixed meta types', () => {
+          expect(
+            getThemeProp('array-meta-override-by-string', 'meta.array')
+          ).toBe('str')
+          expect(
+            getThemeProp('string-meta-override-by-array', 'meta.meta-value')
+          ).toStrictEqual(['B', 'C'])
+        })
+      }
+    )
   })
 
   describe('#has', () => {
