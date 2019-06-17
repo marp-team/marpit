@@ -3,22 +3,22 @@ import scaffoldTheme from '../src/theme/scaffold'
 import { ThemeSet, Theme } from '../src/index'
 
 describe('ThemeSet', () => {
-  const instance = new ThemeSet()
+  let instance
 
   beforeEach(() => {
-    instance.default = undefined
-    instance.clear()
+    instance = new ThemeSet()
   })
 
   describe('#constructor', () => {
-    const bareInstance = new ThemeSet()
+    it('has default theme property as undefined', () =>
+      expect(instance.default).toBeUndefined())
 
-    it('has default property as undefined', () =>
-      expect(bareInstance.default).toBeUndefined())
+    it('has default metaType property as an empty object', () =>
+      expect(instance.metaType).toStrictEqual({}))
 
     it('has unenumerable themeMap property', () => {
-      expect(bareInstance.themeMap).toBeInstanceOf(Map)
-      expect({}.propertyIsEnumerable.call(bareInstance, 'themeMap')).toBe(false)
+      expect(instance.themeMap).toBeInstanceOf(Map)
+      expect({}.propertyIsEnumerable.call(instance, 'themeMap')).toBe(false)
     })
   })
 
@@ -33,6 +33,12 @@ describe('ThemeSet', () => {
   })
 
   describe('#add', () => {
+    let spy
+
+    beforeEach(() => {
+      spy = jest.spyOn(Theme, 'fromCSS')
+    })
+
     it('adds theme and returns parsed Theme instance', () => {
       expect(instance.add('/* @theme test-theme */')).toBeInstanceOf(Theme)
       expect(instance.has('test-theme')).toBe(true)
@@ -43,6 +49,22 @@ describe('ThemeSet', () => {
 
     it('throws error when CSS has not @theme meta', () =>
       expect(() => instance.add('h1 { color: #f00; }')).toThrow())
+
+    it('passes an empty metaType option to Theme.fromCSS', () => {
+      instance.add('/* @theme a */')
+      expect(spy).toBeCalledWith('/* @theme a */', { metaType: {} })
+    })
+
+    context("when ThemeSet's metaType property has changed", () => {
+      const metaType = { array: Array }
+
+      it('passes changed metaType option to Theme.fromCSS by default', () => {
+        instance.metaType = metaType
+        instance.add('/* @theme c */')
+
+        expect(spy).toBeCalledWith('/* @theme c */', { metaType })
+      })
+    })
   })
 
   describe('#addTheme', () => {
@@ -127,6 +149,104 @@ describe('ThemeSet', () => {
     })
   })
 
+  describe('#getThemeMeta', () => {
+    let arrayMetaTheme
+
+    beforeEach(() => {
+      arrayMetaTheme = Theme.fromCSS(
+        '/* @theme array-meta */\n/* @array A */\n/* @array B */',
+        { metaType: { array: Array } }
+      )
+
+      // Meta value
+      instance.add('/* @theme meta */\n/* @meta-value A */')
+      instance.add('/* @theme meta-imported */\n@import "meta";')
+      instance.add(
+        '/* @theme meta-override */\n/* @meta-value B */\n@import "meta";'
+      )
+
+      // Array meta
+      instance.addTheme(arrayMetaTheme)
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme array-meta-imported */\n/* @array C */\n@import "array-meta";',
+          { metaType: { array: Array } }
+        )
+      )
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme array-meta-double-imported */\n/* @array D */\n@import "array-meta-imported";',
+          { metaType: { array: Array } }
+        )
+      )
+      instance.add(
+        '/* @theme array-meta-override-by-string */\n/* @array str */\n@import "array-meta";'
+      )
+      instance.addTheme(
+        Theme.fromCSS(
+          '/* @theme string-meta-override-by-array */\n/* @meta-value B */\n/* @meta-value C */\n@import "meta";',
+          { metaType: { 'meta-value': Array } }
+        )
+      )
+    })
+
+    const getThemeMeta = (...args) =>
+      instance.getThemeMeta.call(instance, ...args)
+
+    context('with passing theme as string', () => {
+      it('returns the meta value of specified theme', () =>
+        expect(getThemeMeta('meta', 'meta-value')).toBe('A'))
+
+      it('returns undefined when the meta key is not defined', () =>
+        expect(getThemeMeta('meta', 'unknown')).toBeUndefined())
+
+      it('returns undefined when the specified theme is not registered', () =>
+        expect(getThemeMeta('unknown', 'meta-value')).toBeUndefined())
+    })
+
+    context('with passing theme as Theme instance', () => {
+      it('returns the meta value of specified instance', () =>
+        expect(getThemeMeta(arrayMetaTheme, 'array')).toStrictEqual(['A', 'B']))
+    })
+
+    context('with @import rules', () => {
+      it('returns the meta value defined at imported theme', () => {
+        expect(getThemeMeta('meta-imported', 'meta-value')).toBe('A')
+        expect(getThemeMeta('meta-override', 'meta-value')).toBe('B')
+      })
+    })
+
+    context('with array meta', () => {
+      it('returns array value from multi-time meta definitions', () =>
+        expect(getThemeMeta('array-meta', 'array')).toStrictEqual(['A', 'B']))
+
+      it('returns merged values in order when defined as array in imported all themes', () => {
+        expect(getThemeMeta('array-meta-imported', 'array')).toStrictEqual([
+          'A',
+          'B',
+          'C',
+        ])
+        expect(
+          getThemeMeta('array-meta-double-imported', 'array')
+        ).toStrictEqual(['A', 'B', 'C', 'D'])
+      })
+    })
+
+    context(
+      'when the specified meta have different type in imported theme',
+      () => {
+        it('returns the meta value only from a primary theme', () => {
+          expect(getThemeMeta('array-meta-override-by-string', 'array')).toBe(
+            'str'
+          )
+          expect(
+            getThemeMeta('string-meta-override-by-array', 'meta-value')
+          ).toStrictEqual(['B', 'C'])
+        })
+      }
+    )
+  })
+
   describe('#getThemeProp', () => {
     let fallbackTheme
     let sizeSpecifiedTheme
@@ -153,53 +273,50 @@ describe('ThemeSet', () => {
       instance.add('/* @theme nested-circular2 */\n@import "nested-circular";')
 
       // Import undefined theme
-      instance.add('/* @theme undefined-theme */\n@import "ignore"')
+      instance.add('/* @theme undefined-theme */\n@import "ignore";')
 
       // Meta value
       instance.add('/* @theme meta */\n/* @meta-value A */')
-      instance.add('/* @theme meta-imported */\n@import "meta";')
-      instance.add(
-        '/* @theme meta-overrode */\n/* @meta-value B */\n@import "meta";'
-      )
     })
 
     const { width, height } = scaffoldTheme
 
+    const getThemeProp = (...args) =>
+      instance.getThemeProp.call(instance, ...args)
+
     context('with passing theme as string', () => {
       it('returns the property value when specified theme is contained', () => {
-        expect(instance.getThemeProp('size-specified', 'width')).toBe('640px')
-        expect(instance.getThemeProp('size-specified', 'height')).toBe('480px')
+        expect(getThemeProp('size-specified', 'width')).toBe('640px')
+        expect(getThemeProp('size-specified', 'height')).toBe('480px')
       })
 
       it('returns scaffold value when specified theme is not defined props', () => {
-        expect(instance.getThemeProp('fallback', 'width')).toBe(width)
-        expect(instance.getThemeProp('fallback', 'height')).toBe(height)
+        expect(getThemeProp('fallback', 'width')).toBe(width)
+        expect(getThemeProp('fallback', 'height')).toBe(height)
       })
 
       it('returns scaffold value when specified theme is not contained', () => {
-        expect(instance.getThemeProp('not-contained', 'width')).toBe(width)
-        expect(instance.getThemeProp('not-contained', 'height')).toBe(height)
+        expect(getThemeProp('not-contained', 'width')).toBe(width)
+        expect(getThemeProp('not-contained', 'height')).toBe(height)
       })
     })
 
     context('with passing theme as Theme instance', () => {
       it('returns the property value when specified theme is contained', () => {
-        expect(instance.getThemeProp(sizeSpecifiedTheme, 'width')).toBe('640px')
-        expect(instance.getThemeProp(sizeSpecifiedTheme, 'height')).toBe(
-          '480px'
-        )
+        expect(getThemeProp(sizeSpecifiedTheme, 'width')).toBe('640px')
+        expect(getThemeProp(sizeSpecifiedTheme, 'height')).toBe('480px')
       })
 
       it('returns scaffold value when specified theme is not defined props', () => {
-        expect(instance.getThemeProp(fallbackTheme, 'width')).toBe(width)
-        expect(instance.getThemeProp(fallbackTheme, 'height')).toBe(height)
+        expect(getThemeProp(fallbackTheme, 'width')).toBe(width)
+        expect(getThemeProp(fallbackTheme, 'height')).toBe(height)
       })
 
       it('returns scaffold value when specified theme is not contained', () => {
         const theme = Theme.fromCSS('/* @theme not-contained */')
 
-        expect(instance.getThemeProp(theme, 'width')).toBe(width)
-        expect(instance.getThemeProp(theme, 'height')).toBe(height)
+        expect(getThemeProp(theme, 'width')).toBe(width)
+        expect(getThemeProp(theme, 'height')).toBe(height)
       })
     })
 
@@ -212,41 +329,37 @@ describe('ThemeSet', () => {
       })
 
       it('returns default value when specified theme is not contained', () =>
-        expect(instance.getThemeProp('not-contained', 'width')).toBe('123px'))
+        expect(getThemeProp('not-contained', 'width')).toBe('123px'))
 
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
-        expect(instance.getThemeProp('not-contained', 'height')).toBe(height))
+        expect(getThemeProp('not-contained', 'height')).toBe(height))
     })
 
     context('with @import rules', () => {
       it('returns the value defined at imported theme', () => {
-        expect(instance.getThemeProp('import', 'width')).toBe('100px')
-        expect(instance.getThemeProp('double-import', 'width')).toBe('100px')
+        expect(getThemeProp('import', 'width')).toBe('100px')
+        expect(getThemeProp('double-import', 'width')).toBe('100px')
       })
 
       it('throws error when circular import is detected', () => {
-        expect(() => instance.getThemeProp('circular-import', 'width')).toThrow(
+        expect(() => getThemeProp('circular-import', 'width')).toThrow(
           'Circular "circular-import" theme import is detected.'
         )
-        expect(() => instance.getThemeProp('nested-circular', 'width')).toThrow(
+        expect(() => getThemeProp('nested-circular', 'width')).toThrow(
           'Circular "nested-circular" theme import is detected.'
         )
       })
 
       it('ignores importing undefined theme and fallbacks to scaffold value', () =>
-        expect(instance.getThemeProp('undefined-theme', 'width')).toBe(width))
+        expect(getThemeProp('undefined-theme', 'width')).toBe(width))
     })
 
-    context('with path to nested meta property', () => {
-      it('returns the value of property', () => {
-        expect(instance.getThemeProp('meta', 'meta.meta-value')).toBe('A')
-        expect(instance.getThemeProp('meta', 'meta.unknown')).toBeUndefined()
-        expect(instance.getThemeProp('meta-imported', 'meta.meta-value')).toBe(
-          'A'
-        )
-        expect(instance.getThemeProp('meta-overrode', 'meta.meta-value')).toBe(
-          'B'
-        )
+    context('[Deprecated] with dot notation path to meta property', () => {
+      it('returns the value of property by using #getThemeMeta', () => {
+        const spy = jest.spyOn(instance, 'getThemeMeta')
+
+        expect(getThemeProp('meta', 'meta.meta-value')).toBe('A')
+        expect(spy).toBeCalledWith('meta', 'meta-value')
       })
     })
   })

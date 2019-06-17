@@ -2,9 +2,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add [`metaType` property for `ThemeSet` class](https://marpit-api.netlify.com/themeset#metaType) to make definable array type for theme metadata ([#170](https://github.com/marp-team/marpit/issues/170), [#171](https://github.com/marp-team/marpit/pull/171))
+- [`ThemeSet#getThemeMeta`](https://marpit-api.netlify.com/themeset#getThemeMeta) to get correct meta value with array support ([#171](https://github.com/marp-team/marpit/pull/171))
+
 ### Fixed
 
 - Finalize token to replace imprimitive attribute string ([#169](https://github.com/marp-team/marpit/pull/169))
+
+### Deprecated
+
+- Dot notation path for meta property in [`ThemeSet#getThemeProp`](https://marpit-api.netlify.com/themeset#getThemeProp) is deprecated in favor of using added `ThemeSet#getThemeMeta` ([#171](https://github.com/marp-team/marpit/pull/171))
 
 ## v1.1.0 - 2019-06-03
 

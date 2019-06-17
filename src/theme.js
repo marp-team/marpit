@@ -2,6 +2,7 @@ import postcss from 'postcss'
 import postcssImportParse from './postcss/import/parse'
 import postcssMeta from './postcss/meta'
 import postcssSectionSize from './postcss/section_size'
+import skipThemeValidationSymbol from './theme/symbol'
 
 const absoluteUnits = {
   cm: v => (v * 960) / 25.4,
@@ -27,11 +28,7 @@ const convertToPixel = value => {
 }
 
 const memoizeProp = name => `${name}Memoized`
-const postcssParser = postcss([
-  postcssMeta,
-  postcssSectionSize,
-  postcssImportParse,
-])
+const reservedMetaType = { theme: String }
 
 /**
  * Marpit theme class.
@@ -64,7 +61,7 @@ class Theme {
      * Parsed metadata from CSS comments.
      * @type {Object}
      */
-    this.meta = {}
+    this.meta = Object.freeze({})
 
     /**
      * Parsed `@import` rules.
@@ -94,19 +91,25 @@ class Theme {
    * @alias Theme.fromCSS
    * @param {string} cssString The string of Marpit theme CSS. It requires
    *     `@theme` meta comment.
+   * @param {Object} [opts]
+   * @param {Object} [opts.metaType] An object for defined types for metadata.
    */
-  static fromCSS(cssString, validate = true) {
-    const processed = postcssParser.process(cssString)
-    const { css, result } = processed
+  static fromCSS(cssString, opts = {}) {
+    const metaType = { ...(opts.metaType || {}), ...reservedMetaType }
 
-    // validate option is for internal usage. User should never set as false.
-    if (validate && !result.marpitMeta.theme)
+    const { css, result } = postcss([
+      postcssMeta({ metaType }),
+      postcssSectionSize,
+      postcssImportParse,
+    ]).process(cssString)
+
+    if (!opts[skipThemeValidationSymbol] && !result.marpitMeta.theme)
       throw new Error('Marpit theme CSS requires @theme meta.')
 
     const theme = new Theme(result.marpitMeta.theme, css)
 
     theme.importRules = [...result.marpitImport]
-    theme.meta = { ...result.marpitMeta }
+    theme.meta = Object.freeze({ ...result.marpitMeta })
 
     Object.assign(theme, { ...result.marpitSectionSize })
 

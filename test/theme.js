@@ -1,4 +1,5 @@
 import dedent from 'dedent'
+import skipThemeValidationSymbol from '../src/theme/symbol'
 import { Theme } from '../src/index'
 
 describe('Theme', () => {
@@ -13,6 +14,7 @@ describe('Theme', () => {
       expect(instance.name).toBe('test-theme')
       expect(instance.css).toBe(css)
       expect(instance.meta).toStrictEqual({ theme: 'test-theme' })
+      expect(Object.isFrozen(instance.meta)).toBe(true)
       expect(instance.importRules).toStrictEqual([])
       expect(instance.width).toBeUndefined()
       expect(instance.height).toBeUndefined()
@@ -26,11 +28,11 @@ describe('Theme', () => {
           'Marpit theme CSS requires @theme meta.'
         ))
 
-      context('with validate option as false (for internal)', () => {
+      context('with specified internal symbol for skipping validation', () => {
         it('returns theme instance without name', () => {
           let instance
           expect(() => {
-            instance = Theme.fromCSS(css, false)
+            instance = Theme.fromCSS(css, { [skipThemeValidationSymbol]: true })
           }).not.toThrow()
 
           expect(instance.name).toBeUndefined()
@@ -66,11 +68,50 @@ describe('Theme', () => {
           'another-theme',
         ]))
     })
+
+    context('with metaType option argument', () => {
+      it('parses custom metadata with specified type', () => {
+        const instance = Theme.fromCSS(
+          dedent`
+            /**
+             * @theme test
+             * @string A
+             * @string B
+             * @array A
+             * @array B
+             * @unknown A
+             * @unknown B
+             */
+          `,
+          { metaType: { string: String, array: Array } }
+        )
+
+        expect(instance.meta.string).toBe('B')
+        expect(instance.meta.array).toStrictEqual(['A', 'B'])
+        expect(instance.meta.unknown).toBe('B')
+      })
+
+      it('cannot override the type for restricted metadata', () => {
+        const instance = Theme.fromCSS(
+          dedent`
+            /**
+             * @theme A
+             * @theme B
+             */
+          `,
+          { metaType: { theme: Array } }
+        )
+
+        expect(instance.meta.theme).toStrictEqual('B')
+      })
+    })
   })
 
   describe('widthPixel property', () => {
     const instance = width =>
-      Theme.fromCSS(`section { width: ${width}; }`, false)
+      Theme.fromCSS(`section { width: ${width}; }`, {
+        [skipThemeValidationSymbol]: true,
+      })
 
     it('returns a width pixel as number', () =>
       expect(instance('1280px').widthPixel).toBe(1280))
@@ -103,7 +144,9 @@ describe('Theme', () => {
 
   describe('heightPixel property', () => {
     const instance = height =>
-      Theme.fromCSS(`section { height: ${height}; }`, false)
+      Theme.fromCSS(`section { height: ${height}; }`, {
+        [skipThemeValidationSymbol]: true,
+      })
 
     it('returns a width pixel as number', () =>
       expect(instance('960px').heightPixel).toBe(960))

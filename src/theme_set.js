@@ -1,4 +1,3 @@
-import get from 'lodash.get'
 import postcss from 'postcss'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
@@ -34,6 +33,46 @@ class ThemeSet {
      */
     this.default = undefined
 
+    /**
+     * The default type settings for theme metadata added by
+     * {@link ThemeSet#add}.
+     *
+     * A key of object is the name of metadata and a value is the type which of
+     * `String` and `Array`. You have to set `Array` if the theme allows
+     * multi-time definitions in same meta key.
+     *
+     * ```css
+     * /**
+     *  * @theme example
+     *  * @foo Single value
+     *  * @foo allows only one string
+     *  * @bar Multiple value 1
+     *  * @bar Multiple value 2
+     *  * @bar Multiple value 3
+     *  * ...
+     * ```
+     *
+     * ```js
+     * const themeSet = new ThemeSet()
+     *
+     * themeSet.metaType = {
+     *   foo: String,
+     *   bar: Array,
+     * }
+     *
+     * themeSet.add(css)
+     *
+     * console.log(themeSet.getThemeMeta('example', 'foo'))
+     * // => 'allows only one string'
+     *
+     * console.log(themeSet.getThemeMeta('example', 'bar'))
+     * // => ['Multiple value 1', 'Multiple value 2', 'Multiple value 3']
+     * ```
+     *
+     * @type {Object}
+     */
+    this.metaType = {}
+
     Object.defineProperty(this, 'themeMap', { value: new Map() })
   }
 
@@ -52,10 +91,11 @@ class ThemeSet {
    *
    * @param {string} css The theme CSS string.
    * @returns {Theme} A created {@link Theme} instance.
-   * @throws Will throw an error if the theme name is not specified by `@theme`.
+   * @throws Will throw an error if the theme name is not specified by `@theme`
+   *     metadata.
    */
   add(css) {
-    const theme = Theme.fromCSS(css)
+    const theme = Theme.fromCSS(css, { metaType: this.metaType })
 
     this.addTheme(theme)
     return theme
@@ -64,7 +104,7 @@ class ThemeSet {
   /**
    * Add theme instance.
    *
-   * @param {Theme} theme The theme instnace.
+   * @param {Theme} theme The theme instance.
    * @throws Will throw an error if the theme name is not specified.
    */
   addTheme(theme) {
@@ -111,46 +151,64 @@ class ThemeSet {
   }
 
   /**
-   * Returns the value of property from a specified theme. It considers
-   * `@import` rules in getting property value.
+   * Returns value(s) of specified metadata from a theme. It considers `@import`
+   * and `@import-theme` rules in getting meta value. On the other hand, the
+   * default theme specified by the instance is not considered.
    *
-   * It will fallback the reference object into the instance's default theme or
-   * scaffold theme when the specified theme is undefined.
+   * To support metadata with array type, it will merge into a flatten array
+   * when the all of got valid values that includes imported themes are array.
    *
    * @param {string|Theme} theme The theme name or instance.
-   * @param {string} propPath The property name or path to get.
+   * @param {string} meta The meta name to get.
+   * @returns {string|string[]|undefined}
    */
-  getThemeProp(theme, propPath, importedThemes = []) {
-    let importedProps = []
+  getThemeMeta(theme, meta) {
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
+    const metas = themeInstance
+      ? this.resolveImport(themeInstance)
+          .map(t => t.meta[meta])
+          .filter(m => m)
+      : []
 
-    if (themeInstance) {
-      const { name } = themeInstance
+    // Flatten in order of definitions when the all of valid values are array
+    if (metas.length > 0 && metas.every(m => Array.isArray(m))) {
+      const mergedArray = []
 
-      if (importedThemes.includes(name))
-        throw new Error(`Circular "${name}" theme import is detected.`)
-
-      importedProps = themeInstance.importRules
-        .map(r => {
-          const importTheme = this.get(r.value)
-          return importTheme
-            ? this.getThemeProp(
-                importTheme,
-                propPath,
-                [...importedThemes, name].filter(n => n)
-              )
-            : undefined
-        })
-        .filter(r => r)
-        .reverse()
+      for (const m of metas) mergedArray.unshift(...m)
+      return mergedArray
     }
 
-    return [
-      get(themeInstance, propPath),
-      ...importedProps,
-      get(this.default, propPath),
-      get(scaffold, propPath),
-    ].find(t => t)
+    return metas[0]
+  }
+
+  /**
+   * Returns the value of specified property name from a theme. It considers
+   * `@import` and `@import-theme` rules in getting value.
+   *
+   * It will fallback the reference object into the instance's default theme or
+   * scaffold theme when the specified theme is `undefined`.
+   *
+   * @param {string|Theme} theme The theme name or instance.
+   * @param {string} prop The property name to get.
+   * @returns {*}
+   */
+  getThemeProp(theme, prop) {
+    // TODO: Remove deprecated dot notation support for meta
+    if (prop.startsWith('meta.')) {
+      console.warn(
+        'Deprecation warning: Dot notation path in getThemeProp to get meta value has no longer supported. We still have a special fallback into getThemeMeta method, but it would remove soon.'
+      )
+      return this.getThemeMeta(theme, prop.slice(5))
+    }
+
+    const themeInstance = theme instanceof Theme ? theme : this.get(theme)
+    const props = themeInstance
+      ? this.resolveImport(themeInstance).map(t => t[prop])
+      : []
+
+    return [...props, this.default && this.default[prop], scaffold[prop]].find(
+      t => t
+    )
   }
 
   /**
@@ -235,6 +293,37 @@ class ThemeSet {
    */
   themes() {
     return this.themeMap.values()
+  }
+
+  /**
+   * Resolves `@import` and `@import-theme` and returns an array of using theme
+   * instances.
+   *
+   * @private
+   * @param {Theme} theme Theme instance
+   * @returns {Theme[]}
+   */
+  resolveImport(theme, importedThemes = []) {
+    const { name } = theme
+
+    if (importedThemes.includes(name))
+      throw new Error(`Circular "${name}" theme import is detected.`)
+
+    const resolvedThemes = [theme]
+
+    theme.importRules.forEach(m => {
+      const importTheme = this.get(m.value)
+
+      if (importTheme)
+        resolvedThemes.push(
+          ...this.resolveImport(
+            importTheme,
+            [...importedThemes, name].filter(n => n)
+          )
+        )
+    })
+
+    return resolvedThemes.filter(v => v)
   }
 }
 
