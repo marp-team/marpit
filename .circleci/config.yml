@@ -1,7 +1,7 @@
 references:
   base: &base
     docker:
-      - image: circleci/node:10.15.3
+      - image: circleci/node:10.16.0
     working_directory: ~/marpit
     steps:
       - run: node --version
@@ -16,7 +16,7 @@ references:
                            && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
                            && rm yarn-v$YARN_VERSION.tar.gz'
           environment:
-            YARN_VERSION: 1.15.2
+            YARN_VERSION: 1.16.0
 
       - checkout
 
