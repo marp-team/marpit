@@ -11,6 +11,10 @@
 
 - Finalize token to replace imprimitive attribute string ([#169](https://github.com/marp-team/marpit/pull/169))
 
+### Changed
+
+- Upgrade Node and dependent packages to the latest version ([#172](https://github.com/marp-team/marpit/pull/172))
+
 ### Deprecated
 
 - Dot notation path for meta property in [`ThemeSet#getThemeProp`](https://marpit-api.netlify.com/themeset#getThemeProp) is deprecated in favor of using added `ThemeSet#getThemeMeta` ([#171](https://github.com/marp-team/marpit/pull/171))
