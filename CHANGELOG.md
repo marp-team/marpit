@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.2.0 - 2019-06-17
+
 ### Added
 
 - Add [`metaType` property for `ThemeSet` class](https://marpit-api.netlify.com/themeset#metaType) to make definable array type for theme metadata ([#170](https://github.com/marp-team/marpit/issues/170), [#171](https://github.com/marp-team/marpit/pull/171))
