@@ -156,7 +156,7 @@ class ThemeSet {
    * default theme specified by the instance is not considered.
    *
    * To support metadata with array type, it will merge into a flatten array
-   * when the all of got valid values are array.
+   * when the all of got valid values that includes imported themes are array.
    *
    * @param {string|Theme} theme The theme name or instance.
    * @param {string} meta The meta name to get.
