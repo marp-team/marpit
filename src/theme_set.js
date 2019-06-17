@@ -62,10 +62,10 @@ class ThemeSet {
      *
      * themeSet.add(css)
      *
-     * console.log(themeSet.getThemeProp('example', 'meta.foo'))
+     * console.log(themeSet.getThemeMeta('example', 'foo'))
      * // => 'allows only one string'
      *
-     * console.log(themeSet.getThemeProp('example', 'meta.bar'))
+     * console.log(themeSet.getThemeMeta('example', 'bar'))
      * // => ['Multiple value 1', 'Multiple value 2', 'Multiple value 3']
      * ```
      *
