@@ -149,38 +149,14 @@ describe('ThemeSet', () => {
     })
   })
 
-  describe('#getThemeProp', () => {
+  describe('#getThemeMeta', () => {
     let arrayMetaTheme
-    let fallbackTheme
-    let sizeSpecifiedTheme
 
     beforeEach(() => {
       arrayMetaTheme = Theme.fromCSS(
         '/* @theme array-meta */\n/* @array A */\n/* @array B */',
         { metaType: { array: Array } }
       )
-      fallbackTheme = instance.add('/* @theme fallback */')
-      sizeSpecifiedTheme = instance.add(dedent`
-        /* @theme size-specified */
-        section {
-          width: 640px;
-          height: 480px;
-        }
-      `)
-
-      // @import rules
-      instance.add('/* @theme import */\n@import "imported";')
-      instance.add('/* @theme imported */\nsection { width: 100px; }')
-      instance.add('/* @theme double-import */\n@import "double-imported";')
-      instance.add('/* @theme double-imported */\n@import "imported";')
-
-      // Circular @import
-      instance.add('/* @theme circular-import */\n@import "circular-import";')
-      instance.add('/* @theme nested-circular */\n@import "nested-circular2";')
-      instance.add('/* @theme nested-circular2 */\n@import "nested-circular";')
-
-      // Import undefined theme
-      instance.add('/* @theme undefined-theme */\n@import "ignore";')
 
       // Meta value
       instance.add('/* @theme meta */\n/* @meta-value A */')
@@ -212,6 +188,95 @@ describe('ThemeSet', () => {
           { metaType: { 'meta-value': Array } }
         )
       )
+    })
+
+    const getThemeMeta = (...args) =>
+      instance.getThemeMeta.call(instance, ...args)
+
+    context('with passing theme as string', () => {
+      it('returns the meta value of specified theme', () =>
+        expect(getThemeMeta('meta', 'meta-value')).toBe('A'))
+
+      it('returns undefined when the meta key is not defined', () =>
+        expect(getThemeMeta('meta', 'unknown')).toBeUndefined())
+
+      it('returns undefined when the specified theme is not registered', () =>
+        expect(getThemeMeta('unknown', 'meta-value')).toBeUndefined())
+    })
+
+    context('with passing theme as Theme instance', () => {
+      it('returns the meta value of specified instance', () =>
+        expect(getThemeMeta(arrayMetaTheme, 'array')).toStrictEqual(['A', 'B']))
+    })
+
+    context('with @import rules', () => {
+      it('returns the meta value defined at imported theme', () => {
+        expect(getThemeMeta('meta-imported', 'meta-value')).toBe('A')
+        expect(getThemeMeta('meta-override', 'meta-value')).toBe('B')
+      })
+    })
+
+    context('with array meta', () => {
+      it('returns array value from multi-time meta definitions', () =>
+        expect(getThemeMeta('array-meta', 'array')).toStrictEqual(['A', 'B']))
+
+      it('returns merged values in order when defined as array in imported all themes', () => {
+        expect(getThemeMeta('array-meta-imported', 'array')).toStrictEqual([
+          'A',
+          'B',
+          'C',
+        ])
+        expect(
+          getThemeMeta('array-meta-double-imported', 'array')
+        ).toStrictEqual(['A', 'B', 'C', 'D'])
+      })
+    })
+
+    context(
+      'when the specified meta have different type in imported theme',
+      () => {
+        it('returns the meta value only from a primary theme', () => {
+          expect(getThemeMeta('array-meta-override-by-string', 'array')).toBe(
+            'str'
+          )
+          expect(
+            getThemeMeta('string-meta-override-by-array', 'meta-value')
+          ).toStrictEqual(['B', 'C'])
+        })
+      }
+    )
+  })
+
+  describe('#getThemeProp', () => {
+    let fallbackTheme
+    let sizeSpecifiedTheme
+
+    beforeEach(() => {
+      fallbackTheme = instance.add('/* @theme fallback */')
+      sizeSpecifiedTheme = instance.add(dedent`
+        /* @theme size-specified */
+        section {
+          width: 640px;
+          height: 480px;
+        }
+      `)
+
+      // @import rules
+      instance.add('/* @theme import */\n@import "imported";')
+      instance.add('/* @theme imported */\nsection { width: 100px; }')
+      instance.add('/* @theme double-import */\n@import "double-imported";')
+      instance.add('/* @theme double-imported */\n@import "imported";')
+
+      // Circular @import
+      instance.add('/* @theme circular-import */\n@import "circular-import";')
+      instance.add('/* @theme nested-circular */\n@import "nested-circular2";')
+      instance.add('/* @theme nested-circular2 */\n@import "nested-circular";')
+
+      // Import undefined theme
+      instance.add('/* @theme undefined-theme */\n@import "ignore";')
+
+      // Meta value
+      instance.add('/* @theme meta */\n/* @meta-value A */')
     })
 
     const { width, height } = scaffoldTheme
@@ -268,21 +333,6 @@ describe('ThemeSet', () => {
 
       it('fallbacks to scaffold value when prop in default theme is not defined', () =>
         expect(getThemeProp('not-contained', 'height')).toBe(height))
-
-      context('[Deprecated fallback] with array meta', () => {
-        beforeEach(() => {
-          instance.default = arrayMetaTheme
-        })
-
-        it('does not fallback array value to default theme', () =>
-          expect(getThemeProp('not-contained', 'meta.array')).toBeUndefined())
-
-        it('returns correct array when specified default theme', () =>
-          expect(getThemeProp('array-meta', 'meta.array')).toStrictEqual([
-            'A',
-            'B',
-          ]))
-      })
     })
 
     context('with @import rules', () => {
@@ -304,41 +354,14 @@ describe('ThemeSet', () => {
         expect(getThemeProp('undefined-theme', 'width')).toBe(width))
     })
 
-    context('[Deprecated fallback] with path to nested meta property', () => {
-      it('returns the value of property', () => {
+    context('[Deprecated] with dot notation path to meta property', () => {
+      it('returns the value of property by using #getThemeMeta', () => {
+        const spy = jest.spyOn(instance, 'getThemeMeta')
+
         expect(getThemeProp('meta', 'meta.meta-value')).toBe('A')
-        expect(getThemeProp('meta', 'meta.unknown')).toBeUndefined()
-        expect(getThemeProp('meta-imported', 'meta.meta-value')).toBe('A')
-        expect(getThemeProp('meta-override', 'meta.meta-value')).toBe('B')
-        expect(getThemeProp('array-meta', 'meta.array')).toStrictEqual([
-          'A',
-          'B',
-        ])
+        expect(spy).toBeCalledWith('meta', 'meta-value')
       })
     })
-
-    context(
-      '[Deprecated fallback] with path to array meta and @import rules',
-      () => {
-        it('returns merged array defined in all themes', () => {
-          expect(
-            getThemeProp('array-meta-imported', 'meta.array')
-          ).toStrictEqual(['A', 'B', 'C'])
-          expect(
-            getThemeProp('array-meta-double-imported', 'meta.array')
-          ).toStrictEqual(['A', 'B', 'C', 'D'])
-        })
-
-        it('returns meta value in a primary theme when have mixed meta types', () => {
-          expect(
-            getThemeProp('array-meta-override-by-string', 'meta.array')
-          ).toBe('str')
-          expect(
-            getThemeProp('string-meta-override-by-array', 'meta.meta-value')
-          ).toStrictEqual(['B', 'C'])
-        })
-      }
-    )
   })
 
   describe('#has', () => {
