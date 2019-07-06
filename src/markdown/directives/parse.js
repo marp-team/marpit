@@ -32,7 +32,15 @@ function parse(md, opts = {}) {
     md.use(MarkdownItFrontMatter, fm => {
       frontMatterObject.text = fm
 
-      const parsed = yaml(fm, !!md.marpit.options.looseYAML)
+      const parsed = yaml(
+        fm,
+        marpit.options.looseYAML
+          ? [
+              ...Object.keys(marpit.customDirectives.global),
+              ...Object.keys(marpit.customDirectives.local),
+            ]
+          : false
+      )
       if (parsed !== false) frontMatterObject.yaml = parsed
     })
   }

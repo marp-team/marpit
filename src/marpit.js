@@ -46,7 +46,8 @@ class Marpit {
    *     slide page at before of headings. it would apply to headings whose
    *     larger than or equal to the specified level if a number is given, or
    *     ONLY specified levels if a number array.
-   * @param {boolean} [opts.looseYAML=false] Allow loose YAML for directives.
+   * @param {boolean} [opts.looseYAML=false] Allow loose YAML parsing in
+   *     built-in directives, and custom directives defined in current instance.
    * @param {MarkdownIt|string|Object|Array} [opts.markdown] An instance of
    *     markdown-it or its constructor option(s) for wrapping. Marpit will
    *     create its instance based on CommonMark when omitted.
