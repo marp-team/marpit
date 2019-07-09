@@ -96,7 +96,7 @@
     "color-string": "^1.5.3",
     "js-yaml": "^3.13.0",
     "lodash.kebabcase": "^4.1.1",
-    "markdown-it": "^8.4.2",
+    "markdown-it": "^9.0.0",
     "markdown-it-front-matter": "^0.1.2",
     "postcss": "^7.0.17"
   },
