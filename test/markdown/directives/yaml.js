@@ -2,14 +2,14 @@ import dedent from 'dedent'
 import yaml from '../../../src/markdown/directives/yaml'
 
 describe('Marpit directives YAML parser', () => {
-  it("ignores directive's special char with false allowLoose option", () =>
+  it("ignores directive's special char with false looseDirectives option", () =>
     expect(yaml('color: #f00', false).color).toBeNull())
 
-  context('with allowLoose option as true', () => {
+  context('with looseDirectives option as true', () => {
     it("parses directive's special char as string", () =>
       expect(yaml('color: #f00', true).color).toBe('#f00'))
 
-    it('disallows loose parsing in not defined directives', () => {
+    it('disallows loose parsing in not built-in directives', () => {
       const body = dedent`
         backgroundColor: #f00
         header: _"HELLO!"_
@@ -48,6 +48,23 @@ describe('Marpit directives YAML parser', () => {
         class: &anchored klass
         _class: *anchored
       `)
+    })
+  })
+
+  context('with looseDirectives option as extra keys', () => {
+    it('allows loose parsing in not built-in directives', () => {
+      const body = dedent`
+        notDefinedDirective: # THIS IS NOT A COMMENT
+        a.c: #def
+        abc: # THIS IS A COMMENT
+      `
+      const parsed = yaml(body, ['notDefinedDirective', 'a.c'])
+
+      expect(parsed.notDefinedDirective).toBe('# THIS IS NOT A COMMENT')
+      expect(parsed['a.c']).toBe('#def')
+
+      // It would fail if you forget escape special characters for RegEx
+      expect(parsed.abc).toBeNull()
     })
   })
 })

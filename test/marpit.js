@@ -102,6 +102,30 @@ describe('Marpit', () => {
         expect(first.meta.marpitDirectives).toStrictEqual({ test: 'local' })
         expect(second.meta.marpitDirectives).toStrictEqual({ test: 'spot' })
       })
+
+      context('with looseYAML option as true', () => {
+        it('allows loose YAML parsing for custom directives', () => {
+          const marpit = new Marpit({ container: undefined, looseYAML: true })
+          marpit.customDirectives.global.a = v => ({ a: v })
+          marpit.customDirectives.local.b = v => ({ b: v })
+
+          const [token] = marpit.markdown.parse('---\na: #123\nb: #abc\n---')
+          expect(token.meta.marpitDirectives.a).toBe('#123')
+          expect(token.meta.marpitDirectives.b).toBe('#abc')
+        })
+      })
+
+      context('with looseYAML option as false', () => {
+        it('disallows loose YAML parsing for custom directives', () => {
+          const marpit = new Marpit({ container: undefined, looseYAML: false })
+          marpit.customDirectives.global.a = v => ({ a: v })
+          marpit.customDirectives.local.b = v => ({ b: v })
+
+          const [token] = marpit.markdown.parse('---\na: #123\nb: #abc\n---')
+          expect(token.meta.marpitDirectives.a).toBeNull()
+          expect(token.meta.marpitDirectives.b).toBeNull()
+        })
+      })
     })
 
     it('has themeSet property', () => {
@@ -335,7 +359,7 @@ describe('Marpit', () => {
         ---
       `
 
-      it('allows loose YAML parsing when looseYAML is true', () => {
+      it('allows loose YAML parsing for built-in directives when looseYAML is true', () => {
         const rendered = instance(true).render(markdown)
         const $ = cheerio.load(rendered.html)
         const firstStyle = $('section:nth-of-type(1)').attr('style')
@@ -347,7 +371,7 @@ describe('Marpit', () => {
         expect(secondStyle).not.toContain('color:')
       })
 
-      it('disallows loose YAML parsing when looseYAML is false', () => {
+      it('disallows loose YAML parsing for built-in directives when looseYAML is false', () => {
         const rendered = instance(false).render(markdown)
         const $ = cheerio.load(rendered.html)
         const style = $('section:nth-of-type(1)').attr('style')
