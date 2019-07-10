@@ -22,8 +22,8 @@ const plugin = postcss.plugin('marpit-postcss-pagination', () => css => {
         )
       )
     )
-      rule.walkDecls(/^content$/, decl => {
-        if (decl.value !== 'attr(data-marpit-pagination)')
+      rule.walkDecls('content', decl => {
+        if (!decl.value.includes('attr(data-marpit-pagination)'))
           decl.replaceWith(`${decl.raw('before')}/* ${decl.toString()}; */`)
       })
   })
