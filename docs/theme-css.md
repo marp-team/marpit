@@ -82,7 +82,7 @@ Please refer to [the default style of `section::after` in a scaffold theme](http
 
 #### Customize content
 
-Marpit has a default content: `attr(data-marpit-pagination)`, indicates the current page number. Theme CSS can add other strings and attributes to shown page number.
+Marpit has a default content: `attr(data-marpit-pagination)`, indicates the current page number. Theme CSS can add other strings and attributes to the shown page number.
 
 <!-- prettier-ignore-start -->
 
