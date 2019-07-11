@@ -353,15 +353,6 @@ describe('ThemeSet', () => {
       it('ignores importing undefined theme and fallbacks to scaffold value', () =>
         expect(getThemeProp('undefined-theme', 'width')).toBe(width))
     })
-
-    context('[Deprecated] with dot notation path to meta property', () => {
-      it('returns the value of property by using #getThemeMeta', () => {
-        const spy = jest.spyOn(instance, 'getThemeMeta')
-
-        expect(getThemeProp('meta', 'meta.meta-value')).toBe('A')
-        expect(spy).toBeCalledWith('meta', 'meta-value')
-      })
-    })
   })
 
   describe('#has', () => {
