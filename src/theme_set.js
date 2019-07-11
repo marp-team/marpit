@@ -193,14 +193,6 @@ class ThemeSet {
    * @returns {*}
    */
   getThemeProp(theme, prop) {
-    // TODO: Remove deprecated dot notation support for meta
-    if (prop.startsWith('meta.')) {
-      console.warn(
-        'Deprecation warning: Dot notation path in getThemeProp to get meta value has no longer supported. We still have a special fallback into getThemeMeta method, but it would remove soon.'
-      )
-      return this.getThemeMeta(theme, prop.slice(5))
-    }
-
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
     const props = themeInstance
       ? this.resolveImport(themeInstance).map(t => t[prop])
