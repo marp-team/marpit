@@ -4,7 +4,11 @@
 
 ### Added
 
-- Allow loose YAML parsing for custom directives ([#173](https://github.com/marp-team/marpit/pull/173))
+- Loose YAML parsing for custom directives ([#173](https://github.com/marp-team/marpit/pull/173))
+
+### Changed
+
+- Allow customization the content of pagination ([#175](https://github.com/marp-team/marpit/pull/175))
 
 ## v1.2.0 - 2019-06-17
 

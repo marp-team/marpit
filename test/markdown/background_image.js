@@ -405,7 +405,7 @@ describe('Marpit background image plugin', () => {
         )
       )
 
-      it('assigns data-marpit-pagination attribute to pseudo layer', () => {
+      it('assigns pagination attributes to pseudo layer', () => {
         const foreignObjects = $('svg > foreignObject')
         expect(foreignObjects).toHaveLength(3)
 
@@ -414,11 +414,9 @@ describe('Marpit background image plugin', () => {
           true
         )
 
-        expect(
-          pseudoFO
-            .find('> section.pseudo.layer')
-            .is('[data-marpit-pagination="1"]')
-        ).toBe(true)
+        const pseudoLayer = pseudoFO.find('> section.pseudo.layer')
+        expect(pseudoLayer.is('[data-marpit-pagination="1"]')).toBe(true)
+        expect(pseudoLayer.is('[data-marpit-pagination-total="1"]')).toBe(true)
       })
     })
 
