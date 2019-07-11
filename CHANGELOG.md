@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.3.0 - 2019-07-11
+
 ### Added
 
 - Loose YAML parsing for custom directives ([#173](https://github.com/marp-team/marpit/pull/173))
