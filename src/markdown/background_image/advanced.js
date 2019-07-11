@@ -141,8 +141,13 @@ function advancedBackground(md) {
                 class: open.attrGet('class'),
                 style: style.toString(),
                 'data-marpit-advanced-background': 'pseudo',
+
+                // For pagination styling
                 'data-marpit-pagination': open.attrGet(
                   'data-marpit-pagination'
+                ),
+                'data-marpit-pagination-total': open.attrGet(
+                  'data-marpit-pagination-total'
                 ),
               })
             )

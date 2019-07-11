@@ -36,40 +36,40 @@ function slide(md, opts = {}) {
   md.core.ruler.push('marpit_slide', state => {
     if (state.inlineMode) return
 
-    state.tokens = split(state.tokens, t => t.type === 'hr', true).reduce(
-      (arr, slideTokens, idx) => {
-        const firstHr =
-          slideTokens[0] && slideTokens[0].type === 'hr'
-            ? slideTokens[0]
-            : undefined
+    const splittedTokens = split(state.tokens, t => t.type === 'hr', true)
+    const { length: marpitSlideTotal } = splittedTokens
 
-        const mapTarget = firstHr || slideTokens.find(t => t.map)
+    state.tokens = splittedTokens.reduce((arr, slideTokens, marpitSlide) => {
+      const firstHr =
+        slideTokens[0] && slideTokens[0].type === 'hr'
+          ? slideTokens[0]
+          : undefined
 
-        return [
-          ...arr,
-          ...wrapTokens(
-            state.Token,
-            'marpit_slide',
-            {
-              ...(opts.attributes || {}),
-              tag: 'section',
-              id: anchorCallback(idx),
-              open: {
-                block: true,
-                meta: { marpitSlide: idx, marpitSlideElement: 1 },
-                map: mapTarget ? mapTarget.map : [0, 1],
-              },
-              close: {
-                block: true,
-                meta: { marpitSlide: idx, marpitSlideElement: -1 },
-              },
+      const mapTarget = firstHr || slideTokens.find(t => t.map)
+
+      return [
+        ...arr,
+        ...wrapTokens(
+          state.Token,
+          'marpit_slide',
+          {
+            ...(opts.attributes || {}),
+            tag: 'section',
+            id: anchorCallback(marpitSlide),
+            open: {
+              block: true,
+              meta: { marpitSlide, marpitSlideTotal, marpitSlideElement: 1 },
+              map: mapTarget ? mapTarget.map : [0, 1],
             },
-            slideTokens.slice(firstHr ? 1 : 0)
-          ),
-        ]
-      },
-      []
-    )
+            close: {
+              block: true,
+              meta: { marpitSlide, marpitSlideTotal, marpitSlideElement: -1 },
+            },
+          },
+          slideTokens.slice(firstHr ? 1 : 0)
+        ),
+      ]
+    }, [])
   })
 }
 

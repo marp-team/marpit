@@ -51,11 +51,20 @@ describe('Marpit PostCSS pagination plugin', () => {
     ]))
 
   it('keeps the content declaration of section::after for pagination', () =>
-    expect(
-      run('section::after { content: attr(data-marpit-pagination); }')
-    ).resolves.toBe(
-      'section::after { content: attr(data-marpit-pagination); }'
-    ))
+    Promise.all([
+      expect(
+        run('section::after { content: attr(data-marpit-pagination); }')
+      ).resolves.toBe(
+        'section::after { content: attr(data-marpit-pagination); }'
+      ),
+      expect(
+        run(
+          'section::after { content: attr(data-marpit-pagination) "/" attr(data-marpit-pagination-total); }'
+        )
+      ).resolves.toBe(
+        'section::after { content: attr(data-marpit-pagination) "/" attr(data-marpit-pagination-total); }'
+      ),
+    ]))
 
   it('keeps the content declaration of section::after with combinators', () =>
     Promise.all([

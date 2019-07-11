@@ -80,6 +80,25 @@ section::after {
 
 Please refer to [the default style of `section::after` in a scaffold theme](https://github.com/marp-team/marpit/blob/master/src/theme/scaffold.js) as well.
 
+#### Customize content
+
+Marpit has a default content: `attr(data-marpit-pagination)`, indicates the current page number. Theme CSS can add other strings and attributes to the shown page number.
+
+<!-- prettier-ignore-start -->
+
+```css
+/* Add "Page" prefix and total page number */
+section::after {
+  content: 'Page ' attr(data-marpit-pagination) ' / ' attr(data-marpit-pagination-total);
+}
+```
+
+<!-- prettier-ignore-end -->
+
+`attr(data-marpit-pagination-total)` means the total page number of rendered slides. Thus, the above example would show as like as `Page 1 / 3`.
+
+!> Theme CSS must contain `attr(data-marpit-pagination)` in `content` declaration because user expects to show the page number by `paginate: true` directive. Marpit will ignore the whole of `content` declaration if the reference to that attribute is not contained.
+
 ### Header and footer
 
 `header` and `footer` element have a possible to be rendered by [`header` / `footer` local directives](/directives#header-and-footer). _Marpit has no default style for these elements._

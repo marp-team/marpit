@@ -228,7 +228,9 @@ describe('Marpit directives apply plugin', () => {
         const sections = $('section')
 
         expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
+        expect(sections.eq(0).data('marpit-pagination-total')).toBeUndefined()
         expect(sections.eq(1).data('marpit-pagination')).toBeTruthy()
+        expect(sections.eq(1).data('marpit-pagination-total')).toBe(2)
       })
     })
   })

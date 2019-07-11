@@ -35,7 +35,8 @@ function apply(md, opts = {}) {
       if (state.inlineMode) return
 
       for (const token of state.tokens) {
-        const { marpitDirectives, marpitSlide } = token.meta || {}
+        const { marpitDirectives, marpitSlide, marpitSlideTotal } =
+          token.meta || {}
 
         if (marpitDirectives) {
           const style = new InlineStyle(token.attrGet('style'))
@@ -83,8 +84,10 @@ function apply(md, opts = {}) {
               style.set('background-size', marpitDirectives.backgroundSize)
           }
 
-          if (marpitDirectives.paginate)
+          if (marpitDirectives.paginate) {
             token.attrSet('data-marpit-pagination', marpitSlide + 1)
+            token.attrSet('data-marpit-pagination-total', marpitSlideTotal)
+          }
 
           if (marpitDirectives.header)
             token.meta.marpitHeader = marpitDirectives.header
