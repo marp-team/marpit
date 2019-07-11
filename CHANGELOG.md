@@ -12,6 +12,10 @@
 - Allow customization the content of pagination ([#175](https://github.com/marp-team/marpit/pull/175))
 - Upgrade dependent packages to the latest version ([#176](https://github.com/marp-team/marpit/pull/176))
 
+### Removed
+
+- Remove deprecated dot notation support for meta in `ThemeSet#getThemeProp` ([#177](https://github.com/marp-team/marpit/pull/177))
+
 ## v1.2.0 - 2019-06-17
 
 ### Added
