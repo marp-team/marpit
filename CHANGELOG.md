@@ -10,6 +10,7 @@
 
 - Follow the latest spec of [CommonMark 0.29](https://spec.commonmark.org/0.29/) by upgraded markdown-it v9 ([#174](https://github.com/marp-team/marpit/pull/174))
 - Allow customization the content of pagination ([#175](https://github.com/marp-team/marpit/pull/175))
+- Upgrade dependent packages to the latest version ([#176](https://github.com/marp-team/marpit/pull/176))
 
 ## v1.2.0 - 2019-06-17
 
