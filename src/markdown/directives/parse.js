@@ -73,7 +73,14 @@ function parse(md, opts = {}) {
       let recognized = false
 
       for (const key of Object.keys(obj)) {
-        const globalKey = key.startsWith('$') ? key.slice(1) : key
+        const globalKey = key.startsWith('$')
+          ? (() => {
+              console.warn(
+                `Deprecation warning: Dollar prefix for global directive is deprecated and will remove in next major version. Just remove "$" from "${key}" to fix.`
+              )
+              return key.slice(1)
+            })()
+          : key
 
         if (directives.globals[globalKey]) {
           recognized = true
