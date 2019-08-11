@@ -92,15 +92,33 @@ describe('Marpit', () => {
         expect(token.meta.marpitDirectives).toStrictEqual({ class: 'ok' })
       })
 
-      it('cannot assign built-in directive as meta', () => {
+      it('can assign built-in directive as alias', () => {
         const marpit = new Marpit({ container: undefined })
+        marpit.themeSet.add('/* @theme foobar */')
+        marpit.customDirectives.global.$theme = jest.fn(v => ({ theme: v }))
         marpit.customDirectives.local.test = v => ({ test: v, class: v })
 
-        const [first, , , second] = marpit.markdown.parse(
+        // Global directive (Dollar prefix)
+        marpit.markdown.render('<!-- $theme: foobar -->')
+        expect(marpit.customDirectives.global.$theme).toBeCalledWith('foobar')
+        expect(marpit.lastGlobalDirectives.theme).toBe('foobar')
+
+        marpit.markdown.render('<!-- $theme: unknown -->')
+        expect(marpit.customDirectives.global.$theme).toBeCalledWith('unknown')
+        expect(marpit.lastGlobalDirectives.theme).toBeUndefined()
+
+        // Local directive (Alias + internal meta)
+        const [localFirst, , , localSecond] = marpit.markdown.parse(
           '<!-- test: local -->\n***\n<!-- _test: spot -->'
         )
-        expect(first.meta.marpitDirectives).toStrictEqual({ test: 'local' })
-        expect(second.meta.marpitDirectives).toStrictEqual({ test: 'spot' })
+        expect(localFirst.meta.marpitDirectives).toStrictEqual({
+          test: 'local',
+          class: 'local',
+        })
+        expect(localSecond.meta.marpitDirectives).toStrictEqual({
+          test: 'spot',
+          class: 'spot',
+        })
       })
 
       context('with looseYAML option as true', () => {
