@@ -86,7 +86,10 @@ class Marpit {
      * @readonly
      */
     Object.defineProperty(this, 'customDirectives', {
-      value: Object.seal({ global: {}, local: {} }),
+      value: Object.seal({
+        global: Object.create(null),
+        local: Object.create(null),
+      }),
     })
 
     /**
