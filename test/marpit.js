@@ -93,24 +93,20 @@ describe('Marpit', () => {
       })
 
       it('can assign built-in directive as alias', () => {
+        const $theme = jest.fn(v => ({ theme: v }))
         const marpit = new Marpit({ container: undefined })
+
         marpit.themeSet.add('/* @theme foobar */')
-        marpit.customDirectives.global.$theme = jest.fn(v => ({ theme: v }))
+        marpit.customDirectives.global.$theme = $theme
         marpit.customDirectives.local.test = v => ({ test: v, class: v })
 
         // Global directive (Dollar prefix)
         marpit.markdown.render('<!-- $theme: foobar -->')
-        expect(marpit.customDirectives.global.$theme).toBeCalledWith(
-          'foobar',
-          marpit
-        )
+        expect($theme).toBeCalledWith('foobar', marpit)
         expect(marpit.lastGlobalDirectives.theme).toBe('foobar')
 
         marpit.markdown.render('<!-- $theme: unknown -->')
-        expect(marpit.customDirectives.global.$theme).toBeCalledWith(
-          'unknown',
-          marpit
-        )
+        expect($theme).toBeCalledWith('unknown', marpit)
         expect(marpit.lastGlobalDirectives.theme).toBeUndefined()
 
         // Local directive (Alias + internal meta)
