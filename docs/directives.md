@@ -30,7 +30,7 @@ paginate: true
 ---
 ```
 
-?> Please not confuse to the ruler for paging slides. The actual slide contents would start after the ending ruler of front-matter.
+Please not confuse to the ruler for paging slides. The actual slide contents would start after the ending ruler of front-matter.
 
 ## Type of directives
 
@@ -38,11 +38,7 @@ paginate: true
 
 Global directives are _the setting value of the whole slide deck_, like `theme`. Marpit recognizes only the last value if you wrote a same global directives many times.
 
-You may use prefix `$` to the name of global directives for clarity type.
-
-```markdown
-<!-- $theme: default -->
-```
+!> We used to support `$` prefix for global directives (`<!-- $theme: default -->`), but it has marked as deprecated in v1.3.1. Developer may re-define dollar-prefixed [custom directives](#custom-directives) as an alias to built-in directive if necessary.
 
 ### Local directives {docsify-ignore}
 
@@ -65,7 +61,7 @@ If you want to apply local directives only to current page, you have to use pref
 ```markdown
 <!-- _backgroundColor: aqua -->
 
-Add underbar prefix `_` to the name of local directives.
+Add underscore prefix `_` to the name of local directives.
 
 ---
 
@@ -320,3 +316,61 @@ In addition, we have supported customize for these declarations:
 - `color`
 
 ?> It also can use [extended image syntax](/image-syntax#slide-backgrounds) if you want to set image or color as background to single page.
+
+## Advanced
+
+### Custom directives
+
+Developer can extend recognizable directives. For example, [Marp Core](https://github.com/marp-team/marp-core) has extended `size` global directive to change slide size in Markdown. [Marp CLI](https://github.com/marp-team/marp-cli) will add directives for setting [meta properties of converted HTML](https://github.com/marp-team/marp-cli#metadata).
+
+Marpit instance has [`customDirectives.global` and `customDirectives.local` object](https://marpit-api.marp.app/marpit#customDirectives) to allow adding directives as you like.
+
+#### Custom global directive
+
+The following example is defining dollar-prefixed alias of built-in [`theme` global directive](#theme).
+
+```javascript
+marpit.customDirectives.global.$theme = (value, marpit) => {
+  return { theme: value }
+}
+```
+
+Please define a function to handle passed value from Markdown. The first argument is the passed value(s), and the second is the current Marpit instance. It should return an object includes pairs of key-value for passing to same kind directives.
+
+#### Custom local directive
+
+Custom directives also can provide a way of assigning multiple same kind directives at once. Let's define `colorPreset` local directive for assigning preset of slide colors.
+
+```javascript
+marpit.customDirectives.local.colorPreset = (value, marpit) => {
+  switch (value) {
+    case 'sunset':
+      return { backgroundColor: '#e62e00', color: '#fffff2' }
+    case 'dark':
+      return { backgroundColor: '#303033', color: '#f8f8ff' }
+    default:
+      // Return an empty object if not have to assign new values
+      return {}
+  }
+}
+```
+
+Now you can use the defined `colorPreset` local directive with same way of built-in local directives. The underscore prefix (`_colorPreset`) for applying preset to single slide also works well.
+
+```markdown
+<!-- colorPreset: sunset -->
+
+# Sunset color preset
+
+---
+
+<!-- _colorPreset: dark -->
+
+# Dark color preset
+
+---
+
+# Sunset color preset
+```
+
+?> The returned key-value will assign to `marpitDirectives` property in [`meta` object](https://markdown-it.github.io/markdown-it/#Token.prototype.meta) of predetermined markdown-it token(s) by the kind of directive. It would be useful for using assigned value in [markdown-it plugin](./usage.md#extend-marpit-by-plugins).
