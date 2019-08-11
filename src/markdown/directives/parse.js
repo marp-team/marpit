@@ -81,7 +81,7 @@ function parse(md, opts = {}) {
               if (marpit.customDirectives.global[key]) return key
 
               console.warn(
-                `Deprecation warning: Dollar prefix support for global directive "${key}" is deprecated and won't support in next major version. Just remove "$" from "${key}" to fix ("${key.slice(
+                `Deprecation warning: Dollar prefix support for global directive "${key}" is deprecated and will remove soon. Just remove "$" from "${key}" to fix ("${key.slice(
                   1
                 )}").`
               )
