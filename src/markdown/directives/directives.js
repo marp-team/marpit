@@ -16,14 +16,11 @@
  * Each global directive assigns to the whole slide deck. If you wrote a same
  * directive many times, Marpit only recognizes the last value.
  *
- * You can use prefix `$` as the name of a directive for the clarity (or
- * compatibility with the old version of Marp).
- *
  * @prop {Directive} headingDivider Specify heading divider option.
  * @prop {Directive} style Specify the CSS style to apply additionally.
  * @prop {Directive} theme Specify theme of the slide deck.
  */
-export const globals = {
+export const globals = Object.assign(Object.create(null), {
   headingDivider: value => {
     const headings = [1, 2, 3, 4, 5, 6]
     const toInt = v =>
@@ -44,7 +41,7 @@ export const globals = {
   },
   style: v => ({ style: v }),
   theme: (v, marpit) => (marpit.themeSet.has(v) ? { theme: v } : {}),
-}
+})
 
 /**
  * Local directives.
@@ -71,7 +68,7 @@ export const globals = {
  *     a `<header>` element to the first of each slide contents.
  * @prop {Directive} paginate Show page number on the slide if you set `true`.
  */
-export const locals = {
+export const locals = Object.assign(Object.create(null), {
   backgroundColor: v => ({ backgroundColor: v }),
   backgroundImage: v => ({ backgroundImage: v }),
   backgroundPosition: v => ({ backgroundPosition: v }),
@@ -82,6 +79,6 @@ export const locals = {
   footer: v => (typeof v === 'string' ? { footer: v } : {}),
   header: v => (typeof v === 'string' ? { header: v } : {}),
   paginate: v => ({ paginate: (v || '').toLowerCase() === 'true' }),
-}
+})
 
 export default [...Object.keys(globals), ...Object.keys(locals)]
