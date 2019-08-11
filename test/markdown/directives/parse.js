@@ -86,7 +86,7 @@ describe('Marpit directives parse plugin', () => {
         expect(marpitStub.lastGlobalDirectives).toStrictEqual({})
       })
 
-      it('allows global directive name prefixed "$"', () => {
+      it('allows global directive name prefixed "$" [DEPRECATED]', () => {
         md().parse('<!-- $theme: test_theme -->')
         expect(marpitStub.lastGlobalDirectives).toStrictEqual(expected)
       })

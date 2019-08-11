@@ -2,9 +2,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- Documentation of [custom directives](https://marpit.marp.app/directives?id=custom-directives) ([#183](https://github.com/marp-team/marpit/pull/183))
+
 ### Changed
 
+- Allow aliasing from custom directive to built-in directives ([#183](https://github.com/marp-team/marpit/pull/183))
 - Upgrade dependent packages to the latest version ([#184](https://github.com/marp-team/marpit/pull/184))
+
+### Deprecated
+
+- Dollar prefix for global directive ([#182](https://github.com/marp-team/marpit/issues/182), [#183](https://github.com/marp-team/marpit/pull/183))
 
 ## v1.3.0 - 2019-07-11
 

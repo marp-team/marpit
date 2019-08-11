@@ -65,7 +65,7 @@ class Marpit {
      * value of options after creating instance.
      *
      * @member {Object} options
-     * @memberOf Marpit
+     * @memberOf Marpit#
      * @readonly
      */
     Object.defineProperty(this, 'options', {
@@ -82,11 +82,14 @@ class Marpit {
      * token.
      *
      * @member {Object} customDirectives
-     * @memberOf Marpit
+     * @memberOf Marpit#
      * @readonly
      */
     Object.defineProperty(this, 'customDirectives', {
-      value: Object.seal({ global: {}, local: {} }),
+      value: Object.seal({
+        global: Object.create(null),
+        local: Object.create(null),
+      }),
     })
 
     /**

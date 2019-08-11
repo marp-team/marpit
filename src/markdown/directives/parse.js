@@ -4,6 +4,14 @@ import yaml from './yaml'
 import * as directives from './directives'
 import marpitPlugin from '../marpit_plugin'
 
+const isComment = token =>
+  token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
+
+const markAsParsed = token => {
+  token.meta = token.meta || {}
+  token.meta.marpitCommentParsed = 'directive'
+}
+
 /**
  * Parse Marpit directives and store result to the slide token meta.
  *
@@ -19,6 +27,20 @@ import marpitPlugin from '../marpit_plugin'
  */
 function parse(md, opts = {}) {
   const { marpit } = md
+
+  const applyBuiltinDirectives = (newProps, builtinDirectives) => {
+    let ret = {}
+
+    for (const prop of Object.keys(newProps)) {
+      if (builtinDirectives[prop]) {
+        ret = { ...ret, ...builtinDirectives[prop](newProps[prop], marpit) }
+      } else {
+        ret[prop] = newProps[prop]
+      }
+    }
+
+    return ret
+  }
 
   // Front-matter support
   const frontMatter = opts.frontMatter === undefined ? true : !!opts.frontMatter
@@ -45,25 +67,6 @@ function parse(md, opts = {}) {
     })
   }
 
-  const isComment = token =>
-    token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
-
-  const markAsParsed = token => {
-    token.meta = token.meta || {}
-    token.meta.marpitCommentParsed = 'directive'
-  }
-
-  const filterBuiltinDirective = newProps => {
-    const ret = {}
-
-    for (const prop of Object.keys(newProps).filter(
-      p => !directives.default.includes(p)
-    ))
-      ret[prop] = newProps[prop]
-
-    return ret
-  }
-
   // Parse global directives
   md.core.ruler.after('inline', 'marpit_directives_global_parse', state => {
     if (state.inlineMode) return
@@ -73,7 +76,18 @@ function parse(md, opts = {}) {
       let recognized = false
 
       for (const key of Object.keys(obj)) {
-        const globalKey = key.startsWith('$') ? key.slice(1) : key
+        const globalKey = key.startsWith('$')
+          ? (() => {
+              if (marpit.customDirectives.global[key]) return key
+
+              console.warn(
+                `Deprecation warning: Dollar prefix support for global directive "${key}" is deprecated and will remove soon. Just remove "$" from "${key}" to fix ("${key.slice(
+                  1
+                )}").`
+              )
+              return key.slice(1)
+            })()
+          : key
 
         if (directives.globals[globalKey]) {
           recognized = true
@@ -85,8 +99,9 @@ function parse(md, opts = {}) {
           recognized = true
           globalDirectives = {
             ...globalDirectives,
-            ...filterBuiltinDirective(
-              marpit.customDirectives.global[globalKey](obj[key], marpit)
+            ...applyBuiltinDirectives(
+              marpit.customDirectives.global[globalKey](obj[key], marpit),
+              directives.globals
             ),
           }
         }
@@ -135,8 +150,9 @@ function parse(md, opts = {}) {
           recognized = true
           cursor.local = {
             ...cursor.local,
-            ...filterBuiltinDirective(
-              marpit.customDirectives.local[key](obj[key], marpit)
+            ...applyBuiltinDirectives(
+              marpit.customDirectives.local[key](obj[key], marpit),
+              directives.locals
             ),
           }
         }
@@ -156,8 +172,9 @@ function parse(md, opts = {}) {
             recognized = true
             cursor.spot = {
               ...cursor.spot,
-              ...filterBuiltinDirective(
-                marpit.customDirectives.local[spotKey](obj[key], marpit)
+              ...applyBuiltinDirectives(
+                marpit.customDirectives.local[spotKey](obj[key], marpit),
+                directives.locals
               ),
             }
           }
