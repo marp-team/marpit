@@ -14,6 +14,7 @@ const plugin = postcss.plugin(
     css.last.after(
       `
 section[data-marpit-advanced-background="background"] {
+  display: block !important;
   padding: 0 !important;
 }
 
