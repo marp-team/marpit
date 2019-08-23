@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.3.2 - 2019-08-23
+
 ### Fixed
 
 - Override declaration of `<section>` for advanced background to `display: block` ([#185](https://github.com/marp-team/marpit/pull/185))
