@@ -9,8 +9,6 @@ executors:
     docker:
       - image: circleci/node:<< parameters.version >>
     working_directory: ~/marpit
-    environment:
-      YARN_VERSION: 1.17.3
 
 commands:
   install:
