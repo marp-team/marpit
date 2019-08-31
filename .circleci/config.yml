@@ -5,6 +5,7 @@ executors:
     parameters:
       version:
         type: string
+        default: lts
     docker:
       - image: circleci/node:<< parameters.version >>
     working_directory: ~/marpit
@@ -12,10 +13,15 @@ executors:
       YARN_VERSION: 1.17.3
 
 commands:
-  test:
+  install:
+    parameters:
+      postinstall:
+        type: steps
+        default: []
+      yarn:
+        type: string
+        default: 1.17.3
     steps:
-      - run: node --version
-
       # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#upgradingdowngrading-yarn
       - run:
           name: Upgrade yarn
@@ -25,8 +31,8 @@ commands:
               && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
               && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
               && rm yarn-v$YARN_VERSION.tar.gz'
-
-      - checkout
+          environment:
+            YARN_VERSION: << parameters.yarn >>
 
       - restore_cache:
           keys:
@@ -35,13 +41,27 @@ commands:
             - v2.1-dependencies-{{ .Environment.CIRCLE_JOB }}-
 
       - run: yarn install
-      - run: yarn audit
+      - steps: << parameters.postinstall >>
 
       - save_cache:
           key: v2.1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
           paths:
             - node_modules
             - ~/.cache/yarn
+
+  audit:
+    steps:
+      - checkout
+      - install:
+          postinstall:
+            - run: yarn audit
+
+  test:
+    steps:
+      - run: node --version
+
+      - checkout
+      - install
 
       - run:
           name: Prettier formatting
@@ -71,23 +91,42 @@ commands:
           destination: coverage
 
 jobs:
-  node8:
+  audit:
+    executor: node
+    steps:
+      - audit
+
+  test-node8:
     executor:
       name: node
-      version: 8
+      version: '8'
     steps:
       - test
 
-  node10:
+  test-node10:
     executor:
       name: node
-      version: 10.16.0 # Specify TLS version for development
+      version: '10.16.0' # Specify TLS version for development
     steps:
       - test
 
-  node12:
+  test-node12:
     executor:
       name: node
-      version: 12
+      version: '12'
     steps:
       - test
+
+workflows:
+  test:
+    jobs:
+      - audit
+      - test-node8:
+          requires:
+            - audit
+      - test-node10:
+          requires:
+            - audit
+      - test-node12:
+          requires:
+            - audit
