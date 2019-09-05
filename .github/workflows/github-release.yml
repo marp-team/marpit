@@ -1,4 +1,4 @@
-name: GitHub release
+name: GitHub Release
 
 on:
   push:
@@ -10,16 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      - uses: marp-team/actions@v1
         with:
-          node-version: '10.x'
-      - name: Create release on GitHub
-        run: |
-          wget https://raw.githubusercontent.com/marp-team/marp/master/github-release.js
-          export TAG=${GITHUB_REF:10}
-          export USER=${GITHUB_REPOSITORY%%/*}
-          export REPO=${GITHUB_REPOSITORY##*/}
-          node github-release.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          task: release
+          token: ${{ secrets.GITHUB_TOKEN }}
