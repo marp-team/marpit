@@ -1,39 +1,65 @@
-references:
-  base: &base
-    docker:
-      - image: circleci/node:10.16.0
-    working_directory: ~/marpit
-    steps:
-      - run: node --version
+version: 2.1
 
+executors:
+  node:
+    parameters:
+      version:
+        type: string
+        default: lts
+    docker:
+      - image: circleci/node:<< parameters.version >>
+    working_directory: ~/marpit
+
+commands:
+  install:
+    parameters:
+      postinstall:
+        type: steps
+        default: []
+      yarn:
+        type: string
+        default: 1.17.3
+    steps:
       # https://github.com/nodejs/docker-node/blob/master/docs/BestPractices.md#upgradingdowngrading-yarn
       - run:
           name: Upgrade yarn
           command: |
             sudo -E sh -c 'curl -fSLO --compressed "https://yarnpkg.com/downloads/$YARN_VERSION/yarn-v$YARN_VERSION.tar.gz" \
-                           && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
-                           && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
-                           && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
-                           && rm yarn-v$YARN_VERSION.tar.gz'
+              && tar -xzf yarn-v$YARN_VERSION.tar.gz -C /opt/ \
+              && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarn /usr/local/bin/yarn \
+              && ln -snf /opt/yarn-v$YARN_VERSION/bin/yarnpkg /usr/local/bin/yarnpkg \
+              && rm yarn-v$YARN_VERSION.tar.gz'
           environment:
-            YARN_VERSION: 1.16.0
-
-      - checkout
+            YARN_VERSION: << parameters.yarn >>
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
-            - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-
-            - v1-dependencies-{{ .Environment.CIRCLE_JOB }}-
+            - v2.1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
+            - v2.1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-
+            - v2.1-dependencies-{{ .Environment.CIRCLE_JOB }}-
 
       - run: yarn install
-      - run: yarn audit
+      - steps: << parameters.postinstall >>
 
       - save_cache:
-          key: v1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
+          key: v2.1-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
           paths:
             - node_modules
             - ~/.cache/yarn
+
+  audit:
+    steps:
+      - checkout
+      - install:
+          postinstall:
+            - run: yarn audit
+
+  test:
+    steps:
+      - run: node --version
+
+      - checkout
+      - install
 
       - run:
           name: Prettier formatting
@@ -62,40 +88,43 @@ references:
           path: ./coverage
           destination: coverage
 
-version: 2
 jobs:
-  current:
-    <<: *base
-
-  carbon:
-    <<: *base
-    docker:
-      - image: circleci/node:carbon
-
-  erbium:
-    <<: *base
-    docker:
-      - image: circleci/node:12
-
-  github-release:
-    <<: *base
+  audit:
+    executor: node
     steps:
-      - checkout
-      - run:
-          name: Create release on GitHub
-          command: curl https://raw.githubusercontent.com/marp-team/marp/master/github-release.js | node
+      - audit
+
+  test-node8:
+    executor:
+      name: node
+      version: '8'
+    steps:
+      - test
+
+  test-node10:
+    executor:
+      name: node
+      version: '10.16.0' # Specify TLS version for development
+    steps:
+      - test
+
+  test-node12:
+    executor:
+      name: node
+      version: '12'
+    steps:
+      - test
 
 workflows:
-  version: 2
-  build:
+  test:
     jobs:
-      - current
-      - carbon
-      - erbium
-      - github-release:
-          context: github-release
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^v.*/
+      - audit
+      - test-node8:
+          requires:
+            - audit
+      - test-node10:
+          requires:
+            - audit
+      - test-node12:
+          requires:
+            - audit
