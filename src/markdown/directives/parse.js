@@ -76,31 +76,18 @@ function parse(md, opts = {}) {
       let recognized = false
 
       for (const key of Object.keys(obj)) {
-        const globalKey = key.startsWith('$')
-          ? (() => {
-              if (marpit.customDirectives.global[key]) return key
-
-              console.warn(
-                `Deprecation warning: Dollar prefix support for global directive "${key}" is deprecated and will remove soon. Just remove "$" from "${key}" to fix ("${key.slice(
-                  1
-                )}").`
-              )
-              return key.slice(1)
-            })()
-          : key
-
-        if (directives.globals[globalKey]) {
+        if (directives.globals[key]) {
           recognized = true
           globalDirectives = {
             ...globalDirectives,
-            ...directives.globals[globalKey](obj[key], marpit),
+            ...directives.globals[key](obj[key], marpit),
           }
-        } else if (marpit.customDirectives.global[globalKey]) {
+        } else if (marpit.customDirectives.global[key]) {
           recognized = true
           globalDirectives = {
             ...globalDirectives,
             ...applyBuiltinDirectives(
-              marpit.customDirectives.global[globalKey](obj[key], marpit),
+              marpit.customDirectives.global[key](obj[key], marpit),
               directives.globals
             ),
           }

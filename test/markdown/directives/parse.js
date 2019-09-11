@@ -72,10 +72,13 @@ describe('Marpit directives parse plugin', () => {
 
       it('applies meta to all slides', () => {
         const parsed = md().parse(text)
-        parsed.forEach(t => {
-          if (t.type === 'marpit_slide_open')
-            expect(t.meta.marpitDirectives).toStrictEqual(expected)
-        })
+        const slides = parsed.filter(t => t.type === 'marpit_slide_open')
+
+        expect.assertions(slides.length)
+
+        for (const { meta } of slides) {
+          expect(meta.marpitDirectives).toStrictEqual(expected)
+        }
       })
 
       it('applies global directives to Marpit instance', () => {
@@ -84,11 +87,6 @@ describe('Marpit directives parse plugin', () => {
 
         md().parse('<!-- class: test -->')
         expect(marpitStub.lastGlobalDirectives).toStrictEqual({})
-      })
-
-      it('allows global directive name prefixed "$" [DEPRECATED]', () => {
-        md().parse('<!-- $theme: test_theme -->')
-        expect(marpitStub.lastGlobalDirectives).toStrictEqual(expected)
       })
 
       it('marks directive comments as parsed', () => {
