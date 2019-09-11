@@ -36,7 +36,7 @@
     "index.d.ts"
   ],
   "scripts": {
-    "build": "yarn run clean && babel src --out-dir lib",
+    "build": "yarn -s clean && babel src --out-dir lib",
     "check:audit": "yarn audit",
     "check:format": "yarn -s run format -c",
     "clean": "rimraf lib",
