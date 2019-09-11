@@ -6,6 +6,10 @@
 
 - Update CircleCI configuration to use v2.1 ([#187](https://github.com/marp-team/marpit/pull/187))
 
+### Removed
+
+- Deprecated dollar prefix alias for global directive ([#182](https://github.com/marp-team/marpit/issues/182), [#189](https://github.com/marp-team/marpit/pull/189))
+
 ## v1.3.2 - 2019-08-23
 
 ### Fixed
