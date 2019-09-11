@@ -104,7 +104,7 @@ jobs:
   test-node10:
     executor:
       name: node
-      version: '10.16.3' # Specify TLS version for development
+      version: '10.16.3' # Specify LTS version for development
     steps:
       - test
 
