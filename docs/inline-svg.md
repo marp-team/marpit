@@ -1,6 +1,6 @@
 # Inline SVG slide _(experimental)_
 
-!> 📐 This feature is experimental because of a strange rendering in some browsers.
+!> 📐 This feature is experimental because of a strange rendering in WebKit browsers.
 
 When you set [`inlineSVG: true` in Marpit constructor option](/usage#triangular_ruler-inline-svg-slide), each `<section>` elements are wrapped with inline SVG.
 
@@ -38,7 +38,7 @@ Developer can handle the slide much easier in Marpit integrated apps.
 
 > [@marp-team/marp-core](https://github.com/marp-team/marp-core), has extended from Marpit, has [useful auto-scaling features](https://github.com/marp-team/marp-core#auto-scaling-features) that are taken this advantage.
 
-!> WebKit cannot scale HTML elements in `<foreignObject>` ([Bug 23113](https://bugs.webkit.org/show_bug.cgi?id=23113): It can mitigate by [polyfill](#polyfill)). Blink can scale them, but currently layouting seems not to be stable ([Bug 467484](https://bugs.chromium.org/p/chromium/issues/detail?id=467484)).
+!> WebKit cannot scale HTML elements in `<foreignObject>` ([Bug 23113](https://bugs.webkit.org/show_bug.cgi?id=23113)). You can mitigate by [polyfill](#polyfill).
 
 ### No require JavaScript
 

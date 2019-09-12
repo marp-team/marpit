@@ -36,9 +36,9 @@ Please not confuse to the ruler for paging slides. The actual slide contents wou
 
 ### Global directives {docsify-ignore}
 
-Global directives are _the setting value of the whole slide deck_, like `theme`. Marpit recognizes only the last value if you wrote a same global directives many times.
+Global directives are _the setting value of the whole slide deck_ such as theme. Marpit recognizes only the last value if you wrote a same global directives many times.
 
-!> We used to support `$` prefix for global directives (`<!-- $theme: default -->`), but it has marked as deprecated in v1.3.1. Developer may re-define dollar-prefixed [custom directives](#custom-directives) as an alias to built-in directive if necessary.
+!> `$` prefix for global directives has removed in v1.4.0. Developer may re-define dollar-prefixed [custom directives](#custom-directives) as an alias to built-in directive if necessary.
 
 ### Local directives {docsify-ignore}
 
