@@ -63,7 +63,7 @@ commands:
 
       - run:
           name: Prettier formatting
-          command: yarn format:check
+          command: yarn check:format
 
       - run:
           name: ESLint
@@ -77,7 +77,7 @@ commands:
           name: Jest
           command: yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
           environment:
-            JEST_JUNIT_OUTPUT: tmp/test-results/jest.xml
+            JEST_JUNIT_OUTPUT_DIR: tmp/test-results
 
       - run: yarn codecov
 
@@ -104,7 +104,7 @@ jobs:
   test-node10:
     executor:
       name: node
-      version: '10.16.0' # Specify TLS version for development
+      version: '10.16.3' # Specify LTS version for development
     steps:
       - test
 
