@@ -5,6 +5,8 @@
 ### Changed
 
 - Update CircleCI configuration to use v2.1 ([#187](https://github.com/marp-team/marpit/pull/187))
+- Bump markdown-it to [v10.0.0](https://github.com/markdown-it/markdown-it/blob/master/CHANGELOG.md#1000---2019-09-11) ([#190](https://github.com/marp-team/marpit/pull/190))
+- Upgrade Node and dependent packages to the latest version ([#190](https://github.com/marp-team/marpit/pull/190))
 
 ### Removed
 
