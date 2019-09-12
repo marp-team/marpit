@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.4.0 - 2019-09-12
+
 ### Changed
 
 - Update CircleCI configuration to use v2.1 ([#187](https://github.com/marp-team/marpit/pull/187))
