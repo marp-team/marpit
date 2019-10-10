@@ -2,7 +2,7 @@ import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import applyDirectives from '../../src/markdown/directives/apply'
 import collect from '../../src/markdown/collect'
-import comment from '../../src/markdown/comment'
+import comment, { markAsParsed } from '../../src/markdown/comment'
 import inlineSVG from '../../src/markdown/inline_svg'
 import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
@@ -109,46 +109,97 @@ describe('Marpit collect plugin', () => {
     expect(lastComments[3]).toStrictEqual(['inline comment'])
   })
 
-  context(
-    'when comment token is marked marpitCommentParsed meta in other plugin',
-    () => {
-      it('ignores collecting comment', () => {
-        const marpit = marpitStub()
+  context('when comment token is marked as parsed by #markAsParsed', () => {
+    it('ignores collecting comment', () => {
+      const marpit = marpitStub()
 
-        md(marpit)
-          .use(mdIt => {
-            mdIt.core.ruler.before(
-              'marpit_slide',
-              'marpit_test_inject',
-              state => {
-                const markParsed = token => {
-                  token.meta = {
-                    ...(token.meta || {}),
-                    marpitCommentParsed: 'test',
-                  }
-                }
-
-                for (const token of state.tokens) {
-                  if (token.content === 'This is comment') {
-                    markParsed(token)
-                  } else if (token.type === 'inline') {
-                    for (const t of token.children)
-                      if (t.content === 'inline comment') markParsed(t)
-                  }
+      md(marpit)
+        .use(mdIt => {
+          mdIt.core.ruler.before(
+            'marpit_slide',
+            'marpit_test_inject',
+            state => {
+              for (const token of state.tokens) {
+                if (token.content === 'This is comment') {
+                  markAsParsed(token, 'test')
+                } else if (token.type === 'inline') {
+                  for (const t of token.children)
+                    if (t.content === 'inline comment') markAsParsed(t, 'test')
                 }
               }
-            )
-          })
-          .render(text)
+            }
+          )
+        })
+        .render(text)
 
-        const { lastComments } = marpit
+      const { lastComments } = marpit
 
-        expect(lastComments[0]).toHaveLength(1)
-        expect(lastComments[0]).not.toContain('This is comment')
-        expect(lastComments[3]).toHaveLength(0)
-      })
-    }
-  )
+      expect(lastComments[0]).toHaveLength(1)
+      expect(lastComments[0]).not.toContain('This is comment')
+      expect(lastComments[3]).toHaveLength(0)
+    })
+
+    it('ignores comments for well-known linters and formatters by default', () => {
+      const comments = markdown => {
+        const marpit = marpitStub()
+        md(marpit).render(markdown)
+
+        return marpit.lastComments[0]
+      }
+
+      expect(comments('<!-- regular comment -->')).toHaveLength(1)
+
+      // Prettier
+      expect(comments('<!-- prettier-ignore -->')).toHaveLength(0)
+      expect(
+        comments(dedent`
+          <!--  prettier-ignore-start  -->
+          <!-- test -->
+          <!--prettier-ignore-end-->
+        `)
+      ).toHaveLength(1)
+
+      // markdownlint
+      expect(
+        comments(dedent`
+          <!-- markdownlint-disable no-space-in-emphasis -->
+          deliberate space * in * emphasis
+          <!-- markdownlint-enable no-space-in-emphasis -->
+        `)
+      ).toHaveLength(0)
+      expect(
+        comments(dedent`
+          <!-- markdownlint-capture -->
+          <!-- markdownlint-disable -->
+          any violations you want
+          <!-- markdownlint-restore -->
+        `)
+      ).toHaveLength(0)
+
+      // remark-lint (remark-message-control)
+      expect(comments('<!--lint disable-->')).toHaveLength(0)
+      expect(comments('<!--lint enable-->')).toHaveLength(0)
+      expect(
+        comments(dedent`
+          # Hello
+
+          <!--lint disable no-duplicate-headings-->
+
+          ## Hello
+
+          <!-- lint enable no-duplicate-headings -->
+        `)
+      ).toHaveLength(0)
+      expect(
+        comments(dedent`
+          <!--lint ignore list-item-bullet-indent strong-marker-->
+
+          *   **foo**
+            * __bar__
+        `)
+      ).toHaveLength(0)
+    })
+  })
 
   context('with inline SVG mode', () => {
     it('includes inline SVG tokens in collected result', () => {

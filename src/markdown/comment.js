@@ -6,6 +6,22 @@ const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/
 const commentMatcherClosing = /-->/
 
+const magicCommentMatchers = [
+  // Prettier
+  /^prettier-ignore(-(start|end))?$/,
+
+  // markdownlint
+  /^markdownlint-((disable|enable).*|capture|restore)$/,
+
+  // remark-lint (remark-message-control)
+  /^lint (disable|enable|ignore).*$/,
+]
+
+export function markAsParsed(token, kind) {
+  token.meta = token.meta || {}
+  token.meta.marpitCommentParsed = kind
+}
+
 /**
  * Marpit comment plugin.
  *
@@ -19,9 +35,15 @@ function comment(md) {
   const parse = (token, content) => {
     const parsed = yaml(content, !!md.marpit.options.looseYAML)
 
-    token.meta = {
-      ...(token.meta || {}),
-      marpitParsedDirectives: parsed === false ? {} : parsed,
+    token.meta = token.meta || {}
+    token.meta.marpitParsedDirectives = parsed === false ? {} : parsed
+
+    // Mark well-known magic comments as parsed comment
+    for (const magicCommentMatcher of magicCommentMatchers) {
+      if (magicCommentMatcher.test(content.trim())) {
+        markAsParsed(token, 'well-known-magic-comment')
+        break
+      }
     }
   }
 

@@ -2,15 +2,11 @@
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
 import yaml from './yaml'
 import * as directives from './directives'
+import { markAsParsed } from '../comment'
 import marpitPlugin from '../marpit_plugin'
 
-const isComment = token =>
+const isDirectiveComment = token =>
   token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
-
-const markAsParsed = token => {
-  token.meta = token.meta || {}
-  token.meta.marpitCommentParsed = 'directive'
-}
 
 /**
  * Parse Marpit directives and store result to the slide token meta.
@@ -101,14 +97,17 @@ function parse(md, opts = {}) {
 
     for (const token of state.tokens) {
       if (
-        isComment(token) &&
+        isDirectiveComment(token) &&
         applyDirectives(token.meta.marpitParsedDirectives)
       ) {
-        markAsParsed(token)
+        markAsParsed(token, 'directive')
       } else if (token.type === 'inline') {
         for (const t of token.children) {
-          if (isComment(t) && applyDirectives(t.meta.marpitParsedDirectives))
-            markAsParsed(t)
+          if (
+            isDirectiveComment(t) &&
+            applyDirectives(t.meta.marpitParsedDirectives)
+          )
+            markAsParsed(t, 'directive')
         }
       }
     }
@@ -190,14 +189,17 @@ function parse(md, opts = {}) {
 
         cursor.spot = {}
       } else if (
-        isComment(token) &&
+        isDirectiveComment(token) &&
         applyDirectives(token.meta.marpitParsedDirectives)
       ) {
-        markAsParsed(token)
+        markAsParsed(token, 'directive')
       } else if (token.type === 'inline') {
         for (const t of token.children) {
-          if (isComment(t) && applyDirectives(t.meta.marpitParsedDirectives))
-            markAsParsed(t)
+          if (
+            isDirectiveComment(t) &&
+            applyDirectives(t.meta.marpitParsedDirectives)
+          )
+            markAsParsed(t, 'directive')
         }
       }
     }
