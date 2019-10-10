@@ -140,19 +140,19 @@ describe('Marpit collect plugin', () => {
     })
 
     it('ignores comments for well-known linters and formatters by default', () => {
-      const comment = markdown => {
+      const comments = markdown => {
         const marpit = marpitStub()
         md(marpit).render(markdown)
 
         return marpit.lastComments[0]
       }
 
-      expect(comment('<!-- regular comment -->')).toHaveLength(1)
+      expect(comments('<!-- regular comment -->')).toHaveLength(1)
 
       // Prettier
-      expect(comment('<!-- prettier-ignore -->')).toHaveLength(0)
+      expect(comments('<!-- prettier-ignore -->')).toHaveLength(0)
       expect(
-        comment(dedent`
+        comments(dedent`
           <!--  prettier-ignore-start  -->
           <!-- test -->
           <!--prettier-ignore-end-->
@@ -161,14 +161,14 @@ describe('Marpit collect plugin', () => {
 
       // markdownlint
       expect(
-        comment(dedent`
+        comments(dedent`
           <!-- markdownlint-disable no-space-in-emphasis -->
           deliberate space * in * emphasis
           <!-- markdownlint-enable no-space-in-emphasis -->
         `)
       ).toHaveLength(0)
       expect(
-        comment(dedent`
+        comments(dedent`
           <!-- markdownlint-capture -->
           <!-- markdownlint-disable -->
           any violations you want
@@ -177,10 +177,10 @@ describe('Marpit collect plugin', () => {
       ).toHaveLength(0)
 
       // remark-lint (remark-message-control)
-      expect(comment('<!--lint disable-->')).toHaveLength(0)
-      expect(comment('<!--lint enable-->')).toHaveLength(0)
+      expect(comments('<!--lint disable-->')).toHaveLength(0)
+      expect(comments('<!--lint enable-->')).toHaveLength(0)
       expect(
-        comment(dedent`
+        comments(dedent`
           # Hello
 
           <!--lint disable no-duplicate-headings-->
@@ -191,7 +191,7 @@ describe('Marpit collect plugin', () => {
         `)
       ).toHaveLength(0)
       expect(
-        comment(dedent`
+        comments(dedent`
           <!--lint ignore list-item-bullet-indent strong-marker-->
 
           *   **foo**
