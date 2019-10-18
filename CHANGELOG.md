@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.4.1 - 2019-10-18
+
 ### Changed
 
 - Ignore well-known magic comments in collected comments ([#191](https://github.com/marp-team/marpit/issues/191), [#199](https://github.com/marp-team/marpit/pull/199))
