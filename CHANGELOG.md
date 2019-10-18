@@ -5,7 +5,7 @@
 ### Changed
 
 - Ignore well-known magic comments in collected comments ([#191](https://github.com/marp-team/marpit/issues/191), [#199](https://github.com/marp-team/marpit/pull/199))
-- Upgrade dependent packages to the latest version ([#196](https://github.com/marp-team/marpit/pull/196))
+- Upgrade dependent packages to the latest version ([#196](https://github.com/marp-team/marpit/pull/196), [#201](https://github.com/marp-team/marpit/pull/201))
 
 ## v1.4.0 - 2019-09-12
 
