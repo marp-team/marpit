@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Node for development to v12 LTS ([#202](https://github.com/marp-team/marpit/pull/202))
+
 ## v1.4.1 - 2019-10-18
 
 ### Changed
