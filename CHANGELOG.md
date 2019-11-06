@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.4.2 - 2019-11-06
+
 ### Fixed
 
 - Apply workaround for glitched video control on Chromium ([#205](https://github.com/marp-team/marpit/issues/205), [#208](https://github.com/marp-team/marpit/pull/208))
