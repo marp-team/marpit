@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Apply workaround for glitched video control on Chromium ([#205](https://github.com/marp-team/marpit/issues/205), [#208](https://github.com/marp-team/marpit/pull/208))
+
 ### Changed
 
 - Upgrade Node for development to v12 LTS ([#202](https://github.com/marp-team/marpit/pull/202))
