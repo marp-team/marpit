@@ -32,6 +32,10 @@ h1 {
   font-size: 2em;
   margin: 0.67em 0;
 }
+
+video::-webkit-media-controls {
+  will-change: transform;
+}
 `.trim()
 
 /**
@@ -40,6 +44,7 @@ h1 {
  * - Define the default slide size.
  * - Set default style for `<section>`.
  * - Normalize `<h1>` heading style.
+ * - Apply workaround for glitched video control on Chromium (https://github.com/marp-team/marpit/issues/205)
  *
  * @alias module:theme/scaffold
  * @type {Theme}
