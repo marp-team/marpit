@@ -57,12 +57,12 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",
-    "@babel/core": "^7.7.0",
+    "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
     "@babel/plugin-proposal-private-methods": "^7.6.0",
     "@babel/preset-env": "^7.7.1",
-    "autoprefixer": "^9.7.1",
+    "autoprefixer": "^9.7.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^24.9.0",
@@ -75,7 +75,7 @@
     "docsify-themeable": "^0.7.2",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "14.0.0",
-    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-import": "^2.18.2",
     "jest": "^24.9.0",
     "jest-junit": "^9.0.0",
@@ -84,10 +84,10 @@
     "mkdirp": "^0.5.1",
     "nodemon": "^1.19.4",
     "npm-run-all": "^4.1.5",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "rimraf": "^3.0.0",
-    "sass": "^1.23.3",
-    "stylelint": "^11.1.1",
+    "sass": "^1.23.6",
+    "stylelint": "^12.0.0",
     "stylelint-config-prettier": "^6.0.0",
     "stylelint-config-standard": "^19.0.0",
     "stylelint-scss": "^3.12.1"
@@ -98,7 +98,7 @@
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^10.0.0",
     "markdown-it-front-matter": "^0.1.2",
-    "postcss": "^7.0.21"
+    "postcss": "^7.0.23"
   },
   "publishConfig": {
     "access": "public"

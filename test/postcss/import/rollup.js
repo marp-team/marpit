@@ -28,7 +28,9 @@ describe('Marpit PostCSS import rollup plugin', () => {
     ))
 
   it('applies the first rule when style has multiple @charset rules', () =>
-    run('h1 { color: red; }\n@charset "utf-16";\n@charset "utf-8";').then(
-      ({ css }) => expect(css).toBe('@charset "utf-16";\nh1 { color: red; }')
+    run(
+      'h1 { color: red; }\n@charset "utf-16";\n@charset "utf-8";'
+    ).then(({ css }) =>
+      expect(css).toBe('@charset "utf-16";\nh1 { color: red; }')
     ))
 })
