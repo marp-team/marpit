@@ -4,7 +4,8 @@
 
 ### Changed
 
-- Upgrade dependent packages to the latest version ([#211](https://github.com/marp-team/marpit/pull/211))
+- Upgrade dependent packages to the latest version ([#211](https://github.com/marp-team/marpit/pull/211), [#213](https://github.com/marp-team/marpit/pull/213))
+- Bump Node LTS version ([#213](https://github.com/marp-team/marpit/pull/213))
 - Update community health files ([#212](https://github.com/marp-team/marpit/pull/212))
 
 ## v1.4.2 - 2019-11-06
