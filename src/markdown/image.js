@@ -1,5 +1,5 @@
 /** @module */
-import marpitPlugin from './marpit_plugin'
+import marpitPlugin from '../plugin'
 import apply from './image/apply'
 import parse from './image/parse'
 

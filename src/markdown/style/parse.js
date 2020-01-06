@@ -1,5 +1,5 @@
 /** @module */
-import marpitPlugin from '../marpit_plugin'
+import marpitPlugin from '../../plugin'
 
 const styleMatcher = /<style([\s\S]*?)>([\s\S]*?)<\/style>/i
 const styleMatcherOpening = /^<style(?=(\s|>|$))/i

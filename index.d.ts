@@ -24,6 +24,16 @@ declare module '@marp-team/marpit' {
     ) => { [meta: string]: any }
   }
 
+  type MarpitPlugin<P extends any[], T extends {} = {}> = (
+    this: Marpit['markdown'] & T,
+    md: Marpit['markdown'] & T,
+    ...params: P
+  ) => void
+
+  type MarpitPluginFactory = <P extends any[]>(
+    plugin: MarpitPlugin<P, { marpit: Marpit }>
+  ) => MarpitPlugin<P, { marpit: Marpit }>
+
   type ThemeReservedMeta = {
     theme: string
   }
@@ -71,20 +81,15 @@ declare module '@marp-team/marpit' {
     protected lastSlideTokens: any[] | undefined
     protected lastStyles: string[] | undefined
 
+    static readonly plugin: MarpitPluginFactory
+
     render(
       markdown: string,
       env: MarpitEnv.HTMLAsArray
     ): MarpitRenderResult<string[]>
     render(markdown: string, env?: any): MarpitRenderResult
 
-    use<P extends any[]>(
-      plugin: (
-        this: Marpit['markdown'],
-        md: Marpit['markdown'],
-        ...params: P
-      ) => void,
-      ...params: P
-    ): this
+    use<P extends any[]>(plugin: MarpitPlugin<P>, ...params: P): this
 
     protected applyMarkdownItPlugins(md: any): void
     protected renderMarkdown(markdown: string, env?: any): string
@@ -141,4 +146,6 @@ declare module '@marp-team/marpit' {
     pack(name: string, opts: ThemeSetPackOptions): string
     themes(): IterableIterator<Theme>
   }
+
+  export const plugin: MarpitPluginFactory
 }

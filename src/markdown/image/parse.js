@@ -1,6 +1,6 @@
 /** @module */
 import colorString from 'color-string'
-import marpitPlugin from '../marpit_plugin'
+import marpitPlugin from '../../plugin'
 
 const escape = target =>
   target.replace(
