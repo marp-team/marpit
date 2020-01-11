@@ -18,7 +18,6 @@ import marpitSlideContainer from './markdown/slide_container'
 import marpitStyleAssign from './markdown/style/assign'
 import marpitStyleParse from './markdown/style/parse'
 import marpitSweep from './markdown/sweep'
-import marpitPlugin from './plugin'
 
 const defaultOptions = {
   container: marpitContainer,
@@ -261,23 +260,5 @@ class Marpit {
     return this
   }
 }
-
-/**
- * Generate Marpit plugin.
- *
- * Create Marpit plugin from passed markdown-it plugin. Marpit plugin would
- * require that markdown-it instance has `marpit` member.
- *
- * @function plugin
- * @memberof Marpit
- * @readonly
- * @static
- * @param {Function} plugin Base plugin for markdown-it.
- * @returns {Function} Marpit plugin.
- */
-Object.defineProperty(Marpit, 'plugin', {
-  enumerable: true,
-  value: marpitPlugin,
-})
 
 export default Marpit
