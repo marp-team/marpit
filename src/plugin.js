@@ -13,7 +13,7 @@
 function marpitPlugin(plugin) {
   // eslint-disable-next-line func-names
   return function(md, ...args) {
-    if (md.marpit) return plugin.apply(this, md, args)
+    if (md.marpit) return plugin.call(this, md, ...args)
 
     throw new Error(
       'Marpit plugin has detected incompatible markdown-it instance.'
