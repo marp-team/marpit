@@ -57,7 +57,7 @@ declare namespace Marpit {
     inlineSVG?: boolean
   }
 
-  export type PluginFactory = <P extends any[]>(
+  type PluginFactory = <P extends any[]>(
     plugin: Plugin<P, { marpit: Marpit }>
   ) => Plugin<P, { marpit: Marpit }>
 
@@ -144,10 +144,10 @@ declare namespace Marpit {
 }
 
 declare module '@marp-team/marpit' {
-  export { Element, Marpit, Theme, ThemeSet } from Marpit
-  export default Marpit.Marpit
+  export = Marpit
 }
 
 declare module '@marp-team/marpit/plugin' {
-  export = Marpit.PluginFactory
+  const pluginFactory: Marpit.PluginFactory
+  export default pluginFactory
 }
