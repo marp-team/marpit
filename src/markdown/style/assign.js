@@ -1,6 +1,6 @@
 /** @module */
 import postcss from 'postcss'
-import marpitPlugin from '../marpit_plugin'
+import marpitPlugin from '../../plugin'
 
 const uniqKeyChars =
   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'

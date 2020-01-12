@@ -33,7 +33,8 @@
   "types": "index.d.ts",
   "files": [
     "lib/",
-    "index.d.ts"
+    "index.d.ts",
+    "plugin.js"
   ],
   "scripts": {
     "build": "yarn -s clean && babel src --out-dir lib",

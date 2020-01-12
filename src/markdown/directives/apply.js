@@ -1,7 +1,7 @@
 /** @module */
 import kebabCase from 'lodash.kebabcase'
 import builtInDirectives from './directives'
-import marpitPlugin from '../marpit_plugin'
+import marpitPlugin from '../../plugin'
 import InlineStyle from '../../helpers/inline_style'
 
 /**

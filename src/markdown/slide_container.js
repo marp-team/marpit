@@ -1,5 +1,5 @@
 /** @module */
-import marpitPlugin from './marpit_plugin'
+import marpitPlugin from '../plugin'
 import split from '../helpers/split'
 import wrapArray from '../helpers/wrap_array'
 import wrapTokens from '../helpers/wrap_tokens'

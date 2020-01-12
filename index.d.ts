@@ -1,7 +1,14 @@
-declare module '@marp-team/marpit' {
-  interface MarpitOptions {
+declare namespace MarpitEnv {
+  interface HTMLAsArray {
+    htmlAsArray: true
+    [key: string]: any
+  }
+}
+
+declare namespace Marpit {
+  interface Options {
     container?: false | Element | Element[]
-    headingDivider?: false | MarpitHeadingDivider | MarpitHeadingDivider[]
+    headingDivider?: false | HeadingDivider | HeadingDivider[]
     looseYAML?: boolean
     markdown?: any
     printable?: boolean
@@ -9,20 +16,26 @@ declare module '@marp-team/marpit' {
     inlineSVG?: boolean
   }
 
-  type MarpitHeadingDivider = 1 | 2 | 3 | 4 | 5 | 6
+  type HeadingDivider = 1 | 2 | 3 | 4 | 5 | 6
 
-  type MarpitRenderResult<T = string> = {
+  type RenderResult<T = string> = {
     html: T
     css: string
     comments: string[][]
   }
 
-  type MarpitDirectiveDefinitions = {
+  type DirectiveDefinitions = {
     [directive: string]: (
       value: string | object | (string | object)[],
       marpit?: Marpit
     ) => { [meta: string]: any }
   }
+
+  type Plugin<P extends any[], T extends {} = {}> = (
+    this: Marpit['markdown'] & T,
+    md: Marpit['markdown'] & T,
+    ...params: P
+  ) => void
 
   type ThemeReservedMeta = {
     theme: string
@@ -44,47 +57,34 @@ declare module '@marp-team/marpit' {
     inlineSVG?: boolean
   }
 
-  namespace MarpitEnv {
-    export interface HTMLAsArray {
-      htmlAsArray: true
-      [key: string]: any
-    }
-  }
+  type PluginFactory = <P extends any[]>(
+    plugin: Plugin<P, { marpit: Marpit }>
+  ) => Plugin<P, { marpit: Marpit }>
 
   export class Marpit {
-    constructor(opts?: MarpitOptions)
+    constructor(opts?: Options)
 
     markdown: any
     themeSet: ThemeSet
 
     readonly customDirectives: {
-      global: MarpitDirectiveDefinitions
-      local: MarpitDirectiveDefinitions
+      global: DirectiveDefinitions
+      local: DirectiveDefinitions
     }
-    readonly options: MarpitOptions
+    readonly options: Options
 
     /** @deprecated A plugin interface for markdown-it is deprecated and will remove in future version. Instead, wrap markdown-it instance when creating Marpit by `new Marpit({ markdown: markdownItInstance })`. */
     readonly markdownItPlugins: (md: any) => void
 
-    protected lastComments: MarpitRenderResult['comments'] | undefined
+    protected lastComments: RenderResult['comments'] | undefined
     protected lastGlobalDirectives: { [directive: string]: any } | undefined
     protected lastSlideTokens: any[] | undefined
     protected lastStyles: string[] | undefined
 
-    render(
-      markdown: string,
-      env: MarpitEnv.HTMLAsArray
-    ): MarpitRenderResult<string[]>
-    render(markdown: string, env?: any): MarpitRenderResult
+    render(markdown: string, env: MarpitEnv.HTMLAsArray): RenderResult<string[]>
+    render(markdown: string, env?: any): RenderResult
 
-    use<P extends any[]>(
-      plugin: (
-        this: Marpit['markdown'],
-        md: Marpit['markdown'],
-        ...params: P
-      ) => void,
-      ...params: P
-    ): this
+    use<P extends any[]>(plugin: Plugin<P>, ...params: P): this
 
     protected applyMarkdownItPlugins(md: any): void
     protected renderMarkdown(markdown: string, env?: any): string
@@ -141,4 +141,13 @@ declare module '@marp-team/marpit' {
     pack(name: string, opts: ThemeSetPackOptions): string
     themes(): IterableIterator<Theme>
   }
+}
+
+declare module '@marp-team/marpit' {
+  export = Marpit
+}
+
+declare module '@marp-team/marpit/plugin' {
+  const pluginFactory: Marpit.PluginFactory
+  export default pluginFactory
 }

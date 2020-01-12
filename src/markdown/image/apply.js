@@ -1,5 +1,5 @@
 /** @module */
-import marpitPlugin from '../marpit_plugin'
+import marpitPlugin from '../../plugin'
 import InlineStyle from '../../helpers/inline_style'
 
 /**
