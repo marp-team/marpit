@@ -24,7 +24,9 @@ import { Element, Marpit, Theme, ThemeSet } from '@marp-team/marpit'
 
 ### Modules _(for internal)_
 
-**Modules** section is documented about internal modules, that is includes plugins of markdown-it and PostCSS. Basically _Marpit user should not use internal module directly._
+**Modules** section is documented about internal modules, that is includes plugins of markdown-it and PostCSS.
+
+Basically _Marpit user should not use internal module directly._
 
 ---
 

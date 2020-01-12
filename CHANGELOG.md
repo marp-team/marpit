@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `@marp-team/marpit/plugin` for creating Marpit plugin ([#214](https://github.com/marp-team/marpit/issues/214), [#217](https://github.com/marp-team/marpit/pull/217))
+
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#211](https://github.com/marp-team/marpit/pull/211), [#213](https://github.com/marp-team/marpit/pull/213), [#216](https://github.com/marp-team/marpit/pull/216))
@@ -11,6 +15,7 @@
 ### Removed
 
 - CI test against EOL Node 8 ([#216](https://github.com/marp-team/marpit/pull/216))
+- `Marpit` prefixes in the name of some type definitions for TypeScript ([#217](https://github.com/marp-team/marpit/pull/217))
 
 ## v1.4.2 - 2019-11-06
 
