@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.5.0 - 2020-01-12
+
 ### Added
 
 - `@marp-team/marpit/plugin` for creating Marpit plugin ([#214](https://github.com/marp-team/marpit/issues/214), [#217](https://github.com/marp-team/marpit/pull/217))
