@@ -69,7 +69,6 @@
     "browser-sync": "^2.26.7",
     "cheerio": "^1.0.0-rc.3",
     "codecov": "^3.6.2",
-    "cross-env": "^6.0.3",
     "cssnano": "^4.1.10",
     "dedent": "^0.7.0",
     "docsify-themeable": "^0.7.2",
