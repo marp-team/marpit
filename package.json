@@ -57,12 +57,12 @@
     "watch": "babel src --out-dir lib -w --verbose"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.3",
-    "@babel/core": "^7.8.3",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.4",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/plugin-proposal-private-methods": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
     "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.0.3",
     "babel-jest": "^25.1.0",
@@ -74,7 +74,7 @@
     "docsify-themeable": "^0.7.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "14.0.0",
-    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.0",
     "jest": "^25.1.0",
     "jest-junit": "^10.0.0",
@@ -83,12 +83,12 @@
     "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.19.1",
-    "rimraf": "^3.0.0",
+    "rimraf": "^3.0.1",
     "sass": "1.25.0",
     "stylelint": "^13.0.0",
     "stylelint-config-prettier": "^8.0.1",
     "stylelint-config-standard": "^19.0.0",
-    "stylelint-scss": "^3.13.0"
+    "stylelint-scss": "^3.14.2"
   },
   "dependencies": {
     "color-string": "^1.5.3",
