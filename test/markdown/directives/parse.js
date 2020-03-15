@@ -24,17 +24,17 @@ describe('Marpit directives parse plugin', () => {
   }
 
   context('with frontMatter option', () => {
-    const text = dedent`
+    const text = (end = '---') => dedent`
       ---
       theme: test_theme
       class: all
       _class: first
-      ---
+      ${end}
       ***
     `
 
     it('does not parse front-matter when option is false', () => {
-      const parsed = md({ frontMatter: false }).parse(text)
+      const parsed = md({ frontMatter: false }).parse(text())
 
       parsed.forEach(t => {
         if (t.type === 'marpit_slide_open')
@@ -43,18 +43,22 @@ describe('Marpit directives parse plugin', () => {
     })
 
     it('parses front-matter when option is true', () => {
-      const parsed = md({ frontMatter: true }).parse(text)
-      const slideTokens = parsed.filter(t => t.type === 'marpit_slide_open')
+      // NOTE: Three-dots are an alternative to indicate the end of YAML
+      // frontmatter: https://yaml.org/spec/1.2/spec.html#id2760395
+      for (const txt of [text(), text('...')]) {
+        const parsed = md({ frontMatter: true }).parse(txt)
+        const slideTokens = parsed.filter(t => t.type === 'marpit_slide_open')
 
-      expect(slideTokens).toHaveLength(2)
-      expect(slideTokens[0].meta.marpitDirectives).toStrictEqual({
-        theme: 'test_theme',
-        class: 'first',
-      })
-      expect(slideTokens[1].meta.marpitDirectives).toStrictEqual({
-        theme: 'test_theme',
-        class: 'all',
-      })
+        expect(slideTokens).toHaveLength(2)
+        expect(slideTokens[0].meta.marpitDirectives).toStrictEqual({
+          theme: 'test_theme',
+          class: 'first',
+        })
+        expect(slideTokens[1].meta.marpitDirectives).toStrictEqual({
+          theme: 'test_theme',
+          class: 'all',
+        })
+      }
     })
   })
 
