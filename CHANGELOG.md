@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.5.1 - 2020-03-15
+
 ### Changed
 
 - On the basis of [the YAML specification](https://yaml.org/spec/1.2/spec.html#id2760395), 3 dots `...` can use as an alternative to indicate the end of YAML front-matter ([#224](https://github.com/marp-team/marpit/pull/224))
