@@ -98,6 +98,10 @@
     "markdown-it-front-matter": "^0.2.1",
     "postcss": "^7.0.27"
   },
+  "resolutions": {
+    "**/gonzales-pe/minimist": "^1.2.5",
+    "**/mkdirp/minimist": "^0.2.1"
+  },
   "publishConfig": {
     "access": "public"
   }

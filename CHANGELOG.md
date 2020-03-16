@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix CVE-2020-7598 in deep dependencies tentatively ([#225](https://github.com/marp-team/marpit/pull/225))
+
 ## v1.5.1 - 2020-03-15
 
 ### Changed
