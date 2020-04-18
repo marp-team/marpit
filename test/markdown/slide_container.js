@@ -5,7 +5,7 @@ import slide from '../../src/markdown/slide'
 import slideContainer from '../../src/markdown/slide_container'
 
 describe('Marpit slide container plugin', () => {
-  const md = containers => {
+  const md = (containers) => {
     const instance = new MarkdownIt('commonmark')
     instance.marpit = { options: { slideContainer: containers } }
 

@@ -13,16 +13,16 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/pagination
  */
-const plugin = postcss.plugin('marpit-postcss-pagination', () => css => {
-  css.walkRules(rule => {
+const plugin = postcss.plugin('marpit-postcss-pagination', () => (css) => {
+  css.walkRules((rule) => {
     if (
-      rule.selectors.some(selector =>
+      rule.selectors.some((selector) =>
         /^section(?![\w-])[^\s>+~]*::?after$/.test(
           selector.replace(/\[.*?\]/g, '')
         )
       )
     )
-      rule.walkDecls('content', decl => {
+      rule.walkDecls('content', (decl) => {
         if (!decl.value.includes('attr(data-marpit-pagination)'))
           decl.replaceWith(`${decl.raw('before')}/* ${decl.toString()}; */`)
       })

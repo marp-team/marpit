@@ -10,7 +10,7 @@ import postcss from 'postcss'
  */
 const plugin = postcss.plugin(
   'marpit-postcss-advanced-background',
-  () => css => {
+  () => (css) => {
     css.last.after(
       `
 section[data-marpit-advanced-background="background"] {

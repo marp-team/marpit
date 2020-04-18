@@ -12,13 +12,13 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/import/rollup
  */
-const plugin = postcss.plugin('marpit-postcss-import-rollup', () => css => {
+const plugin = postcss.plugin('marpit-postcss-import-rollup', () => (css) => {
   const rolluped = {
     charset: undefined,
     imports: [],
   }
 
-  css.walkAtRules(rule => {
+  css.walkAtRules((rule) => {
     if (rule.name === 'charset') {
       rule.remove()
       if (!rolluped.charset) rolluped.charset = rule
@@ -31,7 +31,7 @@ const plugin = postcss.plugin('marpit-postcss-import-rollup', () => css => {
 
   // Rollup at-rules
   ;[rolluped.charset, ...rolluped.imports]
-    .filter(r => r)
+    .filter((r) => r)
     .forEach((rule, idx) => {
       // Strip whitespace from the beginning of first at-rule
       const prependRule =

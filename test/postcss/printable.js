@@ -37,7 +37,7 @@ describe('Marpit PostCSS printable plugin', () => {
 
       // @print at-rule for print
       for (const tag of ['html', 'body']) {
-        const r = findRule(print, { selectors: s => s.includes(tag) })
+        const r = findRule(print, { selectors: (s) => s.includes(tag) })
         expect(findDecl(r, { prop: 'page-break-inside' }).value).toBe('avoid')
         expect(findDecl(r, { prop: 'break-inside' }).value).toBe('avoid-page')
         expect(findDecl(r, { prop: 'margin' }).value).toBe('0')

@@ -5,7 +5,7 @@ import * as directives from './directives'
 import { markAsParsed } from '../comment'
 import marpitPlugin from '../../plugin'
 
-const isDirectiveComment = token =>
+const isDirectiveComment = (token) =>
   token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
 
 /**
@@ -43,11 +43,11 @@ function parse(md, opts = {}) {
   let frontMatterObject = {}
 
   if (frontMatter) {
-    md.core.ruler.before('block', 'marpit_directives_front_matter', state => {
+    md.core.ruler.before('block', 'marpit_directives_front_matter', (state) => {
       frontMatterObject = {}
       if (!state.inlineMode) marpit.lastGlobalDirectives = {}
     })
-    md.use(MarkdownItFrontMatter, fm => {
+    md.use(MarkdownItFrontMatter, (fm) => {
       frontMatterObject.text = fm
 
       const parsed = yaml(
@@ -64,11 +64,11 @@ function parse(md, opts = {}) {
   }
 
   // Parse global directives
-  md.core.ruler.after('inline', 'marpit_directives_global_parse', state => {
+  md.core.ruler.after('inline', 'marpit_directives_global_parse', (state) => {
     if (state.inlineMode) return
 
     let globalDirectives = {}
-    const applyDirectives = obj => {
+    const applyDirectives = (obj) => {
       let recognized = false
 
       for (const key of Object.keys(obj)) {
@@ -116,13 +116,13 @@ function parse(md, opts = {}) {
   })
 
   // Parse local directives and apply meta to slide
-  md.core.ruler.after('marpit_slide', 'marpit_directives_parse', state => {
+  md.core.ruler.after('marpit_slide', 'marpit_directives_parse', (state) => {
     if (state.inlineMode) return
 
     const slides = []
     const cursor = { slide: undefined, local: {}, spot: {} }
 
-    const applyDirectives = obj => {
+    const applyDirectives = (obj) => {
       let recognized = false
 
       for (const key of Object.keys(obj)) {

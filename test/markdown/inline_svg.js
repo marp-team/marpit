@@ -20,7 +20,7 @@ describe('Marpit inline SVG plugin', () => {
 
     return instance
       .use(slide)
-      .use(pluginMd =>
+      .use((pluginMd) =>
         pluginMd.core.ruler.push('marpit_directives_parse', () => {})
       )
       .use(inlineSVG)

@@ -18,7 +18,7 @@ describe('Marpit collect plugin', () => {
     options: { inlineSVG: svg },
   })
 
-  const md = marpitInstance => {
+  const md = (marpitInstance) => {
     const instance = new MarkdownIt('commonmark')
     instance.marpit = marpitInstance
 
@@ -84,7 +84,7 @@ describe('Marpit collect plugin', () => {
     expect(marpit.lastSlideTokens).toHaveLength(4)
     expect(original).toBe(
       marpit.lastSlideTokens
-        .map(tokens => markdownIt.renderer.render(tokens, markdownIt.options))
+        .map((tokens) => markdownIt.renderer.render(tokens, markdownIt.options))
         .join('')
     )
   })
@@ -114,11 +114,11 @@ describe('Marpit collect plugin', () => {
       const marpit = marpitStub()
 
       md(marpit)
-        .use(mdIt => {
+        .use((mdIt) => {
           mdIt.core.ruler.before(
             'marpit_slide',
             'marpit_test_inject',
-            state => {
+            (state) => {
               for (const token of state.tokens) {
                 if (token.content === 'This is comment') {
                   markAsParsed(token, 'test')
@@ -140,7 +140,7 @@ describe('Marpit collect plugin', () => {
     })
 
     it('ignores comments for well-known linters and formatters by default', () => {
-      const comments = markdown => {
+      const comments = (markdown) => {
         const marpit = marpitStub()
         md(marpit).render(markdown)
 

@@ -373,7 +373,7 @@ describe('ThemeSet', () => {
       const themes = instance.themes()
 
       expect(typeof themes.next).toBe('function')
-      expect([...themes].map(t => t.name)).toStrictEqual(['test1', 'test2'])
+      expect([...themes].map((t) => t.name)).toStrictEqual(['test1', 'test2'])
     })
   })
 
@@ -402,7 +402,7 @@ describe('ThemeSet', () => {
       })
 
       it('cannot apply unscoped rules by using @media print', () => {
-        const pack = before =>
+        const pack = (before) =>
           instance.pack(undefined, { before, printable: true })
 
         // `@media print` will apply scope to defined rules.

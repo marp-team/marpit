@@ -14,11 +14,11 @@ function headerAndFooter(md) {
   md.core.ruler.after(
     'marpit_directives_apply',
     'marpit_header_and_footer',
-    state => {
+    (state) => {
       if (state.inlineMode) return
 
       const parsedInlines = new Map()
-      const getParsed = markdown => {
+      const getParsed = (markdown) => {
         let parsed = parsedInlines.get(markdown)
 
         if (!parsed) {

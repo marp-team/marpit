@@ -36,7 +36,7 @@ describe('Marpit directives parse plugin', () => {
     it('does not parse front-matter when option is false', () => {
       const parsed = md({ frontMatter: false }).parse(text())
 
-      parsed.forEach(t => {
+      parsed.forEach((t) => {
         if (t.type === 'marpit_slide_open')
           expect(t.meta.marpitDirectives).toStrictEqual({})
       })
@@ -47,7 +47,7 @@ describe('Marpit directives parse plugin', () => {
       // frontmatter: https://yaml.org/spec/1.2/spec.html#id2760395
       for (const txt of [text(), text('...')]) {
         const parsed = md({ frontMatter: true }).parse(txt)
-        const slideTokens = parsed.filter(t => t.type === 'marpit_slide_open')
+        const slideTokens = parsed.filter((t) => t.type === 'marpit_slide_open')
 
         expect(slideTokens).toHaveLength(2)
         expect(slideTokens[0].meta.marpitDirectives).toStrictEqual({
@@ -76,7 +76,7 @@ describe('Marpit directives parse plugin', () => {
 
       it('applies meta to all slides', () => {
         const parsed = md().parse(text)
-        const slides = parsed.filter(t => t.type === 'marpit_slide_open')
+        const slides = parsed.filter((t) => t.type === 'marpit_slide_open')
 
         expect.assertions(slides.length)
 
@@ -94,7 +94,7 @@ describe('Marpit directives parse plugin', () => {
       })
 
       it('marks directive comments as parsed', () => {
-        const findToken = tk => tk.find(t => t.type === 'marpit_comment')
+        const findToken = (tk) => tk.find((t) => t.type === 'marpit_comment')
 
         const regularTheme = findToken(md().parse('<!-- theme: test_theme -->'))
         expect(regularTheme.meta.marpitCommentParsed).toBe('directive')
@@ -159,7 +159,7 @@ describe('Marpit directives parse plugin', () => {
       it('supports class definition by array', () => {
         const flatParsed = md().parse('<!-- class: ["one", "two", "three"] -->')
         const [flatOpen] = flatParsed.filter(
-          t => t.type === 'marpit_slide_open'
+          (t) => t.type === 'marpit_slide_open'
         )
         expect(flatOpen.meta.marpitDirectives).toMatchObject(expected)
 
@@ -172,7 +172,7 @@ describe('Marpit directives parse plugin', () => {
           ---
         `)
         const [multilineOpen] = multilineParsed.filter(
-          t => t.type === 'marpit_slide_open'
+          (t) => t.type === 'marpit_slide_open'
         )
         expect(multilineOpen.meta.marpitDirectives).toMatchObject(expected)
       })

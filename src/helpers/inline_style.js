@@ -26,7 +26,7 @@ export default class InlineStyle {
       ) {
         const root = postcss.parse(initialDecls.toString(), { from: undefined })
 
-        root.each(node => {
+        root.each((node) => {
           if (node.type === 'decl') this.decls[node.prop] = node.value
         })
       } else {
@@ -78,7 +78,7 @@ export default class InlineStyle {
       }
 
       if (parsed) {
-        parsed.each(node => {
+        parsed.each((node) => {
           if (node.type !== 'decl' || node.prop !== prop) node.remove()
         })
 

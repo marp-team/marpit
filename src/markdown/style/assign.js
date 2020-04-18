@@ -18,9 +18,9 @@ function generateUniqKey(length = 8) {
 
 const injectScopePostCSSplugin = postcss.plugin(
   'marpit-style-assign-postcss-inject-scope',
-  attr => css =>
-    css.walkRules(rule => {
-      rule.selectors = rule.selectors.map(selector => {
+  (attr) => (css) =>
+    css.walkRules((rule) => {
+      rule.selectors = rule.selectors.map((selector) => {
         const injectSelector = /^section(?![\w-])/.test(selector)
           ? selector.slice(7)
           : ` ${selector}`
@@ -42,7 +42,7 @@ const injectScopePostCSSplugin = postcss.plugin(
 function assign(md) {
   const { marpit } = md
 
-  md.core.ruler.after('marpit_slide', 'marpit_style_assign', state => {
+  md.core.ruler.after('marpit_slide', 'marpit_style_assign', (state) => {
     if (state.inlineMode) return
 
     const directives = marpit.lastGlobalDirectives || {}

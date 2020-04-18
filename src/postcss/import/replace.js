@@ -18,10 +18,10 @@ const plugin = postcss.plugin(
   (themeSet, importedThemes = []) =>
     postcss([
       postcssImportParse,
-      css => {
+      (css) => {
         const prepends = []
 
-        css.walk(node => {
+        css.walk((node) => {
           const name = node.marpitImportParse
 
           if (name) {

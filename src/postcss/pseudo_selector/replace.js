@@ -2,10 +2,10 @@
 import postcss from 'postcss'
 import wrapArray from '../../helpers/wrap_array'
 
-const buildSelector = elms =>
+const buildSelector = (elms) =>
   elms
-    .map(e => {
-      const classes = new Set((e.class || '').split(/\s+/).filter(c => c))
+    .map((e) => {
+      const classes = new Set((e.class || '').split(/\s+/).filter((c) => c))
 
       let element = [e.tag, ...classes].join('.')
       if (e.id) element += `#${e.id}`
@@ -30,9 +30,9 @@ const plugin = postcss.plugin(
     const container = buildSelector([...wrapArray(elements)])
     const section = buildSelector([...wrapArray(slideElements)])
 
-    return css =>
-      css.walkRules(rule => {
-        rule.selectors = rule.selectors.map(selector =>
+    return (css) =>
+      css.walkRules((rule) => {
+        rule.selectors = rule.selectors.map((selector) =>
           selector
             .replace(/:marpit-container(?![\w-])/g, container)
             .replace(/:marpit-slide(?![\w-])/g, section)

@@ -12,7 +12,7 @@ import slide from '../../src/markdown/slide'
 describe('Marpit image plugin', () => {
   const md = (svg = false) =>
     new MarkdownIt('commonmark')
-      .use(instance => {
+      .use((instance) => {
         instance.marpit = {
           customDirectives: { global: {}, local: {} },
           options: { inlineSVG: svg },
@@ -40,7 +40,7 @@ describe('Marpit image plugin', () => {
       )
 
       it('uses primitive string as src attribute for all images', () => {
-        for (const { children } of tokens.filter(t => t.type === 'inline')) {
+        for (const { children } of tokens.filter((t) => t.type === 'inline')) {
           const [t] = children
           expect(typeof t.attrGet('src')).toBe('string')
         }
@@ -49,7 +49,7 @@ describe('Marpit image plugin', () => {
   })
 
   describe('Style for inline image', () => {
-    const style = opts => {
+    const style = (opts) => {
       const $ = cheerio.load(
         md().render(`![${opts}](https://example.com/example.jpg)`)
       )
@@ -104,7 +104,7 @@ describe('Marpit image plugin', () => {
 
   describe('Shorthand for text color', () => {
     const colorMd = (src, opts = '') => `![${opts}](${src})`
-    const colorDirective = markdown => {
+    const colorDirective = (markdown) => {
       const [firstSlide] = md().parse(markdown)
       return firstSlide.meta.marpitDirectives.color
     }

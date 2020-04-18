@@ -16,7 +16,7 @@ describe('Marpit PostCSS import replace plugin', () => {
   themeSetStub.set('nested-circular', { css: '@import "nested-circular2"' })
   themeSetStub.set('nested-circular2', { css: '@import "nested-circular"' })
 
-  const run = input =>
+  const run = (input) =>
     postcss([importReplace(themeSetStub)]).process(input, { from: undefined })
 
   it('imports another theme', () =>

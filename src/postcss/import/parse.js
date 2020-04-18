@@ -32,16 +32,16 @@ const plugin = postcss.plugin(
     const imports = { import: [], importTheme: [] }
     let allowImport = true
 
-    css.walk(node => {
+    css.walk((node) => {
       if (node.type === 'atrule') {
-        const push = target => {
+        const push = (target) => {
           const [quote] = node.params
           if (quote !== '"' && quote !== "'") return
 
           const splitedValue = node.params.slice(1).split(quote)
           let value = ''
 
-          splitedValue.every(v => {
+          splitedValue.every((v) => {
             if (v.endsWith('\\')) {
               value = `${value}${v.slice(0, -1)}${quote}`
               return true

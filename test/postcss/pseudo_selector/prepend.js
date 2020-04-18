@@ -3,7 +3,8 @@ import postcss from 'postcss'
 import prepend from '../../../src/postcss/pseudo_selector/prepend'
 
 describe('Marpit PostCSS pseudo selector prepending plugin', () => {
-  const run = input => postcss([prepend()]).process(input, { from: undefined })
+  const run = (input) =>
+    postcss([prepend()]).process(input, { from: undefined })
 
   it('prepends Marpit pseudo selectors to each rule', () =>
     run(dedent`

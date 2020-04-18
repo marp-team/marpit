@@ -15,7 +15,7 @@ import marpitPlugin from '../plugin'
  * @param {MarkdownIt} md markdown-it instance.
  */
 function sweep(md) {
-  md.core.ruler.after('inline', 'marpit_sweep', state => {
+  md.core.ruler.after('inline', 'marpit_sweep', (state) => {
     if (state.inlineMode) return
 
     for (const token of state.tokens) {
@@ -23,14 +23,14 @@ function sweep(md) {
         (token.type === 'html_block' && token.content.match(/^\s*$/)) ||
         (token.type === 'inline' &&
           token.children
-            .filter(t => !(t.hidden || t.type === 'softbreak'))
-            .every(t => t.type === 'text' && t.content.match(/^\s*$/)))
+            .filter((t) => !(t.hidden || t.type === 'softbreak'))
+            .every((t) => t.type === 'text' && t.content.match(/^\s*$/)))
       )
         token.hidden = true
     }
   })
 
-  md.core.ruler.push('marpit_sweep_paragraph', state => {
+  md.core.ruler.push('marpit_sweep_paragraph', (state) => {
     if (state.inlineMode) return
     const current = { open: [], tokens: {} }
 
@@ -45,7 +45,7 @@ function sweep(md) {
       } else if (token.type === 'paragraph_close') {
         const openToken = current.open.pop()
 
-        if (current.tokens[openToken].every(t => t.hidden)) {
+        if (current.tokens[openToken].every((t) => t.hidden)) {
           openToken.hidden = true
           token.hidden = true
         }

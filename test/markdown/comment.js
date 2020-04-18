@@ -27,10 +27,10 @@ describe('Marpit comment plugin', () => {
 
   const htmls = [true, false]
 
-  htmls.forEach(html => {
+  htmls.forEach((html) => {
     context(`with html option as ${html}`, () => {
       const markdown = md({ html })
-      const extractComments = $cheerio =>
+      const extractComments = ($cheerio) =>
         $cheerio('*')
           .contents()
           .filter(function filterComment() {
@@ -75,7 +75,7 @@ describe('Marpit comment plugin', () => {
         fence: '```\n<!-- code -->\n```',
       }
 
-      Object.keys(ignoreCases).forEach(elementType => {
+      Object.keys(ignoreCases).forEach((elementType) => {
         context(`when ${elementType} has HTML comment`, () => {
           it('keeps HTML comment', () => {
             const $ = cheerio.load(markdown.render(ignoreCases[elementType]))

@@ -6,7 +6,7 @@
  * @param  {*} valOrArr
  * @return {Array}
  */
-const wrapArray = valOrArr => {
+const wrapArray = (valOrArr) => {
   if (valOrArr == null || valOrArr === false) return []
   if (valOrArr instanceof Array) return valOrArr
   return [valOrArr]

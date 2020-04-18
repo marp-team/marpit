@@ -3,7 +3,7 @@ import postcss from 'postcss'
 import importRollup from '../../../src/postcss/import/rollup'
 
 describe('Marpit PostCSS import rollup plugin', () => {
-  const run = input =>
+  const run = (input) =>
     postcss([importRollup]).process(input, { from: undefined })
 
   it('rolls up invalid @import rules', () => {

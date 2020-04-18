@@ -6,25 +6,25 @@ import parseDirectives from '../../src/markdown/directives/parse'
 import slide from '../../src/markdown/slide'
 
 describe('Marpit heading divider plugin', () => {
-  const marpitStub = headingDividerOption => ({
+  const marpitStub = (headingDividerOption) => ({
     customDirectives: { global: {}, local: {} },
     options: { headingDivider: headingDividerOption },
   })
 
   const markdownText = '# 1st\n## 2nd\n### 3rd\n#### 4th'
 
-  const pickHrAndHeading = tokens =>
+  const pickHrAndHeading = (tokens) =>
     tokens.filter(
       (t, idx) => t.type === 'hr' || (idx > 0 && tokens[idx - 1].type === 'hr')
     )
 
   describe('Constructor option', () => {
-    const md = marpitInstance => {
+    const md = (marpitInstance) => {
       const instance = new MarkdownIt('commonmark')
       instance.marpit = marpitInstance
 
       return instance
-        .use(pluginMd => pluginMd.core.ruler.push('marpit_slide', () => {}))
+        .use((pluginMd) => pluginMd.core.ruler.push('marpit_slide', () => {}))
         .use(headingDivider)
     }
 
@@ -33,7 +33,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('does not add any horizontal ruler tokens', () => {
         const tokens = markdown.parse(markdownText)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(0)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(0)
       })
     })
 
@@ -42,7 +42,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before until 3rd level headings except first', () => {
         const tokens = markdown.parse(markdownText)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(2)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
         expect(hrAndHeadings[0].type).toBe('hr')
@@ -61,7 +61,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before 3rd level heading', () => {
         const tokens = markdown.parse(markdownText)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(1)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(1)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
         expect(hrAndHeadings[0].type).toBe('hr')
@@ -76,7 +76,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before 2nd and 4th level heading', () => {
         const tokens = markdown.parse(markdownText)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(2)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
         expect(hrAndHeadings[0].type).toBe('hr')
@@ -91,7 +91,7 @@ describe('Marpit heading divider plugin', () => {
     })
 
     context('with headingDivider option as 4 and slide plugin', () => {
-      const mdWithSlide = marpitInstance => {
+      const mdWithSlide = (marpitInstance) => {
         const instance = new MarkdownIt('commonmark')
         instance.marpit = marpitInstance
 
@@ -106,7 +106,7 @@ describe('Marpit heading divider plugin', () => {
       it('maps corresponded line of slide to heading', () => {
         const tokens = mdWithSlide(marpitStub(4)).parse(markdownText)
         const [first, second, third, fourth] = tokens.filter(
-          t => t.type === 'marpit_slide_open'
+          (t) => t.type === 'marpit_slide_open'
         )
 
         expect(first.map).toStrictEqual([0, 1])
@@ -121,7 +121,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('does not add any horizontal ruler tokens', () => {
         const tokens = markdown.parse(markdownText)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(0)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(0)
       })
     })
   })
@@ -138,15 +138,15 @@ describe('Marpit heading divider plugin', () => {
 
       return instance
         .use(comment)
-        .use(pluginMd => pluginMd.core.ruler.push('marpit_slide', () => {}))
+        .use((pluginMd) => pluginMd.core.ruler.push('marpit_slide', () => {}))
         .use(parseDirectives)
         .use(headingDivider)
     }
 
-    const markdownTextWithDirective = level =>
+    const markdownTextWithDirective = (level) =>
       `---\nheadingDivider: ${level}\n---\n\n${markdownText}`
 
-    const markdownTextWithComment = level =>
+    const markdownTextWithComment = (level) =>
       `${markdownText}\n<!-- headingDivider: ${level} -->`
 
     context('with headingDivider directive as 3', () => {
@@ -155,7 +155,7 @@ describe('Marpit heading divider plugin', () => {
 
       it('adds hidden hr token to before until 3rd level headings except first', () => {
         const tokens = markdown.parse(text)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(2)
 
         const hrAndHeadings = pickHrAndHeading(tokens)
         expect(hrAndHeadings[0].type).toBe('hr')
@@ -177,7 +177,7 @@ describe('Marpit heading divider plugin', () => {
 
         it('adds hidden hr token to before 2nd and 4th level heading', () => {
           const tokens = markdown.parse(text)
-          expect(tokens.filter(t => t.type === 'hr')).toHaveLength(2)
+          expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(2)
 
           const hrAndHeadings = pickHrAndHeading(tokens)
           expect(hrAndHeadings[0].type).toBe('hr')
@@ -197,15 +197,15 @@ describe('Marpit heading divider plugin', () => {
 
       it('overrides headingDivider option by directive', () => {
         const tokens = markdown.parse(markdownText)
-        expect(tokens.filter(t => t.type === 'hr')).toHaveLength(3)
+        expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(3)
 
         const overridden = markdown.parse(markdownTextWithDirective('false'))
-        expect(overridden.filter(t => t.type === 'hr')).toHaveLength(0)
+        expect(overridden.filter((t) => t.type === 'hr')).toHaveLength(0)
       })
 
       it('ignores invalid headingDivider directive', () => {
         const overridden = markdown.parse(markdownTextWithDirective('invalid'))
-        expect(overridden.filter(t => t.type === 'hr')).toHaveLength(3)
+        expect(overridden.filter((t) => t.type === 'hr')).toHaveLength(3)
       })
     })
   })

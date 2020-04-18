@@ -63,7 +63,7 @@ describe('Theme', () => {
       `)
 
       it('returns Theme instance that has width and height props', () =>
-        expect(instance.importRules.map(r => r.value)).toStrictEqual([
+        expect(instance.importRules.map((r) => r.value)).toStrictEqual([
           'yet-another', // @import-theme prepends to the beginning
           'another-theme',
         ]))
@@ -108,7 +108,7 @@ describe('Theme', () => {
   })
 
   describe('widthPixel property', () => {
-    const instance = width =>
+    const instance = (width) =>
       Theme.fromCSS(`section { width: ${width}; }`, {
         [skipThemeValidationSymbol]: true,
       })
@@ -130,7 +130,7 @@ describe('Theme', () => {
 
     it('returns undefined when width property is invalid', () => {
       const theme = new Theme()
-      const assertWidth = width => {
+      const assertWidth = (width) => {
         theme.width = width
         expect(theme.widthPixel).toBeUndefined()
       }
@@ -143,7 +143,7 @@ describe('Theme', () => {
   })
 
   describe('heightPixel property', () => {
-    const instance = height =>
+    const instance = (height) =>
       Theme.fromCSS(`section { height: ${height}; }`, {
         [skipThemeValidationSymbol]: true,
       })
@@ -165,7 +165,7 @@ describe('Theme', () => {
 
     it('returns undefined when width property is invalid', () => {
       const theme = new Theme()
-      const assertHeight = height => {
+      const assertHeight = (height) => {
         theme.height = height
         expect(theme.heightPixel).toBeUndefined()
       }

@@ -14,7 +14,7 @@ import split from '../helpers/split'
 function headingDivider(md) {
   const { marpit } = md
 
-  md.core.ruler.before('marpit_slide', 'marpit_heading_divider', state => {
+  md.core.ruler.before('marpit_slide', 'marpit_heading_divider', (state) => {
     let target = marpit.options.headingDivider
 
     if (
@@ -29,18 +29,19 @@ function headingDivider(md) {
     if (state.inlineMode || target === false) return
 
     if (Number.isInteger(target) && target >= 1 && target <= 6)
-      target = [...Array(target).keys()].map(i => i + 1)
+      target = [...Array(target).keys()].map((i) => i + 1)
 
     if (!Array.isArray(target)) return
 
-    const splitTag = target.map(i => `h${i}`)
-    const splitFunc = t => t.type === 'heading_open' && splitTag.includes(t.tag)
+    const splitTag = target.map((i) => `h${i}`)
+    const splitFunc = (t) =>
+      t.type === 'heading_open' && splitTag.includes(t.tag)
     const newTokens = []
 
     for (const slideTokens of split(state.tokens, splitFunc, true)) {
       const [token] = slideTokens
 
-      if (token && splitFunc(token) && newTokens.some(t => !t.hidden)) {
+      if (token && splitFunc(token) && newTokens.some((t) => !t.hidden)) {
         const hr = new state.Token('hr', '', 0)
         hr.hidden = true
         hr.map = token.map

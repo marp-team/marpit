@@ -17,7 +17,7 @@ const plugin = postcss.plugin(
 
     ret.marpitMeta = ret.marpitMeta || {}
 
-    css.walkComments(comment => {
+    css.walkComments((comment) => {
       comment.text
         .slice(0)
         .replace(/^[*!\s]*@([\w-]+)\s+(.+)$/gim, (_, metaName, value) => {

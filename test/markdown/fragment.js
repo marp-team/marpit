@@ -10,7 +10,7 @@ describe('Marpit fragment plugin', () => {
 
     return instance
       .use(slide)
-      .use(m => m.core.ruler.push('marpit_directives_parse', () => {}))
+      .use((m) => m.core.ruler.push('marpit_directives_parse', () => {}))
       .use(fragment)
   }
 

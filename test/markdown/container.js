@@ -4,7 +4,7 @@ import { Element } from '../../src/index'
 import container from '../../src/markdown/container'
 
 describe('Marpit container plugin', () => {
-  const md = containers => {
+  const md = (containers) => {
     const instance = new MarkdownIt('commonmark')
     instance.marpit = { options: { container: containers } }
 

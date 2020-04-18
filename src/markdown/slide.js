@@ -31,12 +31,12 @@ function slide(md, opts = {}) {
   const anchorCallback =
     typeof anchor === 'function'
       ? anchor
-      : i => (anchor ? `${i + 1}` : undefined)
+      : (i) => (anchor ? `${i + 1}` : undefined)
 
-  md.core.ruler.push('marpit_slide', state => {
+  md.core.ruler.push('marpit_slide', (state) => {
     if (state.inlineMode) return
 
-    const splittedTokens = split(state.tokens, t => t.type === 'hr', true)
+    const splittedTokens = split(state.tokens, (t) => t.type === 'hr', true)
     const { length: marpitSlideTotal } = splittedTokens
 
     state.tokens = splittedTokens.reduce((arr, slideTokens, marpitSlide) => {
@@ -45,7 +45,7 @@ function slide(md, opts = {}) {
           ? slideTokens[0]
           : undefined
 
-      const mapTarget = firstHr || slideTokens.find(t => t.map)
+      const mapTarget = firstHr || slideTokens.find((t) => t.map)
 
       return [
         ...arr,
