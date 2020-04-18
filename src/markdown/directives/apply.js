@@ -31,7 +31,7 @@ function apply(md, opts = {}) {
   md.core.ruler.after(
     'marpit_directives_parse',
     'marpit_directives_apply',
-    state => {
+    (state) => {
       if (state.inlineMode) return
 
       for (const token of state.tokens) {

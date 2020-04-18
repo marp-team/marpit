@@ -12,7 +12,7 @@
  */
 function marpitPlugin(plugin) {
   // eslint-disable-next-line func-names
-  return function(md, ...args) {
+  return function (md, ...args) {
     if (md.marpit) return plugin.call(this, md, ...args)
 
     throw new Error(

@@ -15,7 +15,7 @@ import marpitPlugin from '../plugin'
 function collect(md) {
   const { marpit } = md
 
-  md.core.ruler.push('marpit_collect', state => {
+  md.core.ruler.push('marpit_collect', (state) => {
     if (state.inlineMode) return
 
     marpit.lastComments = []
@@ -24,7 +24,7 @@ function collect(md) {
     let currentPage
     let pageIdx = -1
 
-    const collectComment = token => {
+    const collectComment = (token) => {
       if (
         currentPage >= 0 &&
         !(token.meta && token.meta.marpitCommentParsed !== undefined)

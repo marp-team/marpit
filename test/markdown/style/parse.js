@@ -36,7 +36,8 @@ describe('Marpit style parse plugin', () => {
   for (const html of [true, false]) {
     context(`with html option as ${html}`, () => {
       const markdown = md(marpitStub, { html })
-      const pickStyles = tokens => tokens.filter(t => t.type === 'marpit_style')
+      const pickStyles = (tokens) =>
+        tokens.filter((t) => t.type === 'marpit_style')
 
       it('extracts style with scoped attribute and stores to "marpit_style" token', () => {
         const [strong, a, i] = pickStyles(markdown.parse(text))
@@ -70,7 +71,7 @@ describe('Marpit style parse plugin', () => {
         })
       })
 
-      Object.keys(ignoreCases).forEach(elementType => {
+      Object.keys(ignoreCases).forEach((elementType) => {
         context(`when ${elementType} has <style> HTML tag`, () => {
           it('keeps HTML', () => {
             const tokens = markdown.parse(ignoreCases[elementType])

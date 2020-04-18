@@ -1,7 +1,7 @@
 export function find(from, cond) {
   let found
   return (
-    from.some(rule => {
+    from.some((rule) => {
       for (const key of Object.keys(cond)) {
         if (rule[key] === undefined) return false
         if (typeof cond[key] === 'function') {

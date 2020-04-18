@@ -5,7 +5,7 @@ describe('Marpit PostCSS import suppress plugin', () => {
   const themeSetStub = new Map()
   themeSetStub.set('imported', { css: '' })
 
-  const run = input =>
+  const run = (input) =>
     postcss([importSuppress(themeSetStub)]).process(input, { from: undefined })
 
   it('comments out @import and @import-theme rules with valid theme', () =>

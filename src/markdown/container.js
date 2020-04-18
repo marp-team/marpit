@@ -15,7 +15,7 @@ function container(md) {
 
   const target = [...containers].reverse()
 
-  md.core.ruler.push('marpit_containers', state => {
+  md.core.ruler.push('marpit_containers', (state) => {
     if (state.inlineMode) return
 
     for (const cont of target)

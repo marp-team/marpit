@@ -57,7 +57,7 @@ describe('Marpit sweep plugin', () => {
 
   const htmlOptions = [true, false]
 
-  htmlOptions.forEach(html => {
+  htmlOptions.forEach((html) => {
     context(`with html option as ${html}`, () => {
       it('sweeps blank paragraph made by comment plugin', () => {
         // First paragraph remains a whitespace after striped comments.

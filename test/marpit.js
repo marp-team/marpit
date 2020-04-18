@@ -77,7 +77,7 @@ describe('Marpit', () => {
         const marpit = new Marpit({ container: undefined })
 
         expect(() => {
-          marpit.customDirectives.global.marp = v => ({ marp: `test ${v}` })
+          marpit.customDirectives.global.marp = (v) => ({ marp: `test ${v}` })
         }).not.toThrowError()
 
         const [token] = marpit.markdown.parse('<!-- marp: ok -->')
@@ -93,12 +93,12 @@ describe('Marpit', () => {
       })
 
       it('can assign built-in directive as alias', () => {
-        const $theme = jest.fn(v => ({ theme: v }))
+        const $theme = jest.fn((v) => ({ theme: v }))
         const marpit = new Marpit({ container: undefined })
 
         marpit.themeSet.add('/* @theme foobar */')
         marpit.customDirectives.global.$theme = $theme
-        marpit.customDirectives.local.test = v => ({ test: v, class: v })
+        marpit.customDirectives.local.test = (v) => ({ test: v, class: v })
 
         // Global directive (Dollar prefix)
         marpit.markdown.render('<!-- $theme: foobar -->')
@@ -126,8 +126,8 @@ describe('Marpit', () => {
       context('with looseYAML option as true', () => {
         it('allows loose YAML parsing for custom directives', () => {
           const marpit = new Marpit({ container: undefined, looseYAML: true })
-          marpit.customDirectives.global.a = v => ({ a: v })
-          marpit.customDirectives.local.b = v => ({ b: v })
+          marpit.customDirectives.global.a = (v) => ({ a: v })
+          marpit.customDirectives.local.b = (v) => ({ b: v })
 
           const [token] = marpit.markdown.parse('---\na: #123\nb: #abc\n---')
           expect(token.meta.marpitDirectives.a).toBe('#123')
@@ -138,8 +138,8 @@ describe('Marpit', () => {
       context('with looseYAML option as false', () => {
         it('disallows loose YAML parsing for custom directives', () => {
           const marpit = new Marpit({ container: undefined, looseYAML: false })
-          marpit.customDirectives.global.a = v => ({ a: v })
-          marpit.customDirectives.local.b = v => ({ b: v })
+          marpit.customDirectives.global.a = (v) => ({ a: v })
+          marpit.customDirectives.local.b = (v) => ({ b: v })
 
           const [token] = marpit.markdown.parse('---\na: #123\nb: #abc\n---')
           expect(token.meta.marpitDirectives.a).toBeNull()
@@ -177,7 +177,7 @@ describe('Marpit', () => {
       const markdown = '# Hello'
       const instance = new Marpit()
 
-      instance.renderMarkdown = md => {
+      instance.renderMarkdown = (md) => {
         expect(md).toBe(markdown)
         instance.lastGlobalDirectives = { theme: 'dummy-theme' }
         instance.lastComments = [['A', 'B', 'C']]
@@ -229,7 +229,7 @@ describe('Marpit', () => {
     })
 
     context('with inlineSVG option', () => {
-      const instance = inlineSVG => {
+      const instance = (inlineSVG) => {
         const marpit = new Marpit({ inlineSVG })
 
         marpit.themeSet.default = marpit.themeSet.add(dedent`
@@ -260,7 +260,7 @@ describe('Marpit', () => {
 
         return postcssInstance
           .process(rendered.css, { from: undefined })
-          .then(ret => {
+          .then((ret) => {
             expect($('svg > foreignObject > section > h1')).toHaveLength(1)
             expect(countDecl(ret.root, '--theme-defined')).toBe(1)
           })
@@ -283,8 +283,8 @@ describe('Marpit', () => {
 
         return postcssInstance
           .process($('section').attr('style'), { from: undefined })
-          .then(ret =>
-            ret.root.walkDecls('background-image', decl => {
+          .then((ret) =>
+            ret.root.walkDecls('background-image', (decl) => {
               expect(decl.value).toBe('url("test")')
             })
           )
@@ -315,7 +315,7 @@ describe('Marpit', () => {
       context('when markdown-it has customized normalization', () => {
         it('uses original link to detect color', () => {
           const base = new MarkdownIt()
-          base.normalizeLink = url => `test:${url}`
+          base.normalizeLink = (url) => `test:${url}`
 
           // Original markdown-it uses customized normalization
           const baseHTML = base.render(md)
@@ -369,7 +369,7 @@ describe('Marpit', () => {
     })
 
     context('with looseYAML option', () => {
-      const instance = looseYAML => new Marpit({ looseYAML })
+      const instance = (looseYAML) => new Marpit({ looseYAML })
       const markdown = dedent`
         ---
         backgroundImage:  url('/image.jpg')

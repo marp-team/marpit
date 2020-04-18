@@ -17,7 +17,7 @@ function advancedBackground(md) {
   md.core.ruler.after(
     'marpit_directives_apply',
     'marpit_advanced_background',
-    state => {
+    (state) => {
       let current
       const newTokens = []
 

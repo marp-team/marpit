@@ -5,15 +5,15 @@ import postcssSectionSize from './postcss/section_size'
 import skipThemeValidationSymbol from './theme/symbol'
 
 const absoluteUnits = {
-  cm: v => (v * 960) / 25.4,
-  in: v => v * 96,
-  mm: v => (v * 96) / 25.4,
-  pc: v => v * 16,
-  pt: v => (v * 4) / 3,
-  px: v => v,
+  cm: (v) => (v * 960) / 25.4,
+  in: (v) => v * 96,
+  mm: (v) => (v * 96) / 25.4,
+  pc: (v) => v * 16,
+  pt: (v) => (v * 4) / 3,
+  px: (v) => v,
 }
 
-const convertToPixel = value => {
+const convertToPixel = (value) => {
   if (typeof value !== 'string') return undefined
 
   const matched = value.match(/^(-?[.0-9]+)([a-z]+)$/i)
@@ -27,7 +27,7 @@ const convertToPixel = value => {
   return conv ? conv(parsed) : undefined
 }
 
-const memoizeProp = name => `${name}Memoized`
+const memoizeProp = (name) => `${name}Memoized`
 const reservedMetaType = { theme: String }
 
 /**

@@ -31,7 +31,7 @@ describe('Marpit header and footer plugin', () => {
   }
 
   describe('Header local directive', () => {
-    const markdown = header =>
+    const markdown = (header) =>
       `<!-- header: "${header}" -->\n# Page 1\n\n---\n\n# Page 2`
 
     it('appends <header> element to each slide', () => {
@@ -51,9 +51,7 @@ describe('Marpit header and footer plugin', () => {
       const $ = cheerio.load(md().render(markdown(mdText)))
 
       $('section').each((i, elm) => {
-        const header = $(elm)
-          .children()
-          .first()
+        const header = $(elm).children().first()
 
         const img = header.find('img')
 
@@ -71,7 +69,7 @@ describe('Marpit header and footer plugin', () => {
   })
 
   describe('Footer local directive', () => {
-    const markdown = footer =>
+    const markdown = (footer) =>
       `<!-- footer: "${footer}" -->\n# Page 1\n\n---\n\n# Page 2`
 
     it('prepends <footer> element to each slide', () => {
@@ -91,9 +89,7 @@ describe('Marpit header and footer plugin', () => {
       const $ = cheerio.load(md().render(markdown(mdText)))
 
       $('section').each((i, elm) => {
-        const footer = $(elm)
-          .children()
-          .last()
+        const footer = $(elm).children().last()
 
         const img = footer.find('img')
 

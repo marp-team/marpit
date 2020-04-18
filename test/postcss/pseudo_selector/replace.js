@@ -15,9 +15,9 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         :marpit-container > :marpit-slide h3 { font-size: 30px; }
       `
 
-      return run(css).then(result => {
-        result.root.walkRules(rule => {
-          rule.selectors.forEach(selector => {
+      return run(css).then((result) => {
+        result.root.walkRules((rule) => {
+          rule.selectors.forEach((selector) => {
             expect(selector.startsWith('section h')).toBe(true)
           })
         })
@@ -32,9 +32,9 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         :marpit-container > :marpit-slide:first-child { background: #333; }
       `
 
-      return run(css).then(result => {
+      return run(css).then((result) => {
         const rules = []
-        result.root.walkRules(rule => rules.push(...rule.selectors))
+        result.root.walkRules((rule) => rules.push(...rule.selectors))
 
         expect(rules).toContain('section#1')
         expect(rules).toContain('section.invert')
@@ -51,7 +51,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into an element', () => {
         const container = new Element('div')
 
-        return run(css, container).then(result =>
+        return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe('div > section')
         )
       })
@@ -61,7 +61,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into multiple elements combined by child combinator', () => {
         const containers = [new Element('div'), new Element('span')]
 
-        return run(css, containers).then(result =>
+        return run(css, containers).then((result) =>
           expect(result.root.first.selector).toBe('div > span > section')
         )
       })
@@ -71,7 +71,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into an element with class selectors', () => {
         const container = new Element('div', { class: 'foo bar' })
 
-        return run(css, container).then(result =>
+        return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe('div.foo.bar > section')
         )
       })
@@ -79,7 +79,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('removes duplicated class from selector', () => {
         const container = new Element('div', { class: 'one two one' })
 
-        return run(css, container).then(result =>
+        return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe('div.one.two > section')
         )
       })
@@ -89,7 +89,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into an element with id selectors', () => {
         const container = new Element('div', { id: 'identifier' })
 
-        return run(css, container).then(result =>
+        return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe('div#identifier > section')
         )
       })
@@ -97,7 +97,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces container into selector consisted by class and id', () => {
         const container = new Element('div', { class: 'one two', id: 'id' })
 
-        return run(css, container).then(result =>
+        return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe('div.one.two#id > section')
         )
       })
@@ -109,7 +109,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
     context('when slide element is null', () => {
       it('remove pseudo elements', () =>
-        run(css, undefined, null).then(result =>
+        run(css, undefined, null).then((result) =>
           expect(result.root.first.selector).toBe('h1')
         ))
     })
@@ -118,7 +118,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces slide into an element', () => {
         const container = new Element('div')
 
-        return run(css, undefined, container).then(result =>
+        return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('div h1')
         )
       })
@@ -128,7 +128,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces slide into multiple elements combined by child combinator', () => {
         const container = [new Element('svg'), new Element('foreignObject')]
 
-        return run(css, undefined, container).then(result =>
+        return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('svg > foreignObject h1')
         )
       })
@@ -138,7 +138,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces slide into an element with class selectors', () => {
         const container = new Element('div', { class: 'foo bar' })
 
-        return run(css, undefined, container).then(result =>
+        return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('div.foo.bar h1')
         )
       })
@@ -146,7 +146,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('removes duplicated class from selector', () => {
         const container = new Element('div', { class: 'one two one' })
 
-        return run(css, undefined, container).then(result =>
+        return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('div.one.two h1')
         )
       })
@@ -156,7 +156,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces slide into an element with id selectors', () => {
         const container = new Element('div', { id: 'identifier' })
 
-        return run(css, undefined, container).then(result =>
+        return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('div#identifier h1')
         )
       })
@@ -164,7 +164,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       it('replaces slide into selector consisted by class and id', () => {
         const container = new Element('div', { class: 'one two', id: 'id' })
 
-        return run(css, undefined, container).then(result =>
+        return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('div.one.two#id h1')
         )
       })

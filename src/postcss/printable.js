@@ -20,8 +20,8 @@ html, body {
  * @param {string} opts.height
  * @alias module:postcss/printable
  */
-const plugin = postcss.plugin('marpit-postcss-printable', opts => css => {
-  css.walkAtRules('media', rule => {
+const plugin = postcss.plugin('marpit-postcss-printable', (opts) => (css) => {
+  css.walkAtRules('media', (rule) => {
     if (rule.params === 'marpit-print') rule.remove()
   })
 
@@ -60,8 +60,8 @@ const plugin = postcss.plugin('marpit-postcss-printable', opts => css => {
  */
 export const postprocess = postcss.plugin(
   'marpit-postcss-printable-postprocess',
-  () => css =>
-    css.walkAtRules('media', rule => {
+  () => (css) =>
+    css.walkAtRules('media', (rule) => {
       if (rule.params !== 'marpit-print') return
 
       rule.params = 'print'

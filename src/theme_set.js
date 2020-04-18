@@ -166,12 +166,12 @@ class ThemeSet {
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
     const metas = themeInstance
       ? this.resolveImport(themeInstance)
-          .map(t => t.meta[meta])
-          .filter(m => m)
+          .map((t) => t.meta[meta])
+          .filter((m) => m)
       : []
 
     // Flatten in order of definitions when the all of valid values are array
-    if (metas.length > 0 && metas.every(m => Array.isArray(m))) {
+    if (metas.length > 0 && metas.every((m) => Array.isArray(m))) {
       const mergedArray = []
 
       for (const m of metas) mergedArray.unshift(...m)
@@ -195,11 +195,11 @@ class ThemeSet {
   getThemeProp(theme, prop) {
     const themeInstance = theme instanceof Theme ? theme : this.get(theme)
     const props = themeInstance
-      ? this.resolveImport(themeInstance).map(t => t[prop])
+      ? this.resolveImport(themeInstance).map((t) => t[prop])
       : []
 
     return [...props, this.default && this.default[prop], scaffold[prop]].find(
-      t => t
+      (t) => t
     )
   }
 
@@ -240,7 +240,7 @@ class ThemeSet {
     if (opts.inlineSVG)
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
 
-    const additionalCSS = css => {
+    const additionalCSS = (css) => {
       if (!css) return undefined
 
       try {
@@ -255,8 +255,8 @@ class ThemeSet {
 
     const packer = postcss(
       [
-        before && (css => css.first.before(before)),
-        after && (css => css.last.after(after)),
+        before && ((css) => css.first.before(before)),
+        after && ((css) => css.last.after(after)),
         postcssImportRollup,
         postcssImportReplace(this),
         opts.printable &&
@@ -264,14 +264,14 @@ class ThemeSet {
             width: this.getThemeProp(theme, 'width'),
             height: this.getThemeProp(theme, 'height'),
           }),
-        theme !== scaffold && (css => css.first.before(scaffold.css)),
+        theme !== scaffold && ((css) => css.first.before(scaffold.css)),
         opts.inlineSVG && postcssAdvancedBackground,
         postcssPagination,
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
         opts.printable && postcssPrintablePostProcess,
         postcssImportRollup,
-      ].filter(p => p)
+      ].filter((p) => p)
     )
 
     return packer.process(theme.css).css
@@ -303,19 +303,19 @@ class ThemeSet {
 
     const resolvedThemes = [theme]
 
-    theme.importRules.forEach(m => {
+    theme.importRules.forEach((m) => {
       const importTheme = this.get(m.value)
 
       if (importTheme)
         resolvedThemes.push(
           ...this.resolveImport(
             importTheme,
-            [...importedThemes, name].filter(n => n)
+            [...importedThemes, name].filter((n) => n)
           )
         )
     })
 
-    return resolvedThemes.filter(v => v)
+    return resolvedThemes.filter((v) => v)
   }
 }
 

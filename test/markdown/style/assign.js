@@ -16,14 +16,11 @@ describe('Marpit style assign plugin', () => {
   })
 
   context('with inline style elements', () => {
-    const md = marpit => {
+    const md = (marpit) => {
       const instance = new MarkdownIt('commonmark')
       instance.marpit = marpit
 
-      return instance
-        .use(slide)
-        .use(styleParse)
-        .use(styleAssign)
+      return instance.use(slide).use(styleParse).use(styleAssign)
     }
 
     it('assigns parsed styles to Marpit lastStyles property', () => {
@@ -82,7 +79,7 @@ describe('Marpit style assign plugin', () => {
           `)
 
           const matcher = /^section\[(data-marpit-scope-.{8})\]/
-          const attrs = marpit.lastStyles.map(s => s.match(matcher)[1])
+          const attrs = marpit.lastStyles.map((s) => s.match(matcher)[1])
           expect(attrs[0]).toBe(attrs[1])
         })
       })
@@ -99,7 +96,7 @@ describe('Marpit style assign plugin', () => {
   })
 
   context('with style global directive', () => {
-    const md = marpit => {
+    const md = (marpit) => {
       const instance = new MarkdownIt('commonmark')
       instance.marpit = marpit
 
@@ -124,7 +121,7 @@ describe('Marpit style assign plugin', () => {
   })
 
   context('with muiltiple style elements and a style directive', () => {
-    const md = marpit => {
+    const md = (marpit) => {
       const instance = new MarkdownIt('commonmark')
       instance.marpit = marpit
 

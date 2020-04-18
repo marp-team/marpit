@@ -28,12 +28,12 @@ describe('Marpit directives apply plugin', () => {
   }
 
   const mdForTest = (...args) =>
-    md(...args).use(mdInstance => {
+    md(...args).use((mdInstance) => {
       mdInstance.core.ruler.before(
         'marpit_directives_apply',
         'marpit_directives_apply_test',
-        state => {
-          state.tokens.forEach(token => {
+        (state) => {
+          state.tokens.forEach((token) => {
             if (token.meta && token.meta.marpitDirectives) {
               // Internal directive
               token.meta.marpitDirectives.unknownDir = 'directive'
@@ -50,7 +50,7 @@ describe('Marpit directives apply plugin', () => {
     ---
   `
 
-  const toObjStyle = style =>
+  const toObjStyle = (style) =>
     (style || '').split(';').reduce((obj, text) => {
       const splited = text.trim().split(':')
       if (splited.length !== 2) return obj
@@ -202,7 +202,7 @@ describe('Marpit directives apply plugin', () => {
           expect(style['background-color']).toBe('white')
           expect(style.color).toBe('black')
 
-          Array.from({ length: 6 }, (v, k) => k + 1).forEach(i =>
+          Array.from({ length: 6 }, (v, k) => k + 1).forEach((i) =>
             expect(style[`--injection${i}`]).toBeUndefined()
           )
         })

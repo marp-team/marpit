@@ -214,7 +214,7 @@ class Marpit {
     const tokens = this.markdown.parse(markdown, env)
 
     if (env.htmlAsArray) {
-      return this.lastSlideTokens.map(slideTokens =>
+      return this.lastSlideTokens.map((slideTokens) =>
         this.markdown.renderer.render(slideTokens, this.markdown.options, env)
       )
     }

@@ -2,28 +2,28 @@
 import colorString from 'color-string'
 import marpitPlugin from '../../plugin'
 
-const escape = target =>
+const escape = (target) =>
   target.replace(
     /[\\;:()]/g,
-    matched => `\\${matched[0].codePointAt(0).toString(16)} `
+    (matched) => `\\${matched[0].codePointAt(0).toString(16)} `
   )
 
 const optionMatchers = new Map()
 
 // The scale percentage for resize background
-optionMatchers.set(/^(\d*\.)?\d+%$/, matches => ({ size: matches[0] }))
+optionMatchers.set(/^(\d*\.)?\d+%$/, (matches) => ({ size: matches[0] }))
 
 // width and height
-const normalizeLength = v => `${v}${/^(\d*\.)?\d+$/.test(v) ? 'px' : ''}`
+const normalizeLength = (v) => `${v}${/^(\d*\.)?\d+$/.test(v) ? 'px' : ''}`
 
 optionMatchers.set(
   /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
-  matches => ({ width: normalizeLength(matches[1]) })
+  (matches) => ({ width: normalizeLength(matches[1]) })
 )
 
 optionMatchers.set(
   /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
-  matches => ({ height: normalizeLength(matches[1]) })
+  (matches) => ({ height: normalizeLength(matches[1]) })
 )
 
 // CSS filters
@@ -96,7 +96,7 @@ function parseImage(md) {
   let originalURLMap
   let refCount = 0
 
-  const finalizeTokenAttr = token => {
+  const finalizeTokenAttr = (token) => {
     // Convert imprimitive attribute value into primitive string
     if (token.attrs && Array.isArray(token.attrs))
       token.attrs = token.attrs.map(([name, value]) => [name, value.toString()])
@@ -107,14 +107,14 @@ function parseImage(md) {
     }
   }
 
-  md.core.process = state => {
+  md.core.process = (state) => {
     const { normalizeLink } = md
 
     // Prevent reset of WeakMap caused by calling core process internally
     if (refCount === 0) originalURLMap = new WeakMap()
 
     try {
-      md.normalizeLink = url => {
+      md.normalizeLink = (url) => {
         // eslint-disable-next-line no-new-wrappers
         const imprimitiveUrl = new String(normalizeLink.call(md, url))
         originalURLMap.set(imprimitiveUrl, url)
@@ -138,7 +138,7 @@ function parseImage(md) {
   md.inline.ruler2.push('marpit_parse_image', ({ tokens }) => {
     for (const token of tokens) {
       if (token.type === 'image') {
-        const options = token.content.split(/\s+/).filter(s => s.length > 0)
+        const options = token.content.split(/\s+/).filter((s) => s.length > 0)
         const url = token.attrGet('src')
         const originalUrl = originalURLMap.has(url)
           ? originalURLMap.get(url)

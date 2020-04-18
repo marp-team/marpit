@@ -2,7 +2,7 @@
 import YAML, { FAILSAFE_SCHEMA } from 'js-yaml'
 import directives from './directives'
 
-const createPatterns = keys => {
+const createPatterns = (keys) => {
   const set = new Set()
 
   for (const k of keys) {

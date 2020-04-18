@@ -11,7 +11,7 @@ import slide from '../../src/markdown/slide'
 const splitBackgroundKeywords = ['left', 'right']
 
 describe('Marpit background image plugin', () => {
-  const marpitStub = svg => ({
+  const marpitStub = (svg) => ({
     customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     themeSet: { getThemeProp: () => 100 },
@@ -77,7 +77,7 @@ describe('Marpit background image plugin', () => {
 
   context('with color keyword', () => {
     it('assigns backgroundColor directive', () => {
-      const bgColorDirective = src => {
+      const bgColorDirective = (src) => {
         const [firstSlide] = md().parse(`![bg](${src})`)
         return firstSlide.meta.marpitDirectives.backgroundColor
       }
@@ -92,7 +92,7 @@ describe('Marpit background image plugin', () => {
   })
 
   context('with resizing keyword / scale', () => {
-    const directives = markdown => {
+    const directives = (markdown) => {
       const [parsed] = md().parse(markdown)
       return parsed.meta.marpitDirectives
     }
@@ -134,7 +134,7 @@ describe('Marpit background image plugin', () => {
 
   context('with inline SVG (Advanced background mode)', () => {
     const mdSVG = () => md(true)
-    const $load = html =>
+    const $load = (html) =>
       cheerio.load(html, {
         lowerCaseAttributeNames: false,
         lowerCaseTags: false,
@@ -217,12 +217,12 @@ describe('Marpit background image plugin', () => {
       expect(styleD).toContain('background-size:10% 20%;')
     })
 
-    splitBackgroundKeywords.forEach(keyword => {
+    splitBackgroundKeywords.forEach((keyword) => {
       context(`with the ${keyword} keyword for split background`, () => {
-        const $ = attr =>
+        const $ = (attr) =>
           $load(
             mdSVG().render(
-              `![bg ${[keyword, attr].filter(v => v).join(':')}](image)`
+              `![bg ${[keyword, attr].filter((v) => v).join(':')}](image)`
             )
           )
 
@@ -355,7 +355,7 @@ describe('Marpit background image plugin', () => {
           'brightness:.75 blur': 'filter:brightness(.75) blur(10px);',
         }
 
-        Object.keys(filters).forEach(filter => {
+        Object.keys(filters).forEach((filter) => {
           const $ = $load(mdSVG().render(`![${filter}](a)\n![bg ${filter}](b)`))
           const inlineImageStyle = $('img').attr('style')
           const bgImageStyle = $('img').attr('style')
@@ -389,7 +389,7 @@ describe('Marpit background image plugin', () => {
           }
         )
 
-        Object.keys(injections).forEach(filter => {
+        Object.keys(injections).forEach((filter) => {
           const $ = $load(mdSVG().render(`![${filter}](a)`))
           const style = $('img').attr('style')
 

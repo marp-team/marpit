@@ -2,18 +2,18 @@ import postcss from 'postcss'
 import sectionSize from '../../src/postcss/section_size'
 
 describe('Marpit PostCSS section size plugin', () => {
-  const run = input =>
+  const run = (input) =>
     postcss([sectionSize()]).process(input, { from: undefined })
 
   it('adds marpitSectionSize object to result', () => {
-    run('').then(result => {
+    run('').then((result) => {
       expect(result.marpitSectionSize).toBeInstanceOf(Object)
       expect(result.marpitSectionSize).toStrictEqual({})
     })
   })
 
   it('parses width and height declaration on section selector', () =>
-    run('section { width: 123px; height: 456px; }').then(result =>
+    run('section { width: 123px; height: 456px; }').then((result) =>
       expect(result.marpitSectionSize).toStrictEqual({
         width: '123px',
         height: '456px',
@@ -21,7 +21,7 @@ describe('Marpit PostCSS section size plugin', () => {
     ))
 
   it('supports grouping selector', () =>
-    run('html, body, section { width: 234px; height: 567px; }').then(result =>
+    run('html, body, section { width: 234px; height: 567px; }').then((result) =>
       expect(result.marpitSectionSize).toStrictEqual({
         width: '234px',
         height: '567px',
@@ -29,7 +29,7 @@ describe('Marpit PostCSS section size plugin', () => {
     ))
 
   it('ignores section selector with pusedo selector', () =>
-    run('section:first-child { width: 123px; height: 456px; }').then(result =>
+    run('section:first-child { width: 123px; height: 456px; }').then((result) =>
       expect(result.marpitSectionSize).toStrictEqual({})
     ))
 })

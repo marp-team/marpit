@@ -21,16 +21,16 @@
  * @prop {Directive} theme Specify theme of the slide deck.
  */
 export const globals = Object.assign(Object.create(null), {
-  headingDivider: value => {
+  headingDivider: (value) => {
     const headings = [1, 2, 3, 4, 5, 6]
-    const toInt = v =>
+    const toInt = (v) =>
       Array.isArray(v) || Number.isNaN(v) ? v : Number.parseInt(v, 10)
     const converted = toInt(value)
 
     if (Array.isArray(converted)) {
       const convertedArr = converted.map(toInt)
       return {
-        headingDivider: headings.filter(v => convertedArr.includes(v)),
+        headingDivider: headings.filter((v) => convertedArr.includes(v)),
       }
     }
 
@@ -39,7 +39,7 @@ export const globals = Object.assign(Object.create(null), {
 
     return {}
   },
-  style: v => ({ style: v }),
+  style: (v) => ({ style: v }),
   theme: (v, marpit) => (marpit.themeSet.has(v) ? { theme: v } : {}),
 })
 
@@ -69,16 +69,16 @@ export const globals = Object.assign(Object.create(null), {
  * @prop {Directive} paginate Show page number on the slide if you set `true`.
  */
 export const locals = Object.assign(Object.create(null), {
-  backgroundColor: v => ({ backgroundColor: v }),
-  backgroundImage: v => ({ backgroundImage: v }),
-  backgroundPosition: v => ({ backgroundPosition: v }),
-  backgroundRepeat: v => ({ backgroundRepeat: v }),
-  backgroundSize: v => ({ backgroundSize: v }),
-  class: v => ({ class: Array.isArray(v) ? v.join(' ') : v }),
-  color: v => ({ color: v }),
-  footer: v => (typeof v === 'string' ? { footer: v } : {}),
-  header: v => (typeof v === 'string' ? { header: v } : {}),
-  paginate: v => ({ paginate: (v || '').toLowerCase() === 'true' }),
+  backgroundColor: (v) => ({ backgroundColor: v }),
+  backgroundImage: (v) => ({ backgroundImage: v }),
+  backgroundPosition: (v) => ({ backgroundPosition: v }),
+  backgroundRepeat: (v) => ({ backgroundRepeat: v }),
+  backgroundSize: (v) => ({ backgroundSize: v }),
+  class: (v) => ({ class: Array.isArray(v) ? v.join(' ') : v }),
+  color: (v) => ({ color: v }),
+  footer: (v) => (typeof v === 'string' ? { footer: v } : {}),
+  header: (v) => (typeof v === 'string' ? { header: v } : {}),
+  paginate: (v) => ({ paginate: (v || '').toLowerCase() === 'true' }),
 })
 
 export default [...Object.keys(globals), ...Object.keys(locals)]

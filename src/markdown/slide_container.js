@@ -16,14 +16,14 @@ function slideContainer(md) {
 
   const target = [...containers].reverse()
 
-  md.core.ruler.push('marpit_slide_containers', state => {
+  md.core.ruler.push('marpit_slide_containers', (state) => {
     if (state.inlineMode) return
 
     const newTokens = []
 
     for (const tokens of split(
       state.tokens,
-      t => t.meta && t.meta.marpitSlideElement === 1,
+      (t) => t.meta && t.meta.marpitSlideElement === 1,
       true
     )) {
       if (tokens.length > 0)

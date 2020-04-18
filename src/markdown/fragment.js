@@ -11,7 +11,7 @@ const fragmentedListMarkups = ['*', ')']
  */
 function fragment(md) {
   // Fragmented list
-  md.core.ruler.after('marpit_directives_parse', 'marpit_fragment', state => {
+  md.core.ruler.after('marpit_directives_parse', 'marpit_fragment', (state) => {
     if (state.inlineMode) return
 
     for (const token of state.tokens) {
@@ -26,7 +26,7 @@ function fragment(md) {
   })
 
   // Add data-marpit-fragment(s) attributes to token
-  md.core.ruler.after('marpit_fragment', 'marpit_apply_fragment', state => {
+  md.core.ruler.after('marpit_fragment', 'marpit_apply_fragment', (state) => {
     if (state.inlineMode) return
 
     const fragments = { slide: undefined, count: 0 }

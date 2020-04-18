@@ -23,7 +23,7 @@ describe('Marpit directives YAML parser', () => {
     })
 
     it('returns result as same as regular YAML when passed like strict YAML', () => {
-      const confirm = text =>
+      const confirm = (text) =>
         expect(yaml(text, true)).toMatchObject(yaml(text, false))
 
       confirm('headingDivider: [3]')

@@ -32,7 +32,7 @@ describe('Marpit slide plugin', () => {
 
       const [first, second] = markdown
         .parse(multiMd)
-        .filter(t => t.type === 'marpit_slide_open')
+        .filter((t) => t.type === 'marpit_slide_open')
 
       expect(first.map).toStrictEqual([0, 1])
       expect(second.map).toStrictEqual([2, 3])
@@ -68,13 +68,15 @@ describe('Marpit slide plugin', () => {
     })
 
     context('with function', () => {
-      const markdown = func => md({ anchor: func })
+      const markdown = (func) => md({ anchor: func })
 
       it('renders <section> tag with id provided by custom function', () => {
-        const $ = cheerio.load(markdown(i => `page${i + 1}`).render(''))
+        const $ = cheerio.load(markdown((i) => `page${i + 1}`).render(''))
         expect($('section#page1')).toHaveLength(1)
 
-        const $multi = cheerio.load(markdown(i => (i + 1) * 2).render(multiMd))
+        const $multi = cheerio.load(
+          markdown((i) => (i + 1) * 2).render(multiMd)
+        )
         expect($multi('section#2 > h1').text()).toBe('foo')
         expect($multi('section#4 > h2').text()).toBe('bar')
       })
