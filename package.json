@@ -36,6 +36,10 @@
     "index.d.ts",
     "plugin.js"
   ],
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
   "scripts": {
     "build": "yarn -s clean && babel src --out-dir lib",
     "check:audit": "yarn audit",
