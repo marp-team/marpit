@@ -20,6 +20,9 @@ const injectScopePostCSSplugin = postcss.plugin(
   'marpit-style-assign-postcss-inject-scope',
   (attr) => (css) =>
     css.walkRules((rule) => {
+      const { type, name } = rule.parent
+      if (type === 'atrule' && name === 'keyframes') return
+
       rule.selectors = rule.selectors.map((selector) => {
         const injectSelector = /^section(?![\w-])/.test(selector)
           ? selector.slice(7)
