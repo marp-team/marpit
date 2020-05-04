@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#234](https://github.com/marp-team/marpit/pull/234))
+- Bump Node LTS version ([#234](https://github.com/marp-team/marpit/pull/234))
+
+### Removed
+
+- Get rid of using `browser-sync` to preview docs ([#235](https://github.com/marp-team/marpit/pull/235))
+
 ## v1.5.2 - 2020-04-18
 
 ### Changed
