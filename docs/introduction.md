@@ -3,7 +3,7 @@
 
 <div style="text-align:center;">
 
-[![Marpit](./marpit.png ':size=500')](/)
+[![Marpit](./marpit.png ':size=500xauto')](/)
 
 </div>
 <div style="text-align:center;">
