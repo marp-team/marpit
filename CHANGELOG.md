@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.5.3 - 2020-05-04
+
 ### Fixed
 
 - Don't prepend scoping selector into keyframes in `<style scoped>` ([#236](https://github.com/marp-team/marpit/pull/236))
