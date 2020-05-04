@@ -6,7 +6,8 @@
 
 ### Changed
 
-- Upgrade dependent packages to the latest version ([#225](https://github.com/marp-team/marpit/pull/225), [#226](https://github.com/marp-team/marpit/pull/226), [#229](https://github.com/marp-team/marpit/pull/229))
+- Upgrade dependent packages to the latest version ([#225](https://github.com/marp-team/marpit/pull/225), [#226](https://github.com/marp-team/marpit/pull/226), [#229](https://github.com/marp-team/marpit/pull/229), [#234](https://github.com/marp-team/marpit/pull/234))
+- Bump Node LTS version ([#234](https://github.com/marp-team/marpit/pull/234))
 
 ### Removed
 
