@@ -1,8 +1,8 @@
 const fs = require('fs')
+const http = require('http')
 const path = require('path')
 const stream = require('stream')
 const chokidar = require('chokidar')
-const micro = require('micro')
 const handler = require('serve-handler')
 const WebSocket = require('ws')
 const build = require('./modules/build')
@@ -43,9 +43,9 @@ chokidar
 
 // Serve documentation
 const port = process.env.PORT || 3000
-const server = micro(async (req, res) => {
+const server = http.createServer((req, res) => {
   const { writeHead } = res
-  const overriddenHeaders = {}
+  const overriddenHeaders = { 'Cache-Control': 'no-store' }
 
   res.writeHead = function overriddenWriteHead(status, headers) {
     return writeHead.call(this, status, {
@@ -92,7 +92,7 @@ const server = micro(async (req, res) => {
       }
     })
 
-  await handler(
+  return handler(
     req,
     res,
     {
@@ -103,5 +103,6 @@ const server = micro(async (req, res) => {
   )
 })
 
-server.listen(port)
-console.log(`Listening Marpit documentation on http://127.0.0.1:${port}/ ...`)
+server.listen(port, () =>
+  console.log(`Listening Marpit documentation on http://127.0.0.1:${port}/ ...`)
+)
