@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Don't prepend scoping selector into keyframes in `<style scoped>` ([#236](https://github.com/marp-team/marpit/pull/236))
+
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#234](https://github.com/marp-team/marpit/pull/234))
@@ -9,7 +13,7 @@
 
 ### Removed
 
-- Get rid of using `browser-sync` to preview docs ([#235](https://github.com/marp-team/marpit/pull/235))
+- Get rid of `browser-sync` for previewing docs ([#235](https://github.com/marp-team/marpit/pull/235))
 
 ## v1.5.2 - 2020-04-18
 

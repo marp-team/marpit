@@ -84,6 +84,25 @@ describe('Marpit style assign plugin', () => {
         })
       })
 
+      context('when the scoped style has @keyframes', () => {
+        it('ignores scoping style', () => {
+          const marpit = marpitStub()
+          md(marpit).render(dedent`
+            <style scoped>
+            @keyframes spin {
+              from { transform: rotate(0deg); }
+              80% { transform: rotate(390deg); }
+              to { transform: rotate(360deg); }
+            }
+            </style>
+          `)
+
+          expect(marpit.lastStyles.join('\n')).not.toContain(
+            'data-marpit-scope-'
+          )
+        })
+      })
+
       context('when the invalid CSS is passed', () => {
         it('ignores adding style to Marpit lastStyles property', () => {
           const marpit = marpitStub()
