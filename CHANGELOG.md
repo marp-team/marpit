@@ -8,6 +8,10 @@
 
 - Upgrade dependent packages to the latest version ([#225](https://github.com/marp-team/marpit/pull/225), [#226](https://github.com/marp-team/marpit/pull/226), [#229](https://github.com/marp-team/marpit/pull/229))
 
+### Removed
+
+- Get rid of using `browser-sync` to preview docs ([#235](https://github.com/marp-team/marpit/pull/235))
+
 ## v1.5.1 - 2020-03-15
 
 ### Changed
