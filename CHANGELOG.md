@@ -13,7 +13,7 @@
 
 ### Removed
 
-- Get rid of using `browser-sync` to preview docs ([#235](https://github.com/marp-team/marpit/pull/235))
+- Get rid of `browser-sync` for previewing docs ([#235](https://github.com/marp-team/marpit/pull/235))
 
 ## v1.5.2 - 2020-04-18
 
