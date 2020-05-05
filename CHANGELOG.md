@@ -6,6 +6,10 @@
 
 - Make scoped keyframe names if defined `@keyframes` in `<style scoped>` ([#231](https://github.com/marp-team/marpit/issues/231), [#237](https://github.com/marp-team/marpit/pull/237))
 
+### Fixed
+
+- Disable CSS transitions and animations in the style for print ([#238](https://github.com/marp-team/marpit/issues/238), [#239](https://github.com/marp-team/marpit/pull/239))
+
 ## v1.5.3 - 2020-05-04
 
 ### Fixed
