@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Make scoped keyframe names if defined `@keyframes` in `<style scoped>` ([#231](https://github.com/marp-team/marpit/issues/231), [#237](https://github.com/marp-team/marpit/pull/237))
+
 ## v1.5.3 - 2020-05-04
 
 ### Fixed
