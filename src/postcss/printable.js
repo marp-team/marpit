@@ -40,7 +40,10 @@ const plugin = postcss.plugin('marpit-postcss-printable', (opts) => (css) => {
 
   section, section * {
     -webkit-print-color-adjust: exact !important;
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
     color-adjust: exact !important;
+    transition: none !important;
   }
 
   :marpit-container > svg[data-marpit-svg] {
