@@ -85,7 +85,7 @@ describe('Marpit style assign plugin', () => {
       })
 
       context('when the scoped style has @keyframes', () => {
-        it('ignores scoping style', () => {
+        it('scopes keyframe name', () => {
           const marpit = marpitStub()
           md(marpit).render(dedent`
             <style scoped>
@@ -97,9 +97,103 @@ describe('Marpit style assign plugin', () => {
             </style>
           `)
 
-          expect(marpit.lastStyles.join('\n')).not.toContain(
-            'data-marpit-scope-'
+          const css = marpit.lastStyles.join('\n')
+          expect(css).toMatch(/@keyframes spin-\w+/)
+          expect(css).not.toContain('data-marpit-scope-')
+        })
+
+        it('rewrites animation name in decls into scoped name', () => {
+          const basic = marpitStub()
+          md(basic).render(dedent`
+            <style scoped>
+            @keyframes abc {}
+            .animation { animation-name: abc; }
+            </style>
+          `)
+
+          const basicCss = basic.lastStyles.join('\n')
+          const basicMatched = basicCss.match(/@keyframes (abc-\w+)/)
+          expect(basicMatched).toBeTruthy()
+          expect(basicCss).toContain(`animation-name: ${basicMatched[1]}`)
+
+          // Divided keyframes & multiple animation names
+          const divided = marpitStub()
+          md(divided).render(dedent`
+            <style scoped>@keyframes abc {}</style>
+            <style scoped>.animation { animation-name: foo,abc ,bar; }</style>
+          `)
+
+          const dividedCss = divided.lastStyles.join('\n')
+          const dividedMatched = dividedCss.match(/@keyframes (abc-\w+)/)
+          expect(dividedMatched).toBeTruthy()
+          expect(dividedCss).toContain(
+            `animation-name: foo,${dividedMatched[1]} ,bar;`
           )
+
+          // animation shorthands
+          const shorthand = marpitStub()
+          md(shorthand).render(dedent`
+            <style scoped>
+            /* Allow using scoped keyframes before defining */
+            .anim3 { animation: 1s foo, 2s steps, 3s bar; }
+            </style>
+            <style scoped>
+            @keyframes steps {}
+            .anim1 { animation: steps 1s linear 0s infinite; }
+            .anim2 { animation: 1s steps(6) 0s infinite steps; }
+            </style>
+          `)
+
+          const shorthandCss = shorthand.lastStyles.join('\n')
+          const shorthandMatched = shorthandCss.match(/@keyframes (steps-\w+)/)
+          expect(shorthandMatched).toBeTruthy()
+          expect(shorthandCss).toContain(
+            `animation: ${shorthandMatched[1]} 1s linear 0s infinite;`
+          )
+          expect(shorthandCss).toContain(
+            `animation: 1s steps(6) 0s infinite ${shorthandMatched[1]};`
+          )
+          expect(shorthandCss).toContain(
+            `animation: 1s foo, 2s ${shorthandMatched[1]}, 3s bar;`
+          )
+        })
+
+        it('does not scope keyframe name if not defined in scoped styles for the current slide', () => {
+          const marpit = marpitStub()
+          md(marpit).render(dedent`
+            <style>@keyframes global-kf {}</style>
+            <style scoped>.animation { animation-name: global-kf; }</style>
+          `)
+
+          const css = marpit.lastStyles.join('\n')
+          expect(css).toContain('data-marpit-scope-')
+          expect(css).toContain('animation-name: global-kf;')
+        })
+
+        it('scopes keyframes in @supports and @media queries', () => {
+          const marpit = marpitStub()
+          md(marpit).render(dedent`
+            <style scoped>
+            @supports (animation: foobar) {
+              @media screen {
+                @keyframes spin {
+                  from { transform: rotate(0deg); }
+                  to { transform: rotate(360deg); }
+                }
+                .spin {
+                  animation: 1s linear infinite spin;
+                }
+              }
+            }
+            </style>
+          `)
+
+          const css = marpit.lastStyles.join('\n')
+          const matched = css.match(/@keyframes (spin-\w+)/)
+
+          expect(matched).toBeTruthy()
+          expect(css).toContain('data-marpit-scope-')
+          expect(css).toContain(`animation: 1s linear infinite ${matched[1]};`)
         })
       })
 
