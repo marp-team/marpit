@@ -13,17 +13,12 @@ export const rootFontSizeCustomProp = '--marpit-root-font-size'
  */
 const plugin = postcss.plugin('marpit-postcss-root-replace', () => (css) =>
   css.walkRules((rule) => {
-    if (!rule.parent) return
-
-    const { type, name } = rule.parent
-    if (type === 'atrule' && name === 'keyframes') return
-
     const injectSelector = new Set()
 
     rule.selectors = rule.selectors.map((selector) => {
       // Replace `:root` pseudo-class selectors into `section`
       const replaced = selector.replace(
-        /(^|[\s>+~(]):root\b/g,
+        /(^|[\s>+~(])(?:section)?:root\b/g,
         (_, s) => `${s}section`
       )
 
