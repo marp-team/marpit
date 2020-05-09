@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
-import { findAtRule, findDecl, findRule } from '../_supports/postcss_finder'
 import printable, { postprocess } from '../../src/postcss/printable'
+import { findAtRule, findDecl, findRule } from '../_supports/postcss_finder'
 
 describe('Marpit PostCSS printable plugin', () => {
   const run = (input, opts) =>

@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
-import replace from '../../../src/postcss/pseudo_selector/replace'
 import { Element } from '../../../src/index'
+import replace from '../../../src/postcss/pseudo_selector/replace'
 
 describe('Marpit PostCSS pseudo selector replace plugin', () => {
   const run = (input, ...opts) =>

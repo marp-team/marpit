@@ -1,6 +1,6 @@
 /** @module */
-import marpitPlugin from '../plugin'
 import wrapTokens from '../helpers/wrap_tokens'
+import marpitPlugin from '../plugin'
 
 /**
  * Marpit header and footer plugin.

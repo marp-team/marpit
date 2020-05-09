@@ -1,9 +1,9 @@
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import slide from '../../src/markdown/slide'
-import inlineSVG from '../../src/markdown/inline_svg'
-import skipThemeValidationSymbol from '../../src/theme/symbol'
 import { Theme, ThemeSet } from '../../src/index'
+import inlineSVG from '../../src/markdown/inline_svg'
+import slide from '../../src/markdown/slide'
+import skipThemeValidationSymbol from '../../src/theme/symbol'
 
 describe('Marpit inline SVG plugin', () => {
   const marpitStub = (props = {}) => ({

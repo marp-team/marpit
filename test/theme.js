@@ -1,6 +1,6 @@
 import dedent from 'dedent'
-import skipThemeValidationSymbol from '../src/theme/symbol'
 import { Theme } from '../src/index'
+import skipThemeValidationSymbol from '../src/theme/symbol'
 
 describe('Theme', () => {
   describe('.fromCSS', () => {

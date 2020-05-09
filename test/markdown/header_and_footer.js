@@ -1,10 +1,10 @@
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import applyDirectives from '../../src/markdown/directives/apply'
 import comment from '../../src/markdown/comment'
+import applyDirectives from '../../src/markdown/directives/apply'
 import parseDirectives from '../../src/markdown/directives/parse'
-import slide from '../../src/markdown/slide'
 import headerAndFooter from '../../src/markdown/header_and_footer'
+import slide from '../../src/markdown/slide'
 
 describe('Marpit header and footer plugin', () => {
   const themeSet = new Map()
