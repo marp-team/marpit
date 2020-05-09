@@ -9,6 +9,8 @@ import postcssPrintable, {
 } from './postcss/printable'
 import postcssPseudoPrepend from './postcss/pseudo_selector/prepend'
 import postcssPseudoReplace from './postcss/pseudo_selector/replace'
+import postcssRem from './postcss/root/rem'
+import postcssRootReplace from './postcss/root/replace'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
 
@@ -267,9 +269,11 @@ class ThemeSet {
         theme !== scaffold && ((css) => css.first.before(scaffold.css)),
         opts.inlineSVG && postcssAdvancedBackground,
         postcssPagination,
+        postcssRootReplace,
         postcssPseudoPrepend,
         postcssPseudoReplace(opts.containers, slideElements),
         opts.printable && postcssPrintablePostProcess,
+        postcssRem,
         postcssImportRollup,
       ].filter((p) => p)
     )
