@@ -10,6 +10,11 @@ extends:
 parser: babel-eslint
 
 rules:
+  import/order:
+    - error
+    - alphabetize:
+        order: 'asc'
+
   max-len:
     - error
     - 80
