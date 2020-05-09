@@ -182,13 +182,13 @@ body * {
   box-shadow: 0 0 40px var(--mono-tint2);
   scrollbar-width: thin;
 
-  &:hover {
-    --scrollbar-color: var(--mono-tint2);
-  }
-
   &::-webkit-scrollbar {
     width: 9px;
     height: 9px;
+  }
+
+  &:hover {
+    --scrollbar-color: var(--mono-tint2);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
