@@ -5,6 +5,7 @@
 ### Added
 
 - Make scoped keyframe names if defined `@keyframes` in `<style scoped>` ([#231](https://github.com/marp-team/marpit/issues/231), [#237](https://github.com/marp-team/marpit/pull/237))
+- Correct support of `:root` pseudo-class selector and `rem` unit for theme CSS ([#232](https://github.com/marp-team/marpit/issues/232), [#240](https://github.com/marp-team/marpit/pull/240))
 
 ### Fixed
 
