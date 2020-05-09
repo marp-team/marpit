@@ -1,9 +1,10 @@
 env:
-  node: true
   es6: true
+  node: true
 
 extends:
-  - airbnb-base
+  - eslint:recommended
+  - plugin:import/recommended
   - prettier
 
 parser: babel-eslint
@@ -18,11 +19,3 @@ rules:
       ignoreRegExpLiterals: true
       ignoreStrings: true
       ignoreTemplateLiterals: true
-
-  no-param-reassign: off
-
-  no-restricted-syntax:
-    - error
-    - ForInStatement
-    - LabeledStatement
-    - WithStatement
