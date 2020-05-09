@@ -1,7 +1,7 @@
 /** @module */
-import marpitPlugin from '../../plugin'
 import InlineStyle from '../../helpers/inline_style'
 import wrapTokens from '../../helpers/wrap_tokens'
+import marpitPlugin from '../../plugin'
 
 /**
  * Marpit advanced background image plugin.

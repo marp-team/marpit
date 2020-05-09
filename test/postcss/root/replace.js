@@ -1,10 +1,10 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
+import prependSlide from '../../../src/postcss/pseudo_selector/prepend'
+import replaceSlide from '../../../src/postcss/pseudo_selector/replace'
 import replace, {
   rootFontSizeCustomProp,
 } from '../../../src/postcss/root/replace'
-import prependSlide from '../../../src/postcss/pseudo_selector/prepend'
-import replaceSlide from '../../../src/postcss/pseudo_selector/replace'
 
 describe('Marpit PostCSS root replace plugin', () => {
   const run = (input, plugins = []) =>

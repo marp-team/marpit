@@ -1,8 +1,8 @@
 /** @module */
-import marpitPlugin from '../plugin'
 import split from '../helpers/split'
 import wrapArray from '../helpers/wrap_array'
 import wrapTokens from '../helpers/wrap_tokens'
+import marpitPlugin from '../plugin'
 
 /**
  * Marpit slide container plugin.

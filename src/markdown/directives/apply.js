@@ -1,8 +1,8 @@
 /** @module */
 import kebabCase from 'lodash.kebabcase'
-import builtInDirectives from './directives'
-import marpitPlugin from '../../plugin'
 import InlineStyle from '../../helpers/inline_style'
+import marpitPlugin from '../../plugin'
+import builtInDirectives from './directives'
 
 /**
  * Apply parsed Marpit directives to markdown-it tokens.
