@@ -14,6 +14,7 @@
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#241](https://github.com/marp-team/marpit/pull/241))
+- Use ESLint recommended config instead of `eslint-config-airbnb` ([#242](https://github.com/marp-team/marpit/pull/242))
 
 ## v1.5.3 - 2020-05-04
 
