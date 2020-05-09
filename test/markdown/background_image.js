@@ -1,11 +1,11 @@
 import cheerio from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import applyDirectives from '../../src/markdown/directives/apply'
 import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
-import inlineSVG from '../../src/markdown/inline_svg'
+import applyDirectives from '../../src/markdown/directives/apply'
 import parseDirectives from '../../src/markdown/directives/parse'
 import image from '../../src/markdown/image'
+import inlineSVG from '../../src/markdown/inline_svg'
 import slide from '../../src/markdown/slide'
 
 const splitBackgroundKeywords = ['left', 'right']

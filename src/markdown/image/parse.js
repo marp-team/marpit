@@ -115,7 +115,6 @@ function parseImage(md) {
 
     try {
       md.normalizeLink = (url) => {
-        // eslint-disable-next-line no-new-wrappers
         const imprimitiveUrl = new String(normalizeLink.call(md, url))
         originalURLMap.set(imprimitiveUrl, url)
 

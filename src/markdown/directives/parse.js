@@ -1,9 +1,9 @@
 /** @module */
 import MarkdownItFrontMatter from 'markdown-it-front-matter'
-import yaml from './yaml'
-import * as directives from './directives'
-import { markAsParsed } from '../comment'
 import marpitPlugin from '../../plugin'
+import { markAsParsed } from '../comment'
+import * as directives from './directives'
+import yaml from './yaml'
 
 const isDirectiveComment = (token) =>
   token.type === 'marpit_comment' && token.meta.marpitParsedDirectives

@@ -1,7 +1,7 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
-import { rootFontSizeCustomProp } from '../../../src/postcss/root/replace'
 import rem from '../../../src/postcss/root/rem'
+import { rootFontSizeCustomProp } from '../../../src/postcss/root/replace'
 
 describe('Marpit PostCSS rem plugin', () => {
   const run = (input) => postcss([rem()]).process(input, { from: undefined })

@@ -1,7 +1,7 @@
 import cheerio from 'cheerio'
 import dedent from 'dedent'
-import postcss from 'postcss'
 import MarkdownIt from 'markdown-it'
+import postcss from 'postcss'
 import { Marpit, ThemeSet } from '../src/index'
 
 describe('Marpit', () => {

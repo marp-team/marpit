@@ -1,6 +1,6 @@
 /** @module */
-import yaml from './directives/yaml'
 import marpitPlugin from '../plugin'
+import yaml from './directives/yaml'
 
 const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/

@@ -1,6 +1,6 @@
 /** @module */
-import marpitPlugin from '../plugin'
 import split from '../helpers/split'
+import marpitPlugin from '../plugin'
 
 /**
  * Marpit heading divider plugin.

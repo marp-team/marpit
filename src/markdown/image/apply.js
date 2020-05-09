@@ -1,6 +1,6 @@
 /** @module */
-import marpitPlugin from '../../plugin'
 import InlineStyle from '../../helpers/inline_style'
+import marpitPlugin from '../../plugin'
 
 /**
  * Marpit image apply plugin.
