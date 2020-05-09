@@ -17,6 +17,9 @@ $important-color: complement($brand-primary);
   --duration-medium: 0.3s;
   --duration-fast: 0.15s;
 
+  // Scrollbar
+  --scrollbar-color: var(--mono-tint1);
+
   // Sidebar
   --sidebar-background: var(--mono-tint3);
   --sidebar-width: 270px;
@@ -74,6 +77,26 @@ $important-color: complement($brand-primary);
   }
 }
 
+html,
+body,
+body * {
+  scrollbar-color: var(--scrollbar-color) transparent;
+  scrollbar-width: auto;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    box-sizing: border-box;
+    background-color: var(--scrollbar-color);
+    background-clip: padding-box;
+    border-radius: 10px;
+    border: 2px solid transparent;
+  }
+}
+
 .markdown-section {
   padding-bottom: 4rem;
   padding-top: 4rem;
@@ -86,6 +109,14 @@ $important-color: complement($brand-primary);
   h6 {
     code {
       font-size: inherit;
+    }
+  }
+
+  .table-wrapper {
+    margin: 1rem 0;
+
+    table {
+      margin: 0 0 12px 0;
     }
   }
 
@@ -146,13 +177,18 @@ $important-color: complement($brand-primary);
 }
 
 .sidebar {
+  --scrollbar-color: transparent;
+
   box-shadow: 0 0 40px var(--mono-tint2);
+  scrollbar-width: thin;
 
   &::-webkit-scrollbar {
-    width: 3px !important;
+    width: 9px;
+    height: 9px;
   }
-  &::-webkit-scrollbar-thumb {
-    background-color: var(--mono-tint2);
+
+  &:hover {
+    --scrollbar-color: var(--mono-tint2);
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
