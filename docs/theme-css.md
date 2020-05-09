@@ -9,7 +9,7 @@ The basic idea of HTML structure is that `<section>` elements are corresponding 
 <section><h1>Second page</h1></section>
 ```
 
-?> When conversion, Marpit would scope CSS selectors by wrapping with [container element(s)](/usage#package-customize-container-elements) automatically. However, the theme creator should not aware of this process.
+?> When conversion, Marpit would scope CSS selectors by wrapping them with the selector for [container element(s)](/usage#package-customize-container-elements) automatically. However, the theme author doesn't have to be aware of this process.
 
 ## Create theme CSS
 
@@ -35,11 +35,11 @@ h2 {
 }
 ```
 
-We have no any predefined classes or mixins, and don't need require extra definitions for creating theme. This is a key factor different from other slide framework.
+We have no any extra classes or mixins, and do almost not need require to know extra rules for creating theme. This is a key factor of Marpit different from other slide framework.
 
 ### Metadata
 
-We can parse any metadata in CSS comments. Especially the `@theme` metadata is always required by Marpit.
+The `@theme` metadata is always required by Marpit. Define metadata through CSS comment.
 
 ```css
 /* @theme name */
@@ -47,15 +47,44 @@ We can parse any metadata in CSS comments. Especially the `@theme` metadata is a
 
 !> You should use the `/*! comment */` syntax to prevent removing comments if you're using the compressed output of [Sass].
 
+### `:root` pseudo-class selector
+
+Since v1.6.0, [`:root` pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) indicates the viewport of each slide pages in the context of Marpit theme CSS, by replacing `:root` into `section` automatically.
+
+The following is similar theme definition to the example shown earlier, but it's using `:root` selector.
+
+```css
+/* @theme marpit-theme */
+
+:root {
+  width: 1280px;
+  height: 960px;
+  font-size: 40px;
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: #09c;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+```
+
+[`rem` units](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Rems) in Marpit theme will automatically transform into the calculated relative value from the parent `<section>` element, so anyone don't have to worry the effect from `font-size` in the root `<html>` that placed Marpit slide. Everything would work as the theme author expected.
+
 ## Styling
 
 ### Slide size
 
-`width` and `height` declaration in the root `section` selector mean a predefined slide size per theme. The specified size is not only used in the section element size but also in the size of printed PDF.
+`width` and `height` declarations in the root `section` selector or `:root` pseudo-class selector mean a predefined slide size per theme. The specified size is not only used as the size of section element but also as the size of PDF for printing.
 
 The default size is `1280` x `720` pixels. Try this if you want a classic 4:3 slide:
 
 ```css
+/* Change to the classic 4:3 slide */
 section {
   width: 960px;
   height: 720px;
@@ -64,11 +93,11 @@ section {
 
 !> Please notice _it must define the length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
-?> It is determined one size per theme. The slide size cannot tweak through using [inline style](#tweak-style-through-markdown) or [custom class](/directives#class), but may shrink the width of contents if user was using [split backgrounds](/image-syntax#split-backgrounds).
+?> It is determined **one size per theme** in Marpit. The slide size cannot tweak through using [inline style](#tweak-style-through-markdown) or [custom class](/directives#class). But may shrink the width of contents if user was using [split backgrounds](/image-syntax#split-backgrounds).
 
 ### Pagination
 
-[`paginate` local directive](/directives#pagination) may control whether show the page number of slide. The theme creator can style it through `section::after` pseudo-element.
+[`paginate` local directive](/directives#pagination) may control whether show the page number of slide. The theme creator can style it through `section::after` (`:root::after`) pseudo-element.
 
 ```css
 /* Styling page number */
@@ -97,7 +126,7 @@ section::after {
 
 `attr(data-marpit-pagination-total)` means the total page number of rendered slides. Thus, the above example would show as like as `Page 1 / 3`.
 
-!> Theme CSS must contain `attr(data-marpit-pagination)` in `content` declaration because user expects to show the page number by `paginate: true` directive. Marpit will ignore the whole of `content` declaration if the reference to that attribute is not contained.
+!> Theme CSS must contain `attr(data-marpit-pagination)` in `content` declaration because user expects to show the page number by `paginate: true` directive. _Marpit will ignore the whole of `content` declaration if the reference to that attribute is not contained._
 
 ### Header and footer
 
@@ -183,7 +212,7 @@ section {
 
 Sometimes you might think that want to tweak current theme instead of customizing theme fully.
 
-Marpit gives the `<style>` HTML element a special treatment. The specified inline style would parse in the context of as same as a theme, and bundle to the converted CSS together with it.
+Marpit gives the `<style>` HTML element written in Markdown a special treatment. The specified inline style would parse in the context of as same as a theme, and bundle to the converted CSS together with it.
 
 ```markdown
 ---
@@ -201,13 +230,13 @@ section {
 You would see a yellow slide.
 ```
 
-`<style>` elements would not find in rendered HTML, and would merge into CSS.
+`<style>` elements would not find in rendered HTML, and would merge into emitted CSS.
 
 [`style` global directive](/directives#tweak-theme-style) also can use as same purpose.
 
 ### Scoped style
 
-We also support the scoped inline style through `<style scoped>`. When a `style` element has the `scoped` attribute, its style will apply to the current slide page only.
+We also support the scoped inline style through `<style scoped>`. When a `style` element has the `scoped` attribute, its style will apply only to the current slide page only.
 
 ```markdown
 <!-- Global style -->
