@@ -91,9 +91,9 @@ section {
 }
 ```
 
-!> Please notice _it must define the length in **an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
+!> Please notice _it must define **the static length in an absolute unit.**_ We support `cm`, `in`, `mm`, `pc`, `pt`, and `px`.
 
-?> It is determined **one size per theme** in Marpit. The slide size cannot tweak through using [inline style](#tweak-style-through-markdown) or [custom class](/directives#class). But may shrink the width of contents if user was using [split backgrounds](/image-syntax#split-backgrounds).
+?> It is determined **one size per theme** in Marpit. The slide size cannot change through using [inline style](#tweak-style-through-markdown), [custom class](/directives#class), and [CSS custom property](https://developer.mozilla.org/en-US/docs/Web/CSS/--*). But the width of contents may shrink if user was using [split backgrounds](/image-syntax#split-backgrounds).
 
 ### Pagination
 

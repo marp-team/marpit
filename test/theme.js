@@ -55,6 +55,21 @@ describe('Theme', () => {
       })
     })
 
+    context('when CSS has size declarations on :root selector', () => {
+      const instance = Theme.fromCSS(dedent`
+        /* @theme test-theme */
+        :root {
+          width: 960px;
+          height: 720px;
+        }
+      `)
+
+      it('returns Theme instance that has width and height props', () => {
+        expect(instance.width).toBe('960px')
+        expect(instance.height).toBe('720px')
+      })
+    })
+
     context('when CSS has @import rules', () => {
       const instance = Theme.fromCSS(dedent`
         /* @theme test-theme */

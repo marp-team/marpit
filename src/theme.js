@@ -1,6 +1,7 @@
 import postcss from 'postcss'
 import postcssImportParse from './postcss/import/parse'
 import postcssMeta from './postcss/meta'
+import postcssRootReplace from './postcss/root/replace'
 import postcssSectionSize from './postcss/section_size'
 import skipThemeValidationSymbol from './theme/symbol'
 
@@ -99,6 +100,7 @@ class Theme {
 
     const { css, result } = postcss([
       postcssMeta({ metaType }),
+      postcssRootReplace,
       postcssSectionSize,
       postcssImportParse,
     ]).process(cssString)
