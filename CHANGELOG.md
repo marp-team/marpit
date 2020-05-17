@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.6.1 - 2020-05-17
+
 ### Fixed
 
 - Slide size defined in `:root` selector does not reflect to the theme instance ([#244](https://github.com/marp-team/marpit/issues/244), [#246](https://github.com/marp-team/marpit/pull/246))
