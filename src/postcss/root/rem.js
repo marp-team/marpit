@@ -1,6 +1,6 @@
 /** @module */
 import postcss from 'postcss'
-import { rootFontSizeCustomProp } from './replace'
+import { rootFontSizeCustomProp } from './font_size'
 
 const skipParsingMatcher = /("[^"]*"|'[^']*'|(?:attr|url|var)\([^)]*\))/g
 
