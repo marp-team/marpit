@@ -3,6 +3,8 @@ import postcss from 'postcss'
 
 export const pseudoClass = ':marpit-root'
 
+const matcher = new RegExp(`\\b${pseudoClass}\\b`, 'g')
+
 /**
  * Marpit PostCSS root increasing specificity plugin.
  *
@@ -13,16 +15,12 @@ export const pseudoClass = ':marpit-root'
  */
 const plugin = postcss.plugin(
   'marpit-postcss-root-increasing-specificity',
-  () => {
-    const matcher = new RegExp(`\\b${pseudoClass}\\b`, 'g')
-
-    return (css) =>
-      css.walkRules((rule) => {
-        rule.selectors = rule.selectors.map((selector) =>
-          selector.replace(matcher, ':not(\\9)')
-        )
-      })
-  }
+  () => (css) =>
+    css.walkRules((rule) => {
+      rule.selectors = rule.selectors.map((selector) =>
+        selector.replace(matcher, ':not(\\9)')
+      )
+    })
 )
 
 export default plugin
