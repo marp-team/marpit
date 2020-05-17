@@ -8,16 +8,18 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/root/replace
  */
-const plugin = postcss.plugin('marpit-postcss-root-replace', () => (css) =>
-  css.walkRules((rule) => {
-    // Replace `:root` pseudo-class selectors into `section`
-    rule.selectors = rule.selectors.map((selector) =>
-      selector.replace(
-        /(^|[\s>+~(])(?:section)?:root\b/g,
-        (_, s) => `${s}section`
+const plugin = postcss.plugin(
+  'marpit-postcss-root-replace',
+  ({ pseudoClass } = {}) => (css) =>
+    css.walkRules((rule) => {
+      // Replace `:root` pseudo-class selectors into `section`
+      rule.selectors = rule.selectors.map((selector) =>
+        selector.replace(
+          /(^|[\s>+~(])(?:section)?:root\b/g,
+          (_, s) => `${s}section${pseudoClass || ''}`
+        )
       )
-    )
-  })
+    })
 )
 
 export default plugin

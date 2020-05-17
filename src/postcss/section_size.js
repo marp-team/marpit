@@ -10,19 +10,25 @@ import postcss from 'postcss'
  */
 const plugin = postcss.plugin(
   'marpit-postcss-section-size',
-  () => (css, ret) => {
-    ret.marpitSectionSize = ret.marpitSectionSize || {}
+  ({ pseudoClass } = {}) => {
+    const rootSectionMatcher = new RegExp(
+      `^(?:section|\\*?:root)${pseudoClass ? `(?:${pseudoClass})?` : ''}$`
+    )
 
-    css.walkRules((rule) => {
-      if (rule.selectors.includes('section')) {
-        rule.walkDecls(/^(width|height)$/, (decl) => {
-          const { prop } = decl
-          const value = decl.value.trim()
+    return (css, ret) => {
+      ret.marpitSectionSize = ret.marpitSectionSize || {}
 
-          ret.marpitSectionSize[prop] = value
-        })
-      }
-    })
+      css.walkRules((rule) => {
+        if (rule.selectors.some((s) => rootSectionMatcher.test(s))) {
+          rule.walkDecls(/^(width|height)$/, (decl) => {
+            const { prop } = decl
+            const value = decl.value.trim()
+
+            ret.marpitSectionSize[prop] = value
+          })
+        }
+      })
+    }
   }
 )
 
