@@ -76,7 +76,7 @@
     "docsify-themeable": "^0.8.1",
     "eslint": "^7.2.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.21.0",
+    "eslint-plugin-import": "~2.20.2",
     "jest": "^26.0.1",
     "jest-junit": "^10.0.0",
     "jsdoc": "^3.6.4",
