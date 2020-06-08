@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.6.2 - 2020-06-08
+
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#249](https://github.com/marp-team/marpit/pull/249))
