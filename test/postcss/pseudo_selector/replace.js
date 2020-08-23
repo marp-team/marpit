@@ -65,6 +65,20 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
           expect(result.root.first.selector).toBe('div > span > section')
         )
       })
+
+      it('escapes each container element names in selector', () => {
+        // These tag names can use in custom element.
+        const containers = [
+          new Element('marp.custom-element'),
+          new Element('emotion-😍'),
+        ]
+
+        return run(css, containers).then((result) =>
+          expect(result.root.first.selector).toBe(
+            'marp\\.custom-element > emotion-\\1F60D > section'
+          )
+        )
+      })
     })
 
     context('when container element has specified class', () => {
@@ -83,6 +97,16 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
           expect(result.root.first.selector).toBe('div.one.two > section')
         )
       })
+
+      it('escapes each class names in selector', () => {
+        const container = new Element('div', { class: '123 .foo.bar #test' })
+
+        return run(css, container).then((result) =>
+          expect(result.root.first.selector).toBe(
+            'div.\\31 23.\\.foo\\.bar.\\#test > section'
+          )
+        )
+      })
     })
 
     context('when container element has id', () => {
@@ -99,6 +123,16 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe('div.one.two#id > section')
+        )
+      })
+
+      it('escapes id name in selector', () => {
+        const container = new Element('div', { id: '0123<#>4567' })
+
+        return run(css, container).then((result) =>
+          expect(result.root.first.selector).toBe(
+            'div#\\30 123\\<\\#\\>4567 > section'
+          )
         )
       })
     })
@@ -126,10 +160,23 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
     context('when slide element is multiple elements', () => {
       it('replaces slide into multiple elements combined by child combinator', () => {
-        const container = [new Element('svg'), new Element('foreignObject')]
+        const containers = [new Element('svg'), new Element('foreignObject')]
 
-        return run(css, undefined, container).then((result) =>
+        return run(css, undefined, containers).then((result) =>
           expect(result.root.first.selector).toBe('svg > foreignObject h1')
+        )
+      })
+
+      it('escapes each container element names in selector', () => {
+        const containers = [
+          new Element('marp.custom-element'),
+          new Element('emotion-😍'),
+        ]
+
+        return run(css, undefined, containers).then((result) =>
+          expect(result.root.first.selector).toBe(
+            'marp\\.custom-element > emotion-\\1F60D h1'
+          )
         )
       })
     })
@@ -150,6 +197,16 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
           expect(result.root.first.selector).toBe('div.one.two h1')
         )
       })
+
+      it('escapes each class names in selector', () => {
+        const container = new Element('div', { class: '123 .foo.bar #test' })
+
+        return run(css, undefined, container).then((result) =>
+          expect(result.root.first.selector).toBe(
+            'div.\\31 23.\\.foo\\.bar.\\#test h1'
+          )
+        )
+      })
     })
 
     context('when slide element has id', () => {
@@ -166,6 +223,16 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe('div.one.two#id h1')
+        )
+      })
+
+      it('escapes id name in selector', () => {
+        const container = new Element('div', { id: '0123<#>4567' })
+
+        return run(css, undefined, container).then((result) =>
+          expect(result.root.first.selector).toBe(
+            'div#\\30 123\\<\\#\\>4567 h1'
+          )
         )
       })
     })

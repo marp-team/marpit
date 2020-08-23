@@ -1,4 +1,5 @@
 /** @module */
+import cssesc from 'cssesc'
 import postcss from 'postcss'
 import wrapArray from '../../helpers/wrap_array'
 
@@ -7,8 +8,11 @@ const buildSelector = (elms) =>
     .map((e) => {
       const classes = new Set((e.class || '').split(/\s+/).filter((c) => c))
 
-      let element = [e.tag, ...classes].join('.')
-      if (e.id) element += `#${e.id}`
+      let element = [e.tag, ...classes]
+        .map((c) => cssesc(c, { isIdentifier: true }))
+        .join('.')
+
+      if (e.id) element += `#${cssesc(e.id, { isIdentifier: true })}`
 
       return element
     })
