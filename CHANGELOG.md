@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Escape the built selector for scoping CSS ([#256](https://github.com/marp-team/marpit/pull/256))
+
 ### Changed
 
 - Upgrade Node and dependent packages to the latest version ([#255](https://github.com/marp-team/marpit/pull/255))
