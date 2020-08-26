@@ -90,6 +90,7 @@
   },
   "dependencies": {
     "color-string": "^1.5.3",
+    "cssesc": "^3.0.0",
     "js-yaml": "^3.14.0",
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^11.0.0",
