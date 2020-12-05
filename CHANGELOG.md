@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.6.3 - 2020-12-05
+
 ### Added
 
 - Node 14 support ([#267](https://github.com/marp-team/marpit/pull/267))
