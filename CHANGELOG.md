@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Node 14 support ([#267](https://github.com/marp-team/marpit/pull/267))
+
 ### Fixed
 
 - Escape the built selector for scoping CSS ([#256](https://github.com/marp-team/marpit/pull/256))
