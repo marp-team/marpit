@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/master/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
+  <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/main/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
 </p>
 <p align="center">
   <strong>Marpit</strong>: Markdown slide deck framework
 </p>
 <p align="center">
-  <a href="https://circleci.com/gh/marp-team/marpit/"><img src="https://img.shields.io/circleci/project/github/marp-team/marpit/master.svg?style=flat-square&logo=circleci" alt="CircleCI" /></a>
-  <a href="https://codecov.io/gh/marp-team/marpit"><img src="https://img.shields.io/codecov/c/github/marp-team/marpit/master.svg?style=flat-square&logo=codecov" alt="Codecov" /></a>
+  <a href="https://circleci.com/gh/marp-team/marpit/"><img src="https://img.shields.io/circleci/project/github/marp-team/marpit/main.svg?style=flat-square&logo=circleci" alt="CircleCI" /></a>
+  <a href="https://codecov.io/gh/marp-team/marpit"><img src="https://img.shields.io/codecov/c/github/marp-team/marpit/main.svg?style=flat-square&logo=codecov" alt="Codecov" /></a>
   <a href="https://www.npmjs.com/package/@marp-team/marpit"><img src="https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square&logo=npm" alt="npm" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square" alt="LICENSE" /></a>
 </p>

@@ -118,7 +118,7 @@ The advanced backgrounds support [multiple backgrounds][multiple], [split backgr
 
 <span class="image">
 
-[<img src="https://github.com/marp-team/marpit/blob/master/docs/assets/image-syntax/multiple-bg.png?raw=true" alt="Multiple backgrounds" />](/assets/image-syntax/multiple-bg.png ':ignore')
+[<img src="https://github.com/marp-team/marpit/blob/main/docs/assets/image-syntax/multiple-bg.png?raw=true" alt="Multiple backgrounds" />](/assets/image-syntax/multiple-bg.png ':ignore')
 
 </span>
 </div>
@@ -139,7 +139,7 @@ You may change alignment direction from horizontal to vertical, by using `vertic
 
 <span class="image">
 
-[<img src="https://github.com/marp-team/marpit/blob/master/docs/assets/image-syntax/multiple-bg-vertical.png?raw=true" alt="Multiple backgrounds with vertical direction" />](/assets/image-syntax/multiple-bg-vertical.png ':ignore')
+[<img src="https://github.com/marp-team/marpit/blob/main/docs/assets/image-syntax/multiple-bg-vertical.png?raw=true" alt="Multiple backgrounds with vertical direction" />](/assets/image-syntax/multiple-bg-vertical.png ':ignore')
 
 </span>
 </div>
@@ -160,7 +160,7 @@ The space of a slide content will shrink to the right side.
 
 <span class="image">
 
-[<img src="https://github.com/marp-team/marpit/blob/master/docs/assets/image-syntax/split-background.jpg?raw=true" alt="Split backgrounds" />](/assets/image-syntax/split-background.jpg ':ignore')
+[<img src="https://github.com/marp-team/marpit/blob/main/docs/assets/image-syntax/split-background.jpg?raw=true" alt="Split backgrounds" />](/assets/image-syntax/split-background.jpg ':ignore')
 
 </span>
 </div>
@@ -180,7 +180,7 @@ The space of a slide content will shrink to the left side.
 
 <span class="image">
 
-[<img src="https://github.com/marp-team/marpit/blob/master/docs/assets/image-syntax/split-multiple-bg.jpg?raw=true" alt="Split + Multiple BGs" />](/assets/image-syntax/split-multiple-bg.jpg ':ignore')
+[<img src="https://github.com/marp-team/marpit/blob/main/docs/assets/image-syntax/split-multiple-bg.jpg?raw=true" alt="Split + Multiple BGs" />](/assets/image-syntax/split-multiple-bg.jpg ':ignore')
 
 </span>
 </div>
@@ -203,7 +203,7 @@ Since v1.1.0, Marpit can specify split size for background by percentage like `l
 
 <span class="image">
 
-[<img src="https://github.com/marp-team/marpit/blob/master/docs/assets/image-syntax/split-bg-with-size.jpg?raw=true" alt="Split backgrounds with specified size" />](/assets/image-syntax/split-bg-with-size.jpg ':ignore')
+[<img src="https://github.com/marp-team/marpit/blob/main/docs/assets/image-syntax/split-bg-with-size.jpg?raw=true" alt="Split backgrounds with specified size" />](/assets/image-syntax/split-bg-with-size.jpg ':ignore')
 
 </span>
 </div>
