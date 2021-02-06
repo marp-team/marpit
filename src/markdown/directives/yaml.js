@@ -6,13 +6,11 @@ const createPatterns = (keys) => {
   const set = new Set()
 
   for (const k of keys) {
-    const normalized = k.replace(/[.*+?^=!:${}()|[\]\\/]/g, '\\$&')
+    const normalized = '_?' + k.replace(/[.*+?^=!:${}()|[\]\\/]/g, '\\$&')
 
-    for (const key of [normalized, `_${normalized}`]) {
-      set.add(key)
-      set.add(`"${key}"`)
-      set.add(`'${key}'`)
-    }
+    set.add(normalized)
+    set.add(`"${normalized}"`)
+    set.add(`'${normalized}'`)
   }
 
   return [...set.values()]
