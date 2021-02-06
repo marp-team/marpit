@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v1.6.4 - 2021-02-06
+
 ### Fixed
 
 - Split slides only in first level rulers ([#273](https://github.com/marp-team/marpit/issues/273), [#277](https://github.com/marp-team/marpit/pull/277))
