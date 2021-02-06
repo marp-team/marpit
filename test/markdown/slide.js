@@ -42,6 +42,14 @@ describe('Marpit slide plugin', () => {
       const $ = cheerio.load(md().renderInline(''))
       expect($('section')).toHaveLength(0)
     })
+
+    it('does not parse rulers that have in children of contents', () => {
+      const $list = cheerio.load(markdown.render('* ---'))
+      expect($list('section')).toHaveLength(1)
+
+      const $quote = cheerio.load(markdown.render('> ---'))
+      expect($quote('section')).toHaveLength(1)
+    })
   })
 
   context('with attributes option', () => {
