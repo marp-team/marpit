@@ -20,7 +20,7 @@ const yamlSpecialChars = `["'{|>~&*`
 
 function parse(text) {
   try {
-    const obj = YAML.safeLoad(text, { schema: FAILSAFE_SCHEMA })
+    const obj = YAML.load(text, { schema: FAILSAFE_SCHEMA })
     if (obj === null || typeof obj !== 'object') return false
 
     return obj
