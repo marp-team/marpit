@@ -5,6 +5,7 @@
 ### Fixed
 
 - Split slides only in first level rulers ([#273](https://github.com/marp-team/marpit/issues/273), [#277](https://github.com/marp-team/marpit/pull/277))
+- Fix loose YAML parsing for quoted spot directive ([#278](https://github.com/marp-team/marpit/pull/278))
 
 ### Changed
 
