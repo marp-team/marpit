@@ -10,6 +10,7 @@
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#276](https://github.com/marp-team/marpit/pull/276))
+- Rename `master` branch to `main` ([#279](https://github.com/marp-team/marpit/pull/279))
 
 ## v1.6.3 - 2020-12-05
 
