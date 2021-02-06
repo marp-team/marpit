@@ -8,9 +8,11 @@ const createPatterns = (keys) => {
   for (const k of keys) {
     const normalized = k.replace(/[.*+?^=!:${}()|[\]\\/]/g, '\\$&')
 
-    set.add(normalized)
-    set.add(`"${normalized}"`)
-    set.add(`'${normalized}'`)
+    for (const key of [normalized, `_${normalized}`]) {
+      set.add(key)
+      set.add(`"${key}"`)
+      set.add(`'${key}'`)
+    }
   }
 
   return [...set.values()]
@@ -30,7 +32,7 @@ function parse(text) {
 }
 
 function convertLoose(text, looseDirectives) {
-  const keyPattern = `[_$]?(?:${createPatterns(looseDirectives).join('|')})`
+  const keyPattern = `(?:${createPatterns(looseDirectives).join('|')})`
   const looseMatcher = new RegExp(`^(${keyPattern}\\s*:)(.+)$`)
 
   let normalized = ''
