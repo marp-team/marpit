@@ -50,6 +50,8 @@ See [the documentation of Marpit](https://marpit.marp.app/?id=getting-started) t
 ```bash
 git clone https://github.com/marp-team/marpit
 
+cd marpit
+
 yarn install
 yarn build
 ```
