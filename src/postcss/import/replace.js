@@ -1,5 +1,6 @@
 /** @module */
 import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 import postcssImportParse from './parse'
 
 /**
@@ -13,41 +14,38 @@ import postcssImportParse from './parse'
  * @alias module:postcss/import/replace
  * @param {ThemeSet} themeSet ThemeSet instance.
  */
-const plugin = postcss.plugin(
-  'marpit-postcss-import-replace',
-  (themeSet, importedThemes = []) =>
-    postcss([
-      postcssImportParse,
-      (css) => {
-        const prepends = []
+const plugin = (themeSet, importedThemes = []) =>
+  postcss([
+    postcssImportParse,
+    postcssPlugin('marpit-postcss-import-replace', () => (css) => {
+      const prepends = []
 
-        css.walk((node) => {
-          const name = node.marpitImportParse
+      css.walk((node) => {
+        const name = node.marpitImportParse
 
-          if (name) {
-            const theme = themeSet.get(name)
+        if (name) {
+          const theme = themeSet.get(name)
 
-            if (theme) {
-              if (importedThemes.includes(name))
-                throw new Error(`Circular "${name}" theme import is detected.`)
+          if (theme) {
+            if (importedThemes.includes(name))
+              throw new Error(`Circular "${name}" theme import is detected.`)
 
-              const processed = postcss([
-                plugin(themeSet, [...importedThemes, name]),
-              ]).process(theme.css)
+            const processed = postcss([
+              plugin(themeSet, [...importedThemes, name]),
+            ]).process(theme.css)
 
-              if (node.name === 'import') {
-                node.replaceWith(processed.root)
-              } else {
-                node.remove()
-                prepends.unshift(processed.root)
-              }
+            if (node.name === 'import') {
+              node.replaceWith(processed.root)
+            } else {
+              node.remove()
+              prepends.unshift(processed.root)
             }
           }
-        })
+        }
+      })
 
-        for (const root of prepends) css.first.before(root)
-      },
-    ])
-)
+      for (const root of prepends) css.first.before(root)
+    }),
+  ])
 
 export default plugin

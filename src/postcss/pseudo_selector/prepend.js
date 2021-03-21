@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS pseudo selector prepending plugin.
@@ -9,7 +9,7 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/pseudo_selector/prepend
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-pseudo-selector-prepend',
   () => (css) =>
     css.walkRules((rule) => {

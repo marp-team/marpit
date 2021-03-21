@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS section size plugin.
@@ -8,15 +8,15 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/section_size
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-section-size',
   ({ pseudoClass } = {}) => {
     const rootSectionMatcher = new RegExp(
       `^(?:section|\\*?:root)${pseudoClass ? `(?:${pseudoClass})?` : ''}$`
     )
 
-    return (css, ret) => {
-      ret.marpitSectionSize = ret.marpitSectionSize || {}
+    return (css, { result }) => {
+      result.marpitSectionSize = result.marpitSectionSize || {}
 
       css.walkRules((rule) => {
         if (rule.selectors.some((s) => rootSectionMatcher.test(s))) {
@@ -24,7 +24,7 @@ const plugin = postcss.plugin(
             const { prop } = decl
             const value = decl.value.trim()
 
-            ret.marpitSectionSize[prop] = value
+            result.marpitSectionSize[prop] = value
           })
         }
       })
