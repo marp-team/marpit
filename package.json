@@ -27,7 +27,7 @@
     "url": "https://github.com/marp-team/marpit"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "main": "lib/index.js",
   "types": "index.d.ts",
