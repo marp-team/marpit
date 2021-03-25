@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Breaking
+
+- Marpit requires Node.js >= 10 to install ([#284](https://github.com/marp-team/marpit/pull/284))
+
+### Changed
+
+- Upgrade to PostCSS 8 ([#260](https://github.com/marp-team/marpit/issues/260), [#284](https://github.com/marp-team/marpit/pull/284))
+
 ## v1.6.4 - 2021-02-06
 
 ### Fixed
