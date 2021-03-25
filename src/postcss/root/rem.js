@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 import { rootFontSizeCustomProp } from './font_size'
 
 const skipParsingMatcher = /("[^"]*"|'[^']*'|(?:attr|url|var)\([^)]*\))/g
@@ -11,7 +11,7 @@ const skipParsingMatcher = /("[^"]*"|'[^']*'|(?:attr|url|var)\([^)]*\))/g
  *
  * @alias module:postcss/root/rem
  */
-const plugin = postcss.plugin('marpit-postcss-rem', () => (css) =>
+const plugin = postcssPlugin('marpit-postcss-rem', () => (css) =>
   css.walkDecls((decl) => {
     decl.value = decl.value
       .split(skipParsingMatcher)

@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS advanced background plugin.
@@ -8,7 +8,7 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/advanced_background
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-advanced-background',
   () => (css) => {
     css.last.after(

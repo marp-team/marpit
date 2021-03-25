@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS pagination plugin.
@@ -13,7 +13,7 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/pagination
  */
-const plugin = postcss.plugin('marpit-postcss-pagination', () => (css) => {
+const plugin = postcssPlugin('marpit-postcss-pagination', () => (css) => {
   css.walkRules((rule) => {
     if (
       rule.selectors.some((selector) =>
