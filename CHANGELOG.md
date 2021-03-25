@@ -6,6 +6,10 @@
 
 - Marpit requires Node.js >= 10 to install ([#284](https://github.com/marp-team/marpit/pull/284))
 
+### Fixed
+
+- Reset CSS columns in advanced background ([#283](https://github.com/marp-team/marpit/pull/283))
+
 ### Changed
 
 - Upgrade to PostCSS 8 ([#260](https://github.com/marp-team/marpit/issues/260), [#284](https://github.com/marp-team/marpit/pull/284))
