@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 import postcssImportParse from './parse'
 
 /**
@@ -13,16 +13,16 @@ import postcssImportParse from './parse'
  * @alias module:postcss/import/suppress
  * @param {ThemeSet} themeSet ThemeSet instance.
  */
-const plugin = postcss.plugin('marpit-postcss-import-suppress', (themeSet) =>
-  postcss([
-    postcssImportParse,
-    (css) => {
+const plugin = postcssPlugin('marpit-postcss-import-suppress', (themeSet) => ({
+  plugins: [
+    postcssImportParse(),
+    postcssPlugin('marpit-postcss-import-suppress', () => (css) => {
       css.walk((node) => {
         if (node.marpitImportParse && themeSet.has(node.marpitImportParse))
           node.replaceWith(`${node.raw('before')}/* ${node.toString()}; */`)
       })
-    },
-  ])
-)
+    })(),
+  ],
+}))
 
 export default plugin

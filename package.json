@@ -27,7 +27,7 @@
     "url": "https://github.com/marp-team/marpit"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "main": "lib/index.js",
   "types": "index.d.ts",
@@ -62,7 +62,7 @@
     "@babel/cli": "^7.12.13",
     "@babel/core": "^7.12.13",
     "@babel/preset-env": "^7.12.13",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.2.5",
     "babel-eslint": "^10.1.0",
     "cheerio": "^1.0.0-rc.5",
     "chokidar": "^3.5.1",
@@ -95,7 +95,7 @@
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^12.0.4",
     "markdown-it-front-matter": "^0.2.3",
-    "postcss": "^7.0.32"
+    "postcss": "^8.2.8"
   },
   "publishConfig": {
     "access": "public"

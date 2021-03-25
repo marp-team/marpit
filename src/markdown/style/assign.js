@@ -1,5 +1,6 @@
 /** @module */
 import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 import marpitPlugin from '../../plugin'
 
 const uniqKeyChars =
@@ -17,7 +18,7 @@ const generateUniqKey = (length = 8) => {
   return ret
 }
 
-const injectScopePostCSSplugin = postcss.plugin(
+const injectScopePostCSSplugin = postcssPlugin(
   'marpit-style-assign-postcss-inject-scope',
   (key, keyframeSet) => (css) =>
     css.each(function inject(node) {
@@ -42,7 +43,7 @@ const injectScopePostCSSplugin = postcss.plugin(
     })
 )
 
-const scopeKeyframesPostCSSPlugin = postcss.plugin(
+const scopeKeyframesPostCSSPlugin = postcssPlugin(
   'marpit-style-assign-postcss-scope-keyframes',
   (key, keyframeSet) => (css) => {
     if (keyframeSet.size === 0) return

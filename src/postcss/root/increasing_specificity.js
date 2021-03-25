@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 
 export const pseudoClass = ':marpit-root'
 
@@ -13,7 +13,7 @@ const matcher = new RegExp(`\\b${pseudoClass}\\b`, 'g')
  *
  * @alias module:postcss/root/increasing_specificity
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-root-increasing-specificity',
   () => (css) =>
     css.walkRules((rule) => {

@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 const marpitPrintContainerStyle = `
 html, body {
@@ -20,7 +20,7 @@ html, body {
  * @param {string} opts.height
  * @alias module:postcss/printable
  */
-const plugin = postcss.plugin('marpit-postcss-printable', (opts) => (css) => {
+const plugin = postcssPlugin('marpit-postcss-printable', (opts) => (css) => {
   css.walkAtRules('media', (rule) => {
     if (rule.params === 'marpit-print') rule.remove()
   })
@@ -61,7 +61,7 @@ const plugin = postcss.plugin('marpit-postcss-printable', (opts) => (css) => {
  *
  * @alias module:postcss/printable.postprocess
  */
-export const postprocess = postcss.plugin(
+export const postprocess = postcssPlugin(
   'marpit-postcss-printable-postprocess',
   () => (css) =>
     css.walkAtRules('media', (rule) => {

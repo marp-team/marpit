@@ -1,6 +1,6 @@
 /** @module */
 import cssesc from 'cssesc'
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 import wrapArray from '../../helpers/wrap_array'
 
 const buildSelector = (elms) =>
@@ -28,7 +28,7 @@ const buildSelector = (elms) =>
  * @param {Element|Element[]} [elements] Container elements
  * @param {Element|Element[]} [slideElements={ tag: 'section' }] Slide elements
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-pseudo-selector-replace',
   (elements, slideElements = { tag: 'section' }) => {
     const container = buildSelector([...wrapArray(elements)])
