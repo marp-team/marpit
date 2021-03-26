@@ -102,7 +102,7 @@ jobs:
   test-node14:
     executor:
       name: node
-      version: '14.15.1' # Specify LTS version for development
+      version: '14.16.0' # Specify LTS version for development
     steps:
       - test
 
