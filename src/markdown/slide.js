@@ -36,7 +36,11 @@ function slide(md, opts = {}) {
   md.core.ruler.push('marpit_slide', (state) => {
     if (state.inlineMode) return
 
-    const splittedTokens = split(state.tokens, (t) => t.type === 'hr', true)
+    const splittedTokens = split(
+      state.tokens,
+      (t) => t.type === 'hr' && t.level === 0,
+      true
+    )
     const { length: marpitSlideTotal } = splittedTokens
 
     state.tokens = splittedTokens.reduce((arr, slideTokens, marpitSlide) => {

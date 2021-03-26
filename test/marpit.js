@@ -374,6 +374,7 @@ describe('Marpit', () => {
         ---
         backgroundImage:  url('/image.jpg')
         _color:           #123${' \t'}
+        "_backgroundColor": #456
         ---
 
         ---
@@ -387,8 +388,10 @@ describe('Marpit', () => {
 
         expect(firstStyle).toContain("background-image:url('/image.jpg')")
         expect(firstStyle).toContain('color:#123;')
+        expect(firstStyle).toContain('background-color:#456;')
         expect(secondStyle).toContain("background-image:url('/image.jpg')")
         expect(secondStyle).not.toContain('color:')
+        expect(secondStyle).not.toContain('background-color:')
       })
 
       it('disallows loose YAML parsing for built-in directives when looseYAML is false', () => {
@@ -398,6 +401,7 @@ describe('Marpit', () => {
 
         expect(style).toContain("background-image:url('/image.jpg')")
         expect(style).not.toContain('color:#123;')
+        expect(style).not.toContain('background-color:#456;')
       })
     })
   })

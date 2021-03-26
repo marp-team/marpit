@@ -1,6 +1,6 @@
 /* eslint consistent-return: 0 */
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 
 /**
  * @typedef {object} ImportMeta
@@ -26,9 +26,9 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/import/parse
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-import-parse',
-  () => (css, ret) => {
+  () => (css, { result }) => {
     const imports = { import: [], importTheme: [] }
     let allowImport = true
 
@@ -70,7 +70,7 @@ const plugin = postcss.plugin(
       }
     })
 
-    ret.marpitImport = [...imports.importTheme, ...imports.import]
+    result.marpitImport = [...imports.importTheme, ...imports.import]
   }
 )
 

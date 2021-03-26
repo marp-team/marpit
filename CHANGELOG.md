@@ -2,6 +2,45 @@
 
 ## [Unreleased]
 
+### Breaking
+
+- Marpit requires Node.js >= 10 to install ([#284](https://github.com/marp-team/marpit/pull/284))
+
+### Fixed
+
+- Reset CSS columns in advanced background ([#283](https://github.com/marp-team/marpit/pull/283))
+
+### Changed
+
+- Upgrade to PostCSS 8 ([#260](https://github.com/marp-team/marpit/issues/260), [#284](https://github.com/marp-team/marpit/pull/284))
+- Upgrade Node and dependent packages to the latest version ([#285](https://github.com/marp-team/marpit/pull/285))
+
+## v1.6.4 - 2021-02-06
+
+### Fixed
+
+- Split slides only in first level rulers ([#273](https://github.com/marp-team/marpit/issues/273), [#277](https://github.com/marp-team/marpit/pull/277))
+- Fix loose YAML parsing for quoted spot directive ([#278](https://github.com/marp-team/marpit/pull/278))
+
+### Changed
+
+- Upgrade dependent packages to the latest version ([#276](https://github.com/marp-team/marpit/pull/276))
+- Rename `master` branch to `main` ([#279](https://github.com/marp-team/marpit/pull/279))
+
+## v1.6.3 - 2020-12-05
+
+### Added
+
+- Node 14 support ([#267](https://github.com/marp-team/marpit/pull/267))
+
+### Fixed
+
+- Escape the built selector for scoping CSS ([#256](https://github.com/marp-team/marpit/pull/256))
+
+### Changed
+
+- Upgrade Node and dependent packages to the latest version ([#255](https://github.com/marp-team/marpit/pull/255), [#266](https://github.com/marp-team/marpit/pull/266))
+
 ## v1.6.2 - 2020-06-08
 
 ### Changed

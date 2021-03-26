@@ -107,7 +107,7 @@ section::after {
 }
 ```
 
-Please refer to [the default style of `section::after` in a scaffold theme](https://github.com/marp-team/marpit/blob/master/src/theme/scaffold.js) as well.
+Please refer to [the default style of `section::after` in a scaffold theme](https://github.com/marp-team/marpit/blob/main/src/theme/scaffold.js) as well.
 
 #### Customize content
 

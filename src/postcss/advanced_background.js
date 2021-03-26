@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS advanced background plugin.
@@ -8,12 +8,13 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/advanced_background
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-advanced-background',
   () => (css) => {
     css.last.after(
       `
 section[data-marpit-advanced-background="background"] {
+  columns: initial !important;
   display: block !important;
   padding: 0 !important;
 }

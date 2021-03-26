@@ -123,4 +123,4 @@ Managed by [@marp-team](https://github.com/marp-team).
 
 ## License
 
-This framework releases under the [MIT License](https://github.com/marp-team/marpit/blob/master/LICENSE).
+This framework releases under the [MIT License](https://github.com/marp-team/marpit/blob/main/LICENSE).

@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS root replace plugin.
@@ -8,7 +8,7 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/root/replace
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-root-replace',
   ({ pseudoClass } = {}) => (css) =>
     css.walkRules((rule) => {

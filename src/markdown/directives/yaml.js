@@ -6,7 +6,7 @@ const createPatterns = (keys) => {
   const set = new Set()
 
   for (const k of keys) {
-    const normalized = k.replace(/[.*+?^=!:${}()|[\]\\/]/g, '\\$&')
+    const normalized = '_?' + k.replace(/[.*+?^=!:${}()|[\]\\/]/g, '\\$&')
 
     set.add(normalized)
     set.add(`"${normalized}"`)
@@ -20,7 +20,7 @@ const yamlSpecialChars = `["'{|>~&*`
 
 function parse(text) {
   try {
-    const obj = YAML.safeLoad(text, { schema: FAILSAFE_SCHEMA })
+    const obj = YAML.load(text, { schema: FAILSAFE_SCHEMA })
     if (obj === null || typeof obj !== 'object') return false
 
     return obj
@@ -30,7 +30,7 @@ function parse(text) {
 }
 
 function convertLoose(text, looseDirectives) {
-  const keyPattern = `[_$]?(?:${createPatterns(looseDirectives).join('|')})`
+  const keyPattern = `(?:${createPatterns(looseDirectives).join('|')})`
   const looseMatcher = new RegExp(`^(${keyPattern}\\s*:)(.+)$`)
 
   let normalized = ''

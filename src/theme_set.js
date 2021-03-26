@@ -1,4 +1,5 @@
 import postcss from 'postcss'
+import postcssPlugin from './helpers/postcss_plugin'
 import postcssAdvancedBackground from './postcss/advanced_background'
 import postcssImportReplace from './postcss/import/replace'
 import postcssImportRollup from './postcss/import/rollup'
@@ -261,8 +262,14 @@ class ThemeSet {
 
     const packer = postcss(
       [
-        before && ((css) => css.first.before(before)),
-        after && ((css) => css.last.after(after)),
+        before &&
+          postcssPlugin('marpit-pack-before', () => (css) =>
+            css.first.before(before)
+          ),
+        after &&
+          postcssPlugin('marpit-pack-after', () => (css) =>
+            css.first.after(after)
+          ),
         postcssImportRollup,
         postcssImportReplace(this),
         opts.printable &&
@@ -270,7 +277,10 @@ class ThemeSet {
             width: this.getThemeProp(theme, 'width'),
             height: this.getThemeProp(theme, 'height'),
           }),
-        theme !== scaffold && ((css) => css.first.before(scaffold.css)),
+        theme !== scaffold &&
+          postcssPlugin('marpit-pack-scaffold', () => (css) =>
+            css.first.before(scaffold.css)
+          ),
         opts.inlineSVG && postcssAdvancedBackground,
         postcssPagination,
         postcssRootReplace({ pseudoClass }),

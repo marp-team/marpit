@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS import rollup plugin.
@@ -12,7 +12,7 @@ import postcss from 'postcss'
  *
  * @alias module:postcss/import/rollup
  */
-const plugin = postcss.plugin('marpit-postcss-import-rollup', () => (css) => {
+const plugin = postcssPlugin('marpit-postcss-import-rollup', () => (css) => {
   const rolluped = {
     charset: undefined,
     imports: [],

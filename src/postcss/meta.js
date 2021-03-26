@@ -1,5 +1,5 @@
 /** @module */
-import postcss from 'postcss'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 /**
  * Marpit PostCSS meta plugin.
@@ -10,12 +10,12 @@ import postcss from 'postcss'
  * @param {Object} [opts.metaType] An object for defined types for metadata.
  * @alias module:postcss/meta
  */
-const plugin = postcss.plugin(
+const plugin = postcssPlugin(
   'marpit-postcss-meta',
-  (opts = {}) => (css, ret) => {
+  (opts = {}) => (css, { result }) => {
     const metaType = opts.metaType || {}
 
-    ret.marpitMeta = ret.marpitMeta || {}
+    result.marpitMeta = result.marpitMeta || {}
 
     css.walkComments((comment) => {
       comment.text
@@ -23,13 +23,13 @@ const plugin = postcss.plugin(
         .replace(/^[*!\s]*@([\w-]+)\s+(.+)$/gim, (_, metaName, value) => {
           if (metaType[metaName] === Array) {
             // Array meta
-            ret.marpitMeta[metaName] = [
-              ...(ret.marpitMeta[metaName] || []),
+            result.marpitMeta[metaName] = [
+              ...(result.marpitMeta[metaName] || []),
               value,
             ]
           } else {
             // String meta (default)
-            ret.marpitMeta[metaName] = value
+            result.marpitMeta[metaName] = value
           }
         })
     })
