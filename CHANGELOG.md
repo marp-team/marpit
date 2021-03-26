@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.0.0 - 2021-03-26
+
 ### Breaking
 
 - Marpit requires Node.js >= 10 to install ([#284](https://github.com/marp-team/marpit/pull/284))
