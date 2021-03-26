@@ -67,7 +67,7 @@
     "cheerio": "^1.0.0-rc.5",
     "chokidar": "^3.5.1",
     "codecov": "^3.8.1",
-    "cssnano": "^4.1.10",
+    "cssnano": "^5.0.0-rc.2",
     "dedent": "^0.7.0",
     "docsify-themeable": "^0.8.4",
     "eslint": "^7.22.0",
