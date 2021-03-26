@@ -15,6 +15,10 @@
 - Upgrade to PostCSS 8 ([#260](https://github.com/marp-team/marpit/issues/260), [#284](https://github.com/marp-team/marpit/pull/284))
 - Upgrade Node and dependent packages to the latest version ([#285](https://github.com/marp-team/marpit/pull/285))
 
+### Removed
+
+- Remove deprecated `markdownItPlugins`, the getter of plugin interface for markdown-it ([#286](https://github.com/marp-team/marpit/pull/286))
+
 ## v1.6.4 - 2021-02-06
 
 ### Fixed

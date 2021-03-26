@@ -73,9 +73,6 @@ declare namespace Marpit {
     }
     readonly options: Options
 
-    /** @deprecated A plugin interface for markdown-it is deprecated and will remove in future version. Instead, wrap markdown-it instance when creating Marpit by `new Marpit({ markdown: markdownItInstance })`. */
-    readonly markdownItPlugins: (md: any) => void
-
     protected lastComments: RenderResult['comments'] | undefined
     protected lastGlobalDirectives: { [directive: string]: any } | undefined
     protected lastSlideTokens: any[] | undefined
