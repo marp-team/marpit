@@ -267,9 +267,9 @@ class ThemeSet {
             css.first.before(before)
           ),
         after &&
-          postcssPlugin('marpit-pack-after', () => (css) =>
-            css.first.after(after)
-          ),
+          postcssPlugin('marpit-pack-after', () => (css) => {
+            css.last.after(after)
+          }),
         postcssImportRollup,
         postcssImportReplace(this),
         opts.printable &&

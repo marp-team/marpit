@@ -330,12 +330,14 @@ describe('Marpit', () => {
       const markdown =
         '<style>@import "valid-theme";\nsection { --style: appended; }</style>'
 
-      it('appends style to css with processing', () => {
+      it('appends style to the last of css with processing', () => {
         const rendered = instance().render(markdown)
         const $ = cheerio.load(rendered.html)
 
         expect($('style')).toHaveLength(0)
-        expect(rendered.css).toContain('--style: appended;')
+        expect(rendered.css.trim().endsWith('{ --style: appended; }')).toBe(
+          true
+        )
         expect(rendered.css).toContain('/* @import "valid-theme"; */')
       })
 
