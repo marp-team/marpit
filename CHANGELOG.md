@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.0.1 - 2021-04-27
+
 ### Fixed
 
 - Fix regression: Append inline styles into the end of CSS correctly ([#288](https://github.com/marp-team/marpit/issues/288), [#289](https://github.com/marp-team/marpit/pull/289))
