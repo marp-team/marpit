@@ -1,6 +1,6 @@
 # Marpit Markdown {docsify-ignore-all}
 
-Marpit Markdown syntax focuses a compatibility with commonly Markdown documents. It means the result of rendering keeps looking nice even if you open the Marpit Markdown in a general Markdown editor.
+Marpit Markdown syntax focuses on compatibility with commonly Markdown documents. It means the result of rendering keeps looking nice even if you open the Marpit Markdown in a general Markdown editor.
 
 ## How to write slides?
 
