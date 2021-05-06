@@ -1,6 +1,6 @@
 # Usage
 
-Marpit has only a feature: Convert Markdown and theme set into HTML/CSS. Thus the basic usage is completely simple.
+Marpit has only one feature: Convert Markdown and theme set into HTML/CSS. Thus the basic usage is completely simple.
 
 ## Marpit class
 
