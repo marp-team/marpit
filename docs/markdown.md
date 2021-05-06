@@ -18,7 +18,7 @@ foo
 bar
 ```
 
-?> An empty line may be required before the dash ruler by the spec of [CommonMark](https://spec.commonmark.org/0.29/#example-28). You can use the underline ruler `___`, asterisk ruler `***`, and space-included ruler `- - -` when you not want to add empty lines.
+?> An empty line may be required before the dash ruler by the spec of [CommonMark](https://spec.commonmark.org/0.29/#example-28). You can use the underline ruler `___`, asterisk ruler `***`, and space-included ruler `- - -` when you do not want to add empty lines.
 
 ## Extended features
 
