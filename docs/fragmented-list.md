@@ -77,4 +77,4 @@ The below HTML is a rendered result of [bullet list example](#for-bullet-list).
 </section>
 ```
 
-?> Fragmented list does not change DOM structure and appearances. It relys on a behavior of the integrated app whether actually treats the rendered list as fragments.
+?> Fragmented list does not change DOM structure and appearances. It relies on a behavior of the integrated app whether actually treats the rendered list as fragments.
