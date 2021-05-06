@@ -56,7 +56,7 @@ The second page also has same color.
 
 #### Apply to a single page (Spot directives)
 
-If you want to apply local directives only to current page, you have to use prefix `_` to the name of directives.
+If you want to apply local directives only to the current page, you have to add the prefix `_` to the name of directives.
 
 ```markdown
 <!-- _backgroundColor: aqua -->
