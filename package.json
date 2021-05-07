@@ -97,6 +97,10 @@
     "markdown-it-front-matter": "^0.2.3",
     "postcss": "^8.2.8"
   },
+  "resolutions": {
+    "normalize-package-data": "^3.0.2",
+    "underscore": ">=1.12.1"
+  },
   "publishConfig": {
     "access": "public"
   }
