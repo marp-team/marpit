@@ -263,8 +263,9 @@ class ThemeSet {
     const packer = postcss(
       [
         before &&
-          postcssPlugin('marpit-pack-before', () => (css) =>
-            css.first.before(before)
+          postcssPlugin(
+            'marpit-pack-before',
+            () => (css) => css.first.before(before)
           ),
         after &&
           postcssPlugin('marpit-pack-after', () => (css) => {
@@ -278,8 +279,9 @@ class ThemeSet {
             height: this.getThemeProp(theme, 'height'),
           }),
         theme !== scaffold &&
-          postcssPlugin('marpit-pack-scaffold', () => (css) =>
-            css.first.before(scaffold.css)
+          postcssPlugin(
+            'marpit-pack-scaffold',
+            () => (css) => css.first.before(scaffold.css)
           ),
         opts.inlineSVG && postcssAdvancedBackground,
         postcssPagination,

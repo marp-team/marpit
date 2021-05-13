@@ -28,50 +28,51 @@ import postcssPlugin from '../../helpers/postcss_plugin'
  */
 const plugin = postcssPlugin(
   'marpit-postcss-import-parse',
-  () => (css, { result }) => {
-    const imports = { import: [], importTheme: [] }
-    let allowImport = true
+  () =>
+    (css, { result }) => {
+      const imports = { import: [], importTheme: [] }
+      let allowImport = true
 
-    css.walk((node) => {
-      if (node.type === 'atrule') {
-        const push = (target) => {
-          const [quote] = node.params
-          if (quote !== '"' && quote !== "'") return
+      css.walk((node) => {
+        if (node.type === 'atrule') {
+          const push = (target) => {
+            const [quote] = node.params
+            if (quote !== '"' && quote !== "'") return
 
-          const splitedValue = node.params.slice(1).split(quote)
-          let value = ''
+            const splitedValue = node.params.slice(1).split(quote)
+            let value = ''
 
-          splitedValue.every((v) => {
-            if (v.endsWith('\\')) {
-              value = `${value}${v.slice(0, -1)}${quote}`
-              return true
-            }
-            value = `${value}${v}`
-            return false
-          })
+            splitedValue.every((v) => {
+              if (v.endsWith('\\')) {
+                value = `${value}${v.slice(0, -1)}${quote}`
+                return true
+              }
+              value = `${value}${v}`
+              return false
+            })
 
-          node.marpitImportParse = value
-          target.push({ node, value })
-        }
-
-        if (allowImport) {
-          if (node.name === 'import') {
-            push(imports.import)
-          } else if (node.name !== 'charset') {
-            allowImport = false
+            node.marpitImportParse = value
+            target.push({ node, value })
           }
-        }
 
-        if (node.name === 'import-theme' && node.parent.type === 'root') {
-          push(imports.importTheme)
-        }
-      } else if (node.type !== 'comment') {
-        allowImport = false
-      }
-    })
+          if (allowImport) {
+            if (node.name === 'import') {
+              push(imports.import)
+            } else if (node.name !== 'charset') {
+              allowImport = false
+            }
+          }
 
-    result.marpitImport = [...imports.importTheme, ...imports.import]
-  }
+          if (node.name === 'import-theme' && node.parent.type === 'root') {
+            push(imports.importTheme)
+          }
+        } else if (node.type !== 'comment') {
+          allowImport = false
+        }
+      })
+
+      result.marpitImport = [...imports.importTheme, ...imports.import]
+    }
 )
 
 export default plugin
