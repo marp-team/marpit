@@ -32,6 +32,7 @@ describe('Marpit inline SVG plugin', () => {
     return cheerio.load(method.call(markdownIt, text), {
       lowerCaseAttributeNames: false,
       lowerCaseTags: false,
+      xmlMode: true,
     })
   }
 

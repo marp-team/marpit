@@ -134,14 +134,15 @@ describe('Marpit background image plugin', () => {
 
   context('with inline SVG (Advanced background mode)', () => {
     const mdSVG = () => md(true)
-    const $load = (html) =>
+    const $load = (html, opts = {}) =>
       cheerio.load(html, {
+        ...opts,
         lowerCaseAttributeNames: false,
         lowerCaseTags: false,
       })
 
     it('renders advanced background to another foreignObject', () => {
-      const $ = $load(mdSVG().render('![bg](image)'))
+      const $ = $load(mdSVG().render('![bg](image)'), { xmlMode: true })
       expect($('svg[viewBox="0 0 100 100"] > foreignObject')).toHaveLength(3)
 
       const bg = $('svg > foreignObject:first-child')
@@ -166,7 +167,9 @@ describe('Marpit background image plugin', () => {
     })
 
     it('assigns data attribute to section element of the slide content', () => {
-      const $ = $load(mdSVG().render('![bg](image)\n\n# test'))
+      const $ = $load(mdSVG().render('![bg](image)\n\n# test'), {
+        xmlMode: true,
+      })
       const slideSection = $(
         'svg > foreignObject > section[data-marpit-advanced-background="content"]'
       )
@@ -223,7 +226,8 @@ describe('Marpit background image plugin', () => {
           $load(
             mdSVG().render(
               `![bg ${[keyword, attr].filter((v) => v).join(':')}](image)`
-            )
+            ),
+            { xmlMode: true }
           )
 
         const section = $()(
@@ -262,7 +266,7 @@ describe('Marpit background image plugin', () => {
     })
 
     it('assigns x attribute of foreignObject for content as 50% with left keyword', () => {
-      const $ = $load(mdSVG().render(`![bg left](image)`))
+      const $ = $load(mdSVG().render(`![bg left](image)`), { xmlMode: true })
       const section = $(
         'svg > foreignObject > section[data-marpit-advanced-background="content"]'
       )
@@ -274,7 +278,9 @@ describe('Marpit background image plugin', () => {
     context(
       'when multiple keyword for split background defined in a same slide',
       () => {
-        const $ = $load(mdSVG().render(`![bg right](a) ![bg left](b)`))
+        const $ = $load(mdSVG().render(`![bg right](a) ![bg left](b)`), {
+          xmlMode: true,
+        })
 
         it('uses the last defined keyword', () => {
           const section = $(
@@ -402,7 +408,8 @@ describe('Marpit background image plugin', () => {
       const $ = $load(
         mdSVG().render(
           '---\npaginate: true\nclass: pseudo layer\n---\n\n![bg](test)'
-        )
+        ),
+        { xmlMode: true }
       )
 
       it('assigns pagination attributes to pseudo layer', () => {
@@ -421,7 +428,9 @@ describe('Marpit background image plugin', () => {
     })
 
     context('with color directive', () => {
-      const $ = $load(mdSVG().render('<!-- color: white -->\n\n![bg](test)'))
+      const $ = $load(mdSVG().render('<!-- color: white -->\n\n![bg](test)'), {
+        xmlMode: true,
+      })
 
       it('assigns color style to pseudo layer', () => {
         const pseudoSection = $('svg > foreignObject > section').eq(2)
