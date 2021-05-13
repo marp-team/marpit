@@ -43,7 +43,7 @@ commands:
       - checkout
       - install:
           postinstall:
-            - run: yarn audit
+            - run: yarn -s check:audit
 
   test:
     steps:

@@ -42,7 +42,7 @@
   },
   "scripts": {
     "build": "yarn -s clean && babel src --out-dir lib",
-    "check:audit": "yarn audit",
+    "check:audit": "echo \"[WARNING] Temporally limited yarn audit only to dependencies.\" && yarn audit --groups dependencies",
     "check:format": "yarn -s run format -c",
     "clean": "rimraf lib",
     "docs": "node ./docsify/serve.js",
