@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.1.0 - 2021-07-08
+
 ### Added
 
 - CI test against Node 16 ([#306](https://github.com/marp-team/marpit/pull/306))
