@@ -9,8 +9,8 @@ const matcher = new RegExp(`\\b${pseudoClass}\\b`, 'g')
  * Marpit PostCSS root increasing specificity plugin.
  *
  * Replace `:marpit-root` pseudo-class selector into `:not(a)`, to increase
- * specificity. `:marpit-root` is always added to `section` selector so
- * `:not(a)` must always match too.
+ * specificity. `:marpit-root` is always added to `section` selector by root
+ * replace plugin so `:not(a)` must always match too.
  *
  * @alias module:postcss/root/increasing_specificity
  */
