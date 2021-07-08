@@ -10,12 +10,12 @@ describe('Marpit PostCSS root increasing specificity plugin', () => {
       from: undefined,
     })
 
-  it('replaces specific pseudo-class into ":not(\\9)" to increase specificity', () => {
-    expect(run(`section${pseudoClass} {}`).css).toBe('section:not(\\9) {}')
+  it('replaces specific pseudo-class into ":not(a)" to increase specificity', () => {
+    expect(run(`section${pseudoClass} {}`).css).toBe('section:not(a) {}')
 
     // With replaced :root selector via root replace plugin
-    expect(run(`:root {}`).css).toBe('section:not(\\9) {}')
-    expect(run(`section :root {}`).css).toBe('section section:not(\\9) {}')
-    expect(run(`:root.klass div {}`).css).toBe('section:not(\\9).klass div {}')
+    expect(run(`:root {}`).css).toBe('section:not(a) {}')
+    expect(run(`section :root {}`).css).toBe('section section:not(a) {}')
+    expect(run(`:root.klass div {}`).css).toBe('section:not(a).klass div {}')
   })
 })

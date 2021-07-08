@@ -8,6 +8,7 @@
 
 ### Changed
 
+- Change how to increase specificity of `section` defined by `:root` selector ([#302](https://github.com/marp-team/marpit/pull/302))
 - Upgrade dependent packages to the latest version ([#301](https://github.com/marp-team/marpit/pull/301), [#306](https://github.com/marp-team/marpit/pull/306))
 - Follow the latest [CommonMark spec 0.30](https://spec.commonmark.org/0.30/) ([#306](https://github.com/marp-team/marpit/pull/306))
 
