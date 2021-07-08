@@ -2,9 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- CI test against Node 16 ([#306](https://github.com/marp-team/marpit/pull/306))
+
 ### Changed
 
-- Upgrade dependent packages to the latest version ([#301](https://github.com/marp-team/marpit/pull/301))
+- Upgrade dependent packages to the latest version ([#301](https://github.com/marp-team/marpit/pull/301), [#306](https://github.com/marp-team/marpit/pull/306))
+- Follow the latest [CommonMark spec 0.30](https://spec.commonmark.org/0.30/) ([#306](https://github.com/marp-team/marpit/pull/306))
 
 ## v2.0.1 - 2021-04-27
 
