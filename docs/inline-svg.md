@@ -40,7 +40,7 @@ Developer can handle the slide much easier in Marpit integrated apps.
 
 !> WebKit cannot scale HTML elements in `<foreignObject>` ([Bug 23113](https://bugs.webkit.org/show_bug.cgi?id=23113)). You can mitigate by [polyfill](#polyfill).
 
-### No require JavaScript
+### JavaScript not required
 
 Marpit's scaffold style has defined `scroll-snap-align` declaration to `section` elements. They can align and fit to viewport by defining `scroll-snap-type` to the scroll container. ([CSS Scroll Snap](https://developers.google.com/web/updates/2018/07/css-scroll-snap))
 
