@@ -18,7 +18,7 @@ commands:
         default: []
       yarn:
         type: string
-        default: '^1.22.5'
+        default: '^1.22.11'
     steps:
       - run:
           name: Upgrade yarn for current user
@@ -30,7 +30,7 @@ commands:
             - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-
             - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-
 
-      - run: yarn install
+      - run: yarn install --frozen-lockfile
       - steps: << parameters.postinstall >>
 
       - save_cache:
@@ -88,7 +88,7 @@ jobs:
   test-node10:
     executor:
       name: node
-      version: '10.24.0'
+      version: '10.24.1'
     steps:
       - test
 
@@ -102,7 +102,7 @@ jobs:
   test-node14:
     executor:
       name: node
-      version: '14.17.3' # Specify LTS version for development
+      version: '14.17.5' # Specify LTS version for development
     steps:
       - test
 
