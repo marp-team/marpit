@@ -18,6 +18,54 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
   </head>
   <body>
+    <template id="alert-for-marp-consumers">
+      <aside class="alert-for-marp-consumers">
+        <div class="alert-for-marp-consumers-content">
+          <div class="alert-for-marp-consumers-close-container">
+            <button class="alert-for-marp-consumers-close" data-alert-close="">
+              <img
+                class="alert-for-marp-consumers-close-img"
+                src="https://icongr.am/material/close.svg"
+                alt="Close"
+              />
+            </button>
+          </div>
+          <p>
+            This documentation is targeted for <b>JavaScript developers</b> who
+            are using Marpit framework, not for users of
+            <a href="https://marp.app" target="_blank" rel="noopener noreferrer"
+              >Marp presentation ecosystem</a
+            >. If you are a consumer of Marp who are not familiar with
+            engineering, it may be hard to understand the contents.
+          </p>
+          <p>
+            <a
+              href="https://marp.app/blog/re-creation-of-marp-website"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Marp team is planning a unified documentation for Marp users.</a
+            >
+            Track the progress at
+            <a
+              href="https://github.com/marp-team/marp/discussions/126"
+              target="_blank"
+              rel="noopener noreferrer"
+              >marp-team/marp#126</a
+            >.
+          </p>
+        </div>
+        <div class="alert-for-marp-consumers-button-container">
+          <button
+            class="alert-for-marp-consumers-button"
+            type="button"
+            data-alert-close=""
+          >
+            Got it
+          </button>
+        </div>
+      </aside>
+    </template>
+
     <div id="app"></div>
     <script>
       window.$docsify = {
@@ -32,6 +80,40 @@
         subMaxLevel: 3,
         maxLevel: 4,
         pagination: { crossChapter: true },
+        plugins: [
+          (hook) => {
+            const tpl = document.getElementById('alert-for-marp-consumers')
+
+            hook.afterEach((html) => {
+              try {
+                const alertState = sessionStorage.getItem('marpit-alert')
+                if (alertState === 'read') return html
+              } catch (e) {
+                // ignore
+              }
+
+              return tpl.innerHTML + html
+            })
+
+            hook.mounted(() => {
+              document.body.addEventListener('click', (e) => {
+                if (e.target.closest('[data-alert-close]')) {
+                  e.preventDefault()
+
+                  document
+                    .querySelectorAll('.alert-for-marp-consumers')
+                    .forEach((el) => el.remove())
+
+                  try {
+                    sessionStorage.setItem('marpit-alert', 'read')
+                  } catch (e) {
+                    // ignore
+                  }
+                }
+              })
+            })
+          },
+        ],
       }
     </script>
     <script
