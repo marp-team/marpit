@@ -1,4 +1,5 @@
 import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 import nodeResolve from '@rollup/plugin-node-resolve'
 import builtinModules from 'builtin-modules'
 import esbuild from 'rollup-plugin-esbuild'
@@ -11,10 +12,11 @@ const generateExternal = (deps) => (id) =>
 
 const external = generateExternal([
   ...builtinModules,
-  ...Object.keys(pkg.devDependencies),
+  ...Object.keys(pkg.dependencies),
 ])
 
 const plugins = [
+  json({ preferConst: true }),
   nodeResolve(),
   commonjs(),
   esbuild({

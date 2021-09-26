@@ -58,9 +58,14 @@
     "types": "rimraf types && tsc --declaration --emitDeclarationOnly --outDir types",
     "watch": "rollup -w -c"
   },
+  "dependencies": {
+    "@types/markdown-it": "^12.2.1",
+    "markdown-it": "^12.2.0"
+  },
   "devDependencies": {
     "@babel/preset-env": "^7.15.6",
     "@rollup/plugin-commonjs": "^20.0.0",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@tsconfig/node12": "^1.0.9",
     "@types/jest": "^27.0.2",
