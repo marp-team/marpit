@@ -1,0 +1,7 @@
+.git/
+coverage/
+lib/
+module/
+types/
+node_modules
+package.json
