@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  codecov: codecov/codecov@3.2.0
+
 executors:
   node:
     parameters:
@@ -13,6 +16,9 @@ executors:
 commands:
   install:
     parameters:
+      force:
+        type: boolean
+        default: false
       postinstall:
         type: steps
         default: []
@@ -30,7 +36,7 @@ commands:
             - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-
             - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-
 
-      - run: yarn install --frozen-lockfile
+      - run: yarn install --frozen-lockfile <<# parameters.force >>--ignore-engines<</ parameters.force >>
       - steps: << parameters.postinstall >>
 
       - save_cache:
@@ -45,13 +51,20 @@ commands:
           postinstall:
             - run: yarn -s check:audit
 
-  test:
+  prepare:
+    parameters:
+      force:
+        type: boolean
+        default: false
     steps:
       - run: node --version
 
       - checkout
-      - install
+      - install:
+          force: << parameters.force >>
 
+  lint:
+    steps:
       - run:
           name: Prettier formatting
           command: yarn check:format
@@ -64,13 +77,15 @@ commands:
           name: stylelint
           command: yarn lint:css
 
+  test:
+    steps:
       - run:
           name: Jest
           command: yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT_DIR: tmp/test-results
 
-      - run: yarn codecov
+      - codecov/upload
 
       - store_test_results:
           path: tmp/test-results
@@ -90,6 +105,8 @@ jobs:
       name: node
       version: '10.24.1'
     steps:
+      - prepare:
+          force: true
       - test
 
   test-node12:
@@ -97,6 +114,8 @@ jobs:
       name: node
       version: '12.22'
     steps:
+      - prepare
+      - lint
       - test
 
   test-node14:
@@ -104,6 +123,8 @@ jobs:
       name: node
       version: '14.18'
     steps:
+      - prepare
+      - lint
       - test
 
   test-node16:
@@ -111,6 +132,8 @@ jobs:
       name: node
       version: '16.13.0' # Specify LTS version for development
     steps:
+      - prepare
+      - lint
       - test
 
 workflows:
