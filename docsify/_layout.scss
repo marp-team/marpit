@@ -152,7 +152,8 @@ body * {
         width: 100%;
         max-width: 240px;
         margin: 0 auto;
-        box-shadow: 0 3px 6px rgb(#000, 0.15);
+        /* stylelint-disable-next-line color-function-notation */
+        box-shadow: 0 3px 6px rgba(#000, 0.15);
       }
     }
 
