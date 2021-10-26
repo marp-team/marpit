@@ -66,7 +66,6 @@
     "autoprefixer": "^10.3.7",
     "cheerio": "^1.0.0-rc.10",
     "chokidar": "^3.5.2",
-    "codecov": "^3.8.3",
     "cssnano": "^5.0.8",
     "dedent": "^0.7.0",
     "docsify-themeable": "^0.8.6",
