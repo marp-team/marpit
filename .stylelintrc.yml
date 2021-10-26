@@ -10,5 +10,7 @@ ignoreFiles:
 rules:
   at-rule-no-unknown:
     - null
+  custom-property-pattern:
+    - null
   scss/at-rule-no-unknown:
     - true

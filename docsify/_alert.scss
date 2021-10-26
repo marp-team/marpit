@@ -1,7 +1,9 @@
+@use 'sass:color';
+
 .alert-for-marp-consumers {
   background: var(--notice-important-background);
   border: 3px double var(--notice-important-border-color);
-  margin: 0 0 2rem 0;
+  margin: 0 0 2rem;
   overflow: hidden;
   padding: 0 1.5rem;
 }
@@ -25,13 +27,14 @@
   height: 2rem;
   padding: 0;
   cursor: pointer;
-  opacity: 0.7;
+  opacity: 70%;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 80%;
   }
+
   &:hover:active {
-    opacity: 0.5;
+    opacity: 50%;
   }
 }
 
@@ -54,6 +57,6 @@
   padding: 0.5rem 2rem;
 
   &:active {
-    background: mix($important-color, #000, 80%);
+    background: color.mix($important-color, #000, 80%);
   }
 }
