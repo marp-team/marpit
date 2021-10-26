@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.1.2 - 2021-10-26
+
 ### Changed
 
 - Upgrade development Node to v16 LTS ([#314](https://github.com/marp-team/marpit/pull/314))
