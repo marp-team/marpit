@@ -105,7 +105,7 @@ jobs:
   test-node14:
     executor:
       name: node
-      version: '14.17.5' # Specify LTS version for development
+      version: '14.17'
     steps:
       - test
 
