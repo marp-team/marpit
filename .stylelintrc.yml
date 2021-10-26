@@ -1,14 +1,11 @@
 extends:
-  - stylelint-config-standard
+  - stylelint-config-standard-scss
   - stylelint-config-prettier
 
 ignoreFiles:
   - coverage/**/*
   - docs/style/**/*
   - jsdoc/**/*
-
-plugins:
-  - stylelint-scss
 
 rules:
   at-rule-no-unknown:
