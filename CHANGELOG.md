@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Upgrade development Node to v16 LTS ([#314](https://github.com/marp-team/marpit/pull/314))
 - Upgrade dependent packages to the latest version ([#315](https://github.com/marp-team/marpit/pull/315))
 
 ## v2.1.1 - 2021-08-14
