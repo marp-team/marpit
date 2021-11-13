@@ -100,6 +100,15 @@ describe('Marpit image plugin', () => {
       expect(style('h:.678%')).not.toBe('height:.678%;')
       expect(style('h:unexpected')).not.toBe('height:unexpected;')
     })
+
+    it('removes recognized Marpit keywords from alt attribute of the output image', () => {
+      const output = md().render(
+        `![w:100px \t This is  example\timage \t h:200px](https://example.com/test.jpg)`
+      )
+      const $ = cheerio.load(output)
+
+      expect($('img').attr('alt')).toBe('This is  example\timage')
+    })
   })
 
   describe('Shorthand for text color', () => {

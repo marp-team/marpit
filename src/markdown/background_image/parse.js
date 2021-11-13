@@ -30,27 +30,43 @@ function backgroundImageParse(md) {
         if (t.type === 'image') {
           const { marpitImage } = t.meta
 
-          if (t.meta.marpitImage.options.includes('bg')) {
+          if (
+            marpitImage.options.some((v) => !v.consumed && v.content === 'bg')
+          ) {
             marpitImage.background = true
             t.hidden = true
 
             for (const opt of marpitImage.options) {
+              if (opt.consumed) continue
+              let consumed = false
+
+              // bg keyword
+              if (opt.content === 'bg') consumed = true
+
               // Background size keyword
-              if (bgSizeKeywords[opt])
-                marpitImage.backgroundSize = bgSizeKeywords[opt]
+              if (bgSizeKeywords[opt.content]) {
+                marpitImage.backgroundSize = bgSizeKeywords[opt.content]
+                consumed = true
+              }
 
               // Split background keyword
-              const matched = opt.match(splitSizeMatcher)
+              const matched = opt.content.match(splitSizeMatcher)
               if (matched) {
                 const [, splitSide, splitSize] = matched
 
                 marpitImage.backgroundSplit = splitSide
                 marpitImage.backgroundSplitSize = splitSize
+
+                consumed = true
               }
 
               // Background aligned direction
-              if (opt === 'vertical' || opt === 'horizontal')
-                marpitImage.backgroundDirection = opt
+              if (opt.content === 'vertical' || opt.content === 'horizontal') {
+                marpitImage.backgroundDirection = opt.content
+                consumed = true
+              }
+
+              if (consumed) opt.consumed = true
             }
           }
         }
