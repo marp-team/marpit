@@ -5,12 +5,11 @@ describe('Marpit PostCSS section size plugin', () => {
   const run = (input) =>
     postcss([sectionSize()]).process(input, { from: undefined })
 
-  it('adds marpitSectionSize object to result', () => {
+  it('adds marpitSectionSize object to result', () =>
     run('').then((result) => {
       expect(result.marpitSectionSize).toBeInstanceOf(Object)
       expect(result.marpitSectionSize).toStrictEqual({})
-    })
-  })
+    }))
 
   it('parses width and height declaration on section selector', () =>
     run('section { width: 123px; height: 456px; }').then((result) =>

@@ -16,6 +16,7 @@ import postcssRootIncreasingSpecificity, {
 } from './postcss/root/increasing_specificity'
 import postcssRem from './postcss/root/rem'
 import postcssRootReplace from './postcss/root/replace'
+import postcssSVGBackdrop from './postcss/svg_backdrop'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
 
@@ -284,6 +285,7 @@ class ThemeSet {
             () => (css) => css.first.before(scaffold.css)
           ),
         opts.inlineSVG && postcssAdvancedBackground,
+        opts.inlineSVG && postcssSVGBackdrop,
         postcssPagination,
         postcssRootReplace({ pseudoClass }),
         postcssRootFontSize,
