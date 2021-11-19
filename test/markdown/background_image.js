@@ -15,7 +15,8 @@ describe('Marpit background image plugin', () => {
     customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
     themeSet: { getThemeProp: () => 100 },
-    options: { inlineSVG: svg },
+    options: {},
+    inlineSVGOptions: { enabled: svg },
   })
 
   const md = (svg = false) => {

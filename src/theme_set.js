@@ -244,9 +244,11 @@ class ThemeSet {
   pack(name, opts = {}) {
     const slideElements = [{ tag: 'section' }]
     const theme = this.get(name, true)
+    const inlineSVGOpts = opts.inlineSVG || {}
 
-    if (opts.inlineSVG.enabled)
+    if (inlineSVGOpts.enabled) {
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
+    }
 
     const additionalCSS = (css) => {
       if (!css) return undefined
@@ -284,8 +286,10 @@ class ThemeSet {
             'marpit-pack-scaffold',
             () => (css) => css.first.before(scaffold.css)
           ),
-        opts.inlineSVG.enabled && postcssAdvancedBackground,
-        opts.inlineSVG.enabled && opts.inlineSVG.backdrop && postcssSVGBackdrop,
+        inlineSVGOpts.enabled && postcssAdvancedBackground,
+        inlineSVGOpts.enabled &&
+          inlineSVGOpts.backdropSelector &&
+          postcssSVGBackdrop,
         postcssPagination,
         postcssRootReplace({ pseudoClass }),
         postcssRootFontSize,

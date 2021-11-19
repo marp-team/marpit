@@ -32,7 +32,7 @@ const backdropMatcher = /(?:\b|^)::backdrop$/
  *   container whenever matched to `@media screen` media query.
  *
  * If concerned to conflict with the style provided by the app, consider to
- * disable the selector support by `inlineSVG: { backdrop: false }`.
+ * disable the selector support by `inlineSVG: { backdropSelector: false }`.
  *
  * @see https://developer.mozilla.org/docs/Web/CSS/::backdrop
  * @alias module:postcss/svg_backdrop

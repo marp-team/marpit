@@ -29,6 +29,11 @@ const defaultOptions = {
   inlineSVG: false,
 }
 
+const defaultInlineSVGOptions = {
+  enabled: true,
+  backdropSelector: true,
+}
+
 /**
  * Parse Marpit Markdown and render to the slide HTML/CSS.
  */
@@ -244,13 +249,10 @@ class Marpit {
    */
   get inlineSVGOptions() {
     if (typeof this.options.inlineSVG === 'object') {
-      return this.options.inlineSVG
+      return { ...defaultInlineSVGOptions, ...this.options.inlineSVG }
     }
 
-    return {
-      enabled: !!this.options.inlineSVG,
-      backdropSelector: true,
-    }
+    return { ...defaultInlineSVGOptions, enabled: !!this.options.inlineSVG }
   }
 
   /**
