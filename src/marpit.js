@@ -29,11 +29,24 @@ const defaultOptions = {
   inlineSVG: false,
 }
 
+const defaultInlineSVGOptions = {
+  enabled: true,
+  backdropSelector: true,
+}
+
 /**
  * Parse Marpit Markdown and render to the slide HTML/CSS.
  */
 class Marpit {
   #markdown = undefined
+
+  /**
+   * @typedef {Object} Marpit~InlineSVGOptions
+   * @property {boolean} [enabled=true] Whether inline SVG mode is enabled.
+   * @property {boolean} [backdropSelector=true] Whether `::backdrop` selector
+   *     support is enabled. If enabled, the `::backdrop` CSS selector will
+   *     match to the SVG container element.
+   */
 
   /**
    * Create a Marpit instance.
@@ -54,8 +67,8 @@ class Marpit {
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
    * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
    *     wrapping each slide sections.
-   * @param {boolean} [opts.inlineSVG=false] Wrap each sections by inline SVG.
-   *     _(Experimental)_
+   * @param {boolean|Marpit~InlineSVGOptions} [opts.inlineSVG=false] Wrap each
+   *     slide sections by inline SVG. _(Experimental)_
    */
   constructor(opts = {}) {
     /**
@@ -225,9 +238,21 @@ class Marpit {
         ...wrapArray(this.options.container),
         ...wrapArray(this.options.slideContainer),
       ],
-      inlineSVG: this.options.inlineSVG,
+      inlineSVG: this.inlineSVGOptions,
       printable: this.options.printable,
     }
+  }
+
+  /**
+   * @private
+   * @returns {Marpit~InlineSVGOptions} Options for inline SVG.
+   */
+  get inlineSVGOptions() {
+    if (typeof this.options.inlineSVG === 'object') {
+      return { ...defaultInlineSVGOptions, ...this.options.inlineSVG }
+    }
+
+    return { ...defaultInlineSVGOptions, enabled: !!this.options.inlineSVG }
   }
 
   /**

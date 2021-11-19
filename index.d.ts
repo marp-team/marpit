@@ -13,10 +13,15 @@ declare namespace Marpit {
     markdown?: any
     printable?: boolean
     slideContainer?: false | Element | Element[]
-    inlineSVG?: boolean
+    inlineSVG?: boolean | InlineSVGOptions
   }
 
   type HeadingDivider = 1 | 2 | 3 | 4 | 5 | 6
+
+  type InlineSVGOptions = {
+    enabled?: boolean
+    backdropSelector?: boolean
+  }
 
   type RenderResult<T = string> = {
     html: T

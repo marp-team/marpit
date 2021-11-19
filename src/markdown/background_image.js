@@ -9,11 +9,11 @@ import parse from './background_image/parse'
  *
  * Convert image token to backgrounds when the alternate text includes `bg`.
  *
- * When Marpit `inlineSVG` option is `false`, the image will convert to
+ * When Marpit inline SVG mode is disabled, the image will convert to
  * `backgroundImage` and `backgroundSize` spot directive. It supports only
  * single background and resizing by using CSS.
  *
- * When `inlineSVG` option is true, the plugin enables advanced background mode.
+ * When inline SVG mode is enabled, the plugin enables advanced background mode.
  * In addition to the basic background implementation, it supports multiple
  * background images, filters, and split background.
  *

@@ -15,7 +15,8 @@ describe('Marpit collect plugin', () => {
     themeSet,
     customDirectives: { global: {}, local: {} },
     lastGlobalDirectives: {},
-    options: { inlineSVG: svg },
+    options: {},
+    inlineSVGOptions: { enabled: svg },
   })
 
   const md = (marpitInstance) => {

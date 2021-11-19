@@ -175,7 +175,9 @@ describe('Marpit', () => {
         expect(opts.containers).toHaveLength(1)
         expect(opts.containers[0].tag).toBe('div')
         expect(opts.containers[0].class).toBe('marpit')
-        expect(opts.inlineSVG).toBe(false)
+        expect(opts.inlineSVG).toStrictEqual(
+          expect.objectContaining({ enabled: false })
+        )
         expect(opts.printable).toBe(true)
         return 'CSS'
       }
@@ -233,11 +235,30 @@ describe('Marpit', () => {
         return declCount
       }
 
+      const backdropStyle = '<style>::backdrop { --backdrop: true; }</style>'
+      const findBackdropRules = (css) =>
+        postcssInstance.process(css, { from: undefined }).then((ret) => {
+          let rules = []
+
+          ret.root.walkDecls('--backdrop', (decl) => {
+            let node = decl
+            while (node.type !== 'rule' && node.parent) node = node.parent
+            if (node.type === 'rule') rules.push(node)
+          })
+
+          return rules
+        })
+
       it('has not svg when inlineSVG is false', () => {
         const rendered = instance(false).render('# Hi')
         const $ = cheerio.load(rendered.html, { lowerCaseTags: false })
 
         expect($('svg')).toHaveLength(0)
+      })
+
+      it('has not svg when inlineSVG option has enabled field as false', () => {
+        const rendered = instance({ enabled: false }).render('# Hi')
+        expect(rendered.html).not.toContain('<svg')
       })
 
       it('wraps section with svg when inlineSVG is true', () => {
@@ -255,18 +276,51 @@ describe('Marpit', () => {
           })
       })
 
-      context('when passed htmlAsArray env', () => {
-        it('outputs HTML including inline SVG as array', () => {
-          const { html } = instance(true).render('# Hi', { htmlAsArray: true })
-          expect(html).toHaveLength(1)
+      it('redirects ::backdrop selector to container SVG when inlineSVG is enabled', () => {
+        const { css } = instance(true).render(backdropStyle)
 
-          const $ = cheerio.load(html[0], {
-            lowerCaseTags: false,
-            xmlMode: true,
-          })
-          expect($('svg > foreignObject')).toHaveLength(1)
+        return findBackdropRules(css).then((rules) => {
+          expect(rules).toHaveLength(2)
+          expect(
+            rules.find((r) => r.selector.endsWith('svg[data-marpit-svg]'))
+          ).toBeTruthy()
         })
       })
+
+      it('wraps section with svg when inlineSVG is true', () => {
+        const rendered = instance({ enabled: true }).render('# Hi')
+        expect(rendered.html).toContain('<svg')
+      })
+
+      context('when passed htmlAsArray env', () => {
+        it('outputs HTML including inline SVG as array', () => {
+          for (const opt of [true, { enabled: true }]) {
+            const { html } = instance(opt).render('# Hi', { htmlAsArray: true })
+            expect(html).toHaveLength(1)
+
+            const $ = cheerio.load(html[0], {
+              lowerCaseTags: false,
+              xmlMode: true,
+            })
+            expect($('svg > foreignObject')).toHaveLength(1)
+          }
+        })
+      })
+
+      context(
+        'when inlineSVG option has an object with backdropSelector field as false',
+        () => {
+          it('does not redirects ::backdrop selector to container SVG', () => {
+            const { css } = instance({ backdropSelector: false }).render(
+              backdropStyle
+            )
+
+            return findBackdropRules(css).then((rules) => {
+              expect(rules).toHaveLength(1)
+            })
+          })
+        }
+      )
     })
 
     describe('Background image', () => {

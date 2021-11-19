@@ -10,7 +10,8 @@ describe('Marpit inline SVG plugin', () => {
     customDirectives: { global: {}, local: {} },
     themeSet: new ThemeSet(),
     lastGlobalDirectives: {},
-    options: { inlineSVG: true },
+    options: {},
+    inlineSVGOptions: { enabled: true },
     ...props,
   })
 
@@ -52,7 +53,9 @@ describe('Marpit inline SVG plugin', () => {
   })
 
   it('ignores when Marpit inlineSVG option is false', () => {
-    const marpitStubInstance = marpitStub({ options: { inlineSVG: false } })
+    const marpitStubInstance = marpitStub({
+      inlineSVGOptions: { enabled: false },
+    })
     const $ = render(md(marpitStubInstance), '# test\n\n---\n\n# test')
     expect($('svg')).toHaveLength(0)
   })

@@ -16,6 +16,7 @@ import postcssRootIncreasingSpecificity, {
 } from './postcss/root/increasing_specificity'
 import postcssRem from './postcss/root/rem'
 import postcssRootReplace from './postcss/root/replace'
+import postcssSVGBackdrop from './postcss/svg_backdrop'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
 
@@ -236,16 +237,18 @@ class ThemeSet {
    * @param {Element[]} [opts.containers] Container elements wrapping whole
    *     slide deck.
    * @param {boolean} [opts.printable] Make style printable to PDF.
-   * @param {boolean} [opts.inlineSVG] Apply a hierarchy of inline SVG to CSS
-   *     selector by setting `true`. _(Experimental)_
+   * @param {Marpit~InlineSVGOptions} [opts.inlineSVG] Apply a hierarchy of
+   *     inline SVG to CSS selector by setting `true`. _(Experimental)_
    * @return {string} The converted CSS string.
    */
   pack(name, opts = {}) {
     const slideElements = [{ tag: 'section' }]
     const theme = this.get(name, true)
+    const inlineSVGOpts = opts.inlineSVG || {}
 
-    if (opts.inlineSVG)
+    if (inlineSVGOpts.enabled) {
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
+    }
 
     const additionalCSS = (css) => {
       if (!css) return undefined
@@ -283,7 +286,10 @@ class ThemeSet {
             'marpit-pack-scaffold',
             () => (css) => css.first.before(scaffold.css)
           ),
-        opts.inlineSVG && postcssAdvancedBackground,
+        inlineSVGOpts.enabled && postcssAdvancedBackground,
+        inlineSVGOpts.enabled &&
+          inlineSVGOpts.backdropSelector &&
+          postcssSVGBackdrop,
         postcssPagination,
         postcssRootReplace({ pseudoClass }),
         postcssRootFontSize,
