@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.2.0 - 2021-11-19
+
 ### Added
 
 - [`::backdrop` pseudo-element](https://marpit.marp.app/inline-svg?id=backdrop-css-selector) matches to the container SVG when enabled inline SVG mode ([#313](https://github.com/marp-team/marpit/issues/313), [#319](https://github.com/marp-team/marpit/pull/319))
