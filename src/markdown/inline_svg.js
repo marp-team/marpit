@@ -16,7 +16,7 @@ function inlineSVG(md) {
     'marpit_directives_parse',
     'marpit_inline_svg',
     (state) => {
-      if (!marpit.options.inlineSVG || state.inlineMode) return
+      if (!marpit.inlineSVGOptions.enabled || state.inlineMode) return
 
       const { themeSet, lastGlobalDirectives } = marpit
       const w = themeSet.getThemeProp(lastGlobalDirectives.theme, 'widthPixel')

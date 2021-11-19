@@ -237,15 +237,15 @@ class ThemeSet {
    * @param {Element[]} [opts.containers] Container elements wrapping whole
    *     slide deck.
    * @param {boolean} [opts.printable] Make style printable to PDF.
-   * @param {boolean} [opts.inlineSVG] Apply a hierarchy of inline SVG to CSS
-   *     selector by setting `true`. _(Experimental)_
+   * @param {Marpit~InlineSVGOptions} [opts.inlineSVG] Apply a hierarchy of
+   *     inline SVG to CSS selector by setting `true`. _(Experimental)_
    * @return {string} The converted CSS string.
    */
   pack(name, opts = {}) {
     const slideElements = [{ tag: 'section' }]
     const theme = this.get(name, true)
 
-    if (opts.inlineSVG)
+    if (opts.inlineSVG.enabled)
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
 
     const additionalCSS = (css) => {
@@ -284,8 +284,8 @@ class ThemeSet {
             'marpit-pack-scaffold',
             () => (css) => css.first.before(scaffold.css)
           ),
-        opts.inlineSVG && postcssAdvancedBackground,
-        opts.inlineSVG && postcssSVGBackdrop,
+        opts.inlineSVG.enabled && postcssAdvancedBackground,
+        opts.inlineSVG.enabled && opts.inlineSVG.backdrop && postcssSVGBackdrop,
         postcssPagination,
         postcssRootReplace({ pseudoClass }),
         postcssRootFontSize,
