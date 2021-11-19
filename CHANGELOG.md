@@ -11,6 +11,10 @@
 
 - Remove recognized image keywords from alt text ([#316](https://github.com/marp-team/marpit/issues/316), [#318](https://github.com/marp-team/marpit/pull/318))
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#320](https://github.com/marp-team/marpit/pull/320))
+
 ## v2.1.2 - 2021-10-26
 
 ### Changed
