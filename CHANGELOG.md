@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Added
+
+- [`::backdrop` pseudo-element](https://marpit.marp.app/inline-svg?id=backdrop-css-selector) matches to the container SVG when enabled inline SVG mode ([#313](https://github.com/marp-team/marpit/issues/313), [#319](https://github.com/marp-team/marpit/pull/319))
+- Allow setting [the option object](https://marpit-api.marp.app/marpit#~InlineSVGOptions) to `inlineSVG` constructor option ([#319](https://github.com/marp-team/marpit/pull/319))
+
 ### Fixed
 
 - Remove recognized image keywords from alt text ([#316](https://github.com/marp-team/marpit/issues/316), [#318](https://github.com/marp-team/marpit/pull/318))
