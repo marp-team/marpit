@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Remove recognized image keywords from alt text ([#316](https://github.com/marp-team/marpit/issues/316), [#318](https://github.com/marp-team/marpit/pull/318))
+
 ## v2.1.2 - 2021-10-26
 
 ### Changed
