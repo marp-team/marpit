@@ -43,7 +43,9 @@ optionMatchers.set(
 
     for (const arg of matches.slice(1)) {
       if (arg) {
-        const colorFunc = arg.match(/^(rgba?|hsla?)\((.*)\)$/)
+        const colorFunc = arg.match(
+          /^(rgba?|hsla?|hwb|(?:ok)?(?:lab|lch)|color)\((.*)\)$/
+        )
 
         args.push(
           colorFunc ? `${colorFunc[1]}(${escape(colorFunc[2])})` : escape(arg)
@@ -96,14 +98,36 @@ function parseImage(md) {
   let originalURLMap
   let refCount = 0
 
-  const finalizeTokenAttr = (token) => {
+  const finalizeTokenAttr = (token, state) => {
     // Convert imprimitive attribute value into primitive string
-    if (token.attrs && Array.isArray(token.attrs))
+    if (token.attrs && Array.isArray(token.attrs)) {
       token.attrs = token.attrs.map(([name, value]) => [name, value.toString()])
+    }
 
+    // Apply finalization recursively to inline tokens
     if (token.type === 'inline') {
-      // Apply finalization recursively to inline tokens
-      for (const t of token.children) finalizeTokenAttr(t)
+      for (const t of token.children) finalizeTokenAttr(t, state)
+    }
+
+    // Re-generate the alt text of image token to remove Marpit specific options
+    if (token.type === 'image' && token.meta && token.meta.marpitImage) {
+      let updatedAlt = ''
+      let hasConsumed = false
+
+      for (const opt of token.meta.marpitImage.options) {
+        if (opt.consumed) {
+          hasConsumed = true
+        } else {
+          updatedAlt += opt.leading + opt.content
+        }
+      }
+
+      if (hasConsumed) {
+        let newTokens = []
+        md.inline.parse(updatedAlt.trimLeft(), state.md, state.env, newTokens)
+
+        token.children = newTokens
+      }
     }
   }
 
@@ -129,7 +153,7 @@ function parseImage(md) {
 
       if (refCount === 0) {
         // Apply finalization for every tokens
-        for (const token of state.tokens) finalizeTokenAttr(token)
+        for (const token of state.tokens) finalizeTokenAttr(token, state)
       }
     }
   }
@@ -137,7 +161,30 @@ function parseImage(md) {
   md.inline.ruler2.push('marpit_parse_image', ({ tokens }) => {
     for (const token of tokens) {
       if (token.type === 'image') {
-        const options = token.content.split(/\s+/).filter((s) => s.length > 0)
+        // Parse alt text as options
+        const optsBase = token.content.split(/(\s+)/)
+
+        let currentIdx = 0
+        let leading = ''
+
+        const options = optsBase.reduce((acc, opt, i) => {
+          if (i % 2 === 0 && opt.length > 0) {
+            currentIdx += leading.length
+            acc.push({
+              content: opt,
+              index: currentIdx,
+              leading,
+              consumed: false,
+            })
+
+            leading = ''
+            currentIdx += opt.length
+          } else {
+            leading += opt
+          }
+          return acc
+        }, [])
+
         const url = token.attrGet('src')
         const originalUrl = originalURLMap.has(url)
           ? originalURLMap.get(url)
@@ -162,9 +209,11 @@ function parseImage(md) {
         // Parse keyword through matchers
         for (const opt of options) {
           for (const [regexp, mergeFunc] of optionMatchers) {
-            const matched = opt.match(regexp)
+            if (opt.consumed) continue
+            const matched = opt.content.match(regexp)
 
-            if (matched)
+            if (matched) {
+              opt.consumed = true
               token.meta.marpitImage = {
                 ...token.meta.marpitImage,
                 ...mergeFunc(matched, {
@@ -172,6 +221,7 @@ function parseImage(md) {
                   ...token.meta.marpitImage,
                 }),
               }
+            }
           }
         }
       }
