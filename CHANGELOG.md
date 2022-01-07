@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#322](https://github.com/marp-team/marpit/pull/322))
+
 ## v2.2.0 - 2021-11-19
 
 ### Added
