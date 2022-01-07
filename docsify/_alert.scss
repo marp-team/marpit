@@ -27,14 +27,14 @@
   height: 2rem;
   padding: 0;
   cursor: pointer;
-  opacity: 70%;
+  opacity: 0.7;
 
   &:hover {
-    opacity: 80%;
+    opacity: 0.8;
   }
 
   &:hover:active {
-    opacity: 50%;
+    opacity: 0.5;
   }
 }
 
