@@ -95,6 +95,10 @@
     "markdown-it-front-matter": "^0.2.3",
     "postcss": "^8.4.5"
   },
+  "resolutions": {
+    "jsdoc/marked": "^4.0.10",
+    "jsdoc/markdown-it": "^12.3.2"
+  },
   "publishConfig": {
     "access": "public"
   }
