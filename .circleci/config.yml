@@ -115,6 +115,7 @@ jobs:
       version: '12.22'
     steps:
       - prepare
+          force: true
       - lint
       - test
 
