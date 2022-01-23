@@ -114,7 +114,8 @@ jobs:
       name: node
       version: '12.22'
     steps:
-      - prepare
+      - prepare:
+          force: true
       - lint
       - test
 
