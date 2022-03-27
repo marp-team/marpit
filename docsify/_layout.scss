@@ -8,7 +8,7 @@ $important-color: color.complement($brand-primary);
 :root {
   --mono-tint3: #fbfbfb;
   --theme-color: #{$brand-primary};
-  --strong-color: currentColor;
+  --strong-color: currentcolor;
 
   // Base
   --base-letter-spacing: 0.25px;
