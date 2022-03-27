@@ -131,7 +131,7 @@ jobs:
   test-node16:
     executor:
       name: node
-      version: '16.13.1' # Specify LTS version for development
+      version: '16.14.2' # Specify LTS version for development
     steps:
       - prepare
       - lint
