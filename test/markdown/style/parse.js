@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import styleParse from '../../../src/markdown/style/parse'
@@ -53,7 +53,7 @@ describe('Marpit style parse plugin', () => {
       })
 
       it('strips style element in rendering', () => {
-        const $ = cheerio.load(markdown.render(text))
+        const $ = load(markdown.render(text))
         expect($('style')).toHaveLength(0)
       })
 
@@ -78,7 +78,7 @@ describe('Marpit style parse plugin', () => {
             expect(pickStyles(tokens)).toHaveLength(0)
 
             const rendered = markdown.renderer.render(tokens, markdown.options)
-            const $ = cheerio.load(rendered)
+            const $ = load(rendered)
             const code = $('code').text()
 
             expect($('style')).toHaveLength(0)
