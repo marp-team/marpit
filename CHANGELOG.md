@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Scoped style does not style pseudo elements `section::before` and `section::after` in advanced background ([#328](https://github.com/marp-team/marpit/issues/328), [#329](https://github.com/marp-team/marpit/pull/329))
+
 ## v2.2.3 - 2022-03-27
 
 ### Changed
