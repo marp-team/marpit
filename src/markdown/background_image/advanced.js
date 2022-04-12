@@ -137,18 +137,11 @@ function advancedBackground(md) {
                 'data-marpit-advanced-background': 'pseudo',
               },
               wrapTokens(state.Token, 'marpit_advanced_pseudo_section', {
+                ...open.attrs.reduce((o, [k, v]) => ({ ...o, [k]: v }), {}),
                 tag: 'section',
-                class: open.attrGet('class'),
+                id: undefined,
                 style: style.toString(),
                 'data-marpit-advanced-background': 'pseudo',
-
-                // For pagination styling
-                'data-marpit-pagination': open.attrGet(
-                  'data-marpit-pagination'
-                ),
-                'data-marpit-pagination-total': open.attrGet(
-                  'data-marpit-pagination-total'
-                ),
               })
             )
           )

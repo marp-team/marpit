@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
@@ -7,6 +7,8 @@ import parseDirectives from '../../src/markdown/directives/parse'
 import image from '../../src/markdown/image'
 import inlineSVG from '../../src/markdown/inline_svg'
 import slide from '../../src/markdown/slide'
+import assignStyle from '../../src/markdown/style/assign'
+import parseStyle from '../../src/markdown/style/parse'
 
 const splitBackgroundKeywords = ['left', 'right']
 
@@ -25,12 +27,14 @@ describe('Marpit background image plugin', () => {
 
     return instance
       .use(comment)
+      .use(parseStyle)
       .use(slide)
       .use(parseDirectives)
       .use(applyDirectives)
       .use(inlineSVG)
       .use(image)
       .use(backgroundImage)
+      .use(assignStyle)
   }
 
   const bgDirective = (url, mdInstance) => {
@@ -57,7 +61,7 @@ describe('Marpit background image plugin', () => {
   })
 
   it('does not render the image syntax with bg description as <img>', () => {
-    const $ = cheerio.load(md().render('![bg](bgImage) ![notbg](notBgImage)'))
+    const $ = load(md().render('![bg](bgImage) ![notbg](notBgImage)'))
 
     expect($('img')).toHaveLength(1)
     expect($('img').attr('alt')).toBe('notbg')
@@ -136,7 +140,7 @@ describe('Marpit background image plugin', () => {
   context('with inline SVG (Advanced background mode)', () => {
     const mdSVG = () => md(true)
     const $load = (html, opts = {}) =>
-      cheerio.load(html, {
+      load(html, {
         ...opts,
         lowerCaseAttributeNames: false,
         lowerCaseTags: false,
@@ -425,6 +429,25 @@ describe('Marpit background image plugin', () => {
         const pseudoLayer = pseudoFO.find('> section.pseudo.layer')
         expect(pseudoLayer.is('[data-marpit-pagination="1"]')).toBe(true)
         expect(pseudoLayer.is('[data-marpit-pagination-total="1"]')).toBe(true)
+      })
+    })
+
+    context('with scoped style', () => {
+      const $ = $load(
+        mdSVG().render(
+          "![bg](test)\n\n<style scoped>section::before { content: 'test'; }</style>"
+        ),
+        { xmlMode: true }
+      )
+
+      it('assigns scoped attribute to the section element in pseudo layer', () => {
+        const foreignObjects = $('svg > foreignObject')
+        const pseudoFO = foreignObjects.eq(2)
+        const pseudoSection = pseudoFO.find('> section')
+
+        expect(Object.keys(pseudoSection.attr())).toContainEqual(
+          expect.stringMatching(/^data-marpit-scope-/)
+        )
       })
     })
 
