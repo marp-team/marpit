@@ -37,19 +37,9 @@ h2 {
 
 We have no any extra classes or mixins, and do almost not need require to know extra rules for creating theme. This is a key factor of Marpit different from other slide framework.
 
-### Metadata
-
-The `@theme` metadata is always required by Marpit. Define metadata through CSS comment.
-
-```css
-/* @theme name */
-```
-
-!> You should use the `/*! comment */` syntax to prevent removing comments if you're using the compressed output of [Sass].
-
 ### `:root` pseudo-class selector
 
-Since v1.6.0, [`:root` pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) indicates the viewport of each slide pages in the context of Marpit theme CSS, by replacing `:root` into `section` automatically.
+In the context of Marpit, [`:root` pseudo-class](https://developer.mozilla.org/en-US/docs/Web/CSS/:root) indicates each `<section>` elements for the slide page instead of `<html>`.
 
 The following is similar theme definition to the example shown earlier, but it's using `:root` selector.
 
@@ -74,6 +64,18 @@ h2 {
 ```
 
 [`rem` units](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Rems) in Marpit theme will automatically transform into the calculated relative value from the parent `<section>` element, so anyone don't have to worry the effect from `font-size` in the root `<html>` that placed Marpit slide. Everything would work as the theme author expected.
+
+?> `:root` selector can use just like as `section` selector, but there is a difference that `:root` has higher [CSS specificity](https://developer.mozilla.org/docs/Web/CSS/Specificity) than `section`. If both selectors have mixed in a theme CSS, declarations in `:root` selector will be prefered than `section` selector.
+
+### Metadata
+
+**The `@theme` metadata is always required by Marpit.** You must define metadata through CSS comment.
+
+```css
+/* @theme name */
+```
+
+!> You should use the `/*! comment */` syntax to prevent removing comments if you're using the compressed output of [Sass].
 
 ## Styling
 

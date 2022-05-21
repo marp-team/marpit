@@ -6,6 +6,10 @@
 
 - Upgrade dependent packages to the latest version ([#332](https://github.com/marp-team/marpit/pull/332))
 
+### Fixed
+
+- Match `:root` selector specificity to original exactly ([#330](https://github.com/marp-team/marpit/issues/330), [#333](https://github.com/marp-team/marpit/pull/333))
+
 ### Removed
 
 - Continuous test against Node.js 10 ([#291](https://github.com/marp-team/marpit/issues/291), [#332](https://github.com/marp-team/marpit/pull/332))

@@ -4,7 +4,9 @@ import postcssPlugin from '../../helpers/postcss_plugin'
 /**
  * Marpit PostCSS root replace plugin.
  *
- * Replace `:root` pseudo-class selector into `section`.
+ * Replace `:root` pseudo-class selector into `section`. It can add custom
+ * pseudo class through `pseudoClass` option to make distinguishable from
+ * `section` selector.
  *
  * @alias module:postcss/root/replace
  */

@@ -3,14 +3,15 @@ import postcssPlugin from '../../helpers/postcss_plugin'
 
 export const pseudoClass = ':marpit-root'
 
-const matcher = new RegExp(`\\b${pseudoClass}\\b`, 'g')
+const matcher = new RegExp(`\\b(?:section)?${pseudoClass}\\b`, 'g')
 
 /**
  * Marpit PostCSS root increasing specificity plugin.
  *
- * Replace `:marpit-root` pseudo-class selector into `:not(a)`, to increase
- * specificity. `:marpit-root` is always added to `section` selector by root
- * replace plugin so `:not(a)` must always match too.
+ * Replace specific pseudo-class selector to `:where(section):not([\20 root])`,
+ * to increase specificity. `:marpit-root` is always added to `section` selector
+ * by root replace plugin so `:where(section):not([\20 root])` must always match
+ * too (HTML does not allow U+0020 SPACE in the attribute name.).
  *
  * @alias module:postcss/root/increasing_specificity
  */
@@ -19,7 +20,7 @@ const plugin = postcssPlugin(
   () => (css) =>
     css.walkRules((rule) => {
       rule.selectors = rule.selectors.map((selector) =>
-        selector.replace(matcher, ':not(a)')
+        selector.replace(matcher, ':where(section):not([\\20 root])')
       )
     })
 )

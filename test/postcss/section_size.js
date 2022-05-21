@@ -31,4 +31,21 @@ describe('Marpit PostCSS section size plugin', () => {
     run('section:first-child { width: 123px; height: 456px; }').then((result) =>
       expect(result.marpitSectionSize).toStrictEqual({})
     ))
+
+  context('with preferedPseudoClass', () => {
+    const run = (input) =>
+      postcss([sectionSize({ preferedPseudoClass: ':test' })]).process(input, {
+        from: undefined,
+      })
+
+    it('prefers defined size within section selector with specific pseudo selector than plain selector', () =>
+      run(
+        'section:test { width: 123px; height: 123px; } section { width: 456px; height: 456px; } '
+      ).then((result) =>
+        expect(result.marpitSectionSize).toStrictEqual({
+          width: '123px',
+          height: '123px',
+        })
+      ))
+  })
 })
