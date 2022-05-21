@@ -8,7 +8,7 @@
 
 ### Fixed
 
-- Match `:root` selector specificity to original exactly ([#333](https://github.com/marp-team/marpit/pull/333))
+- Match `:root` selector specificity to original exactly ([#330](https://github.com/marp-team/marpit/issues/330), [#333](https://github.com/marp-team/marpit/pull/333))
 
 ### Removed
 
