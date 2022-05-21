@@ -62,9 +62,13 @@ describe('Theme', () => {
           width: 960px;
           height: 720px;
         }
+        section {
+          width: 123px;
+          height: 456px;
+        }
       `)
 
-      it('returns Theme instance that has width and height props', () => {
+      it('returns Theme instance that has width and height props defined in :root selector', () => {
         expect(instance.width).toBe('960px')
         expect(instance.height).toBe('720px')
       })
