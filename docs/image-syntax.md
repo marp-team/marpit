@@ -2,21 +2,17 @@
 
 Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creating beautiful slides.
 
-|              Features               |    Inline image    | [Slide BG][slide-bg] | [Advanced BG][advanced-bg] |
-| :---------------------------------: | :----------------: | :------------------: | :------------------------: |
-|  [Resizing by keywords][resizing]   |    `auto` only     |  :heavy_check_mark:  |     :heavy_check_mark:     |
-| [Resizing by percentage][resizing]  |        :x:         |  :heavy_check_mark:  |     :heavy_check_mark:     |
-|   [Resizing by length][resizing]    | :heavy_check_mark: |  :heavy_check_mark:  |     :heavy_check_mark:     |
-|      [Image filters][filters]       | :heavy_check_mark: |         :x:          |     :heavy_check_mark:     |
-|  [Multiple backgrounds][multiple]   |         -          |         :x:          |     :heavy_check_mark:     |
-|     [Split backgrounds][split]      |         -          |         :x:          |     :heavy_check_mark:     |
-|   [Setting text color][textcolor]   | :heavy_check_mark: |          -           |             -              |
-| [Setting background color][bgcolor] |         -          |  :heavy_check_mark:  |     :heavy_check_mark:     |
+|              Features              |    Inline image    | [Slide BG][slide-bg] | [Advanced BG][advanced-bg] |
+| :--------------------------------: | :----------------: | :------------------: | :------------------------: |
+|  [Resizing by keywords][resizing]  |    `auto` only     |  :heavy_check_mark:  |     :heavy_check_mark:     |
+| [Resizing by percentage][resizing] |        :x:         |  :heavy_check_mark:  |     :heavy_check_mark:     |
+|   [Resizing by length][resizing]   | :heavy_check_mark: |  :heavy_check_mark:  |     :heavy_check_mark:     |
+|      [Image filters][filters]      | :heavy_check_mark: |         :x:          |     :heavy_check_mark:     |
+|  [Multiple backgrounds][multiple]  |         -          |         :x:          |     :heavy_check_mark:     |
+|     [Split backgrounds][split]     |         -          |         :x:          |     :heavy_check_mark:     |
 
 [resizing]: #resizing-image
 [filters]: #image-filters
-[textcolor]: #shorthand-for-setting-colors
-[bgcolor]: #shorthand-for-setting-colors
 [slide-bg]: #slide-backgrounds
 [advanced-bg]: #advanced-backgrounds
 [multiple]: #multiple-backgrounds
@@ -191,7 +187,7 @@ This feature is similar to [Deckset's Split Slides](https://docs.decksetapp.com/
 
 #### Split size
 
-Since v1.1.0, Marpit can specify split size for background by percentage like `left:33%`.
+Marpit can specify split size for background by percentage like `left:33%`.
 
 <div class="example">
 
@@ -207,36 +203,3 @@ Since v1.1.0, Marpit can specify split size for background by percentage like `l
 
 </span>
 </div>
-
-## Shorthand for setting colors
-
-Through Markdown image syntax, Marpit allows the definition of [color value](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value) instead of the image URL.
-
-<!-- prettier-ignore-start -->
-
-```markdown
-# Hex color (White BG + Black text)
-
-![bg](#fff)
-![](#000)
-
----
-
-# Named color (rebeccapurple BG + White text)
-
-![bg](rebeccapurple)
-![](white)
-
----
-
-# RGB values (Orange BG + White text)
-
-![bg](rgb(255,128,0))
-![](rgb(255,255,255))
-```
-
-<!-- prettier-ignore-end -->
-
-It is same as defining [`color` and `backgroundColor` spot directive](/directives?id=local-directives-1).
-
-!> By the spec of CommonMark, it should not allow including spaces without escape if you want using color function like `rgb()`.
