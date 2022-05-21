@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.3.1 - 2022-05-21
+
 ### Fixed
 
 - Fix invalid scoping for updated `:root` selector ([#336](https://github.com/marp-team/marpit/issues/336), [#337](https://github.com/marp-team/marpit/pull/337))
