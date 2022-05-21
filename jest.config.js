@@ -5,6 +5,5 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'node',
   testRegex: '(/(test|__tests__)/(?!_).*|(\\.|/)(test|spec))\\.js$',
-  testURL: 'http://localhost',
   moduleFileExtensions: ['js', 'json', 'node'],
 }

@@ -100,15 +100,6 @@ jobs:
     steps:
       - audit
 
-  test-node10:
-    executor:
-      name: node
-      version: '10.24.1'
-    steps:
-      - prepare:
-          force: true
-      - test
-
   test-node12:
     executor:
       name: node
@@ -141,9 +132,6 @@ workflows:
   test:
     jobs:
       - audit
-      - test-node10:
-          requires:
-            - audit
       - test-node12:
           requires:
             - audit

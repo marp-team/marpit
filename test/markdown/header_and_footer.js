@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import comment from '../../src/markdown/comment'
 import applyDirectives from '../../src/markdown/directives/apply'
@@ -35,7 +35,7 @@ describe('Marpit header and footer plugin', () => {
       `<!-- header: "${header}" -->\n# Page 1\n\n---\n\n# Page 2`
 
     it('appends <header> element to each slide', () => {
-      const $ = cheerio.load(md().render(markdown('text')))
+      const $ = load(md().render(markdown('text')))
 
       $('section').each((i, elm) => {
         const children = $(elm).children()
@@ -48,7 +48,7 @@ describe('Marpit header and footer plugin', () => {
 
     it('renders tags when it includes inline markdown syntax', () => {
       const mdText = '**bold** _italic_ ![image](https://example.com/image.jpg)'
-      const $ = cheerio.load(md().render(markdown(mdText)))
+      const $ = load(md().render(markdown(mdText)))
 
       $('section').each((i, elm) => {
         const header = $(elm).children().first()
@@ -63,7 +63,7 @@ describe('Marpit header and footer plugin', () => {
     })
 
     it('ignores invalid directives like defined as object', () => {
-      const $ = cheerio.load(md().render('<!-- header: ["test"] -->'))
+      const $ = load(md().render('<!-- header: ["test"] -->'))
       expect($('header')).toHaveLength(0)
     })
   })
@@ -73,7 +73,7 @@ describe('Marpit header and footer plugin', () => {
       `<!-- footer: "${footer}" -->\n# Page 1\n\n---\n\n# Page 2`
 
     it('prepends <footer> element to each slide', () => {
-      const $ = cheerio.load(md().render(markdown('text')))
+      const $ = load(md().render(markdown('text')))
 
       $('section').each((i, elm) => {
         const children = $(elm).children()
@@ -86,7 +86,7 @@ describe('Marpit header and footer plugin', () => {
 
     it('renders tags when it includes inline markdown syntax', () => {
       const mdText = '**bold** _italic_ ![image](https://example.com/image.jpg)'
-      const $ = cheerio.load(md().render(markdown(mdText)))
+      const $ = load(md().render(markdown(mdText)))
 
       $('section').each((i, elm) => {
         const footer = $(elm).children().last()
@@ -101,7 +101,7 @@ describe('Marpit header and footer plugin', () => {
     })
 
     it('ignores invalid directives like defined as object', () => {
-      const $ = cheerio.load(md().render('<!-- footer: ["test"] -->'))
+      const $ = load(md().render('<!-- footer: ["test"] -->'))
       expect($('footer')).toHaveLength(0)
     })
   })

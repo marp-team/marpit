@@ -18,7 +18,7 @@
 
 Marpit is designed to _output minimum assets for the slide deck_. You can use the bare assets as a logicless slide deck, but mainly we expect to integrate output with other tools and applications.
 
-In fact, this framework is created for using as the base of [a core converter][marp-core] in [the next version of Marp][marp].
+In fact, this framework is created for using as the base of [a core converter][marp-core] in [Marp ecosystem][marp].
 
 ## Features
 

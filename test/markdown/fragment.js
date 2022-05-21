@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import fragment from '../../src/markdown/fragment'
 import slide from '../../src/markdown/slide'
@@ -17,7 +17,7 @@ describe('Marpit fragment plugin', () => {
   describe('Fragmented unordered list', () => {
     context('when using "*" markup', () => {
       const markdown = '* A\n* B\n* C'
-      const $ = cheerio.load(md().render(markdown))
+      const $ = load(md().render(markdown))
 
       it('adds data-marpit-fragment attribute to <li> with index', () => {
         const li = $('ul > li[data-marpit-fragment]')
@@ -38,7 +38,7 @@ describe('Marpit fragment plugin', () => {
     for (const char of ['-', '+']) {
       context(`when using "${char}" markup`, () => {
         const markdown = `${char} A\n${char} B\n${char} C`
-        const $ = cheerio.load(md().render(markdown))
+        const $ = load(md().render(markdown))
 
         it('does not add data-marpit-fragment attribute', () =>
           expect($('[data-marpit-fragment]')).toHaveLength(0))
@@ -52,7 +52,7 @@ describe('Marpit fragment plugin', () => {
   describe('Fragmented ordered list', () => {
     context('when using "1)" markup', () => {
       const markdown = '1) A\n1) B\n1) C'
-      const $ = cheerio.load(md().render(markdown))
+      const $ = load(md().render(markdown))
 
       it('adds data-marpit-fragment attribute to <li> with index', () => {
         const li = $('ol > li[data-marpit-fragment]')
@@ -72,7 +72,7 @@ describe('Marpit fragment plugin', () => {
 
     context(`when using "1." markup`, () => {
       const markdown = `1. A\n1. B\n1. C`
-      const $ = cheerio.load(md().render(markdown))
+      const $ = load(md().render(markdown))
 
       it('does not add data-marpit-fragment attribute', () =>
         expect($('[data-marpit-fragment]')).toHaveLength(0))

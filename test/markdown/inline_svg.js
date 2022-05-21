@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import { Theme, ThemeSet } from '../../src/index'
 import inlineSVG from '../../src/markdown/inline_svg'
@@ -30,7 +30,7 @@ describe('Marpit inline SVG plugin', () => {
   const render = (markdownIt, text, inline = false) => {
     const method = inline ? markdownIt.renderInline : markdownIt.render
 
-    return cheerio.load(method.call(markdownIt, text), {
+    return load(method.call(markdownIt, text), {
       lowerCaseAttributeNames: false,
       lowerCaseTags: false,
       xmlMode: true,

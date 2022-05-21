@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#332](https://github.com/marp-team/marpit/pull/332))
+
+### Removed
+
+- Continuous test against Node.js 10 ([#291](https://github.com/marp-team/marpit/issues/291), [#332](https://github.com/marp-team/marpit/pull/332))
+
 ## v2.2.4 - 2022-04-12
 
 ### Fixed

@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import backgroundImage from '../../src/markdown/background_image'
@@ -36,7 +36,7 @@ describe('Marpit sweep plugin', () => {
       .use(image)
       .use(backgroundImage)
 
-    const $ = cheerio.load(
+    const $ = load(
       markdown.render(dedent`
         ![bg](sweepA)
 
@@ -63,7 +63,7 @@ describe('Marpit sweep plugin', () => {
         // First paragraph remains a whitespace after striped comments.
         const text = '<!-- parsed --> <!-- comment -->\n\ncontent'
         const markdown = md({ html }).use(comment)
-        const $ = cheerio.load(markdown.render(text))
+        const $ = load(markdown.render(text))
 
         expect($('p')).toHaveLength(1)
       })
