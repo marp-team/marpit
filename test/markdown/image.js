@@ -109,7 +109,7 @@ describe('Marpit image plugin', () => {
     })
   })
 
-  describe('Shorthand for text color', () => {
+  describe('[DEPRECATED] Shorthand for text color', () => {
     const colorMd = (src, opts = '') => `![${opts}](${src})`
     const colorDirective = (markdown) => {
       const [firstSlide] = md().parse(markdown)

@@ -346,7 +346,7 @@ describe('Marpit', () => {
       })
     })
 
-    describe('Color shorthand', () => {
+    describe('[DEPRECATED] Color shorthand', () => {
       const md = '![](red)![bg](blue)'
 
       it('applies color to the current slide', () => {
