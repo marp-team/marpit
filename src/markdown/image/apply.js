@@ -37,7 +37,7 @@ function applyImage(md) {
     }
   })
 
-  // Shorthand for color spot directive
+  // [DEPRECATED] Shorthand for color spot directive
   md.core.ruler.after(
     'marpit_inline_svg',
     'marpit_apply_color',

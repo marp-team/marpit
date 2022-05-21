@@ -197,11 +197,20 @@ function parseImage(md) {
           options,
         }
 
+        // [DEPRECATED]
         // Detect shorthand for setting color (Use value before normalization)
         if (
           !!colorString.get(originalUrl) ||
           originalUrl.toLowerCase() === 'currentcolor'
         ) {
+          const replacedDirective = options.some((opt) => opt.content === 'bg')
+            ? 'backgroundColor'
+            : 'color'
+
+          console.warn(
+            `Deprecation warning: Shorthand for setting colors via Markdown image syntax is deprecated now, and will remove in next major release. Please replace to a scoped local direcitve <!-- _${replacedDirective}: "${originalUrl}" -->, or use the scoped style <style scoped>.`
+          )
+
           token.meta.marpitImage.color = originalUrl
           token.hidden = true
         }
