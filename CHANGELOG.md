@@ -10,9 +10,13 @@
 
 - Match `:root` selector specificity to original exactly ([#330](https://github.com/marp-team/marpit/issues/330), [#333](https://github.com/marp-team/marpit/pull/333))
 
+### Deprecated
+
+- Emit deprecation warning when used color setting shorthand via Markdown image syntax ([#331](https://github.com/marp-team/marpit/issues/331), [#334](https://github.com/marp-team/marpit/pull/334))
+
 ### Removed
 
-- Continuous test against Node.js 10 ([#291](https://github.com/marp-team/marpit/issues/291), [#332](https://github.com/marp-team/marpit/pull/332))
+- Continuous test against EoL Node.js 10 ([#291](https://github.com/marp-team/marpit/issues/291), [#332](https://github.com/marp-team/marpit/pull/332))
 
 ## v2.2.4 - 2022-04-12
 
