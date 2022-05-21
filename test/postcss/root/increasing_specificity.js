@@ -12,18 +12,16 @@ describe('Marpit PostCSS root increasing specificity plugin', () => {
 
   it('replaces specific pseudo-class into ":where(section):not([\\20 root])" to increase specificity', () => {
     expect(run(`section${pseudoClass} {}`).css).toBe(
-      'section:where(section):not([\\20 root]) {}'
+      ':where(section):not([\\20 root]) {}'
     )
 
     // With replaced :root selector via root replace plugin
-    expect(run(`:root {}`).css).toBe(
-      'section:where(section):not([\\20 root]) {}'
-    )
+    expect(run(`:root {}`).css).toBe(':where(section):not([\\20 root]) {}')
     expect(run(`section :root {}`).css).toBe(
-      'section section:where(section):not([\\20 root]) {}'
+      'section :where(section):not([\\20 root]) {}'
     )
     expect(run(`:root.klass div {}`).css).toBe(
-      'section:where(section):not([\\20 root]).klass div {}'
+      ':where(section):not([\\20 root]).klass div {}'
     )
   })
 })

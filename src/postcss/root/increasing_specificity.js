@@ -3,7 +3,7 @@ import postcssPlugin from '../../helpers/postcss_plugin'
 
 export const pseudoClass = ':marpit-root'
 
-const matcher = new RegExp(`\\b${pseudoClass}\\b`, 'g')
+const matcher = new RegExp(`\\b(?:section)?${pseudoClass}\\b`, 'g')
 
 /**
  * Marpit PostCSS root increasing specificity plugin.
