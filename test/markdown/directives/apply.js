@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import comment from '../../../src/markdown/comment'
@@ -60,7 +60,7 @@ describe('Marpit directives apply plugin', () => {
     }, {})
 
   it('applies directives to slide node', () => {
-    const $ = cheerio.load(mdForTest().render(basicDirs))
+    const $ = load(mdForTest().render(basicDirs))
     const section = $('section').first()
     const style = toObjStyle(section.attr('style'))
 
@@ -77,7 +77,7 @@ describe('Marpit directives apply plugin', () => {
     const opts = { dataset: false }
 
     it('does not apply directives to data attributes', () => {
-      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
+      const $ = load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
 
       expect(section.attr('data-class')).toBeUndefined()
@@ -89,7 +89,7 @@ describe('Marpit directives apply plugin', () => {
     const opts = { css: false }
 
     it('does not apply directives to CSS custom properties', () => {
-      const $ = cheerio.load(mdForTest(opts).render(basicDirs))
+      const $ = load(mdForTest(opts).render(basicDirs))
       const section = $('section').first()
 
       expect(section.attr('style')).toBeUndefined()
@@ -110,7 +110,7 @@ describe('Marpit directives apply plugin', () => {
       `
 
       it('applies corresponding style to section element', () => {
-        const $ = cheerio.load(mdForTest().render(bgDirs))
+        const $ = load(mdForTest().render(bgDirs))
         const section = $('section').first()
         const style = toObjStyle(section.attr('style'))
 
@@ -127,7 +127,7 @@ describe('Marpit directives apply plugin', () => {
           '<!-- backgroundImage: "linear-gradient(to bottom, #fff, #000)" -->'
 
         it('assigns background image option as default value', () => {
-          const $ = cheerio.load(mdForTest().render(bgDefaultDirs))
+          const $ = load(mdForTest().render(bgDefaultDirs))
           const section = $('section').first()
           const style = toObjStyle(section.attr('style'))
 
@@ -159,7 +159,7 @@ describe('Marpit directives apply plugin', () => {
         `
 
         it('ignores background option directives', () => {
-          const $ = cheerio.load(mdForTest().render(bgOptionDirs))
+          const $ = load(mdForTest().render(bgOptionDirs))
           const [styleOne, styleTwo, styleThree] = [
             toObjStyle($('section#1').attr('style')),
             toObjStyle($('section#2').attr('style')),
@@ -191,7 +191,7 @@ describe('Marpit directives apply plugin', () => {
         `
 
         it('sanitizes injected styles', () => {
-          const $ = cheerio.load(mdForTest().render(bgInjectionDirs))
+          const $ = load(mdForTest().render(bgInjectionDirs))
           const section = $('section').first()
           const style = toObjStyle(section.attr('style'))
 
@@ -224,7 +224,7 @@ describe('Marpit directives apply plugin', () => {
           ## Slide 2
         `
 
-        const $ = cheerio.load(mdForTest().render(paginateDirs))
+        const $ = load(mdForTest().render(paginateDirs))
         const sections = $('section')
 
         expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()

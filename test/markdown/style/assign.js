@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import comment from '../../../src/markdown/comment'
@@ -41,7 +41,7 @@ describe('Marpit style assign plugin', () => {
     context('with scoped attribute', () => {
       it('assigns parsed styles to Marpit lastStyles property with scoped', () => {
         const marpit = marpitStub()
-        const $ = cheerio.load(
+        const $ = load(
           md(marpit).render('<style scoped>b { color: red; }</style>')
         )
 

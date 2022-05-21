@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import postcss from 'postcss'
@@ -210,8 +210,8 @@ describe('Marpit', () => {
           })
 
           expect(html).toHaveLength(2)
-          expect(cheerio.load(html[0])('section#1 > h1')).toHaveLength(1)
-          expect(cheerio.load(html[1])('section#2 > h2')).toHaveLength(1)
+          expect(load(html[0])('section#1 > h1')).toHaveLength(1)
+          expect(load(html[1])('section#2 > h2')).toHaveLength(1)
         })
       })
     })
@@ -251,7 +251,7 @@ describe('Marpit', () => {
 
       it('has not svg when inlineSVG is false', () => {
         const rendered = instance(false).render('# Hi')
-        const $ = cheerio.load(rendered.html, { lowerCaseTags: false })
+        const $ = load(rendered.html, { lowerCaseTags: false })
 
         expect($('svg')).toHaveLength(0)
       })
@@ -263,7 +263,7 @@ describe('Marpit', () => {
 
       it('wraps section with svg when inlineSVG is true', () => {
         const rendered = instance(true).render('# Hi')
-        const $ = cheerio.load(rendered.html, {
+        const $ = load(rendered.html, {
           lowerCaseTags: false,
           xmlMode: true,
         })
@@ -298,7 +298,7 @@ describe('Marpit', () => {
             const { html } = instance(opt).render('# Hi', { htmlAsArray: true })
             expect(html).toHaveLength(1)
 
-            const $ = cheerio.load(html[0], {
+            const $ = load(html[0], {
               lowerCaseTags: false,
               xmlMode: true,
             })
@@ -325,7 +325,7 @@ describe('Marpit', () => {
 
     describe('Background image', () => {
       it('has background-image style on section tag', () => {
-        const $ = cheerio.load(new Marpit().render('![bg](test)').html)
+        const $ = load(new Marpit().render('![bg](test)').html)
 
         return postcssInstance
           .process($('section').attr('style'), { from: undefined })
@@ -339,7 +339,7 @@ describe('Marpit', () => {
 
     describe('CSS Filters', () => {
       it('applies filter style', () => {
-        const $ = cheerio.load(new Marpit().render('![blur](test)').html)
+        const $ = load(new Marpit().render('![blur](test)').html)
         const style = $('img').attr('style') || ''
 
         expect(style).toContain('filter:blur')
@@ -350,7 +350,7 @@ describe('Marpit', () => {
       const md = '![](red)![bg](blue)'
 
       it('applies color to the current slide', () => {
-        const $ = cheerio.load(new Marpit().render(md).html)
+        const $ = load(new Marpit().render(md).html)
         expect($('section').html()).toBe('')
 
         const style = $('section').attr('style')
@@ -370,7 +370,7 @@ describe('Marpit', () => {
 
           // Wrapped Marp instance uses original link
           const instance = new Marpit({ markdown: base })
-          const $ = cheerio.load(instance.render(md).html)
+          const $ = load(instance.render(md).html)
           const style = $('section').attr('style')
 
           expect(style).toContain('color:red;')
@@ -392,7 +392,7 @@ describe('Marpit', () => {
 
       it('appends style to the last of css with processing', () => {
         const rendered = instance().render(markdown)
-        const $ = cheerio.load(rendered.html)
+        const $ = load(rendered.html)
 
         expect($('style')).toHaveLength(0)
         expect(rendered.css.trim().endsWith('{ --style: appended; }')).toBe(
@@ -406,7 +406,7 @@ describe('Marpit', () => {
 
         it('allows scoping inline style through <style scoped>', () => {
           const { html, css } = instance().render(scopedMarkdown)
-          const $ = cheerio.load(html)
+          const $ = load(html)
 
           expect(css).toContain('[data-marpit-scope-')
           expect(Object.keys($('section').attr())).toContainEqual(
@@ -430,7 +430,7 @@ describe('Marpit', () => {
 
       it('allows loose YAML parsing for built-in directives when looseYAML is true', () => {
         const rendered = instance(true).render(markdown)
-        const $ = cheerio.load(rendered.html)
+        const $ = load(rendered.html)
         const firstStyle = $('section:nth-of-type(1)').attr('style')
         const secondStyle = $('section:nth-of-type(2)').attr('style')
 
@@ -444,7 +444,7 @@ describe('Marpit', () => {
 
       it('disallows loose YAML parsing for built-in directives when looseYAML is false', () => {
         const rendered = instance(false).render(markdown)
-        const $ = cheerio.load(rendered.html)
+        const $ = load(rendered.html)
         const style = $('section:nth-of-type(1)').attr('style')
 
         expect(style).toContain("background-image:url('/image.jpg')")

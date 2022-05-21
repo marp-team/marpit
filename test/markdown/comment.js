@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import comment from '../../src/markdown/comment'
@@ -56,7 +56,7 @@ describe('Marpit comment plugin', () => {
       })
 
       it('strips comment in rendering', () => {
-        const $ = cheerio.load(markdown.render(text))
+        const $ = load(markdown.render(text))
         const comments = extractComments($)
 
         expect(comments).toHaveLength(0)
@@ -78,7 +78,7 @@ describe('Marpit comment plugin', () => {
       Object.keys(ignoreCases).forEach((elementType) => {
         context(`when ${elementType} has HTML comment`, () => {
           it('keeps HTML comment', () => {
-            const $ = cheerio.load(markdown.render(ignoreCases[elementType]))
+            const $ = load(markdown.render(ignoreCases[elementType]))
             const comments = extractComments($)
             const code = $('code')
 

@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import backgroundImage from '../../src/markdown/background_image'
 import comment from '../../src/markdown/comment'
@@ -50,9 +50,7 @@ describe('Marpit image plugin', () => {
 
   describe('Style for inline image', () => {
     const style = (opts) => {
-      const $ = cheerio.load(
-        md().render(`![${opts}](https://example.com/example.jpg)`)
-      )
+      const $ = load(md().render(`![${opts}](https://example.com/example.jpg)`))
       return $('img').attr('style')
     }
 
@@ -105,7 +103,7 @@ describe('Marpit image plugin', () => {
       const output = md().render(
         `![w:100px \t This is  example\timage \t h:200px](https://example.com/test.jpg)`
       )
-      const $ = cheerio.load(output)
+      const $ = load(output)
 
       expect($('img').attr('alt')).toBe('This is  example\timage')
     })

@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import slide from '../../src/markdown/slide'
 
@@ -16,11 +16,11 @@ describe('Marpit slide plugin', () => {
 
     it('renders <section> tag with number anchor', () => {
       // Empty content
-      const $ = cheerio.load(markdown.render(''))
+      const $ = load(markdown.render(''))
       expect($('section#1')).toHaveLength(1)
 
       // Multi page
-      const $multi = cheerio.load(markdown.render(multiMd))
+      const $multi = load(markdown.render(multiMd))
       expect($multi('section')).toHaveLength(2)
       expect($multi('section#1 > h1').text()).toBe('foo')
       expect($multi('section#2 > h2').text()).toBe('bar')
@@ -39,15 +39,15 @@ describe('Marpit slide plugin', () => {
     })
 
     it('ignores in #renderInline', () => {
-      const $ = cheerio.load(md().renderInline(''))
+      const $ = load(md().renderInline(''))
       expect($('section')).toHaveLength(0)
     })
 
     it('does not parse rulers that have in children of contents', () => {
-      const $list = cheerio.load(markdown.render('* ---'))
+      const $list = load(markdown.render('* ---'))
       expect($list('section')).toHaveLength(1)
 
-      const $quote = cheerio.load(markdown.render('> ---'))
+      const $quote = load(markdown.render('> ---'))
       expect($quote('section')).toHaveLength(1)
     })
   })
@@ -56,10 +56,10 @@ describe('Marpit slide plugin', () => {
     const markdown = md({ attributes: { class: 'page', tabindex: -1 } })
 
     it('renders <section> tag with specified attributes', () => {
-      const $ = cheerio.load(markdown.render(''))
+      const $ = load(markdown.render(''))
       expect($('section.page#1[tabindex=-1]')).toHaveLength(1)
 
-      const $multi = cheerio.load(markdown.render(multiMd))
+      const $multi = load(markdown.render(multiMd))
       expect($multi('section.page#1[tabindex=-1] > h1').text()).toBe('foo')
       expect($multi('section.page#2[tabindex=-1] > h2').text()).toBe('bar')
     })
@@ -70,7 +70,7 @@ describe('Marpit slide plugin', () => {
       const markdown = md({ anchor: false })
 
       it('renders <section> tag without id attribute', () => {
-        const $ = cheerio.load(markdown.render(''))
+        const $ = load(markdown.render(''))
         expect($('section:not([id])')).toHaveLength(1)
       })
     })
@@ -79,12 +79,10 @@ describe('Marpit slide plugin', () => {
       const markdown = (func) => md({ anchor: func })
 
       it('renders <section> tag with id provided by custom function', () => {
-        const $ = cheerio.load(markdown((i) => `page${i + 1}`).render(''))
+        const $ = load(markdown((i) => `page${i + 1}`).render(''))
         expect($('section#page1')).toHaveLength(1)
 
-        const $multi = cheerio.load(
-          markdown((i) => (i + 1) * 2).render(multiMd)
-        )
+        const $multi = load(markdown((i) => (i + 1) * 2).render(multiMd))
         expect($multi('section#2 > h1').text()).toBe('foo')
         expect($multi('section#4 > h2').text()).toBe('bar')
       })

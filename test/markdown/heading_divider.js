@@ -1,4 +1,4 @@
-import cheerio from 'cheerio'
+import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import comment from '../../src/markdown/comment'
 import parseDirectives from '../../src/markdown/directives/parse'
@@ -99,7 +99,7 @@ describe('Marpit heading divider plugin', () => {
       }
 
       it('renders four <section> elements', () => {
-        const $ = cheerio.load(mdWithSlide(marpitStub(4)).render(markdownText))
+        const $ = load(mdWithSlide(marpitStub(4)).render(markdownText))
         expect($('section')).toHaveLength(4)
       })
 
