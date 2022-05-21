@@ -17,7 +17,7 @@
 
 Marpit is designed to _output minimum assets for the slide deck_. You can use the bare assets as a logicless slide deck, but mainly we expect to integrate output with other tools and applications.
 
-In fact, this framework is created for using as the base of [a core converter][marp-core] in [the next version of Marp][marp].
+In fact, this framework is created for using as the base of [a core converter][marp-core] in [Marp ecosystem][marp].
 
 [marp]: https://github.com/marp-team/marp/
 [marp-core]: https://github.com/marp-team/marp-core/
@@ -32,11 +32,12 @@ We have extended several features into [markdown-it](https://github.com/markdown
 
 Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 
-### [:triangular_ruler: **Inline SVG slide**](https://marpit.marp.app/inline-svg) <i>(Experimental)</i>
+### [:triangular_ruler: **Inline SVG slide**](https://marpit.marp.app/inline-svg) _(Experimental)_
 
 Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated layer made by `<foreignObject>` can provide [_advanced backgrounds_](https://marpit.marp.app/image-syntax?id=advanced-backgrounds) for the slide with keeping the original Markdown DOM structure.
 
-> :information_source: We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
+> **Info**
+> We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
 
 ## Getting started
 
