@@ -482,6 +482,15 @@ describe('Marpit', () => {
 
       expect(instance.renderStyle('test-theme')).toBe('style of test-theme')
     })
+
+    it('scopes :root selector correctly', () => {
+      const instance = new Marpit()
+      instance.themeSet.add('/* @theme test */ :root { background: red; }')
+
+      expect(instance.renderStyle('test')).toContain(
+        'div.marpit > :where(section)'
+      )
+    })
   })
 
   describe('#use', () => {
