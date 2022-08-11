@@ -3,6 +3,8 @@ import split from '../helpers/split'
 import wrapTokens from '../helpers/wrap_tokens'
 import marpitPlugin from '../plugin'
 
+export const defaultAnchorCallback = (i) => `${i + 1}`
+
 /**
  * Marpit slide plugin.
  *
@@ -14,24 +16,19 @@ import marpitPlugin from '../plugin'
  * @param {Object} [opts]
  * @param {Object} [opts.attributes] The `<section>` element attributes by
  *     key-value pairs.
- * @param {(boolean|anchorCallback)} [opts.anchor=true] If true, assign the
- *     anchor with the page number starting from 1. You can customize anchor
+ * @param {(boolean|Marpit~AnchorCallback)} [opts.anchor=true] If true, assign
+ *     the anchor with the page number starting from 1. You can customize anchor
  *     name by passing callback function.
  */
 function slide(md, opts = {}) {
   const anchor = opts.anchor === undefined ? true : opts.anchor
 
-  /**
-   * Convert slide page index into anchor string.
-   *
-   * @callback anchorCallback
-   * @param {number} index Slide page index, beginning from zero.
-   * @returns {string} The text of anchor/id attribute (without prefix `#`).
-   */
-  const anchorCallback =
-    typeof anchor === 'function'
-      ? anchor
-      : (i) => (anchor ? `${i + 1}` : undefined)
+  const anchorCallback = (() => {
+    if (typeof anchor === 'function') return anchor
+    if (anchor) return defaultAnchorCallback
+
+    return () => undefined
+  })()
 
   md.core.ruler.push('marpit_slide', (state) => {
     if (state.inlineMode) return

@@ -7,6 +7,7 @@ declare namespace MarpitEnv {
 
 declare namespace Marpit {
   interface Options {
+    anchor?: boolean | AnchorCallback
     container?: false | Element | Element[]
     headingDivider?: false | HeadingDivider | HeadingDivider[]
     looseYAML?: boolean
@@ -15,6 +16,8 @@ declare namespace Marpit {
     slideContainer?: false | Element | Element[]
     inlineSVG?: boolean | InlineSVGOptions
   }
+
+  type AnchorCallback = (index: number) => string
 
   type HeadingDivider = 1 | 2 | 3 | 4 | 5 | 6
 
