@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.4.0 - 2022-08-11
+
 ### Added
 
 - `anchor` constructor option for slide anchor customization ([#335](https://github.com/marp-team/marpit/issues/335), [#340](https://github.com/marp-team/marpit/pull/340))
