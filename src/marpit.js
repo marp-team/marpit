@@ -12,7 +12,7 @@ import marpitHeaderAndFooter from './markdown/header_and_footer'
 import marpitHeadingDivider from './markdown/heading_divider'
 import marpitImage from './markdown/image'
 import marpitInlineSVG from './markdown/inline_svg'
-import marpitSlide from './markdown/slide'
+import marpitSlide, { defaultAnchorCallback } from './markdown/slide'
 import marpitSlideContainer from './markdown/slide_container'
 import marpitStyleAssign from './markdown/style/assign'
 import marpitStyleParse from './markdown/style/parse'
@@ -20,6 +20,7 @@ import marpitSweep from './markdown/sweep'
 import ThemeSet from './theme_set'
 
 const defaultOptions = {
+  anchor: true,
   container: marpitContainer,
   headingDivider: false,
   looseYAML: false,
@@ -49,9 +50,20 @@ class Marpit {
    */
 
   /**
+   * Convert slide page index into anchor string.
+   *
+   * @callback Marpit~AnchorCallback
+   * @param {number} index Slide page index, beginning from zero.
+   * @returns {string} The text of anchor for id attribute, without prefix `#`.
+   */
+
+  /**
    * Create a Marpit instance.
    *
    * @param {Object} [opts]
+   * @param {boolean|Marpit~AnchorCallback} [opts.anchor=true] Set the page
+   *     number as anchor of each slides (`id` attribute). You can customize the
+   *     anchor text by defining a custom callback function.
    * @param {false|Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
@@ -149,9 +161,18 @@ class Marpit {
   applyMarkdownItPlugins(md) {
     this.markdown = md
 
+    const slideAnchorCallback = (...args) => {
+      const { anchor } = this.options
+
+      if (typeof anchor === 'function') return anchor(...args)
+      if (anchor) return defaultAnchorCallback(...args)
+
+      return undefined
+    }
+
     md.use(marpitComment)
       .use(marpitStyleParse)
-      .use(marpitSlide)
+      .use(marpitSlide, { anchor: slideAnchorCallback })
       .use(marpitParseDirectives)
       .use(marpitApplyDirectives)
       .use(marpitHeaderAndFooter)

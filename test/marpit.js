@@ -41,6 +41,7 @@ describe('Marpit', () => {
 
     describe('options member', () => {
       it('has default options', () => {
+        expect(instance.options.anchor).toBe(true)
         expect(instance.options.container.tag).toBe('div')
         expect(instance.options.container.class).toBe('marpit')
         expect(instance.options.markdown).toBe(undefined)
@@ -450,6 +451,34 @@ describe('Marpit', () => {
         expect(style).toContain("background-image:url('/image.jpg')")
         expect(style).not.toContain('color:#123;')
         expect(style).not.toContain('background-color:#456;')
+      })
+    })
+
+    context('with anchor option', () => {
+      it('renders slides with id attribute if anchor was true', () => {
+        const marpit = new Marpit({ container: undefined, anchor: true })
+        const [token] = marpit.markdown.parse('')
+
+        expect(token.attrGet('id')).toBe('1')
+      })
+
+      it('renders slides without id attribute if anchor was false', () => {
+        const marpit = new Marpit({ container: undefined, anchor: false })
+        const [token] = marpit.markdown.parse('')
+
+        expect(token.attrGet('id')).toBeNull()
+      })
+
+      it('renders slides with custom id attribute if the function was defined as anchor option', () => {
+        const customAnchor = (index) => `custom-${index + 1}`
+
+        const marpit = new Marpit({
+          container: undefined,
+          anchor: customAnchor,
+        })
+        const [token] = marpit.markdown.parse('')
+
+        expect(token.attrGet('id')).toBe('custom-1')
       })
     })
   })
