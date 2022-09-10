@@ -21,4 +21,8 @@ function marpitPlugin(plugin) {
   }
 }
 
-export default marpitPlugin
+Object.defineProperty(marpitPlugin, '__esModule', { value: true })
+Object.defineProperty(marpitPlugin, 'default', { value: marpitPlugin })
+Object.defineProperty(marpitPlugin, 'marpitPlugin', { value: marpitPlugin })
+
+module.exports = marpitPlugin

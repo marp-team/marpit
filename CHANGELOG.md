@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Improve module interface of `@marp-team/marpit/plugin` to make compatible with CJS ([#341](https://github.com/marp-team/marpit/pull/341))
+
 ## v2.4.0 - 2022-08-11
 
 ### Added

@@ -153,6 +153,6 @@ declare module '@marp-team/marpit' {
 }
 
 declare module '@marp-team/marpit/plugin' {
-  const pluginFactory: Marpit.PluginFactory
-  export default pluginFactory
+  export const marpitPlugin: Marpit.PluginFactory
+  export default marpitPlugin
 }
