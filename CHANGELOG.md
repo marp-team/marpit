@@ -6,6 +6,14 @@
 
 - Improve module interface of `@marp-team/marpit/plugin` to make compatible with CJS ([#341](https://github.com/marp-team/marpit/pull/341))
 
+### Changed
+
+- Upgrade dependent packages to the latest version ([#342](https://github.com/marp-team/marpit/pull/342))
+
+### Removed
+
+- Continuous test against EoL Node.js 12 ([#291](https://github.com/marp-team/marpit/issues/291), [#342](https://github.com/marp-team/marpit/pull/342))
+
 ## v2.4.0 - 2022-08-11
 
 ### Added
