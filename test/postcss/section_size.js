@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import sectionSize from '../../src/postcss/section_size'
+import { sectionSize } from '../../src/postcss/section_size'
 
 describe('Marpit PostCSS section size plugin', () => {
   const run = (input) =>

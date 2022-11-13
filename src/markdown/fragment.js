@@ -6,10 +6,10 @@ const fragmentedListMarkups = ['*', ')']
 /**
  * Marpit fragment plugin.
  *
- * @alias module:markdown/fragment
+ * @function fragment
  * @param {MarkdownIt} md markdown-it instance.
  */
-function fragment(md) {
+function _fragment(md) {
   // Fragmented list
   md.core.ruler.after('marpit_directives_parse', 'marpit_fragment', (state) => {
     if (state.inlineMode) return
@@ -49,4 +49,5 @@ function fragment(md) {
   })
 }
 
-export default marpitPlugin(fragment)
+export const fragment = marpitPlugin(_fragment)
+export default fragment

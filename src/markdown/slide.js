@@ -1,6 +1,6 @@
 /** @module */
-import split from '../helpers/split'
-import wrapTokens from '../helpers/wrap_tokens'
+import { split } from '../helpers/split'
+import { wrapTokens } from '../helpers/wrap_tokens'
 import marpitPlugin from '../plugin'
 
 export const defaultAnchorCallback = (i) => `${i + 1}`
@@ -11,7 +11,7 @@ export const defaultAnchorCallback = (i) => `${i + 1}`
  * Split markdown-it tokens into the slides by horizontal rule. Each slides
  * will be wrapped by section element.
  *
- * @alias module:markdown/slide
+ * @function slide
  * @param {MarkdownIt} md markdown-it instance.
  * @param {Object} [opts]
  * @param {Object} [opts.attributes] The `<section>` element attributes by
@@ -20,7 +20,7 @@ export const defaultAnchorCallback = (i) => `${i + 1}`
  *     the anchor with the page number starting from 1. You can customize anchor
  *     name by passing callback function.
  */
-function slide(md, opts = {}) {
+function _slide(md, opts = {}) {
   const anchor = opts.anchor === undefined ? true : opts.anchor
 
   const anchorCallback = (() => {
@@ -74,4 +74,5 @@ function slide(md, opts = {}) {
   })
 }
 
-export default marpitPlugin(slide)
+export const slide = marpitPlugin(_slide)
+export default slide

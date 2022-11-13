@@ -46,9 +46,10 @@ video::-webkit-media-controls {
  * - Normalize `<h1>` heading style.
  * - Apply workaround for glitched video control on Chromium (https://github.com/marp-team/marpit/issues/205)
  *
- * @alias module:theme/scaffold
  * @type {Theme}
  */
-const scaffoldTheme = Theme.fromCSS(css, { [skipThemeValidationSymbol]: true })
+export const scaffoldTheme = Theme.fromCSS(css, {
+  [skipThemeValidationSymbol]: true,
+})
 
 export default scaffoldTheme

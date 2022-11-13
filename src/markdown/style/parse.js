@@ -15,10 +15,10 @@ const styleMatcherScoped = /\bscoped\b/i
  * `<style>` elements will strip regardless of html setting provided by
  * markdown-it.
  *
- * @alias module:markdown/style/parse
+ * @function parse
  * @param {MarkdownIt} md markdown-it instance.
  */
-function parse(md) {
+function _parse(md) {
   /**
    * Based on markdown-it html_block rule
    * https://github.com/markdown-it/markdown-it/blob/master/lib/rules_block/html_block.js
@@ -76,4 +76,5 @@ function parse(md) {
   )
 }
 
-export default marpitPlugin(parse)
+export const parse = marpitPlugin(_parse)
+export default parse

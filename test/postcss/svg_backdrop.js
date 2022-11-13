@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import svgBackdrop from '../../src/postcss/svg_backdrop'
+import { svgBackdrop } from '../../src/postcss/svg_backdrop'
 
 describe('Marpit PostCSS SVG backdrop plugin', () => {
   const run = (input) =>

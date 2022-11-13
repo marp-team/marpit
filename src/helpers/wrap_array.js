@@ -2,11 +2,11 @@
 /**
  * Wrap value in array if it is not an array.
  *
- * @alias module:helpers/wrap_array
+ * @function wrapArray
  * @param  {*} valOrArr
  * @return {Array}
  */
-const wrapArray = (valOrArr) => {
+export const wrapArray = (valOrArr) => {
   if (valOrArr == null || valOrArr === false) return []
   if (valOrArr instanceof Array) return valOrArr
   return [valOrArr]

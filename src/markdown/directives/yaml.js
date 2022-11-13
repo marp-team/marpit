@@ -54,7 +54,7 @@ function convertLoose(text, looseDirectives) {
 /**
  * Parse text as YAML by using js-yaml's FAILSAFE_SCHEMA.
  *
- * @alias module:markdown/directives/yaml
+ * @function yaml
  * @param {String} text Target text.
  * @param {boolean|string[]} [looseDirectives=false] By setting `true`, it try
  *     to parse as loose YAML only in defined Marpit built-in directives. You
@@ -63,7 +63,7 @@ function convertLoose(text, looseDirectives) {
  * @returns {Object|false} Return parse result, or `false` when failed to parse.
  */
 
-export default (text, looseDirectives = false) =>
+export const yaml = (text, looseDirectives = false) =>
   parse(
     looseDirectives
       ? convertLoose(text, [
@@ -72,3 +72,5 @@ export default (text, looseDirectives = false) =>
         ])
       : text
   )
+
+export default yaml

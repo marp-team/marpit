@@ -6,9 +6,9 @@ import postcssPlugin from '../helpers/postcss_plugin'
  *
  * Append style to suport the advanced background.
  *
- * @alias module:postcss/advanced_background
+ * @function advancedBackground
  */
-const plugin = postcssPlugin(
+export const advancedBackground = postcssPlugin(
   'marpit-postcss-advanced-background',
   () => (css) => {
     css.last.after(
@@ -75,4 +75,4 @@ section[data-marpit-advanced-background-split] {
   }
 )
 
-export default plugin
+export default advancedBackground

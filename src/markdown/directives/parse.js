@@ -3,7 +3,7 @@ import MarkdownItFrontMatter from 'markdown-it-front-matter'
 import marpitPlugin from '../../plugin'
 import { markAsParsed } from '../comment'
 import * as directives from './directives'
-import yaml from './yaml'
+import { yaml } from './yaml'
 
 const isDirectiveComment = (token) =>
   token.type === 'marpit_comment' && token.meta.marpitParsedDirectives
@@ -14,14 +14,14 @@ const isDirectiveComment = (token) =>
  * Marpit comment plugin ans slide plugin requires already loaded to
  * markdown-it instance.
  *
- * @alias module:markdown/directives/parse
+ * @function parse
  * @param {MarkdownIt} md markdown-it instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.frontMatter=true] Switch feature to support YAML
  *     front-matter. If true, you can use Jekyll style directive setting to the
  *     first page.
  */
-function parse(md, opts = {}) {
+function _parse(md, opts = {}) {
   const { marpit } = md
 
   const applyBuiltinDirectives = (newProps, builtinDirectives) => {
@@ -213,4 +213,5 @@ function parse(md, opts = {}) {
   })
 }
 
-export default marpitPlugin(parse)
+export const parse = marpitPlugin(_parse)
+export default parse

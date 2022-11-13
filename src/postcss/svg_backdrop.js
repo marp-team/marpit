@@ -35,9 +35,9 @@ const backdropMatcher = /(?:\b|^)::backdrop$/
  * disable the selector support by `inlineSVG: { backdropSelector: false }`.
  *
  * @see https://developer.mozilla.org/docs/Web/CSS/::backdrop
- * @alias module:postcss/svg_backdrop
+ * @function svgBackdrop
  */
-const plugin = postcssPlugin(
+export const svgBackdrop = postcssPlugin(
   'marpit-postcss-svg-backdrop',
   () => (css, postcss) => {
     css.walkRules((rule) => {
@@ -78,4 +78,4 @@ const plugin = postcssPlugin(
   }
 )
 
-export default plugin
+export default svgBackdrop

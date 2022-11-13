@@ -1,12 +1,12 @@
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import { ThemeSet } from '../../src/index'
-import collect from '../../src/markdown/collect'
-import comment, { markAsParsed } from '../../src/markdown/comment'
+import { collect } from '../../src/markdown/collect'
+import { comment, markAsParsed } from '../../src/markdown/comment'
 import applyDirectives from '../../src/markdown/directives/apply'
 import parseDirectives from '../../src/markdown/directives/parse'
-import inlineSVG from '../../src/markdown/inline_svg'
-import slide from '../../src/markdown/slide'
+import { inlineSVG } from '../../src/markdown/inline_svg'
+import { slide } from '../../src/markdown/slide'
 
 describe('Marpit collect plugin', () => {
   const themeSet = new ThemeSet()

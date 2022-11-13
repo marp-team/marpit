@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import importParse from '../../../src/postcss/import/parse'
+import { importParse } from '../../../src/postcss/import/parse'
 
 describe('Marpit PostCSS import parse plugin', () => {
   const run = (input) =>

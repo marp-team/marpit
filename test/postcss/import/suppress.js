@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import importSuppress from '../../../src/postcss/import/suppress'
+import { importSuppress } from '../../../src/postcss/import/suppress'
 
 describe('Marpit PostCSS import suppress plugin', () => {
   const themeSetStub = new Map()

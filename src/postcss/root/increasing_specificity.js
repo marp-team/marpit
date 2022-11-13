@@ -13,9 +13,9 @@ const matcher = new RegExp(`\\b(?:section)?${pseudoClass}\\b`, 'g')
  * by root replace plugin so `:where(section):not([\20 root])` must always match
  * too (HTML does not allow U+0020 SPACE in the attribute name.).
  *
- * @alias module:postcss/root/increasing_specificity
+ * @function rootIncreasingSpecificity
  */
-const plugin = postcssPlugin(
+export const rootIncreasingSpecificity = postcssPlugin(
   'marpit-postcss-root-increasing-specificity',
   () => (css) =>
     css.walkRules((rule) => {
@@ -25,4 +25,4 @@ const plugin = postcssPlugin(
     })
 )
 
-export default plugin
+export default rootIncreasingSpecificity

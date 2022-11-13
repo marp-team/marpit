@@ -7,9 +7,9 @@ import postcssPlugin from '../../helpers/postcss_plugin'
  * Prepend `:marpit-container > :marpit-slide` pseudo selector to each selector
  * of Marpit theme CSS for modulized styling.
  *
- * @alias module:postcss/pseudo_selector/prepend
+ * @function pseudoSelectorPrepend
  */
-const plugin = postcssPlugin(
+export const pseudoSelectorPrepend = postcssPlugin(
   'marpit-postcss-pseudo-selector-prepend',
   () => (css) =>
     css.walkRules((rule) => {
@@ -27,4 +27,4 @@ const plugin = postcssPlugin(
     })
 )
 
-export default plugin
+export default pseudoSelectorPrepend

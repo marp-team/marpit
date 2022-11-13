@@ -17,13 +17,14 @@ import parse from './background_image/parse'
  * In addition to the basic background implementation, it supports multiple
  * background images, filters, and split background.
  *
- * @alias module:markdown/background_image
+ * @function backgroundImage
  * @param {MarkdownIt} md markdown-it instance.
  */
-function backgroundImage(md) {
+function _backgroundImage(md) {
   parse(md)
   apply(md)
   advanced(md)
 }
 
-export default marpitPlugin(backgroundImage)
+export const backgroundImage = marpitPlugin(_backgroundImage)
+export default backgroundImage

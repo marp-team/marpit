@@ -6,11 +6,11 @@ import postcssPlugin from '../helpers/postcss_plugin'
  *
  * Parse CSS comment written in the format of `@key value`.
  *
+ * @function meta
  * @param {Object} [opts]
  * @param {Object} [opts.metaType] An object for defined types for metadata.
- * @alias module:postcss/meta
  */
-const plugin = postcssPlugin(
+export const meta = postcssPlugin(
   'marpit-postcss-meta',
   (opts = {}) =>
     (css, { result }) => {
@@ -37,4 +37,4 @@ const plugin = postcssPlugin(
     }
 )
 
-export default plugin
+export default meta

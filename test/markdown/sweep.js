@@ -1,14 +1,14 @@
 import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
-import backgroundImage from '../../src/markdown/background_image'
-import comment from '../../src/markdown/comment'
+import { backgroundImage } from '../../src/markdown/background_image'
+import { comment } from '../../src/markdown/comment'
 import applyDirectives from '../../src/markdown/directives/apply'
 import parseDirectives from '../../src/markdown/directives/parse'
-import image from '../../src/markdown/image'
-import inlineSVG from '../../src/markdown/inline_svg'
-import slide from '../../src/markdown/slide'
-import sweep from '../../src/markdown/sweep'
+import { image } from '../../src/markdown/image'
+import { inlineSVG } from '../../src/markdown/inline_svg'
+import { slide } from '../../src/markdown/slide'
+import { sweep } from '../../src/markdown/sweep'
 
 describe('Marpit sweep plugin', () => {
   const md = (mdOpts = {}, marpitInstance = { options: {} }) => {

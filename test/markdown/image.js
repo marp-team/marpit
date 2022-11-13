@@ -1,13 +1,13 @@
 import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import backgroundImage from '../../src/markdown/background_image'
-import comment from '../../src/markdown/comment'
+import { backgroundImage } from '../../src/markdown/background_image'
+import { comment } from '../../src/markdown/comment'
 import applyDirectives from '../../src/markdown/directives/apply'
 import parseDirectives from '../../src/markdown/directives/parse'
-import headerAndFooter from '../../src/markdown/header_and_footer'
-import image from '../../src/markdown/image'
-import inlineSVG from '../../src/markdown/inline_svg'
-import slide from '../../src/markdown/slide'
+import { headerAndFooter } from '../../src/markdown/header_and_footer'
+import { image } from '../../src/markdown/image'
+import { inlineSVG } from '../../src/markdown/inline_svg'
+import { slide } from '../../src/markdown/slide'
 
 describe('Marpit image plugin', () => {
   const md = (svg = false) =>

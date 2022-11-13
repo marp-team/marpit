@@ -6,12 +6,13 @@ import parse from './image/parse'
 /**
  * Marpit image plugin.
  *
- * @alias module:markdown/image
+ * @function image
  * @param {MarkdownIt} md markdown-it instance.
  */
-function image(md) {
+function _image(md) {
   parse(md)
   apply(md)
 }
 
-export default marpitPlugin(image)
+export const image = marpitPlugin(_image)
+export default image

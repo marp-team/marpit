@@ -24,9 +24,9 @@ import postcssPlugin from '../../helpers/postcss_plugin'
  * can place `@import-theme` rule at any in the CSS root, and the content of
  * imported theme will always append to the beginning of CSS.
  *
- * @alias module:postcss/import/parse
+ * @function importParse
  */
-const plugin = postcssPlugin(
+export const importParse = postcssPlugin(
   'marpit-postcss-import-parse',
   () =>
     (css, { result }) => {
@@ -75,4 +75,4 @@ const plugin = postcssPlugin(
     }
 )
 
-export default plugin
+export default importParse

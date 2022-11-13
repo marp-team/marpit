@@ -18,10 +18,10 @@ const splitSizeMatcher = /^(left|right)(?::((?:\d*\.)?\d+%))?$/
  *
  * Furthermore, it parses additional keywords needed for background image.
  *
- * @alias module:markdown/background_image/parse
+ * @function backgroundImageParse
  * @param {MarkdownIt} md markdown-it instance.
  */
-function backgroundImageParse(md) {
+function _backgroundImageParse(md) {
   md.inline.ruler2.after(
     'marpit_parse_image',
     'marpit_background_image',
@@ -75,4 +75,5 @@ function backgroundImageParse(md) {
   )
 }
 
-export default marpitPlugin(backgroundImageParse)
+export const backgroundImageParse = marpitPlugin(_backgroundImageParse)
+export default backgroundImageParse

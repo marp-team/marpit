@@ -7,7 +7,7 @@ import builtInDirectives from './directives'
 /**
  * Apply parsed Marpit directives to markdown-it tokens.
  *
- * @alias module:markdown/directives/apply
+ * @function apply
  * @param {MarkdownIt} md markdown-it instance.
  * @param {Object} [opts]
  * @param {boolean} [opts.dataset=true] Assigns directives as HTML data
@@ -15,7 +15,7 @@ import builtInDirectives from './directives'
  * @param {boolean} [opts.css=true] Assigns directives as CSS Custom Properties
  *     of each section tag.
  */
-function apply(md, opts = {}) {
+function _apply(md, opts = {}) {
   const { marpit } = md
 
   const dataset = opts.dataset === undefined ? true : !!opts.dataset
@@ -103,4 +103,5 @@ function apply(md, opts = {}) {
   )
 }
 
-export default marpitPlugin(apply)
+export const apply = marpitPlugin(_apply)
+export default apply

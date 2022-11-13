@@ -1,5 +1,5 @@
 import dedent from 'dedent'
-import yaml from '../../../src/markdown/directives/yaml'
+import { yaml } from '../../../src/markdown/directives/yaml'
 
 describe('Marpit directives YAML parser', () => {
   it("ignores directive's special char with false looseDirectives option", () =>

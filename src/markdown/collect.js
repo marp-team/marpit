@@ -9,10 +9,10 @@ import marpitPlugin from '../plugin'
  * Marpit instance. It would use in the returned object from
  * {@link Marpit#render}.
  *
- * @alias module:markdown/collect
+ * @function collect
  * @param {MarkdownIt} md markdown-it instance.
  */
-function collect(md) {
+function _collect(md) {
   const { marpit } = md
 
   md.core.ruler.push('marpit_collect', (state) => {
@@ -61,4 +61,5 @@ function collect(md) {
   })
 }
 
-export default marpitPlugin(collect)
+export const collect = marpitPlugin(_collect)
+export default collect

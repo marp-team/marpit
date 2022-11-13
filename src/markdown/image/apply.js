@@ -7,10 +7,10 @@ import marpitPlugin from '../../plugin'
  *
  * Apply image style and color spot directive based on parsed meta.
  *
- * @alias module:markdown/image/apply
+ * @function applyImage
  * @param {MarkdownIt} md markdown-it instance.
  */
-function applyImage(md) {
+function _applyImage(md) {
   // Build and apply image style
   md.inline.ruler2.push('marpit_apply_image', ({ tokens }) => {
     for (const token of tokens) {
@@ -70,4 +70,5 @@ function applyImage(md) {
   )
 }
 
-export default marpitPlugin(applyImage)
+export const applyImage = marpitPlugin(_applyImage)
+export default applyImage

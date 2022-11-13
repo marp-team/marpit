@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import advancedBackground from '../../src/postcss/advanced_background'
+import { advancedBackground } from '../../src/postcss/advanced_background'
 
 describe('Marpit PostCSS advanced background plugin', () => {
   const run = (input) =>

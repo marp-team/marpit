@@ -1,16 +1,16 @@
 /** @module */
-import split from '../helpers/split'
-import wrapArray from '../helpers/wrap_array'
-import wrapTokens from '../helpers/wrap_tokens'
+import { split } from '../helpers/split'
+import { wrapArray } from '../helpers/wrap_array'
+import { wrapTokens } from '../helpers/wrap_tokens'
 import marpitPlugin from '../plugin'
 
 /**
  * Marpit slide container plugin.
  *
- * @alias module:markdown/slide_container
+ * @function slideContainer
  * @param {MarkdownIt} md markdown-it instance.
  */
-function slideContainer(md) {
+function _slideContainer(md) {
   const containers = wrapArray(md.marpit.options.slideContainer)
   if (!containers) return
 
@@ -40,4 +40,5 @@ function slideContainer(md) {
   })
 }
 
-export default marpitPlugin(slideContainer)
+export const slideContainer = marpitPlugin(_slideContainer)
+export default slideContainer

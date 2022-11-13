@@ -11,22 +11,25 @@ import postcssPlugin from '../helpers/postcss_plugin'
  * `section::after` of the root, to prevent override the defined attribute for
  * paginating.
  *
- * @alias module:postcss/pagination
+ * @function pagination
  */
-const plugin = postcssPlugin('marpit-postcss-pagination', () => (css) => {
-  css.walkRules((rule) => {
-    if (
-      rule.selectors.some((selector) =>
-        /^section(?![\w-])[^\s>+~]*::?after$/.test(
-          selector.replace(/\[.*?\]/g, '')
+export const pagination = postcssPlugin(
+  'marpit-postcss-pagination',
+  () => (css) => {
+    css.walkRules((rule) => {
+      if (
+        rule.selectors.some((selector) =>
+          /^section(?![\w-])[^\s>+~]*::?after$/.test(
+            selector.replace(/\[.*?\]/g, '')
+          )
         )
       )
-    )
-      rule.walkDecls('content', (decl) => {
-        if (!decl.value.includes('attr(data-marpit-pagination)'))
-          decl.replaceWith(`${decl.raw('before')}/* ${decl.toString()}; */`)
-      })
-  })
-})
+        rule.walkDecls('content', (decl) => {
+          if (!decl.value.includes('attr(data-marpit-pagination)'))
+            decl.replaceWith(`${decl.raw('before')}/* ${decl.toString()}; */`)
+        })
+    })
+  }
+)
 
-export default plugin
+export default pagination

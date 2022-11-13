@@ -1,8 +1,8 @@
 import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import { Element } from '../../src/index'
-import slide from '../../src/markdown/slide'
-import slideContainer from '../../src/markdown/slide_container'
+import { slide } from '../../src/markdown/slide'
+import { slideContainer } from '../../src/markdown/slide_container'
 
 describe('Marpit slide container plugin', () => {
   const md = (containers) => {

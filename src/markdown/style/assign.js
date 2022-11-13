@@ -66,10 +66,10 @@ const scopeKeyframesPostCSSPlugin = postcssPlugin(
  * Assign style global directive and parsed styles to Marpit instance's
  * `lastStyles' property.
  *
- * @alias module:markdown/style/assign
+ * @function assign
  * @param {MarkdownIt} md markdown-it instance.
  */
-function assign(md) {
+function _assign(md) {
   const { marpit } = md
 
   md.core.ruler.after('marpit_slide', 'marpit_style_assign', (state) => {
@@ -152,4 +152,5 @@ function assign(md) {
   })
 }
 
-export default marpitPlugin(assign)
+export const assign = marpitPlugin(_assign)
+export default assign

@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
-import importReplace from '../../../src/postcss/import/replace'
+import { importReplace } from '../../../src/postcss/import/replace'
 
 describe('Marpit PostCSS import replace plugin', () => {
   const themeSetStub = new Map()

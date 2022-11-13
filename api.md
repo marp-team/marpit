@@ -24,9 +24,9 @@ import { Element, Marpit, Theme, ThemeSet } from '@marp-team/marpit'
 
 ### Modules _(for internal)_
 
-**Modules** section is documented about internal modules, that is includes plugins of markdown-it and PostCSS.
+**Modules** section is documented about internal modules, that includes plugins for markdown-it and PostCSS, for helping to learn Marpit's architecture by contributors and plugin authors.
 
-Basically _Marpit user should not use internal module directly._
+⚠️ **Do not use internal modules directly.** They might be changed the specification without following semantic versioning.
 
 ---
 
@@ -42,12 +42,19 @@ Marpit's plugin interface has compatible with [markdown-it](https://github.com/m
 
 When plugin was used through [`Marpit.use()`](Marpit.html#use), it can access to current Marpit instance via `marpit` member of the passed markdown-it instance.
 
-`@marp-team/marpit/plugin` provides a helper for creating Marpit plugin. A generated plugin promises an existance of `marpit` member.
+`@marp-team/marpit/plugin` provides [a helper for creating Marpit plugin](module-plugin.html). A generated plugin promises an existance of `marpit` member.
 
 ```javascript
-const plugin = require('@marp-team/marpit/plugin')
+import { marpitPlugin } from '@marp-team/marpit/plugin'
 
-module.exports = plugin(({ marpit }) => {
-  // Plugin code (Add theme, define custom directives, etc...)
+export default marpitPlugin(({ marpit }) => {
+  // Add your plugin code here (Add theme, define custom directives, etc...)
+  /*
+  marpit.customDirectives.local.yourDirective = (value) => {
+    return { yourDirective: value }
+  }
+  */
 })
 ```
+
+If the user tried to use the generated Marpit plugin from this helper as markdown-it plugin wrongly, the plugin throws an error. Thus, you can mark the plugin as dedicated to Marpit.

@@ -11,10 +11,10 @@ import marpitPlugin from '../plugin'
  * It also sweep the inline token marked as hidden forcely. Please notice that
  * plugins executed after this cannot handle hidden inline tokens.
  *
- * @alias module:markdown/sweep
+ * @function sweep
  * @param {MarkdownIt} md markdown-it instance.
  */
-function sweep(md) {
+function _sweep(md) {
   md.core.ruler.after('inline', 'marpit_sweep', (state) => {
     if (state.inlineMode) return
 
@@ -57,4 +57,5 @@ function sweep(md) {
   })
 }
 
-export default marpitPlugin(sweep)
+export const sweep = marpitPlugin(_sweep)
+export default sweep

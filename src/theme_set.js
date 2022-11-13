@@ -1,8 +1,8 @@
 import postcss from 'postcss'
 import postcssPlugin from './helpers/postcss_plugin'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssImportHoisting from './postcss/import/hoisting'
 import postcssImportReplace from './postcss/import/replace'
-import postcssImportRollup from './postcss/import/rollup'
 import postcssImportSuppress from './postcss/import/suppress'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable, {
@@ -226,8 +226,8 @@ class ThemeSet {
    * Convert registered theme CSS into usable in the rendered markdown by
    * {@link Marpit#render}.
    *
-   * You should use {@link Marpit#render} unless there is some particular
-   * reason.
+   * **This method is designed for internal use by {@link Marpit} class.** Use
+   * {@link Marpit#render} instead unless there is some particular reason.
    *
    * @param {string} name The theme name. It will use the instance's default
    *     theme or scaffold theme when a specific named theme does not exist.
@@ -274,7 +274,7 @@ class ThemeSet {
           postcssPlugin('marpit-pack-after', () => (css) => {
             css.last.after(after)
           }),
-        postcssImportRollup,
+        postcssImportHoisting,
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
@@ -298,7 +298,7 @@ class ThemeSet {
         postcssRootIncreasingSpecificity,
         opts.printable && postcssPrintablePostProcess,
         postcssRem,
-        postcssImportRollup,
+        postcssImportHoisting,
       ].filter((p) => p)
     )
 

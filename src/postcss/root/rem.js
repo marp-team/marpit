@@ -9,9 +9,9 @@ const skipParsingMatcher = /("[^"]*"|'[^']*'|(?:attr|url|var)\([^)]*\))/g
  *
  * Replace `rem` unit to calculated value from CSS variable.
  *
- * @alias module:postcss/root/rem
+ * @function rem
  */
-const plugin = postcssPlugin(
+export const rem = postcssPlugin(
   'marpit-postcss-rem',
   () => (css) =>
     css.walkDecls((decl) => {
@@ -29,4 +29,4 @@ const plugin = postcssPlugin(
     })
 )
 
-export default plugin
+export default rem

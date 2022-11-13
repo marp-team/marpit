@@ -1,7 +1,7 @@
 import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
-import comment from '../../src/markdown/comment'
+import { comment } from '../../src/markdown/comment'
 
 describe('Marpit comment plugin', () => {
   const md = (mdOption = {}) => {

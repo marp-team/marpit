@@ -10,19 +10,22 @@ import postcssImportParse from './parse'
  * This plugin is useful to prevent the inline style's rolled-up theme import by
  * unexpected order.
  *
- * @alias module:postcss/import/suppress
+ * @function importSuppress
  * @param {ThemeSet} themeSet ThemeSet instance.
  */
-const plugin = postcssPlugin('marpit-postcss-import-suppress', (themeSet) => ({
-  plugins: [
-    postcssImportParse(),
-    postcssPlugin('marpit-postcss-import-suppress', () => (css) => {
-      css.walk((node) => {
-        if (node.marpitImportParse && themeSet.has(node.marpitImportParse))
-          node.replaceWith(`${node.raw('before')}/* ${node.toString()}; */`)
-      })
-    })(),
-  ],
-}))
+export const importSuppress = postcssPlugin(
+  'marpit-postcss-import-suppress',
+  (themeSet) => ({
+    plugins: [
+      postcssImportParse(),
+      postcssPlugin('marpit-postcss-import-suppress', () => (css) => {
+        css.walk((node) => {
+          if (node.marpitImportParse && themeSet.has(node.marpitImportParse))
+            node.replaceWith(`${node.raw('before')}/* ${node.toString()}; */`)
+        })
+      })(),
+    ],
+  })
+)
 
-export default plugin
+export default importSuppress
