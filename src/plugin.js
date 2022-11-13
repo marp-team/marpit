@@ -9,7 +9,7 @@
  * @example
  * import { marpitPlugin } from '@marp-team/marpit/plugin'
  *
- * export default yourPlugin = marpitPlugin((md) => {
+ * export default marpitPlugin((md) => {
  *   // Compatible with markdown-it plugin
  *   md.renderer.rules.your_rule = (tokens, idx, options, env, self) => {
  *     // ...
@@ -21,7 +21,7 @@
  *   marpit.customDirectives.local.yourDirective = (value) => {
  *     return { yourDirective: value }
  *   }
- * )}
+ * })
  *
  * @function marpitPlugin
  * @param {Function} plugin Base plugin for markdown-it.
