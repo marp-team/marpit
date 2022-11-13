@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- Test against Node.js 18 LTS ([#344](https://github.com/marp-team/marpit/issues/344), [#345](https://github.com/marp-team/marpit/pull/345))
+
+### Changed
+
+- Upgrade dependent packages to the latest version ([#345](https://github.com/marp-team/marpit/pull/345))
+
 ## v2.4.1 - 2022-09-10
 
 ### Fixed
