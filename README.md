@@ -1,5 +1,6 @@
 <p align="center">
-  <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/main/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
+  <img src="docs/marpit.png#gh-light-mode-only" alt="Marpit" width="500" />
+  <img src="docs/marpit-dark.png#gh-dark-mode-only" alt="Marpit" width="500" />
 </p>
 <p align="center">
   <strong>Marpit</strong>: Markdown slide deck framework
@@ -10,6 +11,12 @@
   <a href="https://www.npmjs.com/package/@marp-team/marpit"><img src="https://img.shields.io/npm/v/@marp-team/marpit.svg?style=flat-square&logo=npm" alt="npm" /></a>
   <a href="./LICENSE"><img src="https://img.shields.io/github/license/marp-team/marpit.svg?style=flat-square" alt="LICENSE" /></a>
 </p>
+
+<div align="center">
+
+### [🗒 Documentation](https://marpit.marp.app/) | [⚙ API](https://marpit-api.marp.app/)
+
+</div>
 
 ---
 
@@ -45,20 +52,19 @@ See [the documentation of Marpit](https://marpit.marp.app/?id=getting-started) t
 - **[Documentation](https://marpit.marp.app/)**
 - [API (JSDoc)](https://marpit-api.marp.app/)
 
-## Development
+## Contributing
+
+Are you interested in contributing? See [CONTRIBUTING.md](.github/CONTRIBUTING.md) and [the common contributing guideline for Marp team](https://github.com/marp-team/.github/blob/master/CONTRIBUTING.md).
+
+### Development
 
 ```bash
 git clone https://github.com/marp-team/marpit
-
 cd marpit
 
 yarn install
 yarn build
 ```
-
-## Contributing
-
-Are you interested in contributing? Please see [CONTRIBUTING.md](.github/CONTRIBUTING.md) and [the common contributing guideline for Marp team](https://github.com/marp-team/.github/blob/master/CONTRIBUTING.md).
 
 ## Sub-projects
 
