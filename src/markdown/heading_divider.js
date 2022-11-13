@@ -1,5 +1,5 @@
 /** @module */
-import split from '../helpers/split'
+import { split } from '../helpers/split'
 import marpitPlugin from '../plugin'
 
 /**
@@ -8,10 +8,10 @@ import marpitPlugin from '../plugin'
  * Start a new slide page at before of headings by prepending hidden `<hr>`
  * elements.
  *
- * @alias module:markdown/heading_divider
+ * @function headingDivider
  * @param {MarkdownIt} md markdown-it instance.
  */
-function headingDivider(md) {
+function _headingDivider(md) {
   const { marpit } = md
 
   md.core.ruler.before('marpit_slide', 'marpit_heading_divider', (state) => {
@@ -56,4 +56,5 @@ function headingDivider(md) {
   })
 }
 
-export default marpitPlugin(headingDivider)
+export const headingDivider = marpitPlugin(_headingDivider)
+export default headingDivider

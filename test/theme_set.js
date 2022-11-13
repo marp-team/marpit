@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import { ThemeSet, Theme } from '../src/index'
-import scaffoldTheme from '../src/theme/scaffold'
+import { scaffoldTheme } from '../src/theme/scaffold'
 
 describe('ThemeSet', () => {
   let instance

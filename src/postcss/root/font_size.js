@@ -9,9 +9,9 @@ export const rootFontSizeCustomProp = '--marpit-root-font-size'
  * Inject CSS variable based on the root slide container `section` for correct
  * calculation of `rem` unit in the context of Marpit.
  *
- * @alias module:postcss/root/font_size
+ * @function rootFontSize
  */
-const plugin = postcssPlugin(
+export const rootFontSize = postcssPlugin(
   'marpit-postcss-root-font-size',
   () => (css, postcss) =>
     css.walkRules((rule) => {
@@ -57,4 +57,4 @@ const plugin = postcssPlugin(
     })
 )
 
-export default plugin
+export default rootFontSize

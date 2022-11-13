@@ -1,7 +1,7 @@
 import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
 import { Element } from '../../src/index'
-import container from '../../src/markdown/container'
+import { container } from '../../src/markdown/container'
 
 describe('Marpit container plugin', () => {
   const md = (containers) => {

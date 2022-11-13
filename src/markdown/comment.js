@@ -1,6 +1,6 @@
 /** @module */
 import marpitPlugin from '../plugin'
-import yaml from './directives/yaml'
+import { yaml } from './directives/yaml'
 
 const commentMatcher = /<!--+\s*([\s\S]*?)\s*--+>/
 const commentMatcherOpening = /^<!--/
@@ -28,10 +28,10 @@ export function markAsParsed(token, kind) {
  * Parse HTML comment as token. Comments will strip regardless of html setting
  * provided by markdown-it.
  *
- * @alias module:markdown/comment
+ * @function comment
  * @param {MarkdownIt} md markdown-it instance.
  */
-function comment(md) {
+function _comment(md) {
   const parse = (token, content) => {
     const parsed = yaml(content, !!md.marpit.options.looseYAML)
 
@@ -126,4 +126,5 @@ function comment(md) {
   )
 }
 
-export default marpitPlugin(comment)
+export const comment = marpitPlugin(_comment)
+export default comment

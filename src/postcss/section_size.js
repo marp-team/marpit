@@ -6,9 +6,9 @@ import postcssPlugin from '../helpers/postcss_plugin'
  *
  * Parse width and height declartaion on `section` selector.
  *
- * @alias module:postcss/section_size
+ * @function sectionSize
  */
-const plugin = postcssPlugin(
+export const sectionSize = postcssPlugin(
   'marpit-postcss-section-size',
   ({ preferedPseudoClass } = {}) => {
     const rootSectionMatcher = new RegExp(
@@ -56,4 +56,4 @@ const plugin = postcssPlugin(
   }
 )
 
-export default plugin
+export default sectionSize

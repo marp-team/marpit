@@ -6,7 +6,24 @@
  * Generate Marpit plugin from passed markdown-it plugin. Marpit plugin needs
  * markdown-it instance with `marpit` member.
  *
- * @alias module:plugin
+ * @example
+ * import { marpitPlugin } from '@marp-team/marpit/plugin'
+ *
+ * export default yourPlugin = marpitPlugin((md) => {
+ *   // Compatible with markdown-it plugin
+ *   md.renderer.rules.your_rule = (tokens, idx, options, env, self) => {
+ *     // ...
+ *   }
+ *
+ *   // And accessible to Marpit instance as `md.marpit`
+ *   const { marpit } = md
+ *
+ *   marpit.customDirectives.local.yourDirective = (value) => {
+ *     return { yourDirective: value }
+ *   }
+ * )}
+ *
+ * @function marpitPlugin
  * @param {Function} plugin Base plugin for markdown-it.
  * @returns {Function} Generated Marpit plugin.
  */

@@ -1,10 +1,10 @@
 import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
-import comment from '../../../src/markdown/comment'
+import { comment } from '../../../src/markdown/comment'
 import applyDirectives from '../../../src/markdown/directives/apply'
 import parseDirectives from '../../../src/markdown/directives/parse'
-import slide from '../../../src/markdown/slide'
+import { slide } from '../../../src/markdown/slide'
 
 describe('Marpit directives apply plugin', () => {
   const themeSetStub = new Map()

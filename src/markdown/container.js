@@ -1,15 +1,15 @@
 /** @module */
-import wrapArray from '../helpers/wrap_array'
-import wrapTokens from '../helpers/wrap_tokens'
+import { wrapArray } from '../helpers/wrap_array'
+import { wrapTokens } from '../helpers/wrap_tokens'
 import marpitPlugin from '../plugin'
 
 /**
  * Marpit container plugin.
  *
- * @alias module:markdown/container
+ * @function container
  * @param {MarkdownIt} md markdown-it instance.
  */
-function container(md) {
+function _container(md) {
   const containers = wrapArray(md.marpit.options.container)
   if (!containers) return
 
@@ -28,4 +28,5 @@ function container(md) {
   })
 }
 
-export default marpitPlugin(container)
+export const container = marpitPlugin(_container)
+export default container

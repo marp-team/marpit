@@ -10,7 +10,7 @@
  * @param {(Function|Object)} func Function with PostCSS plugin interface.
  * @returns {Function} A PostCSS plugin.
  */
-function plugin(name, func) {
+export function plugin(name, func) {
   return Object.defineProperty(
     function intrface(...args) {
       const retFunc = func.apply(this, args)

@@ -1,8 +1,8 @@
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
-import comment from '../../../src/markdown/comment'
+import { comment } from '../../../src/markdown/comment'
 import parseDirectives from '../../../src/markdown/directives/parse'
-import slide from '../../../src/markdown/slide'
+import { slide } from '../../../src/markdown/slide'
 
 describe('Marpit directives parse plugin', () => {
   const themeSetStub = new Map()

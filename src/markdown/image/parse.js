@@ -87,10 +87,10 @@ optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
  * image url and options. The alternative text is regarded as space-separated
  * options.
  *
- * @alias module:markdown/image/parse
+ * @function parseImage
  * @param {MarkdownIt} md markdown-it instance.
  */
-function parseImage(md) {
+function _parseImage(md) {
   const { process } = md.core
 
   // Store original URL, for the color shorthand.
@@ -238,4 +238,5 @@ function parseImage(md) {
   })
 }
 
-export default marpitPlugin(parseImage)
+export const parseImage = marpitPlugin(_parseImage)
+export default parseImage

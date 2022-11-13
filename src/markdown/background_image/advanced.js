@@ -1,6 +1,6 @@
 /** @module */
 import InlineStyle from '../../helpers/inline_style'
-import wrapTokens from '../../helpers/wrap_tokens'
+import { wrapTokens } from '../../helpers/wrap_tokens'
 import marpitPlugin from '../../plugin'
 
 /**
@@ -10,10 +10,10 @@ import marpitPlugin from '../../plugin'
  * element(s) instead of CSS backgrounds. It works by creating the isolated
  * layer into inline SVG.
  *
- * @alias module:markdown/background_image/advanced
+ * @function advancedBackground
  * @param {MarkdownIt} md markdown-it instance.
  */
-function advancedBackground(md) {
+function _advancedBackground(md) {
   md.core.ruler.after(
     'marpit_directives_apply',
     'marpit_advanced_background',
@@ -157,4 +157,5 @@ function advancedBackground(md) {
   )
 }
 
-export default marpitPlugin(advancedBackground)
+export const advancedBackground = marpitPlugin(_advancedBackground)
+export default advancedBackground

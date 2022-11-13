@@ -1,7 +1,7 @@
 import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import fragment from '../../src/markdown/fragment'
-import slide from '../../src/markdown/slide'
+import { fragment } from '../../src/markdown/fragment'
+import { slide } from '../../src/markdown/slide'
 
 describe('Marpit fragment plugin', () => {
   const md = () => {

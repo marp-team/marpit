@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import meta from '../../src/postcss/meta'
+import { meta } from '../../src/postcss/meta'
 
 describe('Marpit PostCSS meta plugin', () => {
   const run = (input) => postcss([meta()]).process(input, { from: undefined })

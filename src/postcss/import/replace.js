@@ -10,10 +10,10 @@ import postcssImportParse from './parse'
  * Please see {@link module:postcss/import/parse} about the specification of
  * each syntax.
  *
- * @alias module:postcss/import/replace
+ * @function importReplace
  * @param {ThemeSet} themeSet ThemeSet instance.
  */
-const plugin = (themeSet, importedThemes = []) =>
+export const importReplace = (themeSet, importedThemes = []) =>
   postcssPlugin('marpit-postcss-import-replace', () => ({
     plugins: [
       postcssImportParse(),
@@ -36,7 +36,7 @@ const plugin = (themeSet, importedThemes = []) =>
                     )
 
                   const processed = postcss([
-                    plugin(themeSet, [...importedThemes, name]),
+                    importReplace(themeSet, [...importedThemes, name]),
                   ]).process(theme.css)
 
                   if (node.name === 'import') {
@@ -55,4 +55,4 @@ const plugin = (themeSet, importedThemes = []) =>
     ],
   }))
 
-export default plugin
+export default importReplace

@@ -226,8 +226,8 @@ class ThemeSet {
    * Convert registered theme CSS into usable in the rendered markdown by
    * {@link Marpit#render}.
    *
-   * You should use {@link Marpit#render} unless there is some particular
-   * reason.
+   * **This method is designed for internal use by {@link Marpit} class.** Use
+   * {@link Marpit#render} instead unless there is some particular reason.
    *
    * @param {string} name The theme name. It will use the instance's default
    *     theme or scaffold theme when a specific named theme does not exist.

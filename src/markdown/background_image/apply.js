@@ -9,10 +9,10 @@ import marpitPlugin from '../../plugin'
  * When inline SVG is enabled, it will reshape meta for advanced process instead
  * of converting to directives.
  *
- * @alias module:markdown/background_image/apply
+ * @function backgroundImageApply
  * @param {MarkdownIt} md markdown-it instance.
  */
-function backgroundImageApply(md) {
+function _backgroundImageApply(md) {
   md.core.ruler.after(
     'marpit_inline_svg',
     'marpit_apply_background_image',
@@ -115,4 +115,5 @@ function backgroundImageApply(md) {
   )
 }
 
-export default marpitPlugin(backgroundImageApply)
+export const backgroundImageApply = marpitPlugin(_backgroundImageApply)
+export default backgroundImageApply

@@ -18,15 +18,17 @@ html, body {
  * @param {Object} opts
  * @param {string} opts.width
  * @param {string} opts.height
- * @alias module:postcss/printable
+ * @function printable
  */
-const plugin = postcssPlugin('marpit-postcss-printable', (opts) => (css) => {
-  css.walkAtRules('media', (rule) => {
-    if (rule.params === 'marpit-print') rule.remove()
-  })
+export const printable = postcssPlugin(
+  'marpit-postcss-printable',
+  (opts) => (css) => {
+    css.walkAtRules('media', (rule) => {
+      if (rule.params === 'marpit-print') rule.remove()
+    })
 
-  css.first.before(
-    `
+    css.first.before(
+      `
 @page {
   size: ${opts.width} ${opts.height};
   margin: 0;
@@ -53,13 +55,14 @@ const plugin = postcssPlugin('marpit-postcss-printable', (opts) => (css) => {
   }
 }
 `.trim()
-  )
-})
+    )
+  }
+)
 
 /**
  * The post-process PostCSS plugin of Marpit printable plugin.
  *
- * @alias module:postcss/printable.postprocess
+ * @function postprocess
  */
 export const postprocess = postcssPlugin(
   'marpit-postcss-printable-postprocess',
@@ -72,4 +75,4 @@ export const postprocess = postcssPlugin(
     })
 )
 
-export default plugin
+export default printable

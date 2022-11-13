@@ -8,9 +8,9 @@ import postcssPlugin from '../../helpers/postcss_plugin'
  * pseudo class through `pseudoClass` option to make distinguishable from
  * `section` selector.
  *
- * @alias module:postcss/root/replace
+ * @function rootReplace
  */
-const plugin = postcssPlugin(
+export const rootReplace = postcssPlugin(
   'marpit-postcss-root-replace',
   ({ pseudoClass } = {}) =>
     (css) =>
@@ -25,4 +25,4 @@ const plugin = postcssPlugin(
       })
 )
 
-export default plugin
+export default rootReplace

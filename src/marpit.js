@@ -1,6 +1,6 @@
 import MarkdownIt from 'markdown-it'
 import { marpitContainer } from './element'
-import wrapArray from './helpers/wrap_array'
+import { wrapArray } from './helpers/wrap_array'
 import marpitBackgroundImage from './markdown/background_image'
 import marpitCollect from './markdown/collect'
 import marpitComment from './markdown/comment'

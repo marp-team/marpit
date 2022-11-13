@@ -10,35 +10,38 @@ import postcssPlugin from '../../helpers/postcss_plugin'
  *
  * This plugin takes care of rolling up invalid at-rules.
  *
- * @alias module:postcss/import/rollup
+ * @function importRollup
  */
-const plugin = postcssPlugin('marpit-postcss-import-rollup', () => (css) => {
-  const rolluped = {
-    charset: undefined,
-    imports: [],
-  }
-
-  css.walkAtRules((rule) => {
-    if (rule.name === 'charset') {
-      rule.remove()
-      if (!rolluped.charset) rolluped.charset = rule
-    } else if (rule.name === 'import') {
-      rolluped.imports.push(rule.remove())
+export const importRollup = postcssPlugin(
+  'marpit-postcss-import-rollup',
+  () => (css) => {
+    const rolluped = {
+      charset: undefined,
+      imports: [],
     }
-  })
 
-  const { first } = css
-
-  // Rollup at-rules
-  ;[rolluped.charset, ...rolluped.imports]
-    .filter((r) => r)
-    .forEach((rule, idx) => {
-      // Strip whitespace from the beginning of first at-rule
-      const prependRule =
-        idx === 0 ? rule.clone({ raws: { before: undefined } }) : rule
-
-      first.before(prependRule)
+    css.walkAtRules((rule) => {
+      if (rule.name === 'charset') {
+        rule.remove()
+        if (!rolluped.charset) rolluped.charset = rule
+      } else if (rule.name === 'import') {
+        rolluped.imports.push(rule.remove())
+      }
     })
-})
 
-export default plugin
+    const { first } = css
+
+    // Rollup at-rules
+    ;[rolluped.charset, ...rolluped.imports]
+      .filter((r) => r)
+      .forEach((rule, idx) => {
+        // Strip whitespace from the beginning of first at-rule
+        const prependRule =
+          idx === 0 ? rule.clone({ raws: { before: undefined } }) : rule
+
+        first.before(prependRule)
+      })
+  }
+)
+
+export default importRollup

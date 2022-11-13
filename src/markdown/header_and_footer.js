@@ -1,5 +1,5 @@
 /** @module */
-import wrapTokens from '../helpers/wrap_tokens'
+import { wrapTokens } from '../helpers/wrap_tokens'
 import marpitPlugin from '../plugin'
 
 /**
@@ -7,10 +7,10 @@ import marpitPlugin from '../plugin'
  *
  * At each slide, add header and footer that are provided by directives.
  *
- * @alias module:markdown/header_and_footer
+ * @function headerAndFooter
  * @param {MarkdownIt} md markdown-it instance.
  */
-function headerAndFooter(md) {
+function _headerAndFooter(md) {
   md.core.ruler.after(
     'marpit_directives_apply',
     'marpit_header_and_footer',
@@ -68,4 +68,5 @@ function headerAndFooter(md) {
   )
 }
 
-export default marpitPlugin(headerAndFooter)
+export const headerAndFooter = marpitPlugin(_headerAndFooter)
+export default headerAndFooter

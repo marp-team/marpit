@@ -1,9 +1,9 @@
 import { load } from 'cheerio'
 import MarkdownIt from 'markdown-it'
-import comment from '../../src/markdown/comment'
+import { comment } from '../../src/markdown/comment'
 import parseDirectives from '../../src/markdown/directives/parse'
-import headingDivider from '../../src/markdown/heading_divider'
-import slide from '../../src/markdown/slide'
+import { headingDivider } from '../../src/markdown/heading_divider'
+import { slide } from '../../src/markdown/slide'
 
 describe('Marpit heading divider plugin', () => {
   const marpitStub = (headingDividerOption) => ({

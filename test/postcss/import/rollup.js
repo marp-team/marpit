@@ -1,6 +1,6 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
-import importRollup from '../../../src/postcss/import/rollup'
+import { importRollup } from '../../../src/postcss/import/rollup'
 
 describe('Marpit PostCSS import rollup plugin', () => {
   const run = (input) =>

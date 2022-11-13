@@ -1,15 +1,15 @@
 /** @module */
-import split from '../helpers/split'
-import wrapTokens from '../helpers/wrap_tokens'
+import { split } from '../helpers/split'
+import { wrapTokens } from '../helpers/wrap_tokens'
 import marpitPlugin from '../plugin'
 
 /**
  * Marpit Inline SVG plugin.
  *
- * @alias module:markdown/inline_svg
+ * @function inlineSVG
  * @param {MarkdownIt} md markdown-it instance.
  */
-function inlineSVG(md) {
+function _inlineSVG(md) {
   const { marpit } = md
 
   md.core.ruler.after(
@@ -64,4 +64,5 @@ function inlineSVG(md) {
   )
 }
 
-export default marpitPlugin(inlineSVG)
+export const inlineSVG = marpitPlugin(_inlineSVG)
+export default inlineSVG
