@@ -1,5 +1,8 @@
 <p align="center">
-  <a href="https://marpit.marp.app"><img src="https://github.com/marp-team/marpit/blob/main/docs/marpit.png?raw=true" alt="Marpit" width="500" /></a>
+  <a href="https://marpit.marp.app">
+    <img src="docs/marpit.png#gh-light-mode-only" alt="Marpit" width="500" />
+    <img src="docs/marpit-dark.png#gh-dark-mode-only" alt="Marpit" width="500" />
+  </a>
 </p>
 <p align="center">
   <strong>Marpit</strong>: Markdown slide deck framework
