@@ -40,16 +40,22 @@ Optionally `<svg>` element can use as the container of each slide page. It can b
 
 ### Installation
 
-We recommend using [yarn](https://yarnpkg.com/) to install.
+#### npm
+
+```bash
+npm install @marp-team/marpit
+```
+
+#### yarn
 
 ```bash
 yarn add @marp-team/marpit
 ```
 
-If you want to use npm, try this:
+#### pnpm
 
 ```bash
-npm install @marp-team/marpit --save
+pnpm add @marp-team/marpit
 ```
 
 ### How to use
