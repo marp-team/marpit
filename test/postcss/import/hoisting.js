@@ -1,10 +1,10 @@
 import dedent from 'dedent'
 import postcss from 'postcss'
-import { importRollup } from '../../../src/postcss/import/rollup'
+import { importHoisting } from '../../../src/postcss/import/hoisting'
 
-describe('Marpit PostCSS import rollup plugin', () => {
+describe('Marpit PostCSS import hoisting plugin', () => {
   const run = (input) =>
-    postcss([importRollup]).process(input, { from: undefined })
+    postcss([importHoisting]).process(input, { from: undefined })
 
   it('rolls up invalid @import rules', () => {
     const before = dedent`

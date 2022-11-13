@@ -1,8 +1,8 @@
 import postcss from 'postcss'
 import postcssPlugin from './helpers/postcss_plugin'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssImportHoisting from './postcss/import/hoisting'
 import postcssImportReplace from './postcss/import/replace'
-import postcssImportRollup from './postcss/import/rollup'
 import postcssImportSuppress from './postcss/import/suppress'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable, {
@@ -274,7 +274,7 @@ class ThemeSet {
           postcssPlugin('marpit-pack-after', () => (css) => {
             css.last.after(after)
           }),
-        postcssImportRollup,
+        postcssImportHoisting,
         postcssImportReplace(this),
         opts.printable &&
           postcssPrintable({
@@ -298,7 +298,7 @@ class ThemeSet {
         postcssRootIncreasingSpecificity,
         opts.printable && postcssPrintablePostProcess,
         postcssRem,
-        postcssImportRollup,
+        postcssImportHoisting,
       ].filter((p) => p)
     )
 
