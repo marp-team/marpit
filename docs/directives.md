@@ -237,6 +237,17 @@ This page will not update the page number, but rather keep the previous one.
 > Page 2 of 2
 ```
 
+To both exclude a page from pagination and hide the pagination at the same time use `hide-and-skip`:
+
+```markdown
+<!-- _paginate: hide-and-skip -->
+# Slide to exclude
+
+This page will not update the page number and also not show the pagination
+```
+
+This combines `paginate: false` and `paginate: skip`
+
 
 ### Header and footer
 

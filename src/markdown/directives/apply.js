@@ -38,7 +38,7 @@ function _apply(md, opts = {}) {
       let totalSkippedSlides = 0
       for (const token of state.tokens) {
         const { marpitDirectives } = token.meta || {}
-        if (marpitDirectives && marpitDirectives.paginate === 'skip') {
+        if (marpitDirectives && (marpitDirectives.paginate === 'skip' || marpitDirectives.paginate === 'hide-and-skip')) {
           totalSkippedSlides++
         }
       }
@@ -46,6 +46,7 @@ function _apply(md, opts = {}) {
       // keep track of slides that were skipped using one of the following
       // directives:
       // `paginate: skip`, `_paginate: skip`,
+      // `paginate: hide-and-skip`, or `_paginate: hide-and-skip
       let currentSkippedSlides = 0
 
       for (const token of state.tokens) {
@@ -99,12 +100,14 @@ function _apply(md, opts = {}) {
           }
 
           if (marpitDirectives.paginate) {
-            if (marpitDirectives.paginate === 'skip') {
+            if (marpitDirectives.paginate === 'skip' || marpitDirectives.paginate === 'hide-and-skip') {
               currentSkippedSlides++
             }
 
-            token.attrSet('data-marpit-pagination', marpitSlide - currentSkippedSlides + 1)
-            token.attrSet('data-marpit-pagination-total', marpitSlideTotal - totalSkippedSlides)
+            if (marpitDirectives.paginate !== 'hide-and-skip') {
+              token.attrSet('data-marpit-pagination', marpitSlide - currentSkippedSlides + 1)
+              token.attrSet('data-marpit-pagination-total', marpitSlideTotal - totalSkippedSlides)
+            }
           }
 
           if (marpitDirectives.header)
