@@ -214,6 +214,30 @@ _paginate: false
 ---
 ```
 
+You can exclude a page from pagination using `skip`:
+
+```markdown
+# Slide 1
+
+> Page 1 of 2
+
+---
+
+<!-- _paginate: skip -->
+# Slide to exclude
+
+This page will not update the page number, but rather keep the previous one.
+
+> Page 1 of 2
+
+---
+
+# Slide 2
+
+> Page 2 of 2
+```
+
+
 ### Header and footer
 
 When you have to be shown the same content across multiple slides like a title of the slide deck, you may use `header` or `footer` local directives.

@@ -34,6 +34,20 @@ function _apply(md, opts = {}) {
     (state) => {
       if (state.inlineMode) return
 
+      // compute the total number of skipped pages
+      let totalSkippedSlides = 0
+      for (const token of state.tokens) {
+        const { marpitDirectives } = token.meta || {}
+        if (marpitDirectives && marpitDirectives.paginate === 'skip') {
+          totalSkippedSlides++
+        }
+      }
+
+      // keep track of slides that were skipped using one of the following
+      // directives:
+      // `paginate: skip`, `_paginate: skip`,
+      let currentSkippedSlides = 0
+
       for (const token of state.tokens) {
         const { marpitDirectives, marpitSlide, marpitSlideTotal } =
           token.meta || {}
@@ -85,8 +99,12 @@ function _apply(md, opts = {}) {
           }
 
           if (marpitDirectives.paginate) {
-            token.attrSet('data-marpit-pagination', marpitSlide + 1)
-            token.attrSet('data-marpit-pagination-total', marpitSlideTotal)
+            if (marpitDirectives.paginate === 'skip') {
+              currentSkippedSlides++
+            }
+
+            token.attrSet('data-marpit-pagination', marpitSlide - currentSkippedSlides + 1)
+            token.attrSet('data-marpit-pagination-total', marpitSlideTotal - totalSkippedSlides)
           }
 
           if (marpitDirectives.header)

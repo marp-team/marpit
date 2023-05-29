@@ -219,9 +219,13 @@ describe('Marpit directives apply plugin', () => {
 
           # Slide 1
 
+          Pagination is not rendered
+
           ---
 
           ## Slide 2
+
+          Pagination is rendered (2 of 2)
         `
 
         const $ = load(mdForTest().render(paginateDirs))
@@ -229,8 +233,52 @@ describe('Marpit directives apply plugin', () => {
 
         expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
         expect(sections.eq(0).data('marpit-pagination-total')).toBeUndefined()
-        expect(sections.eq(1).data('marpit-pagination')).toBeTruthy()
+        expect(sections.eq(1).data('marpit-pagination')).toBe(2)
         expect(sections.eq(1).data('marpit-pagination-total')).toBe(2)
+      })
+    })
+
+    describe('Paginate with skipped slides', () => {
+      it('applies data-marpit-pagination attribute with a skipped slide', () => {
+        const paginateDirs = dedent`
+          ---
+          paginate: true
+          _paginate:
+          ---
+
+          # Slide 1
+
+          - Page is counted (1 of 2)
+          - Pagination is not rendered
+
+          ---
+
+          <!--
+          _paginate: skip
+          -->
+
+          ## Slide 2
+
+          - Page is not counted
+          - Pagination is rendered (1 of 2)
+
+          ---
+
+          ## Slide 3
+
+          - Page is counted
+          - Pagination is rendered (2 of 2)
+        `
+
+        const $ = load(mdForTest().render(paginateDirs))
+        const sections = $('section')
+
+        expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
+        expect(sections.eq(0).data('marpit-pagination-total')).toBeUndefined()
+        expect(sections.eq(1).data('marpit-pagination')).toBe(1)
+        expect(sections.eq(1).data('marpit-pagination-total')).toBe(2)
+        expect(sections.eq(2).data('marpit-pagination')).toBe(2)
+        expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
       })
     })
   })
