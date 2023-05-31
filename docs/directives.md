@@ -181,7 +181,7 @@ It is useful when you want to create a slide deck from a plain Markdown. Even if
 
 ### Pagination
 
-We support a pagination by the `paginate` local directive.
+We support pagination by the `paginate` local directive.
 
 ```markdown
 <!-- paginate: true -->
@@ -189,64 +189,83 @@ We support a pagination by the `paginate` local directive.
 You would be able to see a page number of slide in the lower right.
 ```
 
+#### Configuring pagination
+
+There are 2 things happening on each slide:
+- the page number is rendered *and*
+- the page number is being incremented.
+
+You can control both of these with the `paginate` directive:
+
+| `paginate` | Page number | Increment |
+| ---------- | ----------- | --------- |
+| `true`     | Show        | Yes       |
+| `false`    | Hide        | Yes       |
+| `hold`     | Show        | No        |
+| `skip`     | Hide        | No        |
+
 #### Skip pagination on title slide
 
-Simply you have to move a definition of `paginate` directive to an inside of a second page.
+A common use case is excluding the title slide from pagination.
+For this you simply have to define the `paginate` directive on the second page instead of the first.
 
 ```markdown
 # Title slide
 
-This page will not paginate by lack of `paginate` local directive.
+This page will not have pagination by lack of the `paginate` directive.
 
 ---
 
 <!-- paginate: true -->
 
-It will paginate slide from a this page.
+Pagination will render from this slide onwards (starting at 2).
 ```
 
-Or also can use the spot directive.
+Or you can use the spot directive.
 
 ```markdown
 ---
 paginate: true
-_paginate: false
+_paginate: false # or use `_paginate: skip`
 ---
 ```
 
-You can exclude a page from pagination using `skip`:
+#### `paginate: skip` and `paginate: hold`
+
+To both exclude a page from pagination and hide the pagination at the same time use `skip`:
 
 ```markdown
-# Slide 1
-
-> Page 1 of 2
-
----
-
 <!-- _paginate: skip -->
-# Slide to exclude
-
-This page will not update the page number, but rather keep the previous one.
-
-> Page 1 of 2
-
----
-
-# Slide 2
-
-> Page 2 of 2
-```
-
-To both exclude a page from pagination and hide the pagination at the same time use `hide-and-skip`:
-
-```markdown
-<!-- _paginate: hide-and-skip -->
 # Slide to exclude
 
 This page will not update the page number and also not show the pagination
 ```
 
-This combines `paginate: false` and `paginate: skip`
+You can exclude a page from pagination but keep the pagination visible using `hold`:
+
+```markdown
+---
+paginate: true
+---
+
+# Slide 1
+
+- bullet point 1
+
+> Page 1 of 1
+
+---
+<!-- _paginate: hold -->
+
+# Slide 2
+
+- bullet point 1
+- bullet point 2
+
+> Page 1 of 1
+```
+
+This is useful if you want to do "animations" by having multiple similar slides each only changing a little bit while keeping the same page number.
 
 
 ### Header and footer

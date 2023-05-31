@@ -239,7 +239,7 @@ describe('Marpit directives apply plugin', () => {
     })
 
     describe('Paginate with skipped slides', () => {
-      it('applies data-marpit-pagination attribute with a skipped slide', () => {
+      it('applies data-marpit-pagination attribute with a _paginate:hold slide', () => {
         const paginateDirs = dedent`
           ---
           paginate: true
@@ -254,7 +254,7 @@ describe('Marpit directives apply plugin', () => {
           ---
 
           <!--
-          _paginate: skip
+          _paginate: hold
           -->
 
           ## Slide 2
@@ -281,7 +281,7 @@ describe('Marpit directives apply plugin', () => {
         expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
       })
 
-      it('applies data-marpit-pagination attribute with a hidden skipped slide', () => {
+      it('applies data-marpit-pagination attribute with a _paginate:skip slide', () => {
         const paginateDirs = dedent`
           ---
           paginate: true
@@ -296,7 +296,7 @@ describe('Marpit directives apply plugin', () => {
           ---
 
           <!--
-          _paginate: hide-and-skip
+          _paginate: skip
           -->
 
           ## Slide 2
