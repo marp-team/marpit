@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Node.js LTS and dependent packages to the latest version ([#360](https://github.com/marp-team/marpit/pull/360))
+- New looks for Marpit API documentation ([#360](https://github.com/marp-team/marpit/pull/360))
+
 ## v2.4.2 - 2022-11-13
 
 ### Added

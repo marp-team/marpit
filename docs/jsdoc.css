@@ -1,0 +1,25 @@
+.sidebar-container,
+.mobile-sidebar-container {
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.sidebar-items-container {
+  margin-top: 2rem !important;
+}
+
+.sidebar-container *,
+.mobile-sidebar-container * {
+  border-radius: 0 !important;
+}
+
+section th,
+section td {
+  padding: 0.25rem 0.75rem !important;
+  font-size: 90%;
+}
+
+.attributes,
+.default {
+  word-break: break-word;
+}
