@@ -192,7 +192,8 @@ You would be able to see a page number of slide in the lower right.
 #### Configuring pagination
 
 There are 2 things happening on each slide:
-- the page number is rendered *and*
+
+- the page number is rendered _and_
 - the page number is being incremented.
 
 You can control both of these with the `paginate` directive:
@@ -236,6 +237,7 @@ To both exclude a page from pagination and hide the pagination at the same time 
 
 ```markdown
 <!-- _paginate: skip -->
+
 # Slide to exclude
 
 This page will not update the page number and also not show the pagination
@@ -255,6 +257,7 @@ paginate: true
 > Page 1 of 1
 
 ---
+
 <!-- _paginate: hold -->
 
 # Slide 2
