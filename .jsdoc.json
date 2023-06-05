@@ -3,7 +3,25 @@
     "destination": "jsdoc",
     "readme": "api.md",
     "recurse": true,
-    "template": "node_modules/minami"
+    "template": "node_modules/clean-jsdoc-theme",
+    "theme_opts": {
+      "default_theme": "light",
+      "homepageTitle": "Marpit API",
+      "title": "Marpit API",
+      "menu": [
+        {
+          "title": "&laquo; Marpit docs",
+          "link": "https://marpit.marp.app/",
+          "target": "_blank"
+        }
+      ],
+      "sections": ["Classes", "Modules"],
+      "displayModuleHeader": true,
+      "include_css": ["./docs/jsdoc.css"]
+    },
+    "markdown": {
+      "idInHeadings": true
+    }
   },
   "plugins": ["plugins/markdown"]
 }
