@@ -250,7 +250,7 @@ paginate: true
 
 # Slide 1
 
-- bullet point 1
+[](./assets/image_01.png)
 
 > Page 1 of 1
 
@@ -259,14 +259,10 @@ paginate: true
 
 # Slide 2
 
-- bullet point 1
-- bullet point 2
+[](./assets/image_02.png)
 
 > Page 1 of 1
 ```
-
-This is useful if you want to do "animations" by having multiple similar slides each only changing a little bit while keeping the same page number.
-
 
 ### Header and footer
 
