@@ -78,7 +78,11 @@ export const locals = Object.assign(Object.create(null), {
   color: (v) => ({ color: v }),
   footer: (v) => (typeof v === 'string' ? { footer: v } : {}),
   header: (v) => (typeof v === 'string' ? { header: v } : {}),
-  paginate: (v) => ({ paginate: (v || '').toLowerCase() === 'true' }),
+  paginate: (v) => ({
+    paginate: ['hold', 'skip'].includes(v)
+      ? v
+      : (v || '').toLowerCase() === 'true',
+  }),
 })
 
 export default [...Object.keys(globals), ...Object.keys(locals)]
