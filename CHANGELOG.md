@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.5.0 - 2023-06-06
+
 ### Added
 
 - `paginate: skip` and `paginate: hold` ([#218](https://github.com/marp-team/marpit/issues/218), [#359](https://github.com/marp-team/marpit/pull/359) by [@JannikWibker](https://github.com/JannikWibker))
