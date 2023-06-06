@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `paginate: skip` and `paginate: hold` ([#218](https://github.com/marp-team/marpit/issues/218), [#359](https://github.com/marp-team/marpit/pull/359) by [@JannikWibker](https://github.com/JannikWibker))
+
 ### Changed
 
 - Upgrade Node.js LTS and dependent packages to the latest version ([#360](https://github.com/marp-team/marpit/pull/360))
