@@ -1,4 +1,5 @@
 import { load } from 'cheerio'
+import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import { backgroundImage } from '../../src/markdown/background_image'
 import { comment } from '../../src/markdown/comment'
@@ -203,6 +204,33 @@ describe('Marpit background image plugin', () => {
       expect(figures).toHaveLength(2)
       expect(figures.eq(0).attr('style')).toBe('background-image:url("A");')
       expect(figures.eq(1).attr('style')).toBe('background-image:url("B");')
+    })
+
+    it('renders alternative text as <figcaption>, without Marpit specific keywords', () => {
+      const $ = $load(
+        mdSVG().render(dedent`
+          ![bg fit  The background image](A)
+          ![This is bg 20% w:40% xxxxx](B)
+          ![    bg      ](C)
+          ![bg <b>should <br /> escape</b>](D)
+        `),
+      )
+      const figures = $('figure')
+
+      expect(figures.eq(0).is(':has(figcaption)')).toBe(true)
+      expect(figures.eq(0).find('figcaption').text()).toBe(
+        'The background image',
+      )
+      expect(figures.eq(1).is(':has(figcaption)')).toBe(true)
+      expect(figures.eq(1).find('figcaption').text()).toBe('This is xxxxx')
+
+      // Ignore whitespaces
+      expect(figures.eq(2).is(':has(figcaption)')).toBe(false)
+
+      // XSS
+      expect(figures.eq(3).is(':has(figcaption)')).toBe(true)
+      expect(figures.eq(3).is(':has(b)')).toBe(false)
+      expect(figures.eq(3).is(':has(br)')).toBe(false)
     })
 
     it('assigns background-size style with resizing keyword / scale', () => {

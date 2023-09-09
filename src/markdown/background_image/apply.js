@@ -100,6 +100,7 @@ function _backgroundImageApply(md) {
                       })(),
                       url,
                       width,
+                      source: t,
                     },
                   ]
                 }

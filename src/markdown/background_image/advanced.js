@@ -99,6 +99,13 @@ function _advancedBackground(md) {
                           {
                             tag: 'figure',
                             style: style.toString(),
+                            open: {
+                              meta: {
+                                // For getting better alt text, we should store
+                                // the reference of the original image token.
+                                marpitBackgroundSource: img.source,
+                              },
+                            },
                           },
                         ),
                       )
@@ -155,6 +162,37 @@ function _advancedBackground(md) {
       state.tokens = newTokens
     },
   )
+
+  // Renderer for advanced background image
+  md.renderer.rules.marpit_advanced_background_image_open = (
+    tokens,
+    idx,
+    options,
+    env,
+    self,
+  ) => {
+    const token = tokens[idx]
+    const open = self.renderToken(tokens, idx, options)
+
+    if (token.meta && token.meta.marpitBackgroundSource) {
+      // Try to render figcaption for background image
+      // (Image token after parsed has text children without Marpit keywords)
+      const figcaption = self
+        .renderInlineAsText(
+          token.meta.marpitBackgroundSource.children,
+          options,
+          env,
+        )
+        .trim()
+
+      if (figcaption)
+        return `${open}<figcaption>${md.utils.escapeHtml(
+          figcaption,
+        )}</figcaption>`
+    }
+
+    return open
+  }
 }
 
 export const advancedBackground = marpitPlugin(_advancedBackground)
