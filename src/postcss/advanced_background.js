@@ -56,6 +56,18 @@ section[data-marpit-advanced-background="background"] > div[data-marpit-advanced
   margin: 0;
 }
 
+section[data-marpit-advanced-background="background"] > div[data-marpit-advanced-background-container] > figure > figcaption {
+	position: absolute;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  white-space: nowrap;
+  width: 1px;
+}
+
 section[data-marpit-advanced-background="content"],
 section[data-marpit-advanced-background="pseudo"] {
   background: transparent !important;
