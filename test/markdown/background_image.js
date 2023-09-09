@@ -212,6 +212,7 @@ describe('Marpit background image plugin', () => {
           ![bg fit  The background image](A)
           ![This is bg 20% w:40% xxxxx](B)
           ![    bg      ](C)
+          ![bg <b>should <br /> escape</b>](D)
         `),
       )
       const figures = $('figure')
@@ -222,7 +223,14 @@ describe('Marpit background image plugin', () => {
       )
       expect(figures.eq(1).is(':has(figcaption)')).toBe(true)
       expect(figures.eq(1).find('figcaption').text()).toBe('This is xxxxx')
+
+      // Ignore whitespaces
       expect(figures.eq(2).is(':has(figcaption)')).toBe(false)
+
+      // XSS
+      expect(figures.eq(3).is(':has(figcaption)')).toBe(true)
+      expect(figures.eq(3).is(':has(b)')).toBe(false)
+      expect(figures.eq(3).is(':has(br)')).toBe(false)
     })
 
     it('assigns background-size style with resizing keyword / scale', () => {
