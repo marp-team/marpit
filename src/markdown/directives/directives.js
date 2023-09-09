@@ -67,6 +67,8 @@ export const globals = Object.assign(Object.create(null), {
  * @prop {Directive} header Specify the content of slide header. It will insert
  *     a `<header>` element to the first of each slide contents.
  * @prop {Directive} paginate Show page number on the slide if you set `true`.
+ *     `hold` and `skip` are also available to disable increment of the page
+ *     number.
  */
 export const locals = Object.assign(Object.create(null), {
   backgroundColor: (v) => ({ backgroundColor: v }),
@@ -78,11 +80,13 @@ export const locals = Object.assign(Object.create(null), {
   color: (v) => ({ color: v }),
   footer: (v) => (typeof v === 'string' ? { footer: v } : {}),
   header: (v) => (typeof v === 'string' ? { header: v } : {}),
-  paginate: (v) => ({
-    paginate: ['hold', 'skip'].includes(v)
-      ? v
-      : (v || '').toLowerCase() === 'true',
-  }),
+  paginate: (v) => {
+    const normalized = (v || '').toLowerCase()
+
+    if (['hold', 'skip'].includes(normalized)) return { paginate: normalized }
+
+    return { paginate: normalized === 'true' }
+  },
 })
 
 export default [...Object.keys(globals), ...Object.keys(locals)]
