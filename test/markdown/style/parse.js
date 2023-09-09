@@ -65,7 +65,9 @@ describe('Marpit style parse plugin', () => {
 
         it('parses scoped attribute with another attribute', () => {
           const [token] = pickStyles(
-            markdown.parse(`<style id="foobar" scoped type='text/css'></style>`)
+            markdown.parse(
+              `<style id="foobar" scoped type='text/css'></style>`,
+            ),
           )
           expect(token.meta.marpitStyleScoped).toBe(true)
         })

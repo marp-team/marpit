@@ -86,7 +86,7 @@ describe('Marpit collect plugin', () => {
     expect(original).toBe(
       marpit.lastSlideTokens
         .map((tokens) => markdownIt.renderer.render(tokens, markdownIt.options))
-        .join('')
+        .join(''),
     )
   })
 
@@ -103,7 +103,7 @@ describe('Marpit collect plugin', () => {
     ])
     expect(lastComments[1]).toStrictEqual([
       expect.stringContaining(
-        'Comment would collect if yaml has only invalid directive'
+        'Comment would collect if yaml has only invalid directive',
       ),
     ])
     expect(lastComments[2]).toHaveLength(0)
@@ -128,7 +128,7 @@ describe('Marpit collect plugin', () => {
                     if (t.content === 'inline comment') markAsParsed(t, 'test')
                 }
               }
-            }
+            },
           )
         })
         .render(text)
@@ -157,7 +157,7 @@ describe('Marpit collect plugin', () => {
           <!--  prettier-ignore-start  -->
           <!-- test -->
           <!--prettier-ignore-end-->
-        `)
+        `),
       ).toHaveLength(1)
 
       // markdownlint
@@ -166,7 +166,7 @@ describe('Marpit collect plugin', () => {
           <!-- markdownlint-disable no-space-in-emphasis -->
           deliberate space * in * emphasis
           <!-- markdownlint-enable no-space-in-emphasis -->
-        `)
+        `),
       ).toHaveLength(0)
       expect(
         comments(dedent`
@@ -174,7 +174,7 @@ describe('Marpit collect plugin', () => {
           <!-- markdownlint-disable -->
           any violations you want
           <!-- markdownlint-restore -->
-        `)
+        `),
       ).toHaveLength(0)
 
       // remark-lint (remark-message-control)
@@ -189,7 +189,7 @@ describe('Marpit collect plugin', () => {
           ## Hello
 
           <!-- lint enable no-duplicate-headings -->
-        `)
+        `),
       ).toHaveLength(0)
       expect(
         comments(dedent`
@@ -197,7 +197,7 @@ describe('Marpit collect plugin', () => {
 
           *   **foo**
             * __bar__
-        `)
+        `),
       ).toHaveLength(0)
     })
   })

@@ -93,7 +93,7 @@ function _apply(md, opts = {}) {
             if (marpitDirectives.backgroundPosition)
               style.set(
                 'background-position',
-                marpitDirectives.backgroundPosition
+                marpitDirectives.backgroundPosition,
               )
 
             if (marpitDirectives.backgroundRepeat)
@@ -114,11 +114,11 @@ function _apply(md, opts = {}) {
             if (marpitDirectives.paginate !== 'skip') {
               token.attrSet(
                 'data-marpit-pagination',
-                marpitSlide - currentSkippedSlides + 1
+                marpitSlide - currentSkippedSlides + 1,
               )
               token.attrSet(
                 'data-marpit-pagination-total',
-                marpitSlideTotal - totalSkippedSlides
+                marpitSlideTotal - totalSkippedSlides,
               )
             }
           }
@@ -133,7 +133,7 @@ function _apply(md, opts = {}) {
           if (styleStr !== '') token.attrSet('style', styleStr)
         }
       }
-    }
+    },
   )
 }
 

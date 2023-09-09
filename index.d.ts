@@ -35,7 +35,7 @@ declare namespace Marpit {
   type DirectiveDefinitions = {
     [directive: string]: (
       value: string | object | (string | object)[],
-      marpit?: Marpit
+      marpit?: Marpit,
     ) => { [meta: string]: any }
   }
 
@@ -66,7 +66,7 @@ declare namespace Marpit {
   }
 
   type PluginFactory = <P extends any[]>(
-    plugin: Plugin<P, { marpit: Marpit }>
+    plugin: Plugin<P, { marpit: Marpit }>,
   ) => Plugin<P, { marpit: Marpit }>
 
   export class Marpit {
@@ -139,7 +139,7 @@ declare namespace Marpit {
     get(name: string, fallback?: boolean): Theme | undefined
     getThemeMeta(
       theme: string | Theme,
-      meta: string
+      meta: string,
     ): string | string[] | undefined
     getThemeProp(theme: string | Theme, prop: string): any
     has(name: string): boolean

@@ -30,7 +30,7 @@ describe('Plugin interface', () => {
     const plugin = marpitPlugin(jest.fn())
 
     expect(() => new markdownIt().use(plugin)).toThrowError(
-      'Marpit plugin has detected incompatible markdown-it instance.'
+      'Marpit plugin has detected incompatible markdown-it instance.',
     )
   })
 })

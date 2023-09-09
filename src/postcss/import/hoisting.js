@@ -41,7 +41,7 @@ export const importHoisting = postcssPlugin(
 
         first.before(prependRule)
       })
-  }
+  },
 )
 
 export default importHoisting

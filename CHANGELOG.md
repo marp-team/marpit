@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Node.js and dependent packages to the latest version ([#369](https://github.com/marp-team/marpit/pull/369))
+
 ## v2.5.0 - 2023-06-06
 
 ### Added

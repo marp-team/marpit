@@ -25,7 +25,7 @@ describe('Theme', () => {
 
       it('throws error', () =>
         expect(() => Theme.fromCSS(css)).toThrow(
-          'Marpit theme CSS requires @theme meta.'
+          'Marpit theme CSS requires @theme meta.',
         ))
 
       context('with specified internal symbol for skipping validation', () => {
@@ -102,7 +102,7 @@ describe('Theme', () => {
              * @unknown B
              */
           `,
-          { metaType: { string: String, array: Array } }
+          { metaType: { string: String, array: Array } },
         )
 
         expect(instance.meta.string).toBe('B')
@@ -118,7 +118,7 @@ describe('Theme', () => {
              * @theme B
              */
           `,
-          { metaType: { theme: Array } }
+          { metaType: { theme: Array } },
         )
 
         expect(instance.meta.theme).toStrictEqual('B')

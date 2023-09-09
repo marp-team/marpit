@@ -14,7 +14,7 @@ describe('Marpit PostCSS SVG backdrop plugin', () => {
       expect(redirected.name).toBe('media')
       expect(redirected.params).toBe('screen')
       expect(redirected.nodes.toString()).toMatchInlineSnapshot(
-        `":marpit-container > svg[data-marpit-svg] { background: white; }"`
+        `":marpit-container > svg[data-marpit-svg] { background: white; }"`,
       )
     }))
 })

@@ -32,7 +32,7 @@ export const importReplace = (themeSet, importedThemes = []) =>
                 if (theme) {
                   if (importedThemes.includes(name))
                     throw new Error(
-                      `Circular "${name}" theme import is detected.`
+                      `Circular "${name}" theme import is detected.`,
                     )
 
                   const processed = postcss([
@@ -50,7 +50,7 @@ export const importReplace = (themeSet, importedThemes = []) =>
             })
 
             for (const root of prepends) css.first.before(root)
-          }
+          },
       )(),
     ],
   }))

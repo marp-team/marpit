@@ -44,7 +44,7 @@ function _advancedBackground(md) {
 
             t.attrSet(
               'width',
-              `${100 - Number.parseFloat(splitBgSize.slice(0, -1))}%`
+              `${100 - Number.parseFloat(splitBgSize.slice(0, -1))}%`,
             )
 
             if (splitSide === 'left') t.attrSet('x', splitBgSize)
@@ -99,17 +99,17 @@ function _advancedBackground(md) {
                           {
                             tag: 'figure',
                             style: style.toString(),
-                          }
-                        )
+                          },
+                        ),
                       )
                     }
 
                     return imageTokens
-                  })()
-                )
-              )
+                  })(),
+                ),
+              ),
             ),
-            t
+            t,
           )
         } else if (current && t.type === 'marpit_inline_svg_content_close') {
           const { open, height, width } = current.meta.marpitBackground
@@ -142,8 +142,8 @@ function _advancedBackground(md) {
                 id: undefined,
                 style: style.toString(),
                 'data-marpit-advanced-background': 'pseudo',
-              })
-            )
+              }),
+            ),
           )
 
           current = undefined
@@ -153,7 +153,7 @@ function _advancedBackground(md) {
       }
 
       state.tokens = newTokens
-    }
+    },
   )
 }
 

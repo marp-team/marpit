@@ -121,7 +121,7 @@ describe('Marpit directives parse plugin', () => {
       const parsed = md().parse(text)
       const [first, second, third] = parsed.reduce(
         (arr, t) => (t.type === 'marpit_slide_open' ? [...arr, t] : arr),
-        []
+        [],
       )
 
       expect(first.meta.marpitDirectives).toStrictEqual({})
@@ -143,14 +143,14 @@ describe('Marpit directives parse plugin', () => {
           const parsed = md().parse(text)
           const [first, second, third] = parsed.reduce(
             (arr, t) => (t.type === 'marpit_slide_open' ? [...arr, t] : arr),
-            []
+            [],
           )
 
           expect(first.meta.marpitDirectives).toStrictEqual({})
           expect(second.meta.marpitDirectives).toStrictEqual({ class: 'test' })
           expect(third.meta.marpitDirectives).toStrictEqual({})
         })
-      }
+      },
     )
 
     context('with class directive', () => {
@@ -159,7 +159,7 @@ describe('Marpit directives parse plugin', () => {
       it('supports class definition by array', () => {
         const flatParsed = md().parse('<!-- class: ["one", "two", "three"] -->')
         const [flatOpen] = flatParsed.filter(
-          (t) => t.type === 'marpit_slide_open'
+          (t) => t.type === 'marpit_slide_open',
         )
         expect(flatOpen.meta.marpitDirectives).toMatchObject(expected)
 
@@ -172,7 +172,7 @@ describe('Marpit directives parse plugin', () => {
           ---
         `)
         const [multilineOpen] = multilineParsed.filter(
-          (t) => t.type === 'marpit_slide_open'
+          (t) => t.type === 'marpit_slide_open',
         )
         expect(multilineOpen.meta.marpitDirectives).toMatchObject(expected)
       })

@@ -25,7 +25,7 @@ export const importSuppress = postcssPlugin(
         })
       })(),
     ],
-  })
+  }),
 )
 
 export default importSuppress

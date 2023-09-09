@@ -20,8 +20,8 @@ export const pagination = postcssPlugin(
       if (
         rule.selectors.some((selector) =>
           /^section(?![\w-])[^\s>+~]*::?after$/.test(
-            selector.replace(/\[.*?\]/g, '')
-          )
+            selector.replace(/\[.*?\]/g, ''),
+          ),
         )
       )
         rule.walkDecls('content', (decl) => {
@@ -29,7 +29,7 @@ export const pagination = postcssPlugin(
             decl.replaceWith(`${decl.raw('before')}/* ${decl.toString()}; */`)
         })
     })
-  }
+  },
 )
 
 export default pagination

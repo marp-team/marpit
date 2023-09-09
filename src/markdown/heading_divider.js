@@ -21,7 +21,7 @@ function _headingDivider(md) {
       marpit.lastGlobalDirectives &&
       Object.prototype.hasOwnProperty.call(
         marpit.lastGlobalDirectives,
-        'headingDivider'
+        'headingDivider',
       )
     )
       target = marpit.lastGlobalDirectives.headingDivider

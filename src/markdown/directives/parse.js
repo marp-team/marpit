@@ -57,7 +57,7 @@ function _parse(md, opts = {}) {
               ...Object.keys(marpit.customDirectives.global),
               ...Object.keys(marpit.customDirectives.local),
             ]
-          : false
+          : false,
       )
       if (parsed !== false) frontMatterObject.yaml = parsed
     })
@@ -84,7 +84,7 @@ function _parse(md, opts = {}) {
             ...globalDirectives,
             ...applyBuiltinDirectives(
               marpit.customDirectives.global[key](obj[key], marpit),
-              directives.globals
+              directives.globals,
             ),
           }
         }
@@ -138,7 +138,7 @@ function _parse(md, opts = {}) {
             ...cursor.local,
             ...applyBuiltinDirectives(
               marpit.customDirectives.local[key](obj[key], marpit),
-              directives.locals
+              directives.locals,
             ),
           }
         }
@@ -160,7 +160,7 @@ function _parse(md, opts = {}) {
               ...cursor.spot,
               ...applyBuiltinDirectives(
                 marpit.customDirectives.local[spotKey](obj[key], marpit),
-                directives.locals
+                directives.locals,
               ),
             }
           }

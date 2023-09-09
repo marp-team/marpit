@@ -23,7 +23,7 @@ function _container(md) {
         state.Token,
         'marpit_containers',
         cont,
-        state.tokens
+        state.tokens,
       )
   })
 }

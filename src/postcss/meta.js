@@ -34,7 +34,7 @@ export const meta = postcssPlugin(
             }
           })
       })
-    }
+    },
 )
 
 export default meta

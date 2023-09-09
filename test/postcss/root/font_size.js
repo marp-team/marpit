@@ -21,19 +21,19 @@ describe('CSS variable injection', () => {
 
     // With combinator
     expect(run('section.klass { font-size: 16px; }').css).toContain(
-      `section.klass { ${rootFontSizeCustomProp}: 16px; }`
+      `section.klass { ${rootFontSizeCustomProp}: 16px; }`,
     )
     expect(run('section#id { font-size: 16px; }').css).toContain(
-      `section#id { ${rootFontSizeCustomProp}: 16px; }`
+      `section#id { ${rootFontSizeCustomProp}: 16px; }`,
     )
     expect(run('section[data-header] { font-size: 16px; }').css).toContain(
-      `section[data-header] { ${rootFontSizeCustomProp}: 16px; }`
+      `section[data-header] { ${rootFontSizeCustomProp}: 16px; }`,
     )
     expect(run('section:hover { font-size: 16px; }').css).toContain(
-      `section:hover { ${rootFontSizeCustomProp}: 16px; }`
+      `section:hover { ${rootFontSizeCustomProp}: 16px; }`,
     )
     expect(run('section::after { font-size: 16px; }').css).toContain(
-      `section::after { ${rootFontSizeCustomProp}: 16px; }`
+      `section::after { ${rootFontSizeCustomProp}: 16px; }`,
     )
 
     // Universal selector in modularized transform (explicit and implicit)
@@ -57,7 +57,7 @@ describe('CSS variable injection', () => {
       section>section { ${rootFontSizeCustomProp}: 16px; }
     `
     expect(runWithModularize('section>section { font-size: 16px; }').css).toBe(
-      nested
+      nested,
     )
   })
 
@@ -69,7 +69,7 @@ describe('CSS variable injection', () => {
           font-size: 1rem;
           font-size: 18px !important;
         }
-      `).css
+      `).css,
     ).toBe(dedent`
       section {
         font-size: 16px;

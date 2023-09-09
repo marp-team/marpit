@@ -15,7 +15,7 @@ describe('Marpit heading divider plugin', () => {
 
   const pickHrAndHeading = (tokens) =>
     tokens.filter(
-      (t, idx) => t.type === 'hr' || (idx > 0 && tokens[idx - 1].type === 'hr')
+      (t, idx) => t.type === 'hr' || (idx > 0 && tokens[idx - 1].type === 'hr'),
     )
 
   describe('Constructor option', () => {
@@ -106,7 +106,7 @@ describe('Marpit heading divider plugin', () => {
       it('maps corresponded line of slide to heading', () => {
         const tokens = mdWithSlide(marpitStub(4)).parse(markdownText)
         const [first, second, third, fourth] = tokens.filter(
-          (t) => t.type === 'marpit_slide_open'
+          (t) => t.type === 'marpit_slide_open',
         )
 
         expect(first.map).toStrictEqual([0, 1])
@@ -131,7 +131,7 @@ describe('Marpit heading divider plugin', () => {
       marpitInstance = {
         customDirectives: { global: {}, local: {} },
         options: {},
-      }
+      },
     ) => {
       const instance = new MarkdownIt('commonmark')
       instance.marpit = marpitInstance
@@ -189,7 +189,7 @@ describe('Marpit heading divider plugin', () => {
           expect(hrAndHeadings[3].type).toBe('heading_open')
           expect(hrAndHeadings[3].tag).toBe('h4')
         })
-      }
+      },
     )
 
     context('with headingDivider constructor option', () => {

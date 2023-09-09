@@ -24,7 +24,7 @@ export const pseudoSelectorPrepend = postcssPlugin(
 
         return `:marpit-container > :marpit-slide ${selector}`
       })
-    })
+    }),
 )
 
 export default pseudoSelectorPrepend

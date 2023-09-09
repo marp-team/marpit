@@ -207,7 +207,7 @@ class ThemeSet {
       : []
 
     return [...props, this.default && this.default[prop], scaffold[prop]].find(
-      (t) => t
+      (t) => t,
     )
   }
 
@@ -268,7 +268,7 @@ class ThemeSet {
         before &&
           postcssPlugin(
             'marpit-pack-before',
-            () => (css) => css.first.before(before)
+            () => (css) => css.first.before(before),
           ),
         after &&
           postcssPlugin('marpit-pack-after', () => (css) => {
@@ -284,7 +284,7 @@ class ThemeSet {
         theme !== scaffold &&
           postcssPlugin(
             'marpit-pack-scaffold',
-            () => (css) => css.first.before(scaffold.css)
+            () => (css) => css.first.before(scaffold.css),
           ),
         inlineSVGOpts.enabled && postcssAdvancedBackground,
         inlineSVGOpts.enabled &&
@@ -299,7 +299,7 @@ class ThemeSet {
         opts.printable && postcssPrintablePostProcess,
         postcssRem,
         postcssImportHoisting,
-      ].filter((p) => p)
+      ].filter((p) => p),
     )
 
     return packer.process(theme.css).css
@@ -338,8 +338,8 @@ class ThemeSet {
         resolvedThemes.push(
           ...this.resolveImport(
             importTheme,
-            [...importedThemes, name].filter((n) => n)
-          )
+            [...importedThemes, name].filter((n) => n),
+          ),
         )
     })
 

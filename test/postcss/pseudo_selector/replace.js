@@ -52,7 +52,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div')
 
         return run(css, container).then((result) =>
-          expect(result.root.first.selector).toBe('div > section')
+          expect(result.root.first.selector).toBe('div > section'),
         )
       })
     })
@@ -62,7 +62,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const containers = [new Element('div'), new Element('span')]
 
         return run(css, containers).then((result) =>
-          expect(result.root.first.selector).toBe('div > span > section')
+          expect(result.root.first.selector).toBe('div > span > section'),
         )
       })
 
@@ -75,8 +75,8 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, containers).then((result) =>
           expect(result.root.first.selector).toBe(
-            'marp\\.custom-element > emotion-\\1F60D > section'
-          )
+            'marp\\.custom-element > emotion-\\1F60D > section',
+          ),
         )
       })
     })
@@ -86,7 +86,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { class: 'foo bar' })
 
         return run(css, container).then((result) =>
-          expect(result.root.first.selector).toBe('div.foo.bar > section')
+          expect(result.root.first.selector).toBe('div.foo.bar > section'),
         )
       })
 
@@ -94,7 +94,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { class: 'one two one' })
 
         return run(css, container).then((result) =>
-          expect(result.root.first.selector).toBe('div.one.two > section')
+          expect(result.root.first.selector).toBe('div.one.two > section'),
         )
       })
 
@@ -103,8 +103,8 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe(
-            'div.\\31 23.\\.foo\\.bar.\\#test > section'
-          )
+            'div.\\31 23.\\.foo\\.bar.\\#test > section',
+          ),
         )
       })
     })
@@ -114,7 +114,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { id: 'identifier' })
 
         return run(css, container).then((result) =>
-          expect(result.root.first.selector).toBe('div#identifier > section')
+          expect(result.root.first.selector).toBe('div#identifier > section'),
         )
       })
 
@@ -122,7 +122,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { class: 'one two', id: 'id' })
 
         return run(css, container).then((result) =>
-          expect(result.root.first.selector).toBe('div.one.two#id > section')
+          expect(result.root.first.selector).toBe('div.one.two#id > section'),
         )
       })
 
@@ -131,8 +131,8 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, container).then((result) =>
           expect(result.root.first.selector).toBe(
-            'div#\\30 123\\<\\#\\>4567 > section'
-          )
+            'div#\\30 123\\<\\#\\>4567 > section',
+          ),
         )
       })
     })
@@ -144,7 +144,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
     context('when slide element is null', () => {
       it('remove pseudo elements', () =>
         run(css, undefined, null).then((result) =>
-          expect(result.root.first.selector).toBe('h1')
+          expect(result.root.first.selector).toBe('h1'),
         ))
     })
 
@@ -153,7 +153,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div')
 
         return run(css, undefined, container).then((result) =>
-          expect(result.root.first.selector).toBe('div h1')
+          expect(result.root.first.selector).toBe('div h1'),
         )
       })
     })
@@ -163,7 +163,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const containers = [new Element('svg'), new Element('foreignObject')]
 
         return run(css, undefined, containers).then((result) =>
-          expect(result.root.first.selector).toBe('svg > foreignObject h1')
+          expect(result.root.first.selector).toBe('svg > foreignObject h1'),
         )
       })
 
@@ -175,8 +175,8 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, containers).then((result) =>
           expect(result.root.first.selector).toBe(
-            'marp\\.custom-element > emotion-\\1F60D h1'
-          )
+            'marp\\.custom-element > emotion-\\1F60D h1',
+          ),
         )
       })
     })
@@ -186,7 +186,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { class: 'foo bar' })
 
         return run(css, undefined, container).then((result) =>
-          expect(result.root.first.selector).toBe('div.foo.bar h1')
+          expect(result.root.first.selector).toBe('div.foo.bar h1'),
         )
       })
 
@@ -194,7 +194,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { class: 'one two one' })
 
         return run(css, undefined, container).then((result) =>
-          expect(result.root.first.selector).toBe('div.one.two h1')
+          expect(result.root.first.selector).toBe('div.one.two h1'),
         )
       })
 
@@ -203,8 +203,8 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe(
-            'div.\\31 23.\\.foo\\.bar.\\#test h1'
-          )
+            'div.\\31 23.\\.foo\\.bar.\\#test h1',
+          ),
         )
       })
     })
@@ -214,7 +214,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { id: 'identifier' })
 
         return run(css, undefined, container).then((result) =>
-          expect(result.root.first.selector).toBe('div#identifier h1')
+          expect(result.root.first.selector).toBe('div#identifier h1'),
         )
       })
 
@@ -222,7 +222,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         const container = new Element('div', { class: 'one two', id: 'id' })
 
         return run(css, undefined, container).then((result) =>
-          expect(result.root.first.selector).toBe('div.one.two#id h1')
+          expect(result.root.first.selector).toBe('div.one.two#id h1'),
         )
       })
 
@@ -231,8 +231,8 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
 
         return run(css, undefined, container).then((result) =>
           expect(result.root.first.selector).toBe(
-            'div#\\30 123\\<\\#\\>4567 h1'
-          )
+            'div#\\30 123\\<\\#\\>4567 h1',
+          ),
         )
       })
     })

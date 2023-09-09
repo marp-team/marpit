@@ -30,7 +30,7 @@ function _inlineSVG(md) {
       for (const tokens of split(
         state.tokens,
         (t) => t.meta && t.meta.marpitSlideElement === 1,
-        true
+        true,
       )) {
         if (tokens.length > 0) {
           for (const t of tokens)
@@ -52,15 +52,15 @@ function _inlineSVG(md) {
                 state.Token,
                 'marpit_inline_svg_content',
                 { tag: 'foreignObject', width: w, height: h },
-                tokens
-              )
-            )
+                tokens,
+              ),
+            ),
           )
         }
       }
 
       state.tokens = newTokens
-    }
+    },
   )
 }
 

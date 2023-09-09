@@ -71,7 +71,7 @@ function _backgroundImageParse(md) {
           }
         }
       }
-    }
+    },
   )
 }
 

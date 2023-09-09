@@ -54,7 +54,7 @@ export const svgBackdrop = postcssPlugin(
         if (target === 'section' || target === '') {
           const delimiter = selector.slice(delimiterMatched.index, -10)
           injectSelectors.add(
-            `:marpit-container > svg[data-marpit-svg]${delimiter}`
+            `:marpit-container > svg[data-marpit-svg]${delimiter}`,
           )
         }
       }
@@ -71,11 +71,11 @@ export const svgBackdrop = postcssPlugin(
                 nodes: rule.nodes,
               }),
             ],
-          })
+          }),
         )
       }
     })
-  }
+  },
 )
 
 export default svgBackdrop

@@ -19,10 +19,10 @@ export const rootReplace = postcssPlugin(
         rule.selectors = rule.selectors.map((selector) =>
           selector.replace(
             /(^|[\s>+~(])(?:section)?:root\b/g,
-            (_, s) => `${s}section${pseudoClass || ''}`
-          )
+            (_, s) => `${s}section${pseudoClass || ''}`,
+          ),
         )
-      })
+      }),
 )
 
 export default rootReplace

@@ -36,7 +36,7 @@ function _headerAndFooter(md) {
           state.Token,
           `marpit_${tag}`,
           { tag, close: { block: true } },
-          getParsed(markdown)
+          getParsed(markdown),
         )
 
       let current
@@ -49,12 +49,12 @@ function _headerAndFooter(md) {
 
           if (current.meta && current.meta.marpitHeader)
             newTokens.push(
-              ...createMarginalTokens('header', current.meta.marpitHeader)
+              ...createMarginalTokens('header', current.meta.marpitHeader),
             )
         } else if (token.type === 'marpit_slide_close') {
           if (current.meta && current.meta.marpitFooter)
             newTokens.push(
-              ...createMarginalTokens('footer', current.meta.marpitFooter)
+              ...createMarginalTokens('footer', current.meta.marpitFooter),
             )
 
           newTokens.push(token)
@@ -64,7 +64,7 @@ function _headerAndFooter(md) {
       }
 
       state.tokens = newTokens
-    }
+    },
   )
 }
 

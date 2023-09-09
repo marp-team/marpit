@@ -36,7 +36,7 @@ describe('Marpit image plugin', () => {
 
     context('with header image via directive', () => {
       const tokens = md().parse(
-        '<!-- header: "![](header.png)" -->\n\n![](content.png)'
+        '<!-- header: "![](header.png)" -->\n\n![](content.png)',
       )
 
       it('uses primitive string as src attribute for all images', () => {
@@ -101,7 +101,7 @@ describe('Marpit image plugin', () => {
 
     it('removes recognized Marpit keywords from alt attribute of the output image', () => {
       const output = md().render(
-        `![w:100px \t This is  example\timage \t h:200px](https://example.com/test.jpg)`
+        `![w:100px \t This is  example\timage \t h:200px](https://example.com/test.jpg)`,
       )
       const $ = load(output)
 
@@ -123,7 +123,7 @@ describe('Marpit image plugin', () => {
       expect(colorDirective(colorMd('currentColor'))).toBe('currentColor')
       expect(colorDirective(colorMd('rgb(255,128,0)'))).toBe('rgb(255,128,0)')
       expect(colorDirective(colorMd('rgba(16,32,64,0.5)'))).toBe(
-        'rgba(16,32,64,0.5)'
+        'rgba(16,32,64,0.5)',
       )
     })
 

@@ -12,7 +12,7 @@ export const sectionSize = postcssPlugin(
   'marpit-postcss-section-size',
   ({ preferedPseudoClass } = {}) => {
     const rootSectionMatcher = new RegExp(
-      `^section${preferedPseudoClass ? `(${preferedPseudoClass})?` : ''}$`
+      `^section${preferedPseudoClass ? `(${preferedPseudoClass})?` : ''}$`,
     )
 
     return (css, { result }) => {
@@ -53,7 +53,7 @@ export const sectionSize = postcssPlugin(
       if (width) result.marpitSectionSize.width = width
       if (height) result.marpitSectionSize.height = height
     }
-  }
+  },
 )
 
 export default sectionSize

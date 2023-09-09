@@ -112,7 +112,7 @@ describe('Marpit', () => {
 
         // Local directive (Alias + internal meta)
         const [localFirst, , , localSecond] = marpit.markdown.parse(
-          '<!-- test: local -->\n***\n<!-- _test: spot -->'
+          '<!-- test: local -->\n***\n<!-- _test: spot -->',
         )
         expect(localFirst.meta.marpitDirectives).toStrictEqual({
           test: 'local',
@@ -177,7 +177,7 @@ describe('Marpit', () => {
         expect(opts.containers[0].tag).toBe('div')
         expect(opts.containers[0].class).toBe('marpit')
         expect(opts.inlineSVG).toStrictEqual(
-          expect.objectContaining({ enabled: false })
+          expect.objectContaining({ enabled: false }),
         )
         expect(opts.printable).toBe(true)
         return 'CSS'
@@ -200,7 +200,7 @@ describe('Marpit', () => {
         expect(render).toBeCalledWith(
           expect.any(Array),
           instance.markdown.options,
-          { env: 'env' }
+          { env: 'env' },
         )
       })
 
@@ -283,7 +283,7 @@ describe('Marpit', () => {
         return findBackdropRules(css).then((rules) => {
           expect(rules).toHaveLength(2)
           expect(
-            rules.find((r) => r.selector.endsWith('svg[data-marpit-svg]'))
+            rules.find((r) => r.selector.endsWith('svg[data-marpit-svg]')),
           ).toBeTruthy()
         })
       })
@@ -313,14 +313,14 @@ describe('Marpit', () => {
         () => {
           it('does not redirects ::backdrop selector to container SVG', () => {
             const { css } = instance({ backdropSelector: false }).render(
-              backdropStyle
+              backdropStyle,
             )
 
             return findBackdropRules(css).then((rules) => {
               expect(rules).toHaveLength(1)
             })
           })
-        }
+        },
       )
     })
 
@@ -333,7 +333,7 @@ describe('Marpit', () => {
           .then((ret) =>
             ret.root.walkDecls('background-image', (decl) => {
               expect(decl.value).toBe('url("test")')
-            })
+            }),
           )
       })
     })
@@ -397,7 +397,7 @@ describe('Marpit', () => {
 
         expect($('style')).toHaveLength(0)
         expect(rendered.css.trim().endsWith('{ --style: appended; }')).toBe(
-          true
+          true,
         )
         expect(rendered.css).toContain('/* @import "valid-theme"; */')
       })
@@ -411,7 +411,7 @@ describe('Marpit', () => {
 
           expect(css).toContain('[data-marpit-scope-')
           expect(Object.keys($('section').attr())).toContainEqual(
-            expect.stringMatching(/^data-marpit-scope-/)
+            expect.stringMatching(/^data-marpit-scope-/),
           )
         })
       })
@@ -517,7 +517,7 @@ describe('Marpit', () => {
       instance.themeSet.add('/* @theme test */ :root { background: red; }')
 
       expect(instance.renderStyle('test')).toContain(
-        'div.marpit > :where(section)'
+        'div.marpit > :where(section)',
       )
     })
   })

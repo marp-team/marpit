@@ -39,7 +39,7 @@ describe('Marpit directives apply plugin', () => {
               token.meta.marpitDirectives.unknownDir = 'directive'
             }
           })
-        }
+        },
       )
     })
 
@@ -203,7 +203,7 @@ describe('Marpit directives apply plugin', () => {
           expect(style.color).toBe('black')
 
           Array.from({ length: 6 }, (v, k) => k + 1).forEach((i) =>
-            expect(style[`--injection${i}`]).toBeUndefined()
+            expect(style[`--injection${i}`]).toBeUndefined(),
           )
         })
       })

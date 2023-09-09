@@ -152,12 +152,12 @@ describe('Marpit background image plugin', () => {
 
       const bg = $('svg > foreignObject:first-child')
       const bgSection = bg.find(
-        '> section[data-marpit-advanced-background="background"]'
+        '> section[data-marpit-advanced-background="background"]',
       )
       expect(bgSection).toHaveLength(1)
 
       const figure = bgSection.find(
-        '> div[data-marpit-advanced-background-container] > figure'
+        '> div[data-marpit-advanced-background-container] > figure',
       )
       expect(figure).toHaveLength(1)
       expect(figure.attr('style')).toBe('background-image:url("image");')
@@ -167,7 +167,7 @@ describe('Marpit background image plugin', () => {
       const $ = $load(mdSVG().render('![bg](img"\\);color:#f00;--xss:url\\(")'))
 
       expect($('figure').attr('style')).not.toBe(
-        'background-image:("img");color:#f00;--xss:url("");'
+        'background-image:("img");color:#f00;--xss:url("");',
       )
     })
 
@@ -176,21 +176,21 @@ describe('Marpit background image plugin', () => {
         xmlMode: true,
       })
       const slideSection = $(
-        'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+        'svg > foreignObject > section[data-marpit-advanced-background="content"]',
       )
 
       expect(slideSection.find('h1')).toHaveLength(1)
       expect(slideSection.attr('data-marpit-advanced-background')).toBe(
-        'content'
+        'content',
       )
     })
 
     it("inherits slide section's style assigned by directive", () => {
       const $ = $load(
-        mdSVG().render('<!-- backgroundImage: url(A) -->\n\n![bg](B)')
+        mdSVG().render('<!-- backgroundImage: url(A) -->\n\n![bg](B)'),
       )
       const bgSection = $(
-        'section[data-marpit-advanced-background="background"]'
+        'section[data-marpit-advanced-background="background"]',
       )
 
       expect(bgSection.attr('style')).toContain('background-image:url(A);')
@@ -230,13 +230,13 @@ describe('Marpit background image plugin', () => {
         const $ = (attr) =>
           $load(
             mdSVG().render(
-              `![bg ${[keyword, attr].filter((v) => v).join(':')}](image)`
+              `![bg ${[keyword, attr].filter((v) => v).join(':')}](image)`,
             ),
-            { xmlMode: true }
+            { xmlMode: true },
           )
 
         const section = $()(
-          'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+          'svg > foreignObject > section[data-marpit-advanced-background="content"]',
         )
         const foreignObject = section.parent()
 
@@ -245,17 +245,17 @@ describe('Marpit background image plugin', () => {
 
         it('assigns CSS variable to style attribute for split background', () =>
           expect(section.attr('style')).toContain(
-            '--marpit-advanced-background-split:50%'
+            '--marpit-advanced-background-split:50%',
           ))
 
         it('assigns data attribute of the keyword for split background', () =>
           expect(section.attr('data-marpit-advanced-background-split')).toBe(
-            keyword
+            keyword,
           ))
 
         context('when passed split size for background', () => {
           const ssSection = $('33%')(
-            'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+            'svg > foreignObject > section[data-marpit-advanced-background="content"]',
           )
           const ssforeignObject = ssSection.parent()
 
@@ -264,7 +264,7 @@ describe('Marpit background image plugin', () => {
 
           it('assigns CSS variable to style attribute for split background', () =>
             expect(ssSection.attr('style')).toContain(
-              '--marpit-advanced-background-split:33%'
+              '--marpit-advanced-background-split:33%',
             ))
         })
       })
@@ -273,7 +273,7 @@ describe('Marpit background image plugin', () => {
     it('assigns x attribute of foreignObject for content as 50% with left keyword', () => {
       const $ = $load(mdSVG().render(`![bg left](image)`), { xmlMode: true })
       const section = $(
-        'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+        'svg > foreignObject > section[data-marpit-advanced-background="content"]',
       )
       const foreignObject = section.parent()
 
@@ -289,13 +289,13 @@ describe('Marpit background image plugin', () => {
 
         it('uses the last defined keyword', () => {
           const section = $(
-            'svg > foreignObject > section[data-marpit-advanced-background="content"]'
+            'svg > foreignObject > section[data-marpit-advanced-background="content"]',
           )
           expect(section.attr('data-marpit-advanced-background-split')).toBe(
-            'left'
+            'left',
           )
         })
-      }
+      },
     )
 
     describe('Direction keyword', () => {
@@ -304,7 +304,7 @@ describe('Marpit background image plugin', () => {
         const container = $('div[data-marpit-advanced-background-container]')
 
         expect(
-          container.attr('data-marpit-advanced-background-direction')
+          container.attr('data-marpit-advanced-background-direction'),
         ).toBe('horizontal')
       })
 
@@ -314,19 +314,19 @@ describe('Marpit background image plugin', () => {
           const container = $('div[data-marpit-advanced-background-container]')
 
           expect(
-            container.attr('data-marpit-advanced-background-direction')
+            container.attr('data-marpit-advanced-background-direction'),
           ).toBe('vertical')
         })
       })
 
       it('uses the last defined direction when defined multiple directions', () => {
         const $ = $load(
-          mdSVG().render('![bg vertical](img1) ![bg horizontal](img2)')
+          mdSVG().render('![bg vertical](img1) ![bg horizontal](img2)'),
         )
         const container = $('div[data-marpit-advanced-background-container]')
 
         expect(
-          container.attr('data-marpit-advanced-background-direction')
+          container.attr('data-marpit-advanced-background-direction'),
         ).toBe('horizontal')
       })
     })
@@ -397,7 +397,7 @@ describe('Marpit background image plugin', () => {
             // It won't escape the brackets that is wrapping the color syntax.
             'drop-shadow:0,0,0,rgba(0,0,0,1;)':
               'filter:drop-shadow(0 0 0 rgba(0,0,0,1\\3b ));',
-          }
+          },
         )
 
         Object.keys(injections).forEach((filter) => {
@@ -412,9 +412,9 @@ describe('Marpit background image plugin', () => {
     context('with paginate and class directive', () => {
       const $ = $load(
         mdSVG().render(
-          '---\npaginate: true\nclass: pseudo layer\n---\n\n![bg](test)'
+          '---\npaginate: true\nclass: pseudo layer\n---\n\n![bg](test)',
         ),
-        { xmlMode: true }
+        { xmlMode: true },
       )
 
       it('assigns pagination attributes to pseudo layer', () => {
@@ -423,7 +423,7 @@ describe('Marpit background image plugin', () => {
 
         const pseudoFO = foreignObjects.eq(2)
         expect(pseudoFO.is('[data-marpit-advanced-background="pseudo"]')).toBe(
-          true
+          true,
         )
 
         const pseudoLayer = pseudoFO.find('> section.pseudo.layer')
@@ -435,9 +435,9 @@ describe('Marpit background image plugin', () => {
     context('with scoped style', () => {
       const $ = $load(
         mdSVG().render(
-          "![bg](test)\n\n<style scoped>section::before { content: 'test'; }</style>"
+          "![bg](test)\n\n<style scoped>section::before { content: 'test'; }</style>",
         ),
-        { xmlMode: true }
+        { xmlMode: true },
       )
 
       it('assigns scoped attribute to the section element in pseudo layer', () => {
@@ -446,7 +446,7 @@ describe('Marpit background image plugin', () => {
         const pseudoSection = pseudoFO.find('> section')
 
         expect(Object.keys(pseudoSection.attr())).toContainEqual(
-          expect.stringMatching(/^data-marpit-scope-/)
+          expect.stringMatching(/^data-marpit-scope-/),
         )
       })
     })
@@ -465,7 +465,7 @@ describe('Marpit background image plugin', () => {
     context('with background color definition', () => {
       const $ = $load(mdSVG().render('![bg](red) ![bg](test)'))
       const bgSection = $(
-        'section[data-marpit-advanced-background="background"]'
+        'section[data-marpit-advanced-background="background"]',
       )
 
       it('assigns backgroundColor style to background layer', () =>

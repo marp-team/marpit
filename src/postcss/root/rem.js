@@ -22,11 +22,11 @@ export const rem = postcssPlugin(
 
           return v.replace(
             /(\d*\.?\d+)rem\b/g,
-            (_, num) => `calc(var(${rootFontSizeCustomProp}, 1rem) * ${num})`
+            (_, num) => `calc(var(${rootFontSizeCustomProp}, 1rem) * ${num})`,
           )
         })
         .join('')
-    })
+    }),
 )
 
 export default rem

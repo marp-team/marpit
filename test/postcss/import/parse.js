@@ -19,7 +19,7 @@ describe('Marpit PostCSS import parse plugin', () => {
 
         expect(imported.node.type).toBe('atrule')
         expect(imported.value).toBe('theme')
-      }
+      },
     ))
 
   it('parses multiple @import rules', () =>
@@ -42,16 +42,16 @@ describe('Marpit PostCSS import parse plugin', () => {
 
   it('does not parse @import rule when it specifies URL data type', () =>
     run("@import url('https://example.com/example.css')").then((result) =>
-      expect(result.marpitImport).toHaveLength(0)
+      expect(result.marpitImport).toHaveLength(0),
     ))
 
   it('does not parse @import rule when it is not preceded any rules', () =>
     Promise.all([
       run("b { color: red; }\n@import 'theme';").then((result) =>
-        expect(result.marpitImport).toHaveLength(0)
+        expect(result.marpitImport).toHaveLength(0),
       ),
       run("@keyframes {}\n@import 'theme';").then((result) =>
-        expect(result.marpitImport).toHaveLength(0)
+        expect(result.marpitImport).toHaveLength(0),
       ),
     ]))
 })

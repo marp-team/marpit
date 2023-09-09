@@ -11,8 +11,8 @@ describe('Marpit PostCSS import suppress plugin', () => {
   it('comments out @import and @import-theme rules with valid theme', () =>
     run('@import "imported";\n@import-theme "imported";').then(({ css }) =>
       expect(css).toBe(
-        '/* @import "imported"; */\n/* @import-theme "imported"; */'
-      )
+        '/* @import "imported"; */\n/* @import-theme "imported"; */',
+      ),
     ))
 
   it('ignores @import and @import-theme rules with invalid theme', () => {

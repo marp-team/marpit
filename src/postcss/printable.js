@@ -54,9 +54,9 @@ export const printable = postcssPlugin(
     width: 100vw;
   }
 }
-`.trim()
+`.trim(),
     )
-  }
+  },
 )
 
 /**
@@ -72,7 +72,7 @@ export const postprocess = postcssPlugin(
 
       rule.params = 'print'
       rule.first.before(marpitPrintContainerStyle)
-    })
+    }),
 )
 
 export default printable
