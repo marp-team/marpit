@@ -40,7 +40,7 @@ const injectScopePostCSSplugin = postcssPlugin(
           return `section[${generateScopeAttr(key)}]${injectSelector}`
         })
       }
-    })
+    }),
 )
 
 const scopeKeyframesPostCSSPlugin = postcssPlugin(
@@ -51,13 +51,13 @@ const scopeKeyframesPostCSSPlugin = postcssPlugin(
     const keyframeMatcher = new RegExp(
       `\\b(${[...keyframeSet.values()]
         .map((kf) => kf.replace(/[.*+\-?^${}()|[\]\\]/g, '\\$&'))
-        .join('|')})(?!\\()\\b`
+        .join('|')})(?!\\()\\b`,
     )
 
     css.walkDecls(/^animation(-name)?$/, (decl) => {
       decl.value = decl.value.replace(keyframeMatcher, (kf) => `${kf}-${key}`)
     })
-  }
+  },
 )
 
 /**
@@ -132,13 +132,13 @@ function _assign(md) {
           const processor = postcss([
             injectScopePostCSSplugin(
               key,
-              current.meta.marpitStyleScoped.keyframeSet
+              current.meta.marpitStyleScoped.keyframeSet,
             ),
           ])
 
           try {
             current.meta.marpitStyleScoped.styles.push(
-              processor.process(content).css
+              processor.process(content).css,
             )
           } catch (e) {
             // No ops

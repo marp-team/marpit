@@ -75,9 +75,9 @@ const server = http.createServer((req, res) => {
               if (endBodyIdx >= 0) {
                 html = `${html.slice(
                   0,
-                  endBodyIdx
+                  endBodyIdx,
                 )}<script>${wsScript}</script></body>${html.slice(
-                  endBodyIdx + 7
+                  endBodyIdx + 7,
                 )}`
               }
 
@@ -87,7 +87,7 @@ const server = http.createServer((req, res) => {
               overriddenHeaders['Content-Length'] = html.length.toString()
               resolve(this)
             },
-          })
+          }),
         )
       }
     })
@@ -99,10 +99,12 @@ const server = http.createServer((req, res) => {
       public: path.resolve(__dirname, '../docs'),
       rewrites: [{ source: '**', destination: '/index.html' }],
     },
-    { createReadStream }
+    { createReadStream },
   )
 })
 
 server.listen(port, () =>
-  console.log(`Listening Marpit documentation on http://127.0.0.1:${port}/ ...`)
+  console.log(
+    `Listening Marpit documentation on http://127.0.0.1:${port}/ ...`,
+  ),
 )

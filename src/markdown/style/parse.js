@@ -72,7 +72,7 @@ function _parse(md) {
       }
 
       return true
-    }
+    },
   )
 }
 

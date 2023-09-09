@@ -70,7 +70,7 @@ export const yaml = (text, looseDirectives = false) =>
           ...directives,
           ...(Array.isArray(looseDirectives) ? looseDirectives : []),
         ])
-      : text
+      : text,
   )
 
 export default yaml

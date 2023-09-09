@@ -20,9 +20,9 @@ export const rootIncreasingSpecificity = postcssPlugin(
   () => (css) =>
     css.walkRules((rule) => {
       rule.selectors = rule.selectors.map((selector) =>
-        selector.replace(matcher, ':where(section):not([\\20 root])')
+        selector.replace(matcher, ':where(section):not([\\20 root])'),
       )
-    })
+    }),
 )
 
 export default rootIncreasingSpecificity

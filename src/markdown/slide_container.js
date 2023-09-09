@@ -24,15 +24,15 @@ function _slideContainer(md) {
     for (const tokens of split(
       state.tokens,
       (t) => t.meta && t.meta.marpitSlideElement === 1,
-      true
+      true,
     )) {
       if (tokens.length > 0)
         newTokens.push(
           ...target.reduce(
             (slides, conts) =>
               wrapTokens(state.Token, 'marpit_slide_containers', conts, slides),
-            tokens
-          )
+            tokens,
+          ),
         )
     }
 

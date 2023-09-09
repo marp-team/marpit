@@ -48,7 +48,7 @@ describe('Marpit sweep plugin', () => {
         ![notBg](keep)
 
         ![bg](keep) with contents
-      `)
+      `),
     )
 
     expect($('p')).toHaveLength(2)

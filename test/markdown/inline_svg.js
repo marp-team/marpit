@@ -22,7 +22,7 @@ describe('Marpit inline SVG plugin', () => {
     return instance
       .use(slide)
       .use((pluginMd) =>
-        pluginMd.core.ruler.push('marpit_directives_parse', () => {})
+        pluginMd.core.ruler.push('marpit_directives_parse', () => {}),
       )
       .use(inlineSVG)
   }
@@ -42,8 +42,8 @@ describe('Marpit inline SVG plugin', () => {
 
     expect(
       $(
-        'svg[viewBox][data-marpit-svg] > foreignObject[width][height] > section'
-      )
+        'svg[viewBox][data-marpit-svg] > foreignObject[width][height] > section',
+      ),
     ).toHaveLength(2)
   })
 
@@ -90,7 +90,7 @@ describe('Marpit inline SVG plugin', () => {
       context('with specified default theme', () => {
         const defaultTheme = Theme.fromCSS(
           'section { width: 160px; height: 90px; }',
-          { [skipThemeValidationSymbol]: true }
+          { [skipThemeValidationSymbol]: true },
         )
 
         const defaultThemeSelector = [

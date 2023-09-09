@@ -72,7 +72,7 @@ export const importParse = postcssPlugin(
       })
 
       result.marpitImport = [...imports.importTheme, ...imports.import]
-    }
+    },
 )
 
 export default importParse

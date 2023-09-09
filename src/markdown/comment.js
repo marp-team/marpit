@@ -90,7 +90,7 @@ function _comment(md) {
       parse(token, token.content)
 
       return true
-    }
+    },
   )
 
   md.inline.ruler.before(
@@ -122,7 +122,7 @@ function _comment(md) {
 
       state.pos += match[0].length
       return true
-    }
+    },
   )
 }
 

@@ -70,9 +70,9 @@ section[data-marpit-advanced-background-split] {
   width: 100%;
   height: 100%;
 }
-`.trim()
+`.trim(),
     )
-  }
+  },
 )
 
 export default advancedBackground

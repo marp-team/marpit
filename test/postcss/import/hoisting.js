@@ -24,11 +24,11 @@ describe('Marpit PostCSS import hoisting plugin', () => {
 
   it('rolls up invalid @charset rule', () =>
     run('h1 { color: red; }\n@charset "utf-8";').then(({ css }) =>
-      expect(css).toBe('@charset "utf-8";\nh1 { color: red; }')
+      expect(css).toBe('@charset "utf-8";\nh1 { color: red; }'),
     ))
 
   it('applies the first rule when style has multiple @charset rules', () =>
     run('h1 { color: red; }\n@charset "utf-16";\n@charset "utf-8";').then(
-      ({ css }) => expect(css).toBe('@charset "utf-16";\nh1 { color: red; }')
+      ({ css }) => expect(css).toBe('@charset "utf-16";\nh1 { color: red; }'),
     ))
 })

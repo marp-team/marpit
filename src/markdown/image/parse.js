@@ -5,7 +5,7 @@ import marpitPlugin from '../../plugin'
 const escape = (target) =>
   target.replace(
     /[\\;:()]/g,
-    (matched) => `\\${matched[0].codePointAt(0).toString(16)} `
+    (matched) => `\\${matched[0].codePointAt(0).toString(16)} `,
   )
 
 const optionMatchers = new Map()
@@ -18,12 +18,12 @@ const normalizeLength = (v) => `${v}${/^(\d*\.)?\d+$/.test(v) ? 'px' : ''}`
 
 optionMatchers.set(
   /^w(?:idth)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
-  (matches) => ({ width: normalizeLength(matches[1]) })
+  (matches) => ({ width: normalizeLength(matches[1]) }),
 )
 
 optionMatchers.set(
   /^h(?:eight)?:((?:\d*\.)?\d+(?:%|ch|cm|em|ex|in|mm|pc|pt|px)?|auto)$/,
-  (matches) => ({ height: normalizeLength(matches[1]) })
+  (matches) => ({ height: normalizeLength(matches[1]) }),
 )
 
 // CSS filters
@@ -44,11 +44,11 @@ optionMatchers.set(
     for (const arg of matches.slice(1)) {
       if (arg) {
         const colorFunc = arg.match(
-          /^(rgba?|hsla?|hwb|(?:ok)?(?:lab|lch)|color)\((.*)\)$/
+          /^(rgba?|hsla?|hwb|(?:ok)?(?:lab|lch)|color)\((.*)\)$/,
         )
 
         args.push(
-          colorFunc ? `${colorFunc[1]}(${escape(colorFunc[2])})` : escape(arg)
+          colorFunc ? `${colorFunc[1]}(${escape(colorFunc[2])})` : escape(arg),
         )
       }
     }
@@ -59,7 +59,7 @@ optionMatchers.set(
         ['drop-shadow', args.join(' ') || '0 5px 10px rgba(0,0,0,.4)'],
       ],
     }
-  }
+  },
 )
 optionMatchers.set(/^grayscale(?::(.+))?$/, (matches, meta) => ({
   filters: [...meta.filters, ['grayscale', escape(matches[1] || '1')]],
@@ -208,7 +208,7 @@ function _parseImage(md) {
             : 'color'
 
           console.warn(
-            `Deprecation warning: Shorthand for setting colors via Markdown image syntax is deprecated now, and will remove in next major release. Please replace to a scoped local direcitve <!-- _${replacedDirective}: "${originalUrl}" -->, or use the scoped style <style scoped>.`
+            `Deprecation warning: Shorthand for setting colors via Markdown image syntax is deprecated now, and will remove in next major release. Please replace to a scoped local direcitve <!-- _${replacedDirective}: "${originalUrl}" -->, or use the scoped style <style scoped>.`,
           )
 
           token.meta.marpitImage.color = originalUrl

@@ -137,7 +137,7 @@ class Marpit {
 
         // Create instance with passed argument(s)
         return new MarkdownIt(...wrapArray(this.options.markdown))
-      })()
+      })(),
     )
   }
 
@@ -231,7 +231,7 @@ class Marpit {
 
     if (env.htmlAsArray) {
       return this.lastSlideTokens.map((slideTokens) =>
-        this.markdown.renderer.render(slideTokens, this.markdown.options, env)
+        this.markdown.renderer.render(slideTokens, this.markdown.options, env),
       )
     }
 

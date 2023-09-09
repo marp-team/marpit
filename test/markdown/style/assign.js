@@ -42,7 +42,7 @@ describe('Marpit style assign plugin', () => {
       it('assigns parsed styles to Marpit lastStyles property with scoped', () => {
         const marpit = marpitStub()
         const $ = load(
-          md(marpit).render('<style scoped>b { color: red; }</style>')
+          md(marpit).render('<style scoped>b { color: red; }</style>'),
         )
 
         const [style] = marpit.lastStyles
@@ -127,7 +127,7 @@ describe('Marpit style assign plugin', () => {
           const dividedMatched = dividedCss.match(/@keyframes (abc-\w+)/)
           expect(dividedMatched).toBeTruthy()
           expect(dividedCss).toContain(
-            `animation-name: foo,${dividedMatched[1]} ,bar;`
+            `animation-name: foo,${dividedMatched[1]} ,bar;`,
           )
 
           // animation shorthands
@@ -148,13 +148,13 @@ describe('Marpit style assign plugin', () => {
           const shorthandMatched = shorthandCss.match(/@keyframes (steps-\w+)/)
           expect(shorthandMatched).toBeTruthy()
           expect(shorthandCss).toContain(
-            `animation: ${shorthandMatched[1]} 1s linear 0s infinite;`
+            `animation: ${shorthandMatched[1]} 1s linear 0s infinite;`,
           )
           expect(shorthandCss).toContain(
-            `animation: 1s steps(6) 0s infinite ${shorthandMatched[1]};`
+            `animation: 1s steps(6) 0s infinite ${shorthandMatched[1]};`,
           )
           expect(shorthandCss).toContain(
-            `animation: 1s foo, 2s ${shorthandMatched[1]}, 3s bar;`
+            `animation: 1s foo, 2s ${shorthandMatched[1]}, 3s bar;`,
           )
         })
 

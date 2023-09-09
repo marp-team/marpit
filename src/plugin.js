@@ -33,7 +33,7 @@ function marpitPlugin(plugin) {
     if (md.marpit) return plugin.call(this, md, ...args)
 
     throw new Error(
-      'Marpit plugin has detected incompatible markdown-it instance.'
+      'Marpit plugin has detected incompatible markdown-it instance.',
     )
   }
 }

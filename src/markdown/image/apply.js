@@ -66,7 +66,7 @@ function _applyImage(md) {
           }
         }
       }
-    }
+    },
   )
 }
 

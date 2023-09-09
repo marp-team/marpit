@@ -37,7 +37,7 @@ export const rootFontSize = postcssPlugin(
               delimiterMatched
                 ? targetSelector.slice(delimiterMatched.index)
                 : '',
-            ].join('')
+            ].join(''),
           )
         }
       }
@@ -54,7 +54,7 @@ export const rootFontSize = postcssPlugin(
       })
 
       if (injectRule.nodes.length > 0) rule.parent.insertAfter(rule, injectRule)
-    })
+    }),
 )
 
 export default rootFontSize

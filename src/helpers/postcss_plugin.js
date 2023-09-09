@@ -18,11 +18,11 @@ export function plugin(name, func) {
       return Object.defineProperty(
         typeof retFunc === 'function' ? { Once: retFunc } : retFunc,
         'postcssPlugin',
-        { value: name }
+        { value: name },
       )
     },
     'postcss',
-    { value: true }
+    { value: true },
   )
 }
 

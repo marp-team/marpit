@@ -36,7 +36,7 @@ function _slide(md, opts = {}) {
     const splittedTokens = split(
       state.tokens,
       (t) => t.type === 'hr' && t.level === 0,
-      true
+      true,
     )
     const { length: marpitSlideTotal } = splittedTokens
 
@@ -67,7 +67,7 @@ function _slide(md, opts = {}) {
               meta: { marpitSlide, marpitSlideTotal, marpitSlideElement: -1 },
             },
           },
-          slideTokens.slice(firstHr ? 1 : 0)
+          slideTokens.slice(firstHr ? 1 : 0),
         ),
       ]
     }, [])

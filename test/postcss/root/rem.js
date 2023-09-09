@@ -8,23 +8,23 @@ describe('Marpit PostCSS rem plugin', () => {
 
   it('replaces rem unit in all declarations into calculated value', () => {
     expect(run('h1 { font-size: 2rem; }').css).toBe(
-      `h1 { font-size: calc(var(${rootFontSizeCustomProp}, 1rem) * 2); }`
+      `h1 { font-size: calc(var(${rootFontSizeCustomProp}, 1rem) * 2); }`,
     )
 
     expect(
       run(dedent`
         h2 { font-size: 1.5rem; }
         h3 { font-size: .9rem; }
-      `).css
+      `).css,
     ).toBe(dedent`
       h2 { font-size: calc(var(${rootFontSizeCustomProp}, 1rem) * 1.5); }
       h3 { font-size: calc(var(${rootFontSizeCustomProp}, 1rem) * .9); }
     `)
 
     expect(
-      run('@media screen { h4 { height: calc(12px + .6rem); } }').css
+      run('@media screen { h4 { height: calc(12px + .6rem); } }').css,
     ).toBe(
-      `@media screen { h4 { height: calc(12px + calc(var(${rootFontSizeCustomProp}, 1rem) * .6)); } }`
+      `@media screen { h4 { height: calc(12px + calc(var(${rootFontSizeCustomProp}, 1rem) * .6)); } }`,
     )
   })
 
@@ -37,7 +37,7 @@ describe('Marpit PostCSS rem plugin', () => {
 
     // The case of mixed
     expect(run("section { font: regular 2rem '2rem font'; }").css).toBe(
-      `section { font: regular calc(var(${rootFontSizeCustomProp}, 1rem) * 2) '2rem font'; }`
+      `section { font: regular calc(var(${rootFontSizeCustomProp}, 1rem) * 2) '2rem font'; }`,
     )
   })
 

@@ -111,7 +111,7 @@ function _backgroundImageApply(md) {
             }
           }
       }
-    }
+    },
   )
 }
 

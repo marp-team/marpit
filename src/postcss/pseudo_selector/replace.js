@@ -40,10 +40,10 @@ export const pseudoSelectorReplace = postcssPlugin(
           selector
             .replace(/:marpit-container(?![\w-])/g, container)
             .replace(/:marpit-slide(?![\w-])/g, section)
-            .replace(/^\s*>\s*/, '')
+            .replace(/^\s*>\s*/, ''),
         )
       })
-  }
+  },
 )
 
 export default pseudoSelectorReplace

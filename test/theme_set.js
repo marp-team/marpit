@@ -75,12 +75,12 @@ describe('ThemeSet', () => {
 
     it('throws error when passed theme is not an instance of Theme', () =>
       expect(() => instance.addTheme('/* @theme test-theme */')).toThrow(
-        'ThemeSet can add only an instance of Theme.'
+        'ThemeSet can add only an instance of Theme.',
       ))
 
     it('throws error when passed theme has not name', () => {
       expect(() => instance.addTheme(new Theme(undefined, ''))).toThrow(
-        'An instance of Theme requires name.'
+        'An instance of Theme requires name.',
       )
     })
 
@@ -155,14 +155,14 @@ describe('ThemeSet', () => {
     beforeEach(() => {
       arrayMetaTheme = Theme.fromCSS(
         '/* @theme array-meta */\n/* @array A */\n/* @array B */',
-        { metaType: { array: Array } }
+        { metaType: { array: Array } },
       )
 
       // Meta value
       instance.add('/* @theme meta */\n/* @meta-value A */')
       instance.add('/* @theme meta-imported */\n@import "meta";')
       instance.add(
-        '/* @theme meta-override */\n/* @meta-value B */\n@import "meta";'
+        '/* @theme meta-override */\n/* @meta-value B */\n@import "meta";',
       )
 
       // Array meta
@@ -170,23 +170,23 @@ describe('ThemeSet', () => {
       instance.addTheme(
         Theme.fromCSS(
           '/* @theme array-meta-imported */\n/* @array C */\n@import "array-meta";',
-          { metaType: { array: Array } }
-        )
+          { metaType: { array: Array } },
+        ),
       )
       instance.addTheme(
         Theme.fromCSS(
           '/* @theme array-meta-double-imported */\n/* @array D */\n@import "array-meta-imported";',
-          { metaType: { array: Array } }
-        )
+          { metaType: { array: Array } },
+        ),
       )
       instance.add(
-        '/* @theme array-meta-override-by-string */\n/* @array str */\n@import "array-meta";'
+        '/* @theme array-meta-override-by-string */\n/* @array str */\n@import "array-meta";',
       )
       instance.addTheme(
         Theme.fromCSS(
           '/* @theme string-meta-override-by-array */\n/* @meta-value B */\n/* @meta-value C */\n@import "meta";',
-          { metaType: { 'meta-value': Array } }
-        )
+          { metaType: { 'meta-value': Array } },
+        ),
       )
     })
 
@@ -227,7 +227,7 @@ describe('ThemeSet', () => {
           'C',
         ])
         expect(
-          getThemeMeta('array-meta-double-imported', 'array')
+          getThemeMeta('array-meta-double-imported', 'array'),
         ).toStrictEqual(['A', 'B', 'C', 'D'])
       })
     })
@@ -237,13 +237,13 @@ describe('ThemeSet', () => {
       () => {
         it('returns the meta value only from a primary theme', () => {
           expect(getThemeMeta('array-meta-override-by-string', 'array')).toBe(
-            'str'
+            'str',
           )
           expect(
-            getThemeMeta('string-meta-override-by-array', 'meta-value')
+            getThemeMeta('string-meta-override-by-array', 'meta-value'),
           ).toStrictEqual(['B', 'C'])
         })
-      }
+      },
     )
   })
 
@@ -343,10 +343,10 @@ describe('ThemeSet', () => {
 
       it('throws error when circular import is detected', () => {
         expect(() => getThemeProp('circular-import', 'width')).toThrow(
-          'Circular "circular-import" theme import is detected.'
+          'Circular "circular-import" theme import is detected.',
         )
         expect(() => getThemeProp('nested-circular', 'width')).toThrow(
-          'Circular "nested-circular" theme import is detected.'
+          'Circular "nested-circular" theme import is detected.',
         )
       })
 
@@ -411,7 +411,7 @@ describe('ThemeSet', () => {
 
         expect(printCSS.split('@media print').length - 1).toBe(2)
         expect(printCSS).toContain(
-          '@media print { section body { background: red; } }'
+          '@media print { section body { background: red; } }',
         )
 
         // `@media marpit-print` internal at-rule will remove.

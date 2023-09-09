@@ -16,7 +16,7 @@ describe('Marpit PostCSS section size plugin', () => {
       expect(result.marpitSectionSize).toStrictEqual({
         width: '123px',
         height: '456px',
-      })
+      }),
     ))
 
   it('supports grouping selector', () =>
@@ -24,12 +24,12 @@ describe('Marpit PostCSS section size plugin', () => {
       expect(result.marpitSectionSize).toStrictEqual({
         width: '234px',
         height: '567px',
-      })
+      }),
     ))
 
   it('ignores section selector with pusedo selector', () =>
     run('section:first-child { width: 123px; height: 456px; }').then((result) =>
-      expect(result.marpitSectionSize).toStrictEqual({})
+      expect(result.marpitSectionSize).toStrictEqual({}),
     ))
 
   context('with preferedPseudoClass', () => {
@@ -40,12 +40,12 @@ describe('Marpit PostCSS section size plugin', () => {
 
     it('prefers defined size within section selector with specific pseudo selector than plain selector', () =>
       run(
-        'section:test { width: 123px; height: 123px; } section { width: 456px; height: 456px; } '
+        'section:test { width: 123px; height: 123px; } section { width: 456px; height: 456px; } ',
       ).then((result) =>
         expect(result.marpitSectionSize).toStrictEqual({
           width: '123px',
           height: '123px',
-        })
+        }),
       ))
   })
 })
