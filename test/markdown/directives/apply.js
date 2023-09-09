@@ -239,7 +239,7 @@ describe('Marpit directives apply plugin', () => {
     })
 
     describe('Paginate with skipped slides', () => {
-      it('applies data-marpit-pagination attribute with a _paginate:hold slide', () => {
+      it('applies data-marpit-pagination attribute with a _paginate: hold slide', () => {
         const paginateDirs = dedent`
           ---
           paginate: true
@@ -281,7 +281,7 @@ describe('Marpit directives apply plugin', () => {
         expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
       })
 
-      it('applies data-marpit-pagination attribute with a _paginate:skip slide', () => {
+      it('applies data-marpit-pagination attribute with a _paginate: skip slide', () => {
         const paginateDirs = dedent`
           ---
           paginate: true
@@ -321,6 +321,58 @@ describe('Marpit directives apply plugin', () => {
         expect(sections.eq(1).data('marpit-pagination-total')).toBeUndefined()
         expect(sections.eq(2).data('marpit-pagination')).toBe(2)
         expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
+      })
+
+      context('when paginate: hold is applied from beginning', () => {
+        const paginateDirs = dedent`
+          ---
+          paginate: hold
+          ---
+
+          # Slide 1
+
+          - Page is not incremented (1 of 3)
+          - Pagination rendered
+
+          ---
+
+          ## Slide 2
+
+          - Page is not incremented (1 of 3)
+          - Pagination rendered
+
+          ---
+
+          <!-- paginate: true -->
+
+          ## Slide 3
+
+          - Page is incremented (2 of 3)
+          - Pagination rendered
+
+          ---
+
+          <!-- paginate: false -->
+
+          ## Slide 4
+
+          - Page is incremented (3 of 3)
+          - Pagination is not rendered
+        `
+
+        it('applies data-marpit-pagination and data-marpit-pagination-total attribute correctly', () => {
+          const $ = load(mdForTest().render(paginateDirs))
+          const sections = $('section')
+
+          expect(sections.eq(0).data('marpit-pagination')).toBe(1)
+          expect(sections.eq(0).data('marpit-pagination-total')).toBe(3)
+          expect(sections.eq(1).data('marpit-pagination')).toBe(1)
+          expect(sections.eq(1).data('marpit-pagination-total')).toBe(3)
+          expect(sections.eq(2).data('marpit-pagination')).toBe(2)
+          expect(sections.eq(2).data('marpit-pagination-total')).toBe(3)
+          expect(sections.eq(3).data('marpit-pagination')).toBeUndefined()
+          expect(sections.eq(3).data('marpit-pagination-total')).toBeUndefined()
+        })
       })
     })
   })

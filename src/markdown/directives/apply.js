@@ -34,28 +34,24 @@ function _apply(md, opts = {}) {
     (state) => {
       if (state.inlineMode) return
 
-      // compute the total number of skipped pages
-      let totalSkippedSlides = 0
+      let pageNumber = 0
+
+      const tokensForPaginationTotal = []
+
       for (const token of state.tokens) {
-        const { marpitDirectives } = token.meta || {}
-        if (
-          marpitDirectives &&
-          (marpitDirectives.paginate === 'hold' ||
-            marpitDirectives.paginate === 'skip')
-        ) {
-          totalSkippedSlides++
+        const { marpitDirectives, marpitSlideElement } = token.meta || {}
+
+        if (marpitSlideElement === 1) {
+          // `skip` and `hold` disable increment of the page number
+          if (
+            !(
+              marpitDirectives?.paginate === 'skip' ||
+              marpitDirectives?.paginate === 'hold'
+            )
+          ) {
+            pageNumber += 1
+          }
         }
-      }
-
-      // keep track of slides that were skipped using one of the following
-      // directives:
-      // `paginate: skip`, `_paginate: skip`,
-      // `paginate: hold`, or `_paginate: hold
-      let currentSkippedSlides = 0
-
-      for (const token of state.tokens) {
-        const { marpitDirectives, marpitSlide, marpitSlideTotal } =
-          token.meta || {}
 
         if (marpitDirectives) {
           const style = new InlineStyle(token.attrGet('style'))
@@ -103,24 +99,16 @@ function _apply(md, opts = {}) {
               style.set('background-size', marpitDirectives.backgroundSize)
           }
 
-          if (marpitDirectives.paginate) {
-            if (
-              marpitDirectives.paginate === 'hold' ||
-              marpitDirectives.paginate === 'skip'
-            ) {
-              currentSkippedSlides++
-            }
+          if (
+            marpitDirectives.paginate &&
+            marpitDirectives.paginate !== 'skip'
+          ) {
+            // If the page number was still not incremented, mark this page as
+            // the first page.
+            if (pageNumber <= 0) pageNumber = 1
 
-            if (marpitDirectives.paginate !== 'skip') {
-              token.attrSet(
-                'data-marpit-pagination',
-                marpitSlide - currentSkippedSlides + 1,
-              )
-              token.attrSet(
-                'data-marpit-pagination-total',
-                marpitSlideTotal - totalSkippedSlides,
-              )
-            }
+            token.attrSet('data-marpit-pagination', pageNumber)
+            tokensForPaginationTotal.push(token)
           }
 
           if (marpitDirectives.header)
@@ -132,6 +120,11 @@ function _apply(md, opts = {}) {
           const styleStr = style.toString()
           if (styleStr !== '') token.attrSet('style', styleStr)
         }
+      }
+
+      // Set total page number to each slide page that has pagination attribute
+      for (const token of tokensForPaginationTotal) {
+        token.attrSet('data-marpit-pagination-total', pageNumber)
       }
     },
   )
