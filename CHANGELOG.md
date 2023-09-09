@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.5.1 - 2023-09-09
+
 ### Added
 
 - Advanced background: Render the image's alt text to `<figcaption>` ([#368](https://github.com/marp-team/marpit/issues/368), [#371](https://github.com/marp-team/marpit/pull/371))
