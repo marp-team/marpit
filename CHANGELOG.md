@@ -6,6 +6,10 @@
 
 - Upgrade Node.js and dependent packages to the latest version ([#369](https://github.com/marp-team/marpit/pull/369))
 
+### Fixed
+
+- Begin the page number from 1 even if used `paginate: hold` at the first page ([#365](https://github.com/marp-team/marpit/issues/365), [#370](https://github.com/marp-team/marpit/pull/370))
+
 ## v2.5.0 - 2023-06-06
 
 ### Added
