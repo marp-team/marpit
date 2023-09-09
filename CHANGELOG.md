@@ -2,13 +2,17 @@
 
 ## [Unreleased]
 
-### Changed
+### Added
 
-- Upgrade Node.js and dependent packages to the latest version ([#369](https://github.com/marp-team/marpit/pull/369))
+- Advanced background: Render the image's alt text to `<figcaption>` ([#368](https://github.com/marp-team/marpit/issues/368), [#371](https://github.com/marp-team/marpit/pull/371))
 
 ### Fixed
 
 - Begin the page number from 1 even if used `paginate: hold` at the first page ([#365](https://github.com/marp-team/marpit/issues/365), [#370](https://github.com/marp-team/marpit/pull/370))
+
+### Changed
+
+- Upgrade Node.js and dependent packages to the latest version ([#369](https://github.com/marp-team/marpit/pull/369))
 
 ## v2.5.0 - 2023-06-06
 
