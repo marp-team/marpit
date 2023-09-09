@@ -185,7 +185,10 @@ function _advancedBackground(md) {
         )
         .trim()
 
-      if (figcaption) return `${open}<figcaption>${figcaption}</figcaption>`
+      if (figcaption)
+        return `${open}<figcaption>${md.utils.escapeHtml(
+          figcaption,
+        )}</figcaption>`
     }
 
     return open
