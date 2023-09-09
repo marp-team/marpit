@@ -103,6 +103,10 @@ function _apply(md, opts = {}) {
             marpitDirectives.paginate &&
             marpitDirectives.paginate !== 'skip'
           ) {
+            // If the page number was still not incremented, mark this page as
+            // the first page.
+            if (pageNumber <= 0) pageNumber = 1
+
             token.attrSet('data-marpit-pagination', pageNumber)
             tokensForPaginationTotal.push(token)
           }
@@ -118,7 +122,7 @@ function _apply(md, opts = {}) {
         }
       }
 
-      // Set total page number to each slide
+      // Set total page number to each slide page that has pagination attribute
       for (const token of tokensForPaginationTotal) {
         token.attrSet('data-marpit-pagination-total', pageNumber)
       }
