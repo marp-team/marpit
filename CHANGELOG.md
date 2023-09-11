@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Advanced background: Exclude Marpit reserved image keywords from `<figcaption>` correctly ([#373](https://github.com/marp-team/marpit/pull/373))
+
 ## v2.5.2 - 2023-09-11
 
 ### Fixed
