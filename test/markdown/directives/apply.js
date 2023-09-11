@@ -284,7 +284,6 @@ describe('Marpit directives apply plugin', () => {
               `
 
               const $ = load(mdWithSVG().render(paginateDirs))
-              console.log($.html())
               const sections = $('section')
 
               expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()

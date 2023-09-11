@@ -101,9 +101,7 @@ function _advancedBackground(md) {
                             style: style.toString(),
                             open: {
                               meta: {
-                                // For getting better alt text, we should store
-                                // the reference of the original image token.
-                                marpitBackgroundSource: img.source,
+                                marpitBackgroundAlt: img.alt,
                               },
                             },
                           },
@@ -168,27 +166,16 @@ function _advancedBackground(md) {
     tokens,
     idx,
     options,
-    env,
+    _env,
     self,
   ) => {
     const token = tokens[idx]
     const open = self.renderToken(tokens, idx, options)
 
-    if (token.meta && token.meta.marpitBackgroundSource) {
-      // Try to render figcaption for background image
-      // (Image token after parsed has text children without Marpit keywords)
-      const figcaption = self
-        .renderInlineAsText(
-          token.meta.marpitBackgroundSource.children,
-          options,
-          env,
-        )
-        .trim()
-
-      if (figcaption)
-        return `${open}<figcaption>${md.utils.escapeHtml(
-          figcaption,
-        )}</figcaption>`
+    if (token.meta?.marpitBackgroundAlt) {
+      return `${open}<figcaption>${md.utils.escapeHtml(
+        token.meta.marpitBackgroundAlt,
+      )}</figcaption>`
     }
 
     return open
