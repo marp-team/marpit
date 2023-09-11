@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v2.5.2 - 2023-09-11
+
 ### Fixed
 
 - Fix blocking `paginate: skip` and `hold` in v2.5.1 inline SVG mode ([#372](https://github.com/marp-team/marpit/pull/372))
