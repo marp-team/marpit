@@ -336,6 +336,25 @@ describe('Marpit', () => {
             }),
           )
       })
+
+      describe('Advanced background image powered by inline SVG mode', () => {
+        it('has figure element with background-image in the isolated layer', async () => {
+          const $ = load(
+            new Marpit({ inlineSVG: true }).render('![bg Advanced](test)').html,
+          )
+
+          const figure = $('figure')
+          const ret = await postcssInstance.process(figure.attr('style'), {
+            from: undefined,
+          })
+
+          ret.root.walkDecls('background-image', (decl) => {
+            expect(decl.value).toBe('url("test")')
+          })
+
+          expect(figure.find('figcaption').text()).toBe('Advanced')
+        })
+      })
     })
 
     describe('CSS Filters', () => {
