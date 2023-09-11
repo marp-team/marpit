@@ -124,7 +124,7 @@ function _parseImage(md) {
 
       if (hasConsumed) {
         let newTokens = []
-        md.inline.parse(updatedAlt.trimLeft(), state.md, state.env, newTokens)
+        md.inline.parse(updatedAlt.trimStart(), state.md, state.env, newTokens)
 
         token.children = newTokens
       }

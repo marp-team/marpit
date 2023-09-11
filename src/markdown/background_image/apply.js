@@ -74,6 +74,7 @@ function _backgroundImageApply(md) {
                 size,
                 url,
                 width,
+                options,
               } = t.meta.marpitImage
 
               if (background && !url.match(/^\s*$/)) {
@@ -85,6 +86,11 @@ function _backgroundImageApply(md) {
                   }
                 } else {
                   // Background image
+                  let altText = ''
+
+                  for (const opt of options)
+                    if (!opt.consumed) altText += opt.leading + opt.content
+
                   current.images = [
                     ...(current.images || []),
                     {
@@ -100,7 +106,7 @@ function _backgroundImageApply(md) {
                       })(),
                       url,
                       width,
-                      source: t,
+                      alt: altText.trimStart(),
                     },
                   ]
                 }
