@@ -4,13 +4,16 @@ import MarkdownIt from 'markdown-it'
 import { comment } from '../../../src/markdown/comment'
 import applyDirectives from '../../../src/markdown/directives/apply'
 import parseDirectives from '../../../src/markdown/directives/parse'
+import { inlineSVG } from '../../../src/markdown/inline_svg'
 import { slide } from '../../../src/markdown/slide'
 
 describe('Marpit directives apply plugin', () => {
-  const themeSetStub = new Map()
+  const themeSetStub = Object.assign(new Map(), {
+    getThemeProp: () => 256,
+  })
   themeSetStub.set('test_theme', true)
 
-  const md = (...args) => {
+  const md = (marpitInstanceOpts, ...args) => {
     const customDirectives = { global: {}, local: {} }
     const instance = new MarkdownIt('commonmark')
 
@@ -18,6 +21,7 @@ describe('Marpit directives apply plugin', () => {
       customDirectives,
       options: { looseYAML: false },
       themeSet: themeSetStub,
+      ...marpitInstanceOpts,
     }
 
     return instance
@@ -25,23 +29,25 @@ describe('Marpit directives apply plugin', () => {
       .use(slide)
       .use(parseDirectives)
       .use(applyDirectives, ...args)
+      .use(inlineSVG)
   }
 
-  const mdForTest = (...args) =>
-    md(...args).use((mdInstance) => {
-      mdInstance.core.ruler.before(
-        'marpit_directives_apply',
-        'marpit_directives_apply_test',
-        (state) => {
-          state.tokens.forEach((token) => {
-            if (token.meta && token.meta.marpitDirectives) {
-              // Internal directive
-              token.meta.marpitDirectives.unknownDir = 'directive'
-            }
-          })
-        },
-      )
-    })
+  const mdTestPlugin = (mdInstance) => {
+    mdInstance.core.ruler.before(
+      'marpit_directives_apply',
+      'marpit_directives_apply_test',
+      (state) => {
+        state.tokens.forEach((token) => {
+          if (token.meta && token.meta.marpitDirectives) {
+            // Internal directive
+            token.meta.marpitDirectives.unknownDir = 'directive'
+          }
+        })
+      },
+    )
+  }
+
+  const mdForTest = (...args) => md({}, ...args).use(mdTestPlugin)
 
   const basicDirs = dedent`
     ---
@@ -239,141 +245,160 @@ describe('Marpit directives apply plugin', () => {
     })
 
     describe('Paginate with skipped slides', () => {
-      it('applies data-marpit-pagination attribute with a _paginate: hold slide', () => {
-        const paginateDirs = dedent`
-          ---
-          paginate: true
-          _paginate:
-          ---
+      for (const inlineSVGmode of [true, false]) {
+        const mdWithSVG = () =>
+          md({ inlineSVGOptions: { enabled: inlineSVGmode } }).use(mdTestPlugin)
 
-          # Slide 1
+        context(
+          `with inlineSVG mode as ${inlineSVGmode ? 'true' : 'false'}`,
+          () => {
+            it('applies data-marpit-pagination attribute with a _paginate: hold slide', () => {
+              const paginateDirs = dedent`
+                ---
+                paginate: true
+                _paginate:
+                ---
 
-          - Page is counted (1 of 2)
-          - Pagination is not rendered
+                # Slide 1
 
-          ---
+                - Page is counted (1 of 2)
+                - Pagination is not rendered
 
-          <!--
-          _paginate: hold
-          -->
+                ---
 
-          ## Slide 2
+                <!--
+                _paginate: hold
+                -->
 
-          - Page is not counted
-          - Pagination is rendered (1 of 2)
+                ## Slide 2
 
-          ---
+                - Page is not counted
+                - Pagination is rendered (1 of 2)
 
-          ## Slide 3
+                ---
 
-          - Page is counted
-          - Pagination is rendered (2 of 2)
-        `
+                ## Slide 3
 
-        const $ = load(mdForTest().render(paginateDirs))
-        const sections = $('section')
+                - Page is counted
+                - Pagination is rendered (2 of 2)
+              `
 
-        expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
-        expect(sections.eq(0).data('marpit-pagination-total')).toBeUndefined()
-        expect(sections.eq(1).data('marpit-pagination')).toBe(1)
-        expect(sections.eq(1).data('marpit-pagination-total')).toBe(2)
-        expect(sections.eq(2).data('marpit-pagination')).toBe(2)
-        expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
-      })
+              const $ = load(mdWithSVG().render(paginateDirs))
+              console.log($.html())
+              const sections = $('section')
 
-      it('applies data-marpit-pagination attribute with a _paginate: skip slide', () => {
-        const paginateDirs = dedent`
-          ---
-          paginate: true
-          _paginate:
-          ---
+              expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
+              expect(
+                sections.eq(0).data('marpit-pagination-total'),
+              ).toBeUndefined()
+              expect(sections.eq(1).data('marpit-pagination')).toBe(1)
+              expect(sections.eq(1).data('marpit-pagination-total')).toBe(2)
+              expect(sections.eq(2).data('marpit-pagination')).toBe(2)
+              expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
+            })
 
-          # Slide 1
+            it('applies data-marpit-pagination attribute with a _paginate: skip slide', () => {
+              const paginateDirs = dedent`
+                ---
+                paginate: true
+                _paginate:
+                ---
 
-          - Page is counted (1 of 2)
-          - Pagination is not rendered
+                # Slide 1
 
-          ---
+                - Page is counted (1 of 2)
+                - Pagination is not rendered
 
-          <!--
-          _paginate: skip
-          -->
+                ---
 
-          ## Slide 2
+                <!--
+                _paginate: skip
+                -->
 
-          - Page is not counted
-          - Pagination is not rendered (1 of 2)
+                ## Slide 2
 
-          ---
+                - Page is not counted
+                - Pagination is not rendered (1 of 2)
 
-          ## Slide 3
+                ---
 
-          - Page is counted
-          - Pagination is rendered (2 of 2)
-        `
+                ## Slide 3
 
-        const $ = load(mdForTest().render(paginateDirs))
-        const sections = $('section')
+                - Page is counted
+                - Pagination is rendered (2 of 2)
+              `
 
-        expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
-        expect(sections.eq(0).data('marpit-pagination-total')).toBeUndefined()
-        expect(sections.eq(1).data('marpit-pagination')).toBeUndefined()
-        expect(sections.eq(1).data('marpit-pagination-total')).toBeUndefined()
-        expect(sections.eq(2).data('marpit-pagination')).toBe(2)
-        expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
-      })
+              const $ = load(mdWithSVG().render(paginateDirs))
+              const sections = $('section')
 
-      context('when paginate: hold is applied from beginning', () => {
-        const paginateDirs = dedent`
-          ---
-          paginate: hold
-          ---
+              expect(sections.eq(0).data('marpit-pagination')).toBeUndefined()
+              expect(
+                sections.eq(0).data('marpit-pagination-total'),
+              ).toBeUndefined()
+              expect(sections.eq(1).data('marpit-pagination')).toBeUndefined()
+              expect(
+                sections.eq(1).data('marpit-pagination-total'),
+              ).toBeUndefined()
+              expect(sections.eq(2).data('marpit-pagination')).toBe(2)
+              expect(sections.eq(2).data('marpit-pagination-total')).toBe(2)
+            })
 
-          # Slide 1
+            context('when paginate: hold is applied from beginning', () => {
+              const paginateDirs = dedent`
+                ---
+                paginate: hold
+                ---
 
-          - Page is not incremented (1 of 3)
-          - Pagination rendered
+                # Slide 1
 
-          ---
+                - Page is not incremented (1 of 3)
+                - Pagination rendered
 
-          ## Slide 2
+                ---
 
-          - Page is not incremented (1 of 3)
-          - Pagination rendered
+                ## Slide 2
 
-          ---
+                - Page is not incremented (1 of 3)
+                - Pagination rendered
 
-          <!-- paginate: true -->
+                ---
 
-          ## Slide 3
+                <!-- paginate: true -->
 
-          - Page is incremented (2 of 3)
-          - Pagination rendered
+                ## Slide 3
 
-          ---
+                - Page is incremented (2 of 3)
+                - Pagination rendered
 
-          <!-- paginate: false -->
+                ---
 
-          ## Slide 4
+                <!-- paginate: false -->
 
-          - Page is incremented (3 of 3)
-          - Pagination is not rendered
-        `
+                ## Slide 4
 
-        it('applies data-marpit-pagination and data-marpit-pagination-total attribute correctly', () => {
-          const $ = load(mdForTest().render(paginateDirs))
-          const sections = $('section')
+                - Page is incremented (3 of 3)
+                - Pagination is not rendered
+              `
 
-          expect(sections.eq(0).data('marpit-pagination')).toBe(1)
-          expect(sections.eq(0).data('marpit-pagination-total')).toBe(3)
-          expect(sections.eq(1).data('marpit-pagination')).toBe(1)
-          expect(sections.eq(1).data('marpit-pagination-total')).toBe(3)
-          expect(sections.eq(2).data('marpit-pagination')).toBe(2)
-          expect(sections.eq(2).data('marpit-pagination-total')).toBe(3)
-          expect(sections.eq(3).data('marpit-pagination')).toBeUndefined()
-          expect(sections.eq(3).data('marpit-pagination-total')).toBeUndefined()
-        })
-      })
+              it('applies data-marpit-pagination and data-marpit-pagination-total attribute correctly', () => {
+                const $ = load(mdWithSVG().render(paginateDirs))
+                const sections = $('section')
+
+                expect(sections.eq(0).data('marpit-pagination')).toBe(1)
+                expect(sections.eq(0).data('marpit-pagination-total')).toBe(3)
+                expect(sections.eq(1).data('marpit-pagination')).toBe(1)
+                expect(sections.eq(1).data('marpit-pagination-total')).toBe(3)
+                expect(sections.eq(2).data('marpit-pagination')).toBe(2)
+                expect(sections.eq(2).data('marpit-pagination-total')).toBe(3)
+                expect(sections.eq(3).data('marpit-pagination')).toBeUndefined()
+                expect(
+                  sections.eq(3).data('marpit-pagination-total'),
+                ).toBeUndefined()
+              })
+            })
+          },
+        )
+      }
     })
   })
 })

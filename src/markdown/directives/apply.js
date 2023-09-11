@@ -39,9 +39,9 @@ function _apply(md, opts = {}) {
       const tokensForPaginationTotal = []
 
       for (const token of state.tokens) {
-        const { marpitDirectives, marpitSlideElement } = token.meta || {}
+        const { marpitDirectives } = token.meta || {}
 
-        if (marpitSlideElement === 1) {
+        if (token.type === 'marpit_slide_open') {
           // `skip` and `hold` disable increment of the page number
           if (
             !(
