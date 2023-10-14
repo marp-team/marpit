@@ -72,6 +72,8 @@ class Marpit {
    *     slide page at before of headings. it would apply to headings whose
    *     larger than or equal to the specified level if a number is given, or
    *     ONLY specified levels if a number array.
+   * @param {string} [opts.lang] Set the default `lang` attribute of each slide.
+   *     It can override by `lang` global directive in the Markdown.
    * @param {boolean} [opts.looseYAML=false] Allow loose YAML parsing in
    *     built-in directives, and custom directives defined in current instance.
    * @param {MarkdownIt|string|Object|Array} [opts.markdown] An instance of

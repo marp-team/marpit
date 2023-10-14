@@ -70,8 +70,8 @@ function _apply(md, opts = {}) {
           }
 
           // Apply attribute to token
-          if (lang || marpitDirectives.lang)
-            token.attrSet('lang', lang || marpitDirectives.lang)
+          if (marpitDirectives.lang || lang)
+            token.attrSet('lang', marpitDirectives.lang || lang)
 
           if (marpitDirectives.class)
             token.attrJoin('class', marpitDirectives.class)

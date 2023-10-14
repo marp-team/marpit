@@ -120,6 +120,11 @@ describe('Marpit directives apply plugin', () => {
         expect(sections.eq(1).attr('lang')).toBe('en-US')
       })
 
+      it('can override the language that is setting by `lang` constructor option', () => {
+        const $lang = load(md({ options: { lang: 'fr' } }).render(langDir))
+        expect($lang('section').first().attr('lang')).toBe('en-US')
+      })
+
       context('when lang directive is not defined', () => {
         it('follows the lang option of Marpit instance', () => {
           const $ = load(md({}).render(''))
