@@ -23,6 +23,7 @@ const defaultOptions = {
   anchor: true,
   container: marpitContainer,
   headingDivider: false,
+  lang: undefined,
   looseYAML: false,
   markdown: undefined,
   printable: true,

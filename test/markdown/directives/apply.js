@@ -102,6 +102,36 @@ describe('Marpit directives apply plugin', () => {
     })
   })
 
+  describe('Global directives', () => {
+    describe('lang directive', () => {
+      const langDir = dedent`
+        ---
+        lang: en-US
+        ---
+
+        ---
+      `
+
+      it('applies lang attribute to each section element', () => {
+        const $ = load(mdForTest().render(langDir))
+        const sections = $('section')
+
+        expect(sections.eq(0).attr('lang')).toBe('en-US')
+        expect(sections.eq(1).attr('lang')).toBe('en-US')
+      })
+
+      context('when lang directive is not defined', () => {
+        it('follows the lang option of Marpit instance', () => {
+          const $ = load(md({}).render(''))
+          expect($('section').first().attr('lang')).toBeUndefined()
+
+          const $lang = load(md({ options: { lang: 'en-US' } }).render(''))
+          expect($lang('section').first().attr('lang')).toBe('en-US')
+        })
+      })
+    })
+  })
+
   describe('Local directives', () => {
     describe('Background image', () => {
       const bgDirs = dedent`

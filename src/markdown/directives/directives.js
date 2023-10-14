@@ -19,6 +19,8 @@
  * @prop {Directive} headingDivider Specify heading divider option.
  * @prop {Directive} style Specify the CSS style to apply additionally.
  * @prop {Directive} theme Specify theme of the slide deck.
+ * @prop {Directive} lang Specify the language of the slide deck. It will
+ *     assign as `lang` attribute for each slide.
  */
 export const globals = Object.assign(Object.create(null), {
   headingDivider: (value) => {
@@ -41,6 +43,7 @@ export const globals = Object.assign(Object.create(null), {
   },
   style: (v) => ({ style: v }),
   theme: (v, marpit) => (marpit.themeSet.has(v) ? { theme: v } : {}),
+  lang: (v) => ({ lang: v }),
 })
 
 /**
