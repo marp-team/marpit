@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Add TypeScript definition for `cssContainerQuery` constructor option ([#378](https://github.com/marp-team/marpit/pull/378))
+
 ## v2.6.0 - 2023-10-15
 
 ### Added
