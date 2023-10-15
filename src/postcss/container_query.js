@@ -11,6 +11,8 @@ const reservedNames = [
   'unset',
 ]
 
+const marpitContainerQueryPseudoMatcher = /\bsection:marpit-container-query\b/g
+
 /**
  * Marpit PostCSS container query plugin.
  *
@@ -40,14 +42,28 @@ export const containerQuery = postcssPlugin(
               .join(' ')};`
           : ''
 
-      css.first.before(
-        `
-:where(section) {
+      const style = `
+section:marpit-container-query {
   container-type: size;${containerNameDeclaration}
 }
-`.trim(),
-      )
+`.trim()
+
+      if (css.first) {
+        css.first.before(style)
+      } else {
+        css.append(style)
+      }
     },
+)
+
+export const postprocess = postcssPlugin(
+  'marpit-postcss-container-query-postprocess',
+  () => (css) =>
+    css.walkRules(marpitContainerQueryPseudoMatcher, (rule) => {
+      rule.selectors = rule.selectors.map((selector) =>
+        selector.replace(marpitContainerQueryPseudoMatcher, ':where(section)'),
+      )
+    }),
 )
 
 export default containerQuery

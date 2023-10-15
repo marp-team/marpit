@@ -1,7 +1,9 @@
 import postcss from 'postcss'
 import postcssPlugin from './helpers/postcss_plugin'
 import postcssAdvancedBackground from './postcss/advanced_background'
-import postcssContainerQuery from './postcss/container_query'
+import postcssContainerQuery, {
+  postprocess as postcssContainerQueryPostProcess,
+} from './postcss/container_query'
 import postcssImportHoisting from './postcss/import/hoisting'
 import postcssImportReplace from './postcss/import/replace'
 import postcssImportSuppress from './postcss/import/suppress'
@@ -308,6 +310,7 @@ class ThemeSet {
         postcssPseudoReplace(opts.containers, slideElements),
         postcssRootIncreasingSpecificity,
         opts.printable && postcssPrintablePostProcess,
+        opts.containerQuery && postcssContainerQueryPostProcess,
         postcssRem,
         postcssImportHoisting,
       ].filter((p) => p),
