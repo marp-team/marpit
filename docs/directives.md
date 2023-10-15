@@ -80,11 +80,12 @@ The second page would not apply setting of directives.
 
 ## Global directives
 
-| Name             | Description                      |
-| :--------------- | :------------------------------- |
-| `theme`          | Specify theme of the slide deck. |
-| `style`          | Specify CSS for tweaking theme.  |
-| `headingDivider` | Specify heading divider option.  |
+| Name             | Description                                                                                                            |
+| :--------------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `headingDivider` | Specify heading divider option.                                                                                        |
+| `lang`           | Set the value of [`lang` attribute](https://developer.mozilla.org/docs/Web/HTML/Global_attributes/lang) for each slide |
+| `style`          | Specify CSS for tweaking theme.                                                                                        |
+| `theme`          | Specify theme of the slide deck.                                                                                       |
 
 ### Theme
 

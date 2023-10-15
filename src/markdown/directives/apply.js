@@ -17,6 +17,7 @@ import builtInDirectives from './directives'
  */
 function _apply(md, opts = {}) {
   const { marpit } = md
+  const { lang } = marpit.options
 
   const dataset = opts.dataset === undefined ? true : !!opts.dataset
   const css = opts.css === undefined ? true : !!opts.css
@@ -69,6 +70,9 @@ function _apply(md, opts = {}) {
           }
 
           // Apply attribute to token
+          if (marpitDirectives.lang || lang)
+            token.attrSet('lang', marpitDirectives.lang || lang)
+
           if (marpitDirectives.class)
             token.attrJoin('class', marpitDirectives.class)
 

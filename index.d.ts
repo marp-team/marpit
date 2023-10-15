@@ -10,6 +10,7 @@ declare namespace Marpit {
     anchor?: boolean | AnchorCallback
     container?: false | Element | Element[]
     headingDivider?: false | HeadingDivider | HeadingDivider[]
+    lang?: string
     looseYAML?: boolean
     markdown?: any
     printable?: boolean

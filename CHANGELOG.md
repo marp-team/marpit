@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- `lang` global directive and constructor option ([#376](https://github.com/marp-team/marpit/pull/376))
+
 ### Changed
 
 - Upgrade dependent packages to the latest version ([#375](https://github.com/marp-team/marpit/pull/375))
