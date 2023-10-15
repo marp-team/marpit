@@ -9,6 +9,7 @@ declare namespace Marpit {
   interface Options {
     anchor?: boolean | AnchorCallback
     container?: false | Element | Element[]
+    cssContainerQuery?: boolean | string | string[]
     headingDivider?: false | HeadingDivider | HeadingDivider[]
     lang?: string
     looseYAML?: boolean
