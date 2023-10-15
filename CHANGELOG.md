@@ -4,6 +4,7 @@
 
 ### Added
 
+- `cssContainerQuery` constructor option ([#355](https://github.com/marp-team/marpit/issues/355), [#377](https://github.com/marp-team/marpit/pull/377))
 - `lang` global directive and constructor option ([#376](https://github.com/marp-team/marpit/pull/376))
 
 ### Changed

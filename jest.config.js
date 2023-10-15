@@ -6,4 +6,5 @@ module.exports = {
   testEnvironment: 'node',
   testRegex: '(/(test|__tests__)/(?!_).*|(\\.|/)(test|spec))\\.js$',
   moduleFileExtensions: ['js', 'json', 'node'],
+  prettierPath: null,
 }

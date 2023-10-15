@@ -22,6 +22,7 @@ import ThemeSet from './theme_set'
 const defaultOptions = {
   anchor: true,
   container: marpitContainer,
+  cssContainerQuery: false,
   headingDivider: false,
   lang: undefined,
   looseYAML: false,
@@ -68,6 +69,10 @@ class Marpit {
    * @param {false|Element|Element[]}
    *     [opts.container={@link module:element.marpitContainer}] Container
    *     element(s) wrapping whole slide deck.
+   * @param {boolean|string|string[]} [opts.cssContainerQuery=false] Set whether
+   *     to enable CSS container query (`@container`). By setting the string or
+   *     string array, you can specify the container name(s) for the CSS
+   *     container.
    * @param {false|number|number[]} [opts.headingDivider=false] Start a new
    *     slide page at before of headings. it would apply to headings whose
    *     larger than or equal to the specified level if a number is given, or
@@ -264,6 +269,7 @@ class Marpit {
       ],
       inlineSVG: this.inlineSVGOptions,
       printable: this.options.printable,
+      containerQuery: this.options.cssContainerQuery,
     }
   }
 

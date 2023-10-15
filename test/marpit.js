@@ -44,7 +44,9 @@ describe('Marpit', () => {
         expect(instance.options.anchor).toBe(true)
         expect(instance.options.container.tag).toBe('div')
         expect(instance.options.container.class).toBe('marpit')
-        expect(instance.options.markdown).toBe(undefined)
+        expect(instance.options.cssContainerQuery).toBe(false)
+        expect(instance.options.lang).toBeUndefined()
+        expect(instance.options.markdown).toBeUndefined()
         expect(instance.options.printable).toBe(true)
         expect(instance.options.slideContainer).toBe(false)
         expect(instance.options.inlineSVG).toBe(false)
@@ -500,6 +502,36 @@ describe('Marpit', () => {
         const [token] = marpit.markdown.parse('')
 
         expect(token.attrGet('id')).toBe('custom-1')
+      })
+    })
+
+    context('with cssContainerQuery option', () => {
+      it('does not include container query style if cssContainerQuery was false', () => {
+        const { css } = new Marpit({ cssContainerQuery: false }).render('')
+        expect(css).not.toContain('container-type: size;')
+      })
+
+      it('includes container query style if cssContainerQuery was true', () => {
+        const { css } = new Marpit({ cssContainerQuery: true }).render('')
+        expect(css).toContain('container-type: size;')
+      })
+
+      it('includes container name style if cssContainerQuery was string', () => {
+        const { css } = new Marpit({ cssContainerQuery: 'test' }).render('')
+        expect(css).toContain('container-type: size;')
+        expect(css).toContain('container-name: test;')
+      })
+
+      it('includes space-separated container name style if cssContainerQuery was the array of strings', () => {
+        const { css } = new Marpit({ cssContainerQuery: ['a', 'b'] }).render('')
+        expect(css).toContain('container-type: size;')
+        expect(css).toContain('container-name: a b;')
+      })
+
+      it('does include container name style if cssContainerQuery was empty array', () => {
+        const { css } = new Marpit({ cssContainerQuery: [] }).render('')
+        expect(css).toContain('container-type: size;')
+        expect(css).not.toContain('container-name')
       })
     })
   })

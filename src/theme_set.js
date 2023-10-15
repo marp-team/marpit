@@ -1,6 +1,9 @@
 import postcss from 'postcss'
 import postcssPlugin from './helpers/postcss_plugin'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssContainerQuery, {
+  postprocess as postcssContainerQueryPostProcess,
+} from './postcss/container_query'
 import postcssImportHoisting from './postcss/import/hoisting'
 import postcssImportReplace from './postcss/import/replace'
 import postcssImportSuppress from './postcss/import/suppress'
@@ -236,6 +239,9 @@ class ThemeSet {
    * @param {string} [opts.before] A CSS string to prepend into before theme.
    * @param {Element[]} [opts.containers] Container elements wrapping whole
    *     slide deck.
+   * @param {boolean|string|string[]} [opts.containerQuery] Enable CSS container
+   *     query by setting `true`. You can also specify the name of container for
+   *     CSS container query used by the `@container` at-rule in child elements.
    * @param {boolean} [opts.printable] Make style printable to PDF.
    * @param {Marpit~InlineSVGOptions} [opts.inlineSVG] Apply a hierarchy of
    *     inline SVG to CSS selector by setting `true`. _(Experimental)_
@@ -263,6 +269,12 @@ class ThemeSet {
     const after = additionalCSS(opts.after)
     const before = additionalCSS(opts.before)
 
+    const containerName =
+      typeof opts.containerQuery === 'string' ||
+      Array.isArray(opts.containerQuery)
+        ? opts.containerQuery
+        : undefined
+
     const packer = postcss(
       [
         before &&
@@ -274,6 +286,7 @@ class ThemeSet {
           postcssPlugin('marpit-pack-after', () => (css) => {
             css.last.after(after)
           }),
+        opts.containerQuery && postcssContainerQuery(containerName),
         postcssImportHoisting,
         postcssImportReplace(this),
         opts.printable &&
@@ -297,6 +310,7 @@ class ThemeSet {
         postcssPseudoReplace(opts.containers, slideElements),
         postcssRootIncreasingSpecificity,
         opts.printable && postcssPrintablePostProcess,
+        opts.containerQuery && postcssContainerQueryPostProcess,
         postcssRem,
         postcssImportHoisting,
       ].filter((p) => p),
