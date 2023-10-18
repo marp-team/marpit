@@ -36,38 +36,6 @@ function _applyImage(md) {
       }
     }
   })
-
-  // [DEPRECATED] Shorthand for color spot directive
-  md.core.ruler.after(
-    'marpit_inline_svg',
-    'marpit_apply_color',
-    ({ inlineMode, tokens }) => {
-      if (inlineMode) return
-
-      let current
-
-      for (const t of tokens) {
-        if (t.type === 'marpit_slide_open') current = t
-        if (t.type === 'marpit_slide_close') current = undefined
-
-        // Collect parsed inline image meta
-        if (current && t.type === 'inline') {
-          for (const tc of t.children) {
-            if (tc.type === 'image') {
-              const { background, color } = tc.meta.marpitImage
-
-              if (!background && color) {
-                current.meta.marpitDirectives = {
-                  ...(current.meta.marpitDirectives || {}),
-                  color,
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-  )
 }
 
 export const applyImage = marpitPlugin(_applyImage)
