@@ -73,8 +73,26 @@ function _apply(md, opts = {}) {
           if (marpitDirectives.lang || lang)
             token.attrSet('lang', marpitDirectives.lang || lang)
 
-          if (marpitDirectives.class)
-            token.attrJoin('class', marpitDirectives.class)
+          if (marpitDirectives.class) {
+            token.attrJoin(
+              'class',
+              Array.from(
+                marpitDirectives.class
+                  .split(' ')
+                  .reduce(
+                    (acc, cur) => (
+                      cur.startsWith('+')
+                        ? acc.add(cur.substring(1))
+                        : cur.startsWith('-')
+                        ? acc.delete(cur.substring(1))
+                        : acc.add(cur),
+                      acc
+                    ),
+                    new Set(),
+                  ),
+              ).join(' '),
+            )
+          }
 
           if (marpitDirectives.color) style.set('color', marpitDirectives.color)
 
