@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Breaking
+
+- Drop support against end-of-lifed Node.js versions (v16 and earlier) ([#291](https://github.com/marp-team/marpit/issues/291), [#380](https://github.com/marp-team/marpit/pull/380))
+
 ### Removed
 
 - Deprecated color setting shorthand via Markdown image syntax ([#331](https://github.com/marp-team/marpit/issues/331), [#379](https://github.com/marp-team/marpit/pull/379))
