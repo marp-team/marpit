@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+- Deprecated color setting shorthand via Markdown image syntax ([#331](https://github.com/marp-team/marpit/issues/331), [#379](https://github.com/marp-team/marpit/pull/379))
+
 ## v2.6.1 - 2023-10-15
 
 ### Fixed
