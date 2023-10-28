@@ -87,7 +87,6 @@
     "ws": "^8.14.2"
   },
   "dependencies": {
-    "color-string": "^1.9.1",
     "cssesc": "^3.0.0",
     "js-yaml": "^4.1.0",
     "lodash.kebabcase": "^4.1.1",
