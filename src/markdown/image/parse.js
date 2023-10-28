@@ -1,5 +1,4 @@
 /** @module */
-import colorString from 'color-string'
 import marpitPlugin from '../../plugin'
 
 const escape = (target) =>
@@ -93,17 +92,9 @@ optionMatchers.set(/^sepia(?::(.+))?$/, (matches, meta) => ({
 function _parseImage(md) {
   const { process } = md.core
 
-  // Store original URL, for the color shorthand.
-  // (Avoid a side effect from link normalization)
-  let originalURLMap
   let refCount = 0
 
   const finalizeTokenAttr = (token, state) => {
-    // Convert imprimitive attribute value into primitive string
-    if (token.attrs && Array.isArray(token.attrs)) {
-      token.attrs = token.attrs.map(([name, value]) => [name, value.toString()])
-    }
-
     // Apply finalization recursively to inline tokens
     if (token.type === 'inline') {
       for (const t of token.children) finalizeTokenAttr(t, state)
@@ -132,24 +123,12 @@ function _parseImage(md) {
   }
 
   md.core.process = (state) => {
-    const { normalizeLink } = md
-
-    // Prevent reset of WeakMap caused by calling core process internally
-    if (refCount === 0) originalURLMap = new WeakMap()
-
     try {
-      md.normalizeLink = (url) => {
-        const imprimitiveUrl = new String(normalizeLink.call(md, url))
-        originalURLMap.set(imprimitiveUrl, url)
-
-        return imprimitiveUrl
-      }
-
       refCount += 1
+
       return process.call(md.core, state)
     } finally {
       refCount -= 1
-      md.normalizeLink = normalizeLink
 
       if (refCount === 0) {
         // Apply finalization for every tokens
@@ -186,33 +165,12 @@ function _parseImage(md) {
         }, [])
 
         const url = token.attrGet('src')
-        const originalUrl = originalURLMap.has(url)
-          ? originalURLMap.get(url)
-          : url
 
         token.meta = token.meta || {}
         token.meta.marpitImage = {
           ...(token.meta.marpitImage || {}),
           url: url.toString(),
           options,
-        }
-
-        // [DEPRECATED]
-        // Detect shorthand for setting color (Use value before normalization)
-        if (
-          !!colorString.get(originalUrl) ||
-          originalUrl.toLowerCase() === 'currentcolor'
-        ) {
-          const replacedDirective = options.some((opt) => opt.content === 'bg')
-            ? 'backgroundColor'
-            : 'color'
-
-          console.warn(
-            `Deprecation warning: Shorthand for setting colors via Markdown image syntax is deprecated now, and will remove in next major release. Please replace to a scoped local direcitve <!-- _${replacedDirective}: "${originalUrl}" -->, or use the scoped style <style scoped>.`,
-          )
-
-          token.meta.marpitImage.color = originalUrl
-          token.hidden = true
         }
 
         // Parse keyword through matchers

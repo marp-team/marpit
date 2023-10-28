@@ -108,28 +108,4 @@ describe('Marpit image plugin', () => {
       expect($('img').attr('alt')).toBe('This is  example\timage')
     })
   })
-
-  describe('[DEPRECATED] Shorthand for text color', () => {
-    const colorMd = (src, opts = '') => `![${opts}](${src})`
-    const colorDirective = (markdown) => {
-      const [firstSlide] = md().parse(markdown)
-      return firstSlide.meta.marpitDirectives.color
-    }
-
-    it('assigns color directive', () => {
-      expect(colorDirective(colorMd('#123abc'))).toBe('#123abc')
-      expect(colorDirective(colorMd('#def'))).toBe('#def')
-      expect(colorDirective(colorMd('transparent'))).toBe('transparent')
-      expect(colorDirective(colorMd('currentColor'))).toBe('currentColor')
-      expect(colorDirective(colorMd('rgb(255,128,0)'))).toBe('rgb(255,128,0)')
-      expect(colorDirective(colorMd('rgba(16,32,64,0.5)'))).toBe(
-        'rgba(16,32,64,0.5)',
-      )
-    })
-
-    it('does not assign color directive when options have bg keyword', () => {
-      expect(colorDirective(colorMd('#123abc', 'bg'))).toBeUndefined()
-      expect(colorDirective('![bg](red) ![](blue)')).toBe('blue')
-    })
-  })
 })
