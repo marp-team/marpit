@@ -12,6 +12,9 @@ section {
   position: relative;
 
   scroll-snap-align: center center;
+
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 section::after {
