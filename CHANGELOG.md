@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v3.0.0 - 2024-05-17
+
 ### Breaking
 
 - Drop support against end-of-lifed Node.js versions (v16 and earlier) ([#291](https://github.com/marp-team/marpit/issues/291), [#380](https://github.com/marp-team/marpit/pull/380))
