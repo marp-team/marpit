@@ -82,7 +82,6 @@
     "sass": "1.69.3",
     "serve-handler": "^6.1.5",
     "stylelint": "^15.10.3",
-    "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard-scss": "^11.0.0",
     "ws": "^8.14.2"
   },
