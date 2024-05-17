@@ -13,6 +13,7 @@
 ### Changed
 
 - Switch package manager from yarn to npm ([#391](https://github.com/marp-team/marpit/pull/391))
+- Upgrade development Node.js to v20 LTS ([#392](https://github.com/marp-team/marpit/pull/392))
 
 ### Removed
 
