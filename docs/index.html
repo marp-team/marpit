@@ -18,6 +18,7 @@
     <link rel="icon" type="image/png" href="/favicon.png" />
   </head>
   <body>
+    <!--
     <template id="alert-for-marp-consumers">
       <aside class="alert-for-marp-consumers">
         <div class="alert-for-marp-consumers-content">
@@ -65,6 +66,7 @@
         </div>
       </aside>
     </template>
+    -->
 
     <div id="app"></div>
     <script>
@@ -82,36 +84,31 @@
         pagination: { crossChapter: true },
         plugins: [
           (hook) => {
-            const tpl = document.getElementById('alert-for-marp-consumers')
-
-            hook.afterEach((html) => {
-              try {
-                const alertState = sessionStorage.getItem('marpit-alert')
-                if (alertState === 'read') return html
-              } catch (e) {
-                // ignore
-              }
-
-              return tpl.innerHTML + html
-            })
-
-            hook.mounted(() => {
-              document.body.addEventListener('click', (e) => {
-                if (e.target.closest('[data-alert-close]')) {
-                  e.preventDefault()
-
-                  document
-                    .querySelectorAll('.alert-for-marp-consumers')
-                    .forEach((el) => el.remove())
-
-                  try {
-                    sessionStorage.setItem('marpit-alert', 'read')
-                  } catch (e) {
-                    // ignore
-                  }
-                }
-              })
-            })
+            // const tpl = document.getElementById('alert-for-marp-consumers')
+            // hook.afterEach((html) => {
+            //   try {
+            //     const alertState = sessionStorage.getItem('marpit-alert')
+            //     if (alertState === 'read') return html
+            //   } catch (e) {
+            //     // ignore
+            //   }
+            //   return tpl.innerHTML + html
+            // })
+            // hook.mounted(() => {
+            //   document.body.addEventListener('click', (e) => {
+            //     if (e.target.closest('[data-alert-close]')) {
+            //       e.preventDefault()
+            //       document
+            //         .querySelectorAll('.alert-for-marp-consumers')
+            //         .forEach((el) => el.remove())
+            //       try {
+            //         sessionStorage.setItem('marpit-alert', 'read')
+            //       } catch (e) {
+            //         // ignore
+            //       }
+            //     }
+            //   })
+            // })
           },
         ],
       }
