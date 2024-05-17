@@ -41,9 +41,9 @@
     "singleQuote": true
   },
   "scripts": {
-    "build": "yarn -s clean && babel src --out-dir lib",
-    "check:audit": "yarn audit",
-    "check:format": "yarn -s run format -c",
+    "build": "npm -s run clean && babel src --out-dir lib",
+    "check:audit": "npm audit",
+    "check:format": "npm -s run format -- -c",
     "clean": "rimraf lib",
     "docs": "node ./docsify/serve.js",
     "docs:style": "node ./docsify/build.js",
@@ -82,7 +82,6 @@
     "sass": "1.69.3",
     "serve-handler": "^6.1.5",
     "stylelint": "^15.10.3",
-    "stylelint-config-prettier": "^9.0.5",
     "stylelint-config-standard-scss": "^11.0.0",
     "ws": "^8.14.2"
   },
