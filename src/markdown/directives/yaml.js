@@ -24,7 +24,7 @@ function parse(text) {
     if (obj === null || typeof obj !== 'object') return false
 
     return obj
-  } catch (e) {
+  } catch {
     return false
   }
 }
