@@ -62,8 +62,8 @@ Are you interested in contributing? See [CONTRIBUTING.md](.github/CONTRIBUTING.m
 git clone https://github.com/marp-team/marpit
 cd marpit
 
-yarn install
-yarn build
+npm install
+npm run build
 ```
 
 ## Sub-projects

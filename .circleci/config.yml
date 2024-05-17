@@ -22,34 +22,27 @@ commands:
       postinstall:
         type: steps
         default: []
-      yarn:
-        type: string
-        default: '^1.22.19'
     steps:
-      - run:
-          name: Upgrade yarn for current user
-          command: cd ~ && yarn policies set-version << parameters.yarn >>
-
       - restore_cache:
           keys:
-            - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
-            - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-
-            - v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-
+            - v3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package-lock.json" }}-{{ .Branch }}
+            - v3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package-lock.json" }}-
+            - v3-dependencies-{{ .Environment.CIRCLE_JOB }}-
 
-      - run: yarn install --frozen-lockfile <<# parameters.force >>--ignore-engines<</ parameters.force >>
+      - run: npm ci <<# parameters.force >>--force<</ parameters.force >>
       - steps: << parameters.postinstall >>
 
       - save_cache:
-          key: v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}-{{ .Branch }}
+          key: v2.3-dependencies-{{ .Environment.CIRCLE_JOB }}-{{ checksum "package-lock.json" }}-{{ .Branch }}
           paths:
-            - ~/.cache/yarn
+            - ~/.npm
 
   audit:
     steps:
       - checkout
       - install:
           postinstall:
-            - run: yarn -s check:audit
+            - run: npm -s run check:audit
 
   prepare:
     parameters:
@@ -67,21 +60,21 @@ commands:
     steps:
       - run:
           name: Prettier formatting
-          command: yarn check:format
+          command: npm run check:format
 
       - run:
           name: ESLint
-          command: yarn lint:js
+          command: npm run lint:js
 
       - run:
           name: stylelint
-          command: yarn lint:css
+          command: npm run lint:css
 
   test:
     steps:
       - run:
           name: Jest
-          command: yarn test:coverage --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
+          command: npm run test:coverage -- --ci --maxWorkers=2 --reporters=default --reporters=jest-junit
           environment:
             JEST_JUNIT_OUTPUT_DIR: tmp/test-results
 
