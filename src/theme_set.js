@@ -261,7 +261,7 @@ class ThemeSet {
 
       try {
         return postcss([postcssImportSuppress(this)]).process(css).css
-      } catch (e) {
+      } catch {
         return undefined
       }
     }

@@ -95,7 +95,7 @@ function _assign(md) {
           current.meta.marpitStyleScoped.styles = styles.map((style) => {
             try {
               return processor.process(style).css
-            } catch (e) {
+            } catch {
               return style
             }
           })
@@ -140,7 +140,7 @@ function _assign(md) {
             current.meta.marpitStyleScoped.styles.push(
               processor.process(content).css,
             )
-          } catch (e) {
+          } catch {
             // No ops
           }
         } else if (content) {

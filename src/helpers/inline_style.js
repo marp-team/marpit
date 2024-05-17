@@ -73,7 +73,7 @@ export default class InlineStyle {
         parsed = postcss.parse(`${prop}:${this.decls[prop]}`, {
           from: undefined,
         })
-      } catch (e) {
+      } catch {
         // A declaration that have value it cannot parse will ignore.
       }
 
