@@ -10,6 +10,10 @@
 
 - Add `-webkit-text-size-adjust: 100%;` to the scaffold theme ([#389](https://github.com/marp-team/marpit/pull/389))
 
+### Changed
+
+- Switch package manager from yarn to npm ([#391](https://github.com/marp-team/marpit/pull/391))
+
 ### Removed
 
 - Deprecated color setting shorthand via Markdown image syntax ([#331](https://github.com/marp-team/marpit/issues/331), [#379](https://github.com/marp-team/marpit/pull/379))
