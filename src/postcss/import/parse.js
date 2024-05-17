@@ -1,4 +1,3 @@
-/* eslint consistent-return: 0 */
 /** @module */
 import postcssPlugin from '../../helpers/postcss_plugin'
 
