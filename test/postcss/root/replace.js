@@ -25,6 +25,9 @@ describe('Marpit PostCSS root replace plugin', () => {
     expect(run(':root:not(:root.klass) { --bg: #fff; }').css).toBe(
       'section:not(section.klass) { --bg: #fff; }',
     )
+    expect(run(':is(:root) { --bg: #fff; }').css).toBe(
+      ':is(section) { --bg: #fff; }',
+    )
     expect(
       run(dedent`
         @media screen {

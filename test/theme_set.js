@@ -20,6 +20,21 @@ describe('ThemeSet', () => {
       expect(instance.themeMap).toBeInstanceOf(Map)
       expect({}.propertyIsEnumerable.call(instance, 'themeMap')).toBe(false)
     })
+
+    context('cssNesting option', () => {
+      it('has cssNesting property as false by default', () =>
+        expect(instance.cssNesting).toBe(false))
+
+      it('has cssNesting property as true when passed as true', () => {
+        instance = new ThemeSet({ cssNesting: true })
+        expect(instance.cssNesting).toBe(true)
+      })
+
+      it('has cssNesting property as false when passed as false', () => {
+        instance = new ThemeSet({ cssNesting: false })
+        expect(instance.cssNesting).toBe(false)
+      })
+    })
   })
 
   describe('get #size', () => {
@@ -52,7 +67,19 @@ describe('ThemeSet', () => {
 
     it('passes an empty metaType option to Theme.fromCSS', () => {
       instance.add('/* @theme a */')
-      expect(spy).toBeCalledWith('/* @theme a */', { metaType: {} })
+      expect(spy).toBeCalledWith(
+        '/* @theme a */',
+        expect.objectContaining({ metaType: {} }),
+      )
+    })
+
+    it('passes cssNesting option to Theme.fromCSS', () => {
+      instance.cssNesting = false
+      instance.add('/* @theme a */')
+      expect(spy).toBeCalledWith(
+        '/* @theme a */',
+        expect.objectContaining({ cssNesting: false }),
+      )
     })
 
     context("when ThemeSet's metaType property has changed", () => {
@@ -62,7 +89,10 @@ describe('ThemeSet', () => {
         instance.metaType = metaType
         instance.add('/* @theme c */')
 
-        expect(spy).toBeCalledWith('/* @theme c */', { metaType })
+        expect(spy).toBeCalledWith(
+          '/* @theme c */',
+          expect.objectContaining({ metaType }),
+        )
       })
     })
   })

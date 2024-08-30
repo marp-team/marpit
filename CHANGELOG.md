@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Support for CSS nesting (`cssNesting` constructor option) ([#397](https://github.com/marp-team/marpit/issues/397), [#399](https://github.com/marp-team/marpit/pull/399))
+
 ### Changed
 
 - Upgrade development Node.js and dependent packages to the latest ([#398](https://github.com/marp-team/marpit/issues/398))

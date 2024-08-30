@@ -1,6 +1,7 @@
 import postcss from 'postcss'
 import postcssImportParse from './postcss/import/parse'
 import postcssMeta from './postcss/meta'
+import postcssNesting from './postcss/nesting'
 import { pseudoClass } from './postcss/root/increasing_specificity'
 import postcssRootReplace from './postcss/root/replace'
 import postcssSectionSize from './postcss/section_size'
@@ -13,6 +14,7 @@ const absoluteUnits = {
   pc: (v) => v * 16,
   pt: (v) => (v * 4) / 3,
   px: (v) => v,
+  // q: (v) => (v * 24) / 25.4,
 }
 
 const convertToPixel = (value) => {
@@ -95,16 +97,20 @@ class Theme {
    *     `@theme` meta comment.
    * @param {Object} [opts]
    * @param {Object} [opts.metaType] An object for defined types for metadata.
+   * @param {Object} [opts.cssNesting] Enable support for CSS nesting.
    */
   static fromCSS(cssString, opts = {}) {
     const metaType = { ...(opts.metaType || {}), ...reservedMetaType }
 
-    const { css, result } = postcss([
-      postcssMeta({ metaType }),
-      postcssRootReplace({ pseudoClass }),
-      postcssSectionSize({ preferedPseudoClass: pseudoClass }),
-      postcssImportParse,
-    ]).process(cssString)
+    const { css, result } = postcss(
+      [
+        !!opts.cssNesting && postcssNesting,
+        postcssMeta({ metaType }),
+        postcssRootReplace({ pseudoClass }),
+        postcssSectionSize({ preferedPseudoClass: pseudoClass }),
+        postcssImportParse,
+      ].filter((p) => p),
+    ).process(cssString)
 
     if (!opts[skipThemeValidationSymbol] && !result.marpitMeta.theme)
       throw new Error('Marpit theme CSS requires @theme meta.')

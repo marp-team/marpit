@@ -7,6 +7,7 @@ import postcssContainerQuery, {
 import postcssImportHoisting from './postcss/import/hoisting'
 import postcssImportReplace from './postcss/import/replace'
 import postcssImportSuppress from './postcss/import/suppress'
+import postcssNesting from './postcss/nesting'
 import postcssPagination from './postcss/pagination'
 import postcssPrintable, {
   postprocess as postcssPrintablePostProcess,
@@ -23,14 +24,21 @@ import postcssSVGBackdrop from './postcss/svg_backdrop'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
 
+const defaultOptions = {
+  cssNesting: false,
+}
+
 /**
  * Marpit theme set class.
  */
 class ThemeSet {
   /**
    * Create a ThemeSet instance.
+   *
+   * @param {Object} [opts]
+   * @param {boolean} [opts.cssNesting=true] Enable CSS nesting support.
    */
-  constructor() {
+  constructor(opts = defaultOptions) {
     /**
      * An instance of default theme.
      *
@@ -84,6 +92,14 @@ class ThemeSet {
      */
     this.metaType = {}
 
+    /**
+     * A boolean value indicating whether the theme set is enabling CSS nesting
+     * or not.
+     *
+     * @type {boolean}
+     */
+    this.cssNesting = !!opts.cssNesting
+
     Object.defineProperty(this, 'themeMap', { value: new Map() })
   }
 
@@ -106,7 +122,10 @@ class ThemeSet {
    *     metadata.
    */
   add(css) {
-    const theme = Theme.fromCSS(css, { metaType: this.metaType })
+    const theme = Theme.fromCSS(css, {
+      metaType: this.metaType,
+      cssNesting: this.cssNesting,
+    })
 
     this.addTheme(theme)
     return theme
@@ -256,11 +275,16 @@ class ThemeSet {
       slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
     }
 
+    const runPostCSS = (css, plugins) =>
+      postcss(
+        [this.cssNesting && postcssNesting(), ...plugins].filter((p) => p),
+      ).process(css).css
+
     const additionalCSS = (css) => {
       if (!css) return undefined
 
       try {
-        return postcss([postcssImportSuppress(this)]).process(css).css
+        return runPostCSS(css, [postcssImportSuppress(this)])
       } catch {
         return undefined
       }
@@ -275,48 +299,44 @@ class ThemeSet {
         ? opts.containerQuery
         : undefined
 
-    const packer = postcss(
-      [
-        before &&
-          postcssPlugin(
-            'marpit-pack-before',
-            () => (css) => css.first.before(before),
-          ),
-        after &&
-          postcssPlugin('marpit-pack-after', () => (css) => {
-            css.last.after(after)
-          }),
-        opts.containerQuery && postcssContainerQuery(containerName),
-        postcssImportHoisting,
-        postcssImportReplace(this),
-        opts.printable &&
-          postcssPrintable({
-            width: this.getThemeProp(theme, 'width'),
-            height: this.getThemeProp(theme, 'height'),
-          }),
-        theme !== scaffold &&
-          postcssPlugin(
-            'marpit-pack-scaffold',
-            () => (css) => css.first.before(scaffold.css),
-          ),
-        inlineSVGOpts.enabled && postcssAdvancedBackground,
-        inlineSVGOpts.enabled &&
-          inlineSVGOpts.backdropSelector &&
-          postcssSVGBackdrop,
-        postcssPagination,
-        postcssRootReplace({ pseudoClass }),
-        postcssRootFontSize,
-        postcssPseudoPrepend,
-        postcssPseudoReplace(opts.containers, slideElements),
-        postcssRootIncreasingSpecificity,
-        opts.printable && postcssPrintablePostProcess,
-        opts.containerQuery && postcssContainerQueryPostProcess,
-        postcssRem,
-        postcssImportHoisting,
-      ].filter((p) => p),
-    )
-
-    return packer.process(theme.css).css
+    return runPostCSS(theme.css, [
+      before &&
+        postcssPlugin(
+          'marpit-pack-before',
+          () => (css) => css.first.before(before),
+        ),
+      after &&
+        postcssPlugin('marpit-pack-after', () => (css) => {
+          css.last.after(after)
+        }),
+      opts.containerQuery && postcssContainerQuery(containerName),
+      postcssImportHoisting,
+      postcssImportReplace(this),
+      opts.printable &&
+        postcssPrintable({
+          width: this.getThemeProp(theme, 'width'),
+          height: this.getThemeProp(theme, 'height'),
+        }),
+      theme !== scaffold &&
+        postcssPlugin(
+          'marpit-pack-scaffold',
+          () => (css) => css.first.before(scaffold.css),
+        ),
+      inlineSVGOpts.enabled && postcssAdvancedBackground,
+      inlineSVGOpts.enabled &&
+        inlineSVGOpts.backdropSelector &&
+        postcssSVGBackdrop,
+      postcssPagination,
+      postcssRootReplace({ pseudoClass }),
+      postcssRootFontSize,
+      postcssPseudoPrepend,
+      postcssPseudoReplace(opts.containers, slideElements),
+      postcssRootIncreasingSpecificity,
+      opts.printable && postcssPrintablePostProcess,
+      opts.containerQuery && postcssContainerQueryPostProcess,
+      postcssRem,
+      postcssImportHoisting,
+    ])
   }
 
   /**

@@ -79,6 +79,7 @@
     "jsdoc": "^4.0.3",
     "npm-check-updates": "^17.1.0",
     "npm-run-all2": "^6.2.2",
+    "postcss-selector-parser": "^6.1.2",
     "prettier": "^3.3.3",
     "rimraf": "^6.0.1",
     "sass": "1.77.8",
@@ -88,12 +89,14 @@
     "ws": "^8.18.0"
   },
   "dependencies": {
+    "@csstools/postcss-is-pseudo-class": "^5.0.0",
     "cssesc": "^3.0.0",
     "js-yaml": "^4.1.0",
     "lodash.kebabcase": "^4.1.1",
     "markdown-it": "^14.1.0",
     "markdown-it-front-matter": "^0.2.4",
-    "postcss": "^8.4.41"
+    "postcss": "^8.4.41",
+    "postcss-nesting": "^13.0.0"
   },
   "publishConfig": {
     "access": "public"
