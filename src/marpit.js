@@ -23,6 +23,7 @@ const defaultOptions = {
   anchor: true,
   container: marpitContainer,
   cssContainerQuery: false,
+  cssNesting: true,
   headingDivider: false,
   lang: undefined,
   looseYAML: false,
@@ -73,6 +74,9 @@ class Marpit {
    *     to enable CSS container query (`@container`). By setting the string or
    *     string array, you can specify the container name(s) for the CSS
    *     container.
+   * @param {boolean} [opts.cssNesting=false] Enable CSS nesting support. If
+   *     enabled, Marpit will try to make flatten the CSS with nested rules
+   *     before rendering, to make it compatible with Marpit preprocessing.
    * @param {false|number|number[]} [opts.headingDivider=false] Start a new
    *     slide page at before of headings. it would apply to headings whose
    *     larger than or equal to the specified level if a number is given, or
@@ -128,7 +132,9 @@ class Marpit {
     /**
      * @type {ThemeSet}
      */
-    this.themeSet = new ThemeSet()
+    this.themeSet = new ThemeSet({
+      cssNesting: this.options.cssNesting,
+    })
 
     this.applyMarkdownItPlugins(
       (() => {
@@ -267,9 +273,9 @@ class Marpit {
         ...wrapArray(this.options.container),
         ...wrapArray(this.options.slideContainer),
       ],
+      containerQuery: this.options.cssContainerQuery,
       inlineSVG: this.inlineSVGOptions,
       printable: this.options.printable,
-      containerQuery: this.options.cssContainerQuery,
     }
   }
 

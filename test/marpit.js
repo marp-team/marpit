@@ -3,6 +3,7 @@ import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import postcss from 'postcss'
 import { Marpit, ThemeSet } from '../src/index'
+import { normalizeSelectorsInCss } from './_supports/selector_normalizer'
 
 describe('Marpit', () => {
   // Suppress PostCSS warning while running test
@@ -45,6 +46,7 @@ describe('Marpit', () => {
         expect(instance.options.container.tag).toBe('div')
         expect(instance.options.container.class).toBe('marpit')
         expect(instance.options.cssContainerQuery).toBe(false)
+        expect(instance.options.cssNesting).toBe(true)
         expect(instance.options.lang).toBeUndefined()
         expect(instance.options.markdown).toBeUndefined()
         expect(instance.options.printable).toBe(true)
@@ -499,6 +501,78 @@ describe('Marpit', () => {
         const { css } = new Marpit({ cssContainerQuery: [] }).render('')
         expect(css).toContain('container-type: size;')
         expect(css).not.toContain('container-name')
+      })
+    })
+
+    context('with cssNesting option', () => {
+      const cssWithNesting = (root = 'section') => dedent`
+        ${root} {
+          color: red;
+
+          h1 {
+            font-size: 2em;
+
+            &:hover {
+              color: blue;
+            }
+          }
+
+          > h2 {
+            color: green;
+          }
+        }
+      `
+
+      it('parses CSS nesting if cssNesting was true', () => {
+        // Inline style
+        const { css } = new Marpit({ cssNesting: true }).render(
+          `<style>\n${cssWithNesting()}\n</style>`,
+        )
+        const normalizedCss = normalizeSelectorsInCss(css)
+
+        expect(normalizedCss).toContain('div.marpit>section h1')
+        expect(normalizedCss).toContain('div.marpit>section h1:hover')
+        expect(normalizedCss).toContain('div.marpit>section>h2')
+
+        // Custom theme
+        const marpit = new Marpit({ cssNesting: true })
+
+        marpit.themeSet.add(dedent`
+          /* @theme test */
+          ${cssWithNesting(':root')}
+        `)
+
+        const { css: customThemeCSS } = marpit.render('<!-- theme: test -->')
+        const normalizedCustomThemeCSS = normalizeSelectorsInCss(customThemeCSS)
+
+        expect(normalizedCustomThemeCSS).toContain(
+          'div.marpit>:where(section):not([\\20 root]) h1',
+        )
+        expect(normalizedCustomThemeCSS).toContain(
+          'div.marpit>:where(section):not([\\20 root]) h1:hover',
+        )
+        expect(normalizedCustomThemeCSS).toContain(
+          'div.marpit>:where(section):not([\\20 root])>h2',
+        )
+      })
+
+      it('does not parse CSS nesting if cssNesting was false', () => {
+        // Inline style
+        const { css } = new Marpit({ cssNesting: false }).render(
+          `<style>\n${cssWithNesting()}\n</style>`,
+        )
+        expect(css).not.toContain('h1:hover') // Test for parent selector `&`
+
+        // Custom theme
+        const marpit = new Marpit({ cssNesting: false })
+
+        marpit.themeSet.add(dedent`
+          /* @theme test */
+          ${cssWithNesting(':root')}
+        `)
+
+        const { css: customThemeCSS } = marpit.render('<!-- theme: test -->')
+        expect(customThemeCSS).not.toContain('h1:hover')
       })
     })
   })
