@@ -1,7 +1,7 @@
 /** @module */
-import postcssPlugin from '../helpers/postcss_plugin'
-import postcssNesting from 'postcss-nesting'
 import postcssIsPseudoClass from '@csstools/postcss-is-pseudo-class'
+import postcssNesting from 'postcss-nesting'
+import postcssPlugin from '../helpers/postcss_plugin'
 
 const { Rule: applyPostCSSNesting } = postcssNesting()
 
