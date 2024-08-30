@@ -1,6 +1,6 @@
 {
   "name": "@marp-team/marpit",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "The skinny framework for creating slide deck from Markdown",
   "license": "MIT",
   "author": {

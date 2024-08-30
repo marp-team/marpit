@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v3.1.0 - 2024-08-30
+
 ### Added
 
 - Support for CSS nesting (`cssNesting` constructor option) ([#397](https://github.com/marp-team/marpit/issues/397), [#399](https://github.com/marp-team/marpit/pull/399))
