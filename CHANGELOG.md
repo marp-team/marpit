@@ -5,6 +5,7 @@
 ### Added
 
 - Support for CSS nesting (`cssNesting` constructor option) ([#397](https://github.com/marp-team/marpit/issues/397), [#399](https://github.com/marp-team/marpit/pull/399))
+- Allow CSS `Q` unit as slide size definitions ([#400](https://github.com/marp-team/marpit/pull/400))
 
 ### Changed
 
