@@ -6,7 +6,7 @@ import globals from 'globals'
 
 export default [
   js.configs.recommended,
-  // eslintPluginImportX.configs.recommended, // not yet available
+  eslintPluginImportX.flatConfigs.recommended,
   eslintConfigPrettier,
   {
     languageOptions: {

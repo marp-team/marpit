@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade development Node.js and dependent packages to the latest ([#398](https://github.com/marp-team/marpit/issues/398))
+
 ## v3.0.0 - 2024-05-17
 
 ### Breaking

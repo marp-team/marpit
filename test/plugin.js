@@ -1,7 +1,6 @@
 import markdownIt from 'markdown-it'
 import { Marpit } from '../src/index'
-import pluginAsDefaultExport from '../src/plugin'
-import { marpitPlugin } from '../src/plugin'
+import pluginAsDefaultExport, { marpitPlugin } from '../src/plugin'
 
 describe('Plugin interface', () => {
   it('is compatible as CommonJS module', () => {

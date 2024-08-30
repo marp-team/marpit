@@ -1,5 +1,5 @@
 /** @module */
-import YAML, { FAILSAFE_SCHEMA } from 'js-yaml'
+import { load, FAILSAFE_SCHEMA } from 'js-yaml'
 import directives from './directives'
 
 const createPatterns = (keys) => {
@@ -20,7 +20,7 @@ const yamlSpecialChars = `["'{|>~&*`
 
 function parse(text) {
   try {
-    const obj = YAML.load(text, { schema: FAILSAFE_SCHEMA })
+    const obj = load(text, { schema: FAILSAFE_SCHEMA })
     if (obj === null || typeof obj !== 'object') return false
 
     return obj
