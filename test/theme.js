@@ -141,6 +141,7 @@ describe('Theme', () => {
       expect(instance('635mm').widthPixel).toBe(2400)
       expect(instance('8pc').widthPixel).toBe(128)
       expect(instance('300pt').widthPixel).toBe(400)
+      expect(instance('635Q').widthPixel).toBe(600)
     })
 
     it('returns undefined when width has not absolute unit', () => {
