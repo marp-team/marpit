@@ -76,7 +76,7 @@ class Marpit {
    *     container.
    * @param {boolean} [opts.cssNesting=false] Enable CSS nesting support. If
    *     enabled, Marpit will try to make flatten the CSS with nested rules
-   *     before rendering, to make it compatible with Marpit preprocessing.
+   *     before rendering, to make it compatible with Marpit preprocessings.
    * @param {false|number|number[]} [opts.headingDivider=false] Start a new
    *     slide page at before of headings. it would apply to headings whose
    *     larger than or equal to the specified level if a number is given, or

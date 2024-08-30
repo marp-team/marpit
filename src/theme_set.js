@@ -34,6 +34,9 @@ const defaultOptions = {
 class ThemeSet {
   /**
    * Create a ThemeSet instance.
+   *
+   * @param {Object} [opts]
+   * @param {boolean} [opts.cssNesting=true] Enable CSS nesting support.
    */
   constructor(opts = defaultOptions) {
     /**
@@ -90,8 +93,8 @@ class ThemeSet {
     this.metaType = {}
 
     /**
-     * A boolean value indicating whether the theme set should enable CSS
-     * nesting or not.
+     * A boolean value indicating whether the theme set is enabling CSS nesting
+     * or not.
      *
      * @type {boolean}
      */
