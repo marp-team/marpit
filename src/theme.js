@@ -14,7 +14,7 @@ const absoluteUnits = {
   pc: (v) => v * 16,
   pt: (v) => (v * 4) / 3,
   px: (v) => v,
-  // q: (v) => (v * 24) / 25.4,
+  q: (v) => (v * 24) / 25.4,
 }
 
 const convertToPixel = (value) => {
@@ -27,7 +27,7 @@ const convertToPixel = (value) => {
   const parsed = Number.parseFloat(num)
   if (Number.isNaN(parsed)) return undefined
 
-  const conv = absoluteUnits[unit]
+  const conv = absoluteUnits[unit.toLowerCase()]
   return conv ? conv(parsed) : undefined
 }
 
