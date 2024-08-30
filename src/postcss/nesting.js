@@ -37,6 +37,8 @@ export const nesting = postcssPlugin(
         // pseudo-class
         applyPostCSSIsPseudoClass(rule, helpers)
       }
+
+      delete rule.__marpitNestingOriginalSelector
     }
   },
 )
