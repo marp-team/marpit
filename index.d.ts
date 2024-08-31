@@ -10,6 +10,7 @@ declare namespace Marpit {
     anchor?: boolean | AnchorCallback
     container?: false | Element | Element[]
     cssContainerQuery?: boolean | string | string[]
+    cssNesting?: boolean
     headingDivider?: false | HeadingDivider | HeadingDivider[]
     lang?: string
     looseYAML?: boolean
@@ -47,15 +48,20 @@ declare namespace Marpit {
     ...params: P
   ) => void
 
-  type ThemeReservedMeta = {
-    theme: string
-  }
-
   type ThemeMetaType = {
     [key: string]: StringConstructor | ArrayConstructor
   }
 
+  type ThemeReservedMeta = {
+    theme: string
+  }
+
+  interface ThemeSetOptions {
+    cssNesting?: boolean
+  }
+
   type ThemeOptions = {
+    cssNesting?: boolean
     metaType?: ThemeMetaType
   }
 
@@ -126,8 +132,9 @@ declare namespace Marpit {
   }
 
   export class ThemeSet {
-    constructor()
+    constructor(opts?: ThemeSetOptions)
 
+    cssNesting: boolean
     default: Theme | undefined
     metaType: ThemeMetaType
 
