@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Fixed
+
+- Update type definition to add `cssNesting` constructor option ([#401](https://github.com/marp-team/marpit/pull/401))
+
 ## v3.1.0 - 2024-08-30
 
 ### Added
