@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  codecov: codecov/codecov@3.2.0
+  codecov: codecov/codecov@5.0.3
 
 executors:
   node:
@@ -127,9 +127,15 @@ workflows:
       - test-node18:
           requires:
             - audit
+          context:
+            - Codecov
       - test-node20:
           requires:
             - audit
+          context:
+            - Codecov
       - test-node22:
           requires:
             - audit
+          context:
+            - Codecov
