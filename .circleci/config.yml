@@ -127,15 +127,15 @@ workflows:
       - test-node18:
           requires:
             - audit
-          # context:
-          #   - Codecov
+          context:
+            - Codecov
       - test-node20:
           requires:
             - audit
-          # context:
-          #   - Codecov
+          context:
+            - Codecov
       - test-node22:
           requires:
             - audit
-          # context:
-          #   - Codecov
+          context:
+            - Codecov
