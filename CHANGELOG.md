@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Node.js LTS and dependent packages to the latest version ([#405](https://github.com/marp-team/marpit/pull/405))
+
 ## v3.1.1 - 2024-08-31
 
 ### Fixed
