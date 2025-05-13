@@ -5,6 +5,7 @@
 ### Added
 
 - Test against Node.js 24 ([#413](https://github.com/marp-team/marpit/pull/413))
+- Added `print-color-adjust` property to print CSS ([#410](https://github.com/marp-team/marpit/issues/410), [#412](https://github.com/marp-team/marpit/pull/412))
 
 ### Changed
 
