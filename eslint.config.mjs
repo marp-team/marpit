@@ -1,12 +1,14 @@
 import babelParser from '@babel/eslint-parser'
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
-import eslintPluginImportX from 'eslint-plugin-import-x'
+import eslintPluginImportX, {
+  flatConfigs as eslintPluginImportXConfigs,
+} from 'eslint-plugin-import-x'
 import globals from 'globals'
 
 export default [
   js.configs.recommended,
-  eslintPluginImportX.flatConfigs.recommended,
+  eslintPluginImportXConfigs.recommended,
   eslintConfigPrettier,
   {
     languageOptions: {

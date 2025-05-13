@@ -172,7 +172,6 @@ body * {
   @media (width <= 30em) {
     .table-wrapper {
       overflow-x: auto;
-      overflow-x: overlay;
       -webkit-overflow-scrolling: touch;
 
       th,
