@@ -45,6 +45,7 @@ export const printable = postcssPlugin(
     animation-delay: 0s !important;
     animation-duration: 0s !important;
     color-adjust: exact !important;
+    print-color-adjust: exact !important;
     transition: none !important;
   }
 
