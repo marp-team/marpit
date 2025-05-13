@@ -11,6 +11,10 @@
 
 - Upgrade Node.js LTS and dependent packages to the latest version ([#413](https://github.com/marp-team/marpit/pull/413))
 
+### Fixed
+
+- Scaffold theme: Don't overload UA's inline margin for `<h1>` element ([#414](https://github.com/marp-team/marpit/pull/414))
+
 ## v3.1.2 - 2024-12-23
 
 ### Changed

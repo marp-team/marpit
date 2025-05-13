@@ -33,7 +33,7 @@ section:not([data-marpit-pagination])::after {
 /* Normalization */
 h1 {
   font-size: 2em;
-  margin: 0.67em 0;
+  margin-block: 0.67em;
 }
 
 video::-webkit-media-controls {
