@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v3.1.3 - 2025-05-13
+
 ### Added
 
 - Test against Node.js 24 ([#413](https://github.com/marp-team/marpit/pull/413))
