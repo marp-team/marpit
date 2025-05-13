@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Added
+
+- Test against Node.js 24 ([#413](https://github.com/marp-team/marpit/pull/413))
+
+### Changed
+
+- Upgrade Node.js LTS and dependent packages to the latest version ([#413](https://github.com/marp-team/marpit/pull/413))
+
 ## v3.1.2 - 2024-12-23
 
 ### Changed
