@@ -28,7 +28,7 @@ We have extended several features into [markdown-it](https://github.com/markdown
 
 ### [🎨 Theme CSS by clean markup](/theme-css) {docsify-ignore}
 
-Marpit has the CSS theming system that can design slides everything. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
+Marpit has a CSS theming system that can design every aspect of your slides. Unlike other slide frameworks, there are not any predefined classes and mixins. You have only to focus styling HTML elements by pure CSS. Marpit would take care of the selected theme's necessary conversion.
 
 ### [📐 Inline SVG slide <i>(Experimental)</i>](/inline-svg) {docsify-ignore}
 
