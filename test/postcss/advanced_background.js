@@ -7,7 +7,7 @@ describe('Marpit PostCSS advanced background plugin', () => {
 
   const baseCss = 'body { background: #fff; }'
 
-  it('appends style to suport the advanced background', () =>
+  it('appends style to support the advanced background', () =>
     run(baseCss).then(({ root }) => {
       expect(root.nodes[0].selector).toBe('body')
 

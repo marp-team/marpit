@@ -233,7 +233,7 @@ describe('Marpit style assign plugin', () => {
     })
   })
 
-  context('with muiltiple style elements and a style directive', () => {
+  context('with multiple style elements and a style directive', () => {
     const md = (marpit) => {
       const instance = new MarkdownIt('commonmark')
       instance.marpit = marpit

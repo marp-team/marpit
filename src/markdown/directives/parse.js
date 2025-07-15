@@ -11,7 +11,7 @@ const isDirectiveComment = (token) =>
 /**
  * Parse Marpit directives and store result to the slide token meta.
  *
- * Marpit comment plugin ans slide plugin requires already loaded to
+ * Marpit comment plugin and slide plugin requires already loaded to
  * markdown-it instance.
  *
  * @function parse

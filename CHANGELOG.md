@@ -738,7 +738,7 @@
 ### Changed
 
 - Move documentation from README.md to [https://marpit.marp.app/](https://marpit.marp.app/) ([#67](https://github.com/marp-team/marpit/pull/67))
-- Upgrade Node LTS and depenent packages ([#70](https://github.com/marp-team/marpit/pull/70))
+- Upgrade Node LTS and dependent packages ([#70](https://github.com/marp-team/marpit/pull/70))
 
 ---
 
@@ -781,7 +781,7 @@
 ### Changed
 
 - Improve lazy YAML parsing to apply in defined directives only ([#54](https://github.com/marp-team/marpit/pull/54))
-- Upgrade Node LTS and depenent packages ([#55](https://github.com/marp-team/marpit/pull/55))
+- Upgrade Node LTS and dependent packages ([#55](https://github.com/marp-team/marpit/pull/55))
 
 ## v0.0.11 - 2018-08-12
 
@@ -820,7 +820,7 @@
 
 ### Changed
 
-- Upgrade Node LTS and depenent packages ([#42](https://github.com/marp-team/marpit/pull/42))
+- Upgrade Node LTS and dependent packages ([#42](https://github.com/marp-team/marpit/pull/42))
 
 ## v0.0.8 - 2018-06-28
 

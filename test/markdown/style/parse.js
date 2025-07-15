@@ -58,7 +58,7 @@ describe('Marpit style parse plugin', () => {
       })
 
       describe('The scoped attribute', () => {
-        it('parses scoped attribute with splitted by hardbreak', () => {
+        it('parses scoped attribute with split by hardbreak', () => {
           const [token] = pickStyles(markdown.parse('<style\nscoped></style>'))
           expect(token.meta.marpitStyleScoped).toBe(true)
         })

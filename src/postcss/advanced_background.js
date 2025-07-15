@@ -4,7 +4,7 @@ import postcssPlugin from '../helpers/postcss_plugin'
 /**
  * Marpit PostCSS advanced background plugin.
  *
- * Append style to suport the advanced background.
+ * Append style to support the advanced background.
  *
  * @function advancedBackground
  */
