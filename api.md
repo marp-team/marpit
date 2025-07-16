@@ -42,7 +42,7 @@ Marpit's plugin interface has compatible with [markdown-it](https://github.com/m
 
 When plugin was used through [`Marpit.use()`](Marpit.html#use), it can access to current Marpit instance via `marpit` member of the passed markdown-it instance.
 
-`@marp-team/marpit/plugin` provides [a helper for creating Marpit plugin](module-plugin.html). A generated plugin promises an existance of `marpit` member.
+`@marp-team/marpit/plugin` provides [a helper for creating Marpit plugin](module-plugin.html). A generated plugin promises an existence of `marpit` member.
 
 ```javascript
 import { marpitPlugin } from '@marp-team/marpit/plugin'

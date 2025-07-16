@@ -103,7 +103,7 @@ describe('Marpit background image plugin', () => {
       expect(directives('![bg 100% contain](i)').backgroundSize).toBe('100%')
     })
 
-    it('assigns specifid scale per direction', () => {
+    it('assigns specified scale per direction', () => {
       expect(directives('![bg w:300](i)').backgroundSize).toBe('300px auto')
       expect(directives('![bg h:25%](i)').backgroundSize).toBe('auto 25%')
       expect(directives('![bg 50% w:100%](i)').backgroundSize).toBe('100% 50%')

@@ -65,7 +65,7 @@ h2 {
 
 [`rem` units](https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#Rems) in Marpit theme will automatically transform into the calculated relative value from the parent `<section>` element, so anyone don't have to worry the effect from `font-size` in the root `<html>` that placed Marpit slide. Everything would work as the theme author expected.
 
-?> `:root` selector can use just like as `section` selector, but there is a difference that `:root` has higher [CSS specificity](https://developer.mozilla.org/docs/Web/CSS/Specificity) than `section`. If both selectors have mixed in a theme CSS, declarations in `:root` selector will be prefered than `section` selector.
+?> `:root` selector can use just like as `section` selector, but there is a difference that `:root` has higher [CSS specificity](https://developer.mozilla.org/docs/Web/CSS/Specificity) than `section`. If both selectors have mixed in a theme CSS, declarations in `:root` selector will be preferred than `section` selector.
 
 ### Metadata
 
