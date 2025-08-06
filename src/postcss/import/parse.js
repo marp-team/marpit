@@ -38,10 +38,10 @@ export const importParse = postcssPlugin(
             const [quote] = node.params
             if (quote !== '"' && quote !== "'") return
 
-            const splitedValue = node.params.slice(1).split(quote)
+            const splitValue = node.params.slice(1).split(quote)
             let value = ''
 
-            splitedValue.every((v) => {
+            splitValue.every((v) => {
               if (v.endsWith('\\')) {
                 value = `${value}${v.slice(0, -1)}${quote}`
                 return true

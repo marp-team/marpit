@@ -58,10 +58,10 @@ describe('Marpit directives apply plugin', () => {
 
   const toObjStyle = (style) =>
     (style || '').split(';').reduce((obj, text) => {
-      const splited = text.trim().split(':')
-      if (splited.length !== 2) return obj
+      const split = text.trim().split(':')
+      if (split.length !== 2) return obj
 
-      const [key, val] = splited
+      const [key, val] = split
       return { ...obj, [key.trim()]: val.trim() }
     }, {})
 
