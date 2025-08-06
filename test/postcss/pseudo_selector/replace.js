@@ -24,7 +24,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
       })
     })
 
-    it('keeps id, class, attribute, and pesudo selector', () => {
+    it('keeps id, class, attribute, and pseudo selector', () => {
       const css = dedent`
         :marpit-container > :marpit-slide#1 { color: red; }
         :marpit-container > :marpit-slide.invert { background: #000; }
