@@ -117,7 +117,7 @@ const htmlFile = `
 fs.writeFileSync('example.html', htmlFile.trim())
 ```
 
-Outputted HTML is [here](/assets/how-to-use/example.html ':ignore'). It can convert into [PDF slide deck](/assets/how-to-use/example.pdf ':ignore') through printing by Chrome.
+See [Generated HTML](/assets/how-to-use/example.html ':ignore'). It can convert into [PDF slide deck](/assets/how-to-use/example.pdf ':ignore') through printing by Chrome.
 
 We are introducing the basic usage step-by-step in [Usage](usage.md) section.
 
