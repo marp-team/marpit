@@ -70,7 +70,7 @@ Naturally multiple filters can apply to a image.
 
 ## Slide backgrounds
 
-We provide a background image syntax to specify a slide's background through Markdown. It only have to include `bg` keyword to the alternate text.
+We provide a background image syntax to specify a slide's background through Markdown. It only has to include `bg` keyword to the alternate text.
 
 ```markdown
 ![bg](https://example.com/background.jpg)
