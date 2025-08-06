@@ -5,7 +5,7 @@ import marpitPlugin from '../plugin'
  * Marpit sweep plugin.
  *
  * Hide blank paragraphs. For better support of the background image syntax and
- * directives through HTML comment, Marpit will sweep paragraphs included only
+ * directives through HTML comment, Marpit will sweep paragraphs including only
  * whitespace by setting `hidden: true`.
  *
  * It also sweep the inline token marked as hidden forcefully. Please notice that
