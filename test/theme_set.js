@@ -67,7 +67,7 @@ describe('ThemeSet', () => {
 
     it('passes an empty metaType option to Theme.fromCSS', () => {
       instance.add('/* @theme a */')
-      expect(spy).toBeCalledWith(
+      expect(spy).toHaveBeenCalledWith(
         '/* @theme a */',
         expect.objectContaining({ metaType: {} }),
       )
@@ -76,7 +76,7 @@ describe('ThemeSet', () => {
     it('passes cssNesting option to Theme.fromCSS', () => {
       instance.cssNesting = false
       instance.add('/* @theme a */')
-      expect(spy).toBeCalledWith(
+      expect(spy).toHaveBeenCalledWith(
         '/* @theme a */',
         expect.objectContaining({ cssNesting: false }),
       )
@@ -89,7 +89,7 @@ describe('ThemeSet', () => {
         instance.metaType = metaType
         instance.add('/* @theme c */')
 
-        expect(spy).toBeCalledWith(
+        expect(spy).toHaveBeenCalledWith(
           '/* @theme c */',
           expect.objectContaining({ metaType }),
         )
@@ -159,7 +159,7 @@ describe('ThemeSet', () => {
     })
 
     it('returns undefined when specified theme is not contain', () => {
-      expect(instance.get('not-contain')).toBe(undefined)
+      expect(instance.get('not-contain')).toBeUndefined()
     })
 
     context('with fallback option as true', () => {
@@ -314,35 +314,35 @@ describe('ThemeSet', () => {
     const getThemeProp = (...args) =>
       instance.getThemeProp.call(instance, ...args)
 
-    context('with passing theme as string', () => {
-      it('returns the property value when specified theme is contained', () => {
+    context('with passing theme as a string', () => {
+      it('returns the property value when specified theme is contained (theme as a string)', () => {
         expect(getThemeProp('size-specified', 'width')).toBe('640px')
         expect(getThemeProp('size-specified', 'height')).toBe('480px')
       })
 
-      it('returns scaffold value when specified theme is not defined props', () => {
+      it('returns scaffold value when specified theme is not defined props (theme as a string)', () => {
         expect(getThemeProp('fallback', 'width')).toBe(width)
         expect(getThemeProp('fallback', 'height')).toBe(height)
       })
 
-      it('returns scaffold value when specified theme is not contained', () => {
+      it('returns scaffold value when specified theme is not contained (theme as a string)', () => {
         expect(getThemeProp('not-contained', 'width')).toBe(width)
         expect(getThemeProp('not-contained', 'height')).toBe(height)
       })
     })
 
     context('with passing theme as Theme instance', () => {
-      it('returns the property value when specified theme is contained', () => {
+      it('returns the property value when specified theme is contained (theme as a Theme instance)', () => {
         expect(getThemeProp(sizeSpecifiedTheme, 'width')).toBe('640px')
         expect(getThemeProp(sizeSpecifiedTheme, 'height')).toBe('480px')
       })
 
-      it('returns scaffold value when specified theme is not defined props', () => {
+      it('returns scaffold value when specified theme is not defined props (theme as a Theme instance)', () => {
         expect(getThemeProp(fallbackTheme, 'width')).toBe(width)
         expect(getThemeProp(fallbackTheme, 'height')).toBe(height)
       })
 
-      it('returns scaffold value when specified theme is not contained', () => {
+      it('returns scaffold value when specified theme is not contained (theme as a Theme instance)', () => {
         const theme = Theme.fromCSS('/* @theme not-contained */')
 
         expect(getThemeProp(theme, 'width')).toBe(width)
@@ -426,7 +426,7 @@ describe('ThemeSet', () => {
 
         expect(() => {
           css = instance.pack(undefined, { before: 'INVALID */' })
-        }).not.toThrowError()
+        }).not.toThrow()
 
         expect(css).not.toContain('INVALID')
       })

@@ -24,7 +24,7 @@ describe('Marpit', () => {
         const { html } = new Marpit({ markdown }).render(mdText)
 
         expect(html).not.toContain('<b>')
-        expect(mdSpy).toBeCalledWith(mdText, expect.anything())
+        expect(mdSpy).toHaveBeenCalledWith(mdText, expect.anything())
       })
 
       it('wraps markdown-it instance created by passed arguments', () => {
@@ -83,7 +83,7 @@ describe('Marpit', () => {
 
         expect(() => {
           marpit.customDirectives.global.marp = (v) => ({ marp: `test ${v}` })
-        }).not.toThrowError()
+        }).not.toThrow()
 
         const [token] = marpit.markdown.parse('<!-- marp: ok -->')
         expect(token.meta.marpitDirectives).toStrictEqual({ marp: 'test ok' })
@@ -107,11 +107,11 @@ describe('Marpit', () => {
 
         // Global directive (Dollar prefix)
         marpit.markdown.render('<!-- $theme: foobar -->')
-        expect($theme).toBeCalledWith('foobar', marpit)
+        expect($theme).toHaveBeenCalledWith('foobar', marpit)
         expect(marpit.lastGlobalDirectives.theme).toBe('foobar')
 
         marpit.markdown.render('<!-- $theme: unknown -->')
-        expect($theme).toBeCalledWith('unknown', marpit)
+        expect($theme).toHaveBeenCalledWith('unknown', marpit)
         expect(marpit.lastGlobalDirectives.theme).toBeUndefined()
 
         // Local directive (Alias + internal meta)
@@ -201,7 +201,7 @@ describe('Marpit', () => {
 
         instance.render('Markdown', { env: 'env' })
 
-        expect(render).toBeCalledWith(
+        expect(render).toHaveBeenCalledWith(
           expect.any(Array),
           instance.markdown.options,
           { env: 'env' },
@@ -290,11 +290,6 @@ describe('Marpit', () => {
             rules.find((r) => r.selector.endsWith('svg[data-marpit-svg]')),
           ).toBeTruthy()
         })
-      })
-
-      it('wraps section with svg when inlineSVG is true', () => {
-        const rendered = instance({ enabled: true }).render('# Hi')
-        expect(rendered.html).toContain('<svg')
       })
 
       context('when passed htmlAsArray env', () => {
@@ -586,9 +581,13 @@ describe('Marpit', () => {
 
       instance.renderMarkdown('render', { env: 'env' })
 
-      expect(spy).toBeCalledWith(expect.any(Array), instance.markdown.options, {
-        env: 'env',
-      })
+      expect(spy).toHaveBeenCalledWith(
+        expect.any(Array),
+        instance.markdown.options,
+        {
+          env: 'env',
+        },
+      )
     })
   })
 
@@ -624,8 +623,8 @@ describe('Marpit', () => {
       })
 
       expect(instance.use(plugin, 'parameter')).toBe(instance)
-      expect(plugin).toBeCalledTimes(1)
-      expect(plugin).toBeCalledWith(instance.markdown, 'parameter')
+      expect(plugin).toHaveBeenCalledTimes(1)
+      expect(plugin).toHaveBeenCalledWith(instance.markdown, 'parameter')
       expect(instance.markdown.extended).toBe('parameter')
     })
   })

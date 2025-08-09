@@ -36,10 +36,9 @@ describe('Marpit directives parse plugin', () => {
     it('does not parse front-matter when option is false', () => {
       const parsed = md({ frontMatter: false }).parse(text())
 
-      parsed.forEach((t) => {
-        if (t.type === 'marpit_slide_open')
-          expect(t.meta.marpitDirectives).toStrictEqual({})
-      })
+      parsed
+        .filter((t) => t.type === 'marpit_slide_open')
+        .forEach((t) => expect(t.meta.marpitDirectives).toStrictEqual({}))
     })
 
     it('parses front-matter when option is true', () => {

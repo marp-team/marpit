@@ -66,7 +66,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('escapes each container element names in selector', () => {
+      it('escapes each container element names in selector (multiple container elements)', () => {
         // These tag names can use in custom element.
         const containers = [
           new Element('marp.custom-element'),
@@ -90,7 +90,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('removes duplicated class from selector', () => {
+      it('removes duplicated class from selector (container element with class)', () => {
         const container = new Element('div', { class: 'one two one' })
 
         return run(css, container).then((result) =>
@@ -98,7 +98,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('escapes each class names in selector', () => {
+      it('escapes each class names in selector (container element with class)', () => {
         const container = new Element('div', { class: '123 .foo.bar #test' })
 
         return run(css, container).then((result) =>
@@ -126,7 +126,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('escapes id name in selector', () => {
+      it('escapes id name in selector (container element)', () => {
         const container = new Element('div', { id: '0123<#>4567' })
 
         return run(css, container).then((result) =>
@@ -167,7 +167,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('escapes each container element names in selector', () => {
+      it('escapes each container element names in selector (multiple slide elements)', () => {
         const containers = [
           new Element('marp.custom-element'),
           new Element('emotion-😍'),
@@ -190,7 +190,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('removes duplicated class from selector', () => {
+      it('removes duplicated class from selector (slide element with class)', () => {
         const container = new Element('div', { class: 'one two one' })
 
         return run(css, undefined, container).then((result) =>
@@ -198,7 +198,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('escapes each class names in selector', () => {
+      it('escapes each class names in selector (slide element with class)', () => {
         const container = new Element('div', { class: '123 .foo.bar #test' })
 
         return run(css, undefined, container).then((result) =>
@@ -226,7 +226,7 @@ describe('Marpit PostCSS pseudo selector replace plugin', () => {
         )
       })
 
-      it('escapes id name in selector', () => {
+      it('escapes id name in selector (slide element)', () => {
         const container = new Element('div', { id: '0123<#>4567' })
 
         return run(css, undefined, container).then((result) =>

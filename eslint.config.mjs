@@ -4,6 +4,7 @@ import eslintConfigPrettier from 'eslint-config-prettier'
 import eslintPluginImportX, {
   flatConfigs as eslintPluginImportXConfigs,
 } from 'eslint-plugin-import-x'
+import eslintPluginJest from 'eslint-plugin-jest'
 import globals from 'globals'
 
 export default [
@@ -45,6 +46,14 @@ export default [
         },
       ],
     },
+  },
+  {
+    files: ['test/**/*'],
+    ...eslintPluginJest.configs['flat/recommended'],
+  },
+  {
+    files: ['test/**/*'],
+    ...eslintPluginJest.configs['flat/style'],
   },
   {
     files: ['test/**/*', 'jest.*'],
