@@ -1,4 +1,4 @@
-import postcss from 'postcss'
+import { parse } from 'postcss'
 
 /**
  * InlineStyle helper class.
@@ -24,7 +24,7 @@ export default class InlineStyle {
         initialDecls instanceof InlineStyle ||
         typeof initialDecls === 'string'
       ) {
-        const root = postcss.parse(initialDecls.toString(), { from: undefined })
+        const root = parse(initialDecls.toString(), { from: undefined })
 
         root.each((node) => {
           if (node.type === 'decl') this.decls[node.prop] = node.value
@@ -70,9 +70,7 @@ export default class InlineStyle {
       let parsed
 
       try {
-        parsed = postcss.parse(`${prop}:${this.decls[prop]}`, {
-          from: undefined,
-        })
+        parsed = parse(`${prop}:${this.decls[prop]}`, { from: undefined })
       } catch {
         // A declaration that have value it cannot parse will ignore.
       }

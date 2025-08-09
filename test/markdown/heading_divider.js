@@ -119,7 +119,7 @@ describe('Marpit heading divider plugin', () => {
     context('with invalid headingDivider option', () => {
       const markdown = md(marpitStub('invalid'))
 
-      it('does not add any horizontal ruler tokens', () => {
+      it('does not add any horizontal ruler tokens because headingDivider option is invalid', () => {
         const tokens = markdown.parse(markdownText)
         expect(tokens.filter((t) => t.type === 'hr')).toHaveLength(0)
       })

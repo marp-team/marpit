@@ -71,7 +71,7 @@ describe('Marpit background image plugin', () => {
 
   context('when empty string is specified', () => {
     it('ignores assign if empty string is specified', () =>
-      expect(bgDirective('', md())).toBe(undefined))
+      expect(bgDirective('', md())).toBeUndefined())
 
     it('fallbacks to an already assigned directive', () => {
       const mdText = '<!-- backgroundImage: url(A) --> ![bg]()'
@@ -274,7 +274,7 @@ describe('Marpit background image plugin', () => {
           it('assigns the width attribute of foreignObject for content as remaining size', () =>
             expect(ssforeignObject.attr('width')).toBe('67%'))
 
-          it('assigns CSS variable to style attribute for split background', () =>
+          it('assigns CSS variable to style attribute for split background, with specified size', () =>
             expect(ssSection.attr('style')).toContain(
               '--marpit-advanced-background-split:33%',
             ))

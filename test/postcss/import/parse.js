@@ -5,11 +5,11 @@ describe('Marpit PostCSS import parse plugin', () => {
   const run = (input) =>
     postcss([importParse()]).process(input, { from: undefined })
 
-  it('adds marpitImport empty array to result', () => {
-    run('').then((result) => {
-      expect(result.marpitImport).toBeInstanceOf(Array)
-      expect(result.marpitImport).toStrictEqual([])
-    })
+  it('adds marpitImport empty array to result', async () => {
+    const result = await run('')
+
+    expect(result.marpitImport).toBeInstanceOf(Array)
+    expect(result.marpitImport).toStrictEqual([])
   })
 
   it('parses @import rule and store meta object to marpitImport', () =>

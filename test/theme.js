@@ -81,7 +81,7 @@ describe('Theme', () => {
         @import-theme "yet-another"
       `)
 
-      it('returns Theme instance that has width and height props', () =>
+      it('returns Theme instance that has correct import rules prop', () =>
         expect(instance.importRules.map((r) => r.value)).toStrictEqual([
           'yet-another', // @import-theme prepends to the beginning
           'another-theme',
@@ -121,7 +121,7 @@ describe('Theme', () => {
           { metaType: { theme: Array } },
         )
 
-        expect(instance.meta.theme).toStrictEqual('B')
+        expect(instance.meta.theme).toBe('B')
       })
     })
   })
