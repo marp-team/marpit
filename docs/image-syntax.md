@@ -1,6 +1,6 @@
 # Image syntax
 
-Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creating beautiful slides.
+Marpit has extended Markdown image syntax `![](image.jpg)` to help create beautiful slides.
 
 |              Features              |    Inline image    | [Slide BG][slide-bg] | [Advanced BG][advanced-bg] |
 | :--------------------------------: | :----------------: | :------------------: | :------------------------: |
@@ -19,7 +19,7 @@ Marpit has extended Markdown image syntax `![](image.jpg)` to be helpful creatin
 [split]: #split-backgrounds
 [constructor]: https://marpit-api.marp.app/marpit/
 
-Basically the extended features can turn enable by including corresponded keywords to the image's alternative text.
+The extended features are enabled by including corresponding keywords in the image's alternative text; the remaining alternative text is rendered as alt text for inline images or the figure caption for background images.
 
 ### Resizing image
 
