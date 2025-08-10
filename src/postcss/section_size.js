@@ -4,7 +4,7 @@ import postcssPlugin from '../helpers/postcss_plugin'
 /**
  * Marpit PostCSS section size plugin.
  *
- * Parse width and height declartaion on `section` selector.
+ * Parse width and height declaration on `section` selector.
  *
  * @function sectionSize
  */

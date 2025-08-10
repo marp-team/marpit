@@ -12,7 +12,7 @@
  */
 export function plugin(name, func) {
   return Object.defineProperty(
-    function intrface(...args) {
+    function interface_(...args) {
       const retFunc = func.apply(this, args)
 
       return Object.defineProperty(

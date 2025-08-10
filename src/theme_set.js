@@ -171,7 +171,7 @@ class ThemeSet {
    * @param {string} name The theme name to get.
    * @param {boolean} [fallback=false] If true, return instance's default theme
    *     or scaffold theme when specified theme cannot find.
-   * @returns {Theme|undefined} Returns specified or fallbacked theme, or
+   * @returns {Theme|undefined} Returns specified or fallback theme, or
    *     `undefined` if `fallback` is false and the specified theme has not
    *     existed.
    */

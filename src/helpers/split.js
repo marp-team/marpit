@@ -4,11 +4,11 @@
  *
  * @param {Array} arr Target array.
  * @param {splitCallback} func Callback to split array.
- * @param {boolean} [keepSplitedValue=false] Keep splited value. The split
+ * @param {boolean} [keepSplitValue=false] Keep split value. The split
  *     point is before the matched value.
- * @returns {Array[]} Splited array.
+ * @returns {Array[]} Split array.
  */
-export function split(arr, func, keepSplitedValue = false) {
+export function split(arr, func, keepSplitValue = false) {
   const ret = [[]]
 
   for (const value of arr) {
@@ -19,7 +19,7 @@ export function split(arr, func, keepSplitedValue = false) {
      * @param {*} value
      */
     if (func(value)) {
-      ret.push(keepSplitedValue ? [value] : [])
+      ret.push(keepSplitValue ? [value] : [])
     } else {
       ret[ret.length - 1].push(value)
     }

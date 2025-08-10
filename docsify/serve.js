@@ -33,7 +33,7 @@ const wsScript = `
 })()
 `
 
-// Build docisfy style and watch changes
+// Build docsify style and watch changes
 chokidar.watch('**/*.scss', { cwd: __dirname }).on('all', debounce(build, 250))
 
 // Watch change of docs directory

@@ -5,7 +5,7 @@ import postcssPlugin from '../../helpers/postcss_plugin'
  * Marpit PostCSS pseudo selector prepending plugin.
  *
  * Prepend `:marpit-container > :marpit-slide` pseudo selector to each selector
- * of Marpit theme CSS for modulized styling.
+ * of Marpit theme CSS for modularized styling.
  *
  * @function pseudoSelectorPrepend
  */

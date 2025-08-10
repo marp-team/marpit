@@ -27,7 +27,7 @@ describe('Marpit PostCSS section size plugin', () => {
       }),
     ))
 
-  it('ignores section selector with pusedo selector', () =>
+  it('ignores section selector with pseudo selector', () =>
     run('section:first-child { width: 123px; height: 456px; }').then((result) =>
       expect(result.marpitSectionSize).toStrictEqual({}),
     ))

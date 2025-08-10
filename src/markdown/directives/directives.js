@@ -53,7 +53,7 @@ export const globals = Object.assign(Object.create(null), {
  * local directive applies to the defined page and followed pages.
  *
  * If you want to set a local directive to single page only, you can add the
- * prefix `_` (underbar) to directive name. (Spot directives)
+ * prefix `_` (underscore) to directive name. (Spot directives)
  *
  * @prop {Directive} backgroundColor Specify background-color style.
  * @prop {Directive} backgroundImage Specify background-image style.
