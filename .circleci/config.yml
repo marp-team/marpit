@@ -105,7 +105,7 @@ jobs:
   test-node22:
     executor:
       name: node
-      version: '22.15.0' # Specify LTS version for development
+      version: '22.18.0' # Specify LTS version for development
     steps:
       - prepare
       - lint
@@ -114,7 +114,7 @@ jobs:
   test-node24:
     executor:
       name: node
-      version: '24.0'
+      version: '24.5'
     steps:
       - prepare
       - lint
