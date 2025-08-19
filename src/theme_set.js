@@ -1,6 +1,7 @@
 import postcss from 'postcss'
-import postcssPlugin from './helpers/postcss_plugin'
 import postcssAdvancedBackground from './postcss/advanced_background'
+import postcssAfter from './postcss/after'
+import postcssBefore from './postcss/before'
 import postcssContainerQuery, {
   postprocess as postcssContainerQueryPostProcess,
 } from './postcss/container_query'
@@ -20,6 +21,7 @@ import postcssRootIncreasingSpecificity, {
 } from './postcss/root/increasing_specificity'
 import postcssRem from './postcss/root/rem'
 import postcssRootReplace from './postcss/root/replace'
+import postcssScaffold from './postcss/scaffold'
 import postcssSVGBackdrop from './postcss/svg_backdrop'
 import Theme from './theme'
 import scaffold from './theme/scaffold'
@@ -32,6 +34,8 @@ const defaultOptions = {
  * Marpit theme set class.
  */
 class ThemeSet {
+  #plugins = []
+
   /**
    * Create a ThemeSet instance.
    *
@@ -267,20 +271,26 @@ class ThemeSet {
    * @return {string} The converted CSS string.
    */
   pack(name, opts = {}) {
-    const slideElements = [{ tag: 'section' }]
     const theme = this.get(name, true)
     const inlineSVGOpts = opts.inlineSVG || {}
-
-    if (inlineSVGOpts.enabled) {
-      slideElements.unshift({ tag: 'svg' }, { tag: 'foreignObject' })
-    }
+    const slideElements = [
+      ...(inlineSVGOpts.enabled
+        ? [{ tag: 'svg' }, { tag: 'foreignObject' }]
+        : []),
+      { tag: 'section' },
+    ]
+    const containerName =
+      typeof opts.containerQuery === 'string' ||
+      Array.isArray(opts.containerQuery)
+        ? opts.containerQuery
+        : undefined
 
     const runPostCSS = (css, plugins) =>
       postcss(
         [this.cssNesting && postcssNesting(), ...plugins].filter((p) => p),
       ).process(css).css
 
-    const additionalCSS = (css) => {
+    const normalizeExtraCSS = (css) => {
       if (!css) return undefined
 
       try {
@@ -290,25 +300,12 @@ class ThemeSet {
       }
     }
 
-    const after = additionalCSS(opts.after)
-    const before = additionalCSS(opts.before)
-
-    const containerName =
-      typeof opts.containerQuery === 'string' ||
-      Array.isArray(opts.containerQuery)
-        ? opts.containerQuery
-        : undefined
+    const after = normalizeExtraCSS(opts.after)
+    const before = normalizeExtraCSS(opts.before)
 
     return runPostCSS(theme.css, [
-      before &&
-        postcssPlugin(
-          'marpit-pack-before',
-          () => (css) => css.first.before(before),
-        ),
-      after &&
-        postcssPlugin('marpit-pack-after', () => (css) => {
-          css.last.after(after)
-        }),
+      before && postcssBefore(before),
+      after && postcssAfter(after),
       opts.containerQuery && postcssContainerQuery(containerName),
       postcssImportHoisting,
       postcssImportReplace(this),
@@ -317,11 +314,7 @@ class ThemeSet {
           width: this.getThemeProp(theme, 'width'),
           height: this.getThemeProp(theme, 'height'),
         }),
-      theme !== scaffold &&
-        postcssPlugin(
-          'marpit-pack-scaffold',
-          () => (css) => css.first.before(scaffold.css),
-        ),
+      theme !== scaffold && postcssScaffold,
       inlineSVGOpts.enabled && postcssAdvancedBackground,
       inlineSVGOpts.enabled &&
         inlineSVGOpts.backdropSelector &&
@@ -336,6 +329,7 @@ class ThemeSet {
       opts.containerQuery && postcssContainerQueryPostProcess,
       postcssRem,
       postcssImportHoisting,
+      ...this.#plugins,
     ])
   }
 
@@ -378,6 +372,18 @@ class ThemeSet {
     })
 
     return resolvedThemes.filter((v) => v)
+  }
+
+  /**
+   * Register an additional PostCSS plugin for processing the theme CSS.
+   *
+   * @private
+   * @param {Function} plugin A PostCSS plugin function to register.
+   * @return {ThemeSet} The current ThemeSet instance for chainable.
+   */
+  use(plugin) {
+    this.#plugins.push(plugin)
+    return this
   }
 }
 

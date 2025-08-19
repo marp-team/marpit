@@ -292,14 +292,19 @@ class Marpit {
   }
 
   /**
-   * Load the specified markdown-it plugin with given parameters.
+   * Load plugin either markdown-it or PostCSS into the current Marpit instance.
    *
-   * @param {Function} plugin markdown-it plugin.
-   * @param {...*} params Params to pass into plugin.
+   * @param {Function} plugin A markdown-it plugin or PostCSS plugin.
+   * @param {...*} params Params to pass into markdown-it plugin. (Not used in
+   * PostCSS plugin)
    * @returns {Marpit} The called {@link Marpit} instance for chainable.
    */
   use(plugin, ...params) {
-    plugin.call(this.markdown, this.markdown, ...params)
+    if ('postcss' in plugin && !plugin.postcss) {
+      this.themeSet.use(plugin)
+    } else {
+      plugin.call(this.markdown, this.markdown, ...params)
+    }
     return this
   }
 }

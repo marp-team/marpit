@@ -7,8 +7,8 @@ import postcssImportParse from './parse'
  *
  * Comment out `@import` / `@import-theme` rules that have imported theme.
  *
- * This plugin is useful to prevent the inline style's rolled-up theme import by
- * unexpected order.
+ * This plugin is useful to prevent that hoisting theme imports within inline
+ * styles become unexpected order.
  *
  * @function importSuppress
  * @param {ThemeSet} themeSet ThemeSet instance.
