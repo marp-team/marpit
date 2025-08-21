@@ -300,7 +300,9 @@ class Marpit {
    * @returns {Marpit} The called {@link Marpit} instance for chainable.
    */
   use(plugin, ...params) {
-    if ('postcss' in plugin && !plugin.postcss) {
+    if ('postcss' in plugin && plugin.postcss) {
+      this.themeSet.use(plugin(...params))
+    } else if ('postcssPlugin' in plugin && plugin.postcssPlugin) {
       this.themeSet.use(plugin)
     } else {
       plugin.call(this.markdown, this.markdown, ...params)
