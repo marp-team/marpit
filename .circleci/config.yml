@@ -39,7 +39,8 @@ commands:
 
   audit:
     steps:
-      - checkout
+      - checkout:
+          method: blobless
       - install:
           postinstall:
             - run: npm -s run check:audit
@@ -52,7 +53,9 @@ commands:
     steps:
       - run: node --version
 
-      - checkout
+      - checkout:
+          method: blobless
+
       - install:
           force: << parameters.force >>
 
