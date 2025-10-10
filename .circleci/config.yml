@@ -39,7 +39,8 @@ commands:
 
   audit:
     steps:
-      - checkout
+      - checkout:
+          method: blobless
       - install:
           postinstall:
             - run: npm -s run check:audit
@@ -52,7 +53,9 @@ commands:
     steps:
       - run: node --version
 
-      - checkout
+      - checkout:
+          method: blobless
+
       - install:
           force: << parameters.force >>
 
@@ -105,7 +108,7 @@ jobs:
   test-node22:
     executor:
       name: node
-      version: '22.18.0' # Specify LTS version for development
+      version: '22.20.0' # Specify LTS version for development
     steps:
       - prepare
       - lint
@@ -114,7 +117,7 @@ jobs:
   test-node24:
     executor:
       name: node
-      version: '24.5'
+      version: '24.9'
     steps:
       - prepare
       - lint

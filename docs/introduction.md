@@ -34,7 +34,7 @@ Marpit has a CSS theming system that can design every aspect of your slides. Unl
 
 Optionally `<svg>` element can use as the container of each slide page. It can be realized the pixel-perfect scaling of the slide only by CSS, so handling slides in integrated apps become simplified. The isolated layer made by `<foreignObject>` can provide [_advanced backgrounds_](/image-syntax#advanced-backgrounds) for the slide with keeping the original Markdown DOM structure.
 
-?> We not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
+?> We do not provide any themes because Marpit is just a framework. You can use [@marp-team/marp-core][marp-core] if you want. It has the official themes, and practical features extended from Marpit.
 
 ## Getting started
 
