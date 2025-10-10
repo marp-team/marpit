@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v3.2.0 - 2025-10-10
+
 ### Added
 
 - Allow passing PostCSS plugin into Marpit#use as postprocess for CSS ([#418](https://github.com/marp-team/marpit/issues/418), [#428](https://github.com/marp-team/marpit/pull/428))
