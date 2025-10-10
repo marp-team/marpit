@@ -2,8 +2,8 @@ import { load } from 'cheerio'
 import dedent from 'dedent'
 import MarkdownIt from 'markdown-it'
 import postcss from 'postcss'
-import postcssOrderedValues from 'postcss-ordered-values' // cssnano
 import postcssNormalizeString from 'postcss-normalize-string' // cssnano
+import postcssOrderedValues from 'postcss-ordered-values' // cssnano
 import { Marpit, ThemeSet } from '../src/index'
 import { normalizeSelectorsInCss } from './_supports/selector_normalizer'
 
