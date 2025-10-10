@@ -4,7 +4,7 @@ import postcssPlugin from '../helpers/postcss_plugin'
 /**
  * Marpit PostCSS after plugin.
  *
- * Prepend specific style into after current style.
+ * Append specific style after current style.
  *
  * @function after
  */
