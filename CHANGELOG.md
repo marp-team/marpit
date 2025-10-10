@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Allow passing PostCSS plugin into Marpit#use as postprocess for CSS ([#418](https://github.com/marp-team/marpit/issues/418), [#428](https://github.com/marp-team/marpit/pull/428))
+
 ### Changed
 
 - Upgrade Node.js and dependent packages to the latest version ([#423](https://github.com/marp-team/marpit/pull/423), [#427](https://github.com/marp-team/marpit/pull/427))

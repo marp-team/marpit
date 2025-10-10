@@ -7,7 +7,7 @@ Marpit has only one feature: Convert Markdown and theme set into HTML/CSS. Thus 
 At first you must create an instance of [**`Marpit`**](https://marpit-api.marp.app/marpit) class.
 
 ```javascript
-const { Marpit } = require('@marp-team/marpit')
+import { Marpit } from '@marp-team/marpit'
 
 // Create Marpit instance
 const marpit = new Marpit()
@@ -37,7 +37,7 @@ const marpit = new Marpit({
 You can customize container HTML elements too. These settings are using to scope the converted CSS. [`Element` class](https://marpit-api.marp.app/element) helps to specify container(s).
 
 ```javascript
-const { Marpit, Element } = require('@marp-team/marpit')
+import { Marpit, Element } from '@marp-team/marpit'
 
 const marpit = new Marpit({
   container: [
@@ -199,17 +199,42 @@ The returned value is a two-dimensional array composed by comments per slide pag
 ]
 ```
 
-### Extend Marpit by plugins
+### Extend by plugins
 
-You can extend Marpit Markdown parser by [`marpit.use()`](https://marpit-api.marp.app/marpit#use) with [markdown-it plugin](https://www.npmjs.com/search?q=keywords:markdown-it-plugin).
+You can extend Marpit by [`marpit.use()`](https://marpit-api.marp.app/marpit#use) with Marpit plugin, [markdown-it plugin](https://www.npmjs.com/search?q=keywords:markdown-it-plugin), and [PostCSS plugin](https://postcss.org/docs/postcss-plugins). `use()` method returns the Marpit instance itself, so you can chain it.
+
+```javascript
+const marpit = new Marpit()
+  .use(marpitPlugin) // Marpit plugin
+  .use(markdownItPlugin) // markdown-it plugin
+  .use(postcssPlugin) // PostCSS plugin
+```
+
+#### Marpit plugin
+
+Marpit plugin is just a function that receives an object (= markdown-it instance) including the Marpit instance.
+
+```javascript
+const marpitPlugin = ({ marpit }) => {
+  // Do something with Marpit instance
+}
+
+const marpit = new Marpit().use(marpitPlugin)
+```
+
+You can manipulate Marpit instance in the plugin. e.g. [adding theme CSS through `marpit.themeSet.add()`](#add-to-theme-set), or [registering custom directives through `marpit.customDirectives` object](/directives#custom-directives).
+
+#### markdown-it plugin
+
+Marpit's Markdown parser is compatible with markdown-it so you can extend the parser by plugins.
 
 Due to our policy, Marpit has not extended Markdown syntax such as to break CommonMark. But you may use plugins if you want the aggressive extended syntax.
 
 For example, let's say you want to use the custom container by [markdown-it-container](https://github.com/markdown-it/markdown-it-container) to support multi-column block.
 
 ```javascript
-const { Marpit } = require('@marp-team/marpit')
-const markdownItContainer = require('markdown-it-container')
+import { Marpit } from '@marp-team/marpit'
+import markdownItContainer from 'markdown-it-container'
 
 // Create the extended Marpit instance
 const marpit = new Marpit().use(markdownItContainer, 'columns')
@@ -239,7 +264,20 @@ You're ready to use multi-column through custom container! The rendered slide is
 
 </p>
 
-!> Marpit has already many extends to support converting Markdown into slide deck. So some markdown-it plugins that are not created for Marpit would not work as expected because of existing extends.
+!> Marpit has already many built-in extends to support converting Markdown into slide deck. So some markdown-it plugins that are not created for Marpit would not work as expected because of existing extends.
+
+#### PostCSS plugin
+
+You can also use [PostCSS plugins](https://postcss.org/docs/postcss-plugins) to append transformers to the rendered style.
+
+```javascript
+import { Marpit } from '@marp-team/marpit'
+import postcssMinify from '@csstools/postcss-minify'
+
+const marpit = new Marpit().use(postcssMinify())
+
+console.log(marpit.render('# Hello').css) // Outputs minified CSS
+```
 
 ## Full API documentation
 
