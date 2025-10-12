@@ -96,15 +96,6 @@ jobs:
     steps:
       - audit
 
-  test-node18:
-    executor:
-      name: node
-      version: '18.20'
-    steps:
-      - prepare:
-          force: true
-      - test
-
   test-node20:
     executor:
       name: node
@@ -136,9 +127,6 @@ workflows:
   test:
     jobs:
       - audit
-      - test-node18:
-          requires:
-            - audit
       - test-node20:
           requires:
             - audit
