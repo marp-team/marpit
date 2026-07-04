@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## v3.2.2 - 2026-07-04
+
 ### Changed
 
 - Upgrade development Node.js to v26 LTS ([#457](https://github.com/marp-team/marpit/pull/457))
