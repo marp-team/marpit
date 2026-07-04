@@ -7,6 +7,10 @@
 - Upgrade development Node.js to v26 LTS ([#457](https://github.com/marp-team/marpit/pull/457))
 - Upgrade dependent packages to the latest version ([#438](https://github.com/marp-team/marpit/pull/438), [#440](https://github.com/marp-team/marpit/pull/440), [#457](https://github.com/marp-team/marpit/pull/457))
 
+### Fixed
+
+- Make `<h1>` style normalization overloadable using the universal selector `*` ([#443](https://github.com/marp-team/marpit/issues/443), [#458](https://github.com/marp-team/marpit/pull/458))
+
 ## v3.2.1 - 2026-02-28
 
 ### Changed

@@ -31,7 +31,7 @@ section:not([data-marpit-pagination])::after {
 }
 
 /* Normalization */
-h1 {
+:where(h1) {
   font-size: 2em;
   margin-block: 0.67em;
 }
