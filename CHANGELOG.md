@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
-- Upgrade dependent packages to the latest version ([#438](https://github.com/marp-team/marpit/pull/438), [#440](https://github.com/marp-team/marpit/pull/440))
+### Changed
+
+- Upgrade development Node.js to v26 LTS ([#457](https://github.com/marp-team/marpit/pull/457))
+- Upgrade dependent packages to the latest version ([#438](https://github.com/marp-team/marpit/pull/438), [#440](https://github.com/marp-team/marpit/pull/440), [#457](https://github.com/marp-team/marpit/pull/457))
 
 ## v3.2.1 - 2026-02-28
 
