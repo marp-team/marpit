@@ -78,7 +78,7 @@
     "jest": "^30.4.2",
     "jest-junit": "^17.0.0",
     "jsdoc": "^4.0.5",
-    "npm-check-updates": "^19.6.6",
+    "npm-check-updates": "^22.2.7",
     "npm-run-all2": "^8.0.4",
     "postcss-selector-parser": "^7.1.4",
     "prettier": "^3.8.5",
