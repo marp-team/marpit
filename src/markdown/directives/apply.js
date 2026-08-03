@@ -44,12 +44,10 @@ function _apply(md, opts = {}) {
 
         if (token.type === 'marpit_slide_open') {
           // `skip` and `hold` disable increment of the page number
-          if (
-            !(
-              marpitDirectives?.paginate === 'skip' ||
-              marpitDirectives?.paginate === 'hold'
-            )
-          ) {
+          if (!(
+            marpitDirectives?.paginate === 'skip' ||
+            marpitDirectives?.paginate === 'hold'
+          )) {
             pageNumber += 1
           }
         }
