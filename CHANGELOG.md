@@ -6,6 +6,10 @@
 
 - Upgrade Node.js and dependent packages ([#463](https://github.com/marp-team/marpit/pull/463))
 
+### Fixed
+
+- Fix class JSDoc to reflect correct types ([#464](https://github.com/marp-team/marpit/pull/464))
+
 ## v3.2.2 - 2026-07-04
 
 ### Changed

@@ -75,13 +75,13 @@ class Theme {
 
     /**
      * Slide width. It requires the absolute unit supported in CSS.
-     * @type {string}
+     * @type {string|undefined}
      */
     this.width = undefined
 
     /**
      * Slide height. It requires the absolute unit supported in CSS.
-     * @type {string}
+     * @type {string|undefined}
      */
     this.height = undefined
 
@@ -97,7 +97,8 @@ class Theme {
    *     `@theme` meta comment.
    * @param {Object} [opts]
    * @param {Object} [opts.metaType] An object for defined types for metadata.
-   * @param {Object} [opts.cssNesting] Enable support for CSS nesting.
+   * @param {boolean} [opts.cssNesting=false] Enable support for CSS nesting.
+   * @returns {Theme} A created {@link Theme} instance.
    */
   static fromCSS(cssString, opts = {}) {
     const metaType = { ...(opts.metaType || {}), ...reservedMetaType }
@@ -129,7 +130,7 @@ class Theme {
    * The converted width into pixel.
    *
    * @alias Theme#widthPixel
-   * @type {number}
+   * @type {number|undefined}
    * @readonly
    */
   get widthPixel() {
@@ -140,7 +141,7 @@ class Theme {
    * The converted height into pixel.
    *
    * @alias Theme#heightPixel
-   * @type {number}
+   * @type {number|undefined}
    * @readonly
    */
   get heightPixel() {

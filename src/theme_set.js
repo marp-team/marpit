@@ -40,7 +40,7 @@ class ThemeSet {
    * Create a ThemeSet instance.
    *
    * @param {Object} [opts]
-   * @param {boolean} [opts.cssNesting=true] Enable CSS nesting support.
+   * @param {boolean} [opts.cssNesting=false] Enable CSS nesting support.
    */
   constructor(opts = defaultOptions) {
     /**
@@ -222,7 +222,7 @@ class ThemeSet {
    * It will fallback the reference object into the instance's default theme or
    * scaffold theme when the specified theme is `undefined`.
    *
-   * @param {string|Theme} theme The theme name or instance.
+   * @param {string|Theme|undefined} theme The theme name or instance.
    * @param {string} prop The property name to get.
    * @returns {*}
    */
@@ -255,8 +255,9 @@ class ThemeSet {
    * **This method is designed for internal use by {@link Marpit} class.** Use
    * {@link Marpit#render} instead unless there is some particular reason.
    *
-   * @param {string} name The theme name. It will use the instance's default
-   *     theme or scaffold theme when a specific named theme does not exist.
+   * @param {string|undefined} name The theme name. It will use the instance's
+   *     default theme or scaffold theme when a specific named theme does not
+   *     exist.
    * @param {Object} [opts] The option object passed by {@link Marpit#render}.
    * @param {string} [opts.after] A CSS string to append into after theme.
    * @param {string} [opts.before] A CSS string to prepend into before theme.

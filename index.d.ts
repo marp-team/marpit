@@ -118,14 +118,14 @@ declare namespace Marpit {
     static fromCSS(cssString: string, opts?: ThemeOptions): Readonly<Theme>
 
     css: string
-    height: string
+    height: string | undefined
     importRules: {
       node: any
       value: string
     }[]
     meta: Readonly<ThemeReservedMeta & Record<string, string | string[]>>
     name: string
-    width: string
+    width: string | undefined
 
     readonly heightPixel: number | undefined
     readonly widthPixel: number | undefined
@@ -150,9 +150,9 @@ declare namespace Marpit {
       theme: string | Theme,
       meta: string,
     ): string | string[] | undefined
-    getThemeProp(theme: string | Theme, prop: string): any
+    getThemeProp(theme: string | Theme | undefined, prop: string): any
     has(name: string): boolean
-    pack(name: string, opts: ThemeSetPackOptions): string
+    pack(name: string | undefined, opts: ThemeSetPackOptions): string
     themes(): IterableIterator<Theme>
   }
 }
