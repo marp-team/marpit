@@ -2,8 +2,22 @@ import dedent from 'dedent'
 import { yaml } from '../../../src/markdown/directives/yaml'
 
 describe('Marpit directives YAML parser', () => {
+  it('parses scalar values as strings', () => {
+    expect(yaml('empty:').empty).toBe('')
+    expect(yaml('quoted: ""').quoted).toBe('')
+    expect(yaml('null: null').null).toBe('null')
+    expect(yaml('nullTilde: ~').nullTilde).toBe('~')
+    expect(yaml('booleanTrue: true').booleanTrue).toBe('true')
+    expect(yaml('booleanFalse: false').booleanFalse).toBe('false')
+    expect(yaml('booleanYes: yes').booleanYes).toBe('yes')
+    expect(yaml('booleanNo: no').booleanNo).toBe('no')
+    expect(yaml('booleanOn: on').booleanOn).toBe('on')
+    expect(yaml('booleanOff: off').booleanOff).toBe('off')
+    expect(yaml('number: 123').number).toBe('123')
+  })
+
   it("ignores directive's special char with false looseDirectives option", () =>
-    expect(yaml('color: #f00', false).color).toBeNull())
+    expect(yaml('color: #f00', false).color).toBe(''))
 
   context('with looseDirectives option as true', () => {
     it("parses directive's special char as string", () =>
@@ -19,7 +33,7 @@ describe('Marpit directives YAML parser', () => {
 
       expect(parsed.backgroundColor).toBe('#f00')
       expect(parsed.header).toBe('_"HELLO!"_')
-      expect(parsed.notDefinedDirective).toBeNull()
+      expect(parsed.notDefinedDirective).toBe('')
     })
 
     it('returns result as same as regular YAML when passed like strict YAML', () => {
@@ -64,7 +78,7 @@ describe('Marpit directives YAML parser', () => {
       expect(parsed['a.c']).toBe('#def')
 
       // It would fail if you forget escape special characters for RegEx
-      expect(parsed.abc).toBeNull()
+      expect(parsed.abc).toBe('')
     })
   })
 })
