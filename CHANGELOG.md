@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- Upgrade Node.js and dependent packages ([#463](https://github.com/marp-team/marpit/pull/463))
+
 ## v3.2.2 - 2026-07-04
 
 ### Changed
