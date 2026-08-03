@@ -149,8 +149,8 @@ describe('Marpit', () => {
           marpit.customDirectives.local.b = (v) => ({ b: v })
 
           const [token] = marpit.markdown.parse('---\na: #123\nb: #abc\n---')
-          expect(token.meta.marpitDirectives.a).toBeNull()
-          expect(token.meta.marpitDirectives.b).toBeNull()
+          expect(token.meta.marpitDirectives.a).toBe('')
+          expect(token.meta.marpitDirectives.b).toBe('')
         })
       })
     })
