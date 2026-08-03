@@ -74,7 +74,7 @@ class Marpit {
    *     to enable CSS container query (`@container`). By setting the string or
    *     string array, you can specify the container name(s) for the CSS
    *     container.
-   * @param {boolean} [opts.cssNesting=false] Enable CSS nesting support. If
+   * @param {boolean} [opts.cssNesting=true] Enable CSS nesting support. If
    *     enabled, Marpit will try to make flatten the CSS with nested rules
    *     before rendering, to make it compatible with Marpit preprocessings.
    * @param {false|number|number[]} [opts.headingDivider=false] Start a new
@@ -89,8 +89,8 @@ class Marpit {
    *     markdown-it or its constructor option(s) for wrapping. Marpit will
    *     create its instance based on CommonMark when omitted.
    * @param {boolean} [opts.printable=true] Make style printable to PDF.
-   * @param {false|Element|Element[]} [opts.slideContainer] Container element(s)
-   *     wrapping each slide sections.
+   * @param {false|Element|Element[]} [opts.slideContainer=false] Container
+   *     element(s) wrapping each slide sections.
    * @param {boolean|Marpit~InlineSVGOptions} [opts.inlineSVG=false] Wrap each
    *     slide sections by inline SVG. _(Experimental)_
    */
