@@ -119,7 +119,7 @@ jobs:
           root: .
           paths:
             - lib
-            - tmp/legacy-test
+            - tmp/compiled-test
 
   test-node18:
     executor:
