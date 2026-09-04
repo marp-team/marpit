@@ -1,4 +1,3 @@
-import babelParser from '@babel/eslint-parser'
 import js from '@eslint/js'
 import eslintConfigPrettier from 'eslint-config-prettier'
 import eslintPluginImportX, {
@@ -13,7 +12,6 @@ export default [
   eslintConfigPrettier,
   {
     languageOptions: {
-      parser: babelParser,
       globals: {
         ...globals.node,
       },
