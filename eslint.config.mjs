@@ -69,6 +69,7 @@ export default [
       'docs/**/*',
       'jsdoc/**/*',
       'lib/**/*',
+      'tmp/**/*',
       'node_modules/**/*',
       'plugin.js',
     ],

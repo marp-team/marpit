@@ -42,6 +42,7 @@
   },
   "scripts": {
     "build": "npm -s run clean && babel src --out-dir lib",
+    "build:test": "npm run build && rimraf tmp/compiled-test && babel test --out-dir tmp/compiled-test --copy-files",
     "check:audit": "npm audit",
     "check:format": "npm -s run format -- -c",
     "clean": "rimraf lib",
@@ -59,9 +60,9 @@
     "watch": "babel src --out-dir lib -w --verbose"
   },
   "devDependencies": {
-    "@babel/cli": "^7.29.7",
-    "@babel/core": "^7.29.7",
-    "@babel/preset-env": "^7.29.7",
+    "@babel/cli": "^8.0.4",
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
     "@eslint/js": "^10.0.1",
     "autoprefixer": "^10.5.4",
     "cheerio": "^1.2.0",
@@ -98,6 +99,11 @@
     "markdown-it-front-matter": "^0.2.4",
     "postcss": "^8.5.26",
     "postcss-nesting": "^13.0.2"
+  },
+  "overrides": {
+    "babel-preset-current-node-syntax": {
+      "@babel/core": "^7.0.0 || ^8.0.0"
+    }
   },
   "publishConfig": {
     "access": "public"
