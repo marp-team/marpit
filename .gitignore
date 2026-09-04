@@ -1,6 +1,7 @@
 lib
 dist
 jsdoc
+tmp/
 /docs/style/
 
 ########## gitignore.io ##########

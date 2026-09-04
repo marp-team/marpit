@@ -75,17 +75,26 @@ commands:
 
   test:
     parameters:
+      legacy:
+        type: boolean
+        default: false
       junit:
         type: boolean
         default: true
     steps:
       - run:
           name: Jest
-          command: npm run test:coverage -- --ci --maxWorkers=2 --reporters=default <<# parameters.junit >>--reporters=jest-junit<</ parameters.junit >>
+          command: npm run test:coverage -- --ci --maxWorkers=2 --reporters=default <<# parameters.junit >>--reporters=jest-junit<</ parameters.junit >> <<# parameters.legacy >>--config jest.legacy.config.js --coverage=false<</ parameters.legacy >>
           environment:
             JEST_JUNIT_OUTPUT_DIR: tmp/test-results
 
-      - codecov/upload
+      - unless:
+          condition: << parameters.legacy >>
+          steps:
+            - codecov/upload
+            - store_artifacts:
+                path: ./coverage
+                destination: coverage
 
       - when:
           condition: << parameters.junit >>
@@ -93,15 +102,24 @@ commands:
             - store_test_results:
                 path: tmp/test-results
 
-      - store_artifacts:
-          path: ./coverage
-          destination: coverage
-
 jobs:
   audit:
     executor: node
     steps:
       - audit
+
+  build-tests-for-legacy-node:
+    executor:
+      name: node
+      version: '26.8.1' # Specify version for development
+    steps:
+      - prepare
+      - run: npm run build:test
+      - persist_to_workspace:
+          root: .
+          paths:
+            - lib
+            - tmp/compiled-test
 
   test-node18:
     executor:
@@ -110,7 +128,10 @@ jobs:
     steps:
       - prepare:
           force: true
+      - attach_workspace:
+          at: .
       - test:
+          legacy: true
           junit: false
 
   test-node20:
@@ -120,7 +141,10 @@ jobs:
     steps:
       - prepare
       - lint
-      - test
+      - attach_workspace:
+          at: .
+      - test:
+          legacy: true
 
   test-node22:
     executor:
@@ -134,7 +158,7 @@ jobs:
   test-node24:
     executor:
       name: node
-      version: '24.19'
+      version: '24.20'
     steps:
       - prepare
       - lint
@@ -143,7 +167,7 @@ jobs:
   test-node26:
     executor:
       name: node
-      version: '26.6.0' # Specify LTS version for development
+      version: '26.8.1' # Specify version for development
     steps:
       - prepare
       - lint
@@ -153,12 +177,19 @@ workflows:
   test:
     jobs:
       - audit
+
+      # For legacy Node.js
+      - build-tests-for-legacy-node:
+          requires:
+            - audit
       - test-node18:
           requires:
-            - audit
+            - build-tests-for-legacy-node
       - test-node20:
           requires:
-            - audit
+            - build-tests-for-legacy-node
+
+      # For active Node.js
       - test-node22:
           requires:
             - audit

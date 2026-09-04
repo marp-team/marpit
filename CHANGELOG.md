@@ -4,7 +4,7 @@
 
 ### Changed
 
-- Upgrade Node.js and dependent packages ([#463](https://github.com/marp-team/marpit/pull/463))
+- Upgrade Node.js and dependent packages ([#463](https://github.com/marp-team/marpit/pull/463), [#467](https://github.com/marp-team/marpit/pull/467))
 
 ### Fixed
 
